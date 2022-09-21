@@ -17,7 +17,6 @@ const initvalue = {
   },
   totalBill : 0,
   statusLogin: false,
-  listPaymentChecked : []
 };
 const userReducer = (state = initvalue, action) => {
   switch (action.type) {

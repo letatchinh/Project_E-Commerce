@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import {
     Avatar,
     Button,
@@ -11,7 +11,7 @@ import { Stack } from "@mui/system";
 import styled from "styled-components";
 
 import { v4 } from 'uuid';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { featchDecreaseItemRequest, featchIncreaseItemRequest, featchRemoveItemCartRequest, fecthAddListPaymentChecked, fecthListPaymentChecked, fecthRemoveListPaymentChecked } from '../../redux/login/Actions';
 const SpanStylePrice = styled.span`
 margin : 0 10px;
@@ -20,10 +20,8 @@ font-weight : 500;
 font-size : 18px
 `
 export default function ItemCart({value}) {
-    const [checked, setChecked] = useState(true);
     const dispatch = useDispatch()
     const handleChange = (event) => {
-        setChecked(event.target.checked);
        if(event.target.checked){
         dispatch(fecthAddListPaymentChecked(value))
        }

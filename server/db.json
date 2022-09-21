@@ -953,30 +953,23 @@
           "listRating": [],
           "id": 0,
           "isCheckedPayment": true,
-          "quanlity": 2
+          "quanlity": 1
         },
         {
-          "name": "ao dep2",
+          "name": "ao dep23",
           "price": "11",
-          "image": "https://baoduyenbabyhouse.com/wp-content/uploads/2022/03/ueew.jpg",
+          "image": "https://cf.shopee.vn/file/68173dbc9c0260929a31cf1f8f41f6f9",
           "isSell": "false",
           "discount": "0",
-          "rating": "5",
-          "listRating": [
-            {
-              "comment": "dsme anam",
-              "rating": 5,
-              "time": "16-9-2022 6:05:55 PM",
-              "username": "2367281133423878"
-            }
-          ],
+          "rating": 0,
+          "listRating": [],
           "id": 1,
           "isCheckedPayment": true,
           "quanlity": 1
         }
       ],
       "id": 8,
-      "name": "le tat chinh",
+      "name": "le tat chinh 2",
       "email": "letatchinh123@gmail.com",
       "phone": "0905970965",
       "address": "67 nguyễn đình chiểu"

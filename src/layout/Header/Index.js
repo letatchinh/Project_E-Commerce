@@ -19,11 +19,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import PinterestIcon from '@mui/icons-material/Pinterest';
 import { KEY_USER } from "../../constant/LocalStored";
-import useMediaQuery from '@mui/material/useMediaQuery';
-
 export default function Index() {
-  const matches = useMediaQuery('(min-width:600px)');
-
   const [user,setUser] = useState({})
   const [displayCart,setDisplayCart] = useState(false)
   const statusLogin = useSelector(state => state.user.statusLogin);
@@ -129,7 +125,7 @@ export default function Index() {
       >
        <div style={{display : (statusLogin) ? "block" : "none"}}> 
         <MenuItem onClick={handleClose}>{user.username}</MenuItem>
-       <Link to='profile_Info'>
+       <Link to='/profile_Info'>
        <MenuItem onClick={handleClose}>My account</MenuItem>
        </Link>
         <MenuItem  onClick={() => {handleLogout() ; handleClose()}}><LogoutIcon/>Logout</MenuItem>

@@ -1,5 +1,5 @@
 import { Button, List, TextField, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import ItemInfoUser from "./ItemInfoUser";
 import PeopleIcon from "@mui/icons-material/People";
 import EmailIcon from "@mui/icons-material/Email";
@@ -16,7 +16,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import * as regex from "../../constant/YupGlobal.js";
 import Alert from "@mui/material/Alert";
-
+import '../StyleComponent/StyleCommomUser.css'
 export default function InfoUser() {
   const [status, setStatus] = useState(false);
   const [loading, setLoading] = useState(false);

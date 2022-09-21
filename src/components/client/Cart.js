@@ -32,7 +32,6 @@ font-size : 18px
   const dispatch = useDispatch();
   const cartUser = useSelector((state) => state.user.loginSuccess.listCarts);
   const totalBill = useSelector((state) => state.user.totalBill);
-  const [listChecked,setListChecked] = useState([])
   const fetch = useCallback(() => {
     if (localStorage.getItem(KEY_USER)) {
       dispatch(fetchLogginSuccessRequest());
@@ -42,15 +41,6 @@ font-size : 18px
   useEffect(() => {
     fetch();
   }, [fetch]);
-  const handleDeleteCart = (item) => {
-    dispatch(featchRemoveItemCartRequest(item));
-  };
-  const handleIncrease = (item) => {
-    dispatch(featchIncreaseItemRequest(item));
-  };
-  const handleDecrease = (item) => {
-    dispatch(featchDecreaseItemRequest(item));
-  };
   return (
     <List
       sx={{
@@ -74,7 +64,7 @@ font-size : 18px
         <span>Tổng Hoá Đơn</span>
         <span style={{fontWeight : 700}}>{totalBill} Đ</span>
       </Stack>
-     <Link style={{pointerEvents :(cartUser.length === 0) ?  'none' : 'auto'}} to='payment'>
+     <Link style={{pointerEvents :(cartUser.length === 0) ?  'none' : 'auto'}} to='/payment'>
      <Button disabled={cartUser.length === 0} onClick={offCart} fullWidth color="success" variant="outlined">Thanh Toán</Button>
      </Link>
 

@@ -2,10 +2,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400&display=swap');
 
-a {
-  text-decoration: none;
-  color: black;
-}
+
 
 li {
   list-style-type: none;
@@ -1057,4 +1054,8 @@ ul.row-sm {
 
 .pagination {
   justify-content: end;
+}
+a {
+  text-decoration: none;
+  color: black;
 }
