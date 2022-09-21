@@ -17,13 +17,17 @@ import { URL_BASE } from "../../constant/UrlConstant";
 import InfoIcon from "@mui/icons-material/Info";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { Link } from "react-router-dom";
+import Header from "../../layout/Header/Index"
+
 export default function ProfileUser({children}) {
   const [active, setActive] = useState(1);
   const handleCLickList = (active) => {
     setActive(active)
   }
   return (
-    <div style={{ background: "#F0F2F5", padding: "10px" }}>
+   <>
+   <Header />
+   <div style={{ background: "#F0F2F5", padding: "10px" }}>
       <Container sx={{ background: "white", borderRadius: "20px" }}>
         <Stack direction="row">
           <Stack width="30%" borderRight="1px solid #F0F2F5">
@@ -57,5 +61,6 @@ export default function ProfileUser({children}) {
         </Stack>
       </Container>
     </div>
-  );
+   </> 
+  )
 }
