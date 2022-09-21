@@ -18,7 +18,6 @@ import InfoIcon from "@mui/icons-material/Info";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { Link } from "react-router-dom";
 export default function ProfileUser({children}) {
-  const username = useSelector((state) => state.user.loginSuccess);
   const [active, setActive] = useState(1);
   const handleCLickList = (active) => {
     setActive(active)
@@ -52,7 +51,6 @@ export default function ProfileUser({children}) {
              </Link>
             </MenuList>
           </Stack>
-         {/* <InfoUser/> */}
         <Container width='100%'>
           {children}
         </Container>

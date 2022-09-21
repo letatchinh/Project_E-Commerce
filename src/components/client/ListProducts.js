@@ -48,7 +48,7 @@ export default function ListProducts() {
               ))
             : list &&
               list.map((e) => (
-                <Grid className="abc" key={v4()} xs={3} item>
+                <Grid className="abc" key={v4()} xs={6} md={3} item>
                   <Link to={`/products/${e.id}`}>
                     <Product
                       item={e}
@@ -64,7 +64,7 @@ export default function ListProducts() {
                 </Grid>
               ))}
         </Grid>
-        <Stack alignItems="center" spacing={2}>
+        <Stack alignItems="center" spacing={2} sx={{marginTop : '20px'}}>
           <Pagination count={count} page={page} onChange={handleChange} />
         </Stack>
       </Container>
