@@ -11,10 +11,10 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useForm } from "react-hook-form";
 import "@fontsource/roboto/700.css";
 import DoneIcon from "@mui/icons-material/Done";
-import { fetchEditUserRequest } from "../redux/login/Actions";
+import { fetchEditUserRequest } from "../../redux/login/Actions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import * as regex from "../constant/YupGlobal.js";
+import * as regex from "../../constant/YupGlobal.js";
 import Alert from "@mui/material/Alert";
 
 export default function InfoUser() {

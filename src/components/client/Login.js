@@ -10,8 +10,8 @@ import {
   fecthUserRequest,
   fetchCheckLogin,
   fetchRegisterRequest,
-} from "../redux/login/Actions";
-import * as TYPES from "../redux/login/Types";
+} from "../../redux/login/Actions";
+import * as TYPES from "../../redux/login/Types";
 import { Link, useNavigate } from "react-router-dom";
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";

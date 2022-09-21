@@ -3,15 +3,15 @@ import { Container, Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAddToCartRequest } from "../redux/login/Actions";
+import { fetchAddToCartRequest } from "../../redux/login/Actions";
 import SendIcon from "@mui/icons-material/Send";
 import { useForm } from "react-hook-form";
 import Rating from "@mui/material/Rating";
 import ListReview from "./ListReview";
-import { fetchAddRatingProductRequest } from "../redux/shopping/Shopping-actions";
+import { fetchAddRatingProductRequest } from "../../redux/shopping/Shopping-actions";
 import PriceSell from "./PriceSell";
 import axios from "axios";
-import { URL_BASE } from "../constant/UrlConstant";
+import { URL_BASE } from "../../constant/UrlConstant";
 import { useParams } from "react-router-dom";
 export default function DetailProduct() {
     const [itemm,setItem] = useState({})

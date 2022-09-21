@@ -5,7 +5,7 @@ import ContentTop from "./ContentTop";
 import ItemListPaymentUser from "./ItemListPaymentUser";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
-import { URL_BASE } from "../constant/UrlConstant";
+import { URL_BASE } from "../../constant/UrlConstant";
 import { useSelector } from "react-redux";
 import { v4 } from "uuid";
 export default function ListPaymentUser() {

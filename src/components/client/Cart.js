@@ -15,10 +15,10 @@ import {
   featchIncreaseItemRequest,
   featchRemoveItemCartRequest,
   fetchLogginSuccessRequest,
-} from "../redux/login/Actions";
+} from "../../redux/login/Actions";
 import { Stack } from "@mui/system";
 import styled from "styled-components";
-import { KEY_USER } from "../constant/LocalStored";
+import { KEY_USER } from "../../constant/LocalStored";
 import { Link } from "react-router-dom";
 import ItemCart from "./ItemCart";
 

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import productApi from "../apis/productApi";
+import productApi from "../../apis/productApi";
 import { Container, Stack } from "@mui/system";
 import { Grid, Pagination } from "@mui/material";
 import { v4 } from "uuid";

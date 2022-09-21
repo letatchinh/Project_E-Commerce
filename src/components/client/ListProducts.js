@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
-import { URL_BASE } from "../constant/UrlConstant";
+import { URL_BASE } from "../../constant/UrlConstant";
 import Product from "./Product";
 export default function ListProducts() {
   const limit = 4;

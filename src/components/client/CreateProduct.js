@@ -4,7 +4,7 @@ import React from 'react'
 import Typography from '@mui/material/Typography';
 import '@fontsource/roboto/300.css';
 import { useDispatch } from 'react-redux';
-import {  fetchAddProductRequest } from '../redux/shopping/Shopping-actions';
+import {  fetchAddProductRequest } from '../../redux/shopping/Shopping-actions';
 import { useForm } from 'react-hook-form';
 export default function CreateProduct() {
   const { setValue, register, handleSubmit, watch, formState: {errors } } = useForm();

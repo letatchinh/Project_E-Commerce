@@ -1,19 +1,19 @@
 import './App.css';
 import Header from './layout/Header/Index'
 import { Route, Routes } from 'react-router-dom';
-import ListProducts from './components/ListProducts';
-import CreateProduct from './components/CreateProduct';
-import Login from './components/Login';
-import Search from './components/Search';
-import Register from './components/Register';
+import ListProducts from './components/client/ListProducts';
+import CreateProduct from './components/client/CreateProduct';
+import Login from './components/client/Login';
+import Search from './components/client/Search';
+import Register from './components/client/Register';
 import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fecthProductRequest } from './redux/shopping/Shopping-actions';
-import DetailProduct from './components/DetailProduct';
-import ProfileUser from './components/ProfileUser';
-import InfoUser from './components/InfoUser';
-import ListPaymentUser from './components/ListPaymentUser';
-import Payment from './components/Payment';
+import DetailProduct from './components/client/DetailProduct';
+import ProfileUser from './components/client/ProfileUser';
+import InfoUser from './components/client/InfoUser';
+import ListPaymentUser from './components/client/ListPaymentUser';
+import Payment from './components/client/Payment';
 function App() {
   const dispatch = useDispatch();
   const fetch = useCallback(async() => {

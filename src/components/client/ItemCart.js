@@ -12,7 +12,7 @@ import styled from "styled-components";
 
 import { v4 } from 'uuid';
 import { useDispatch, useSelector} from 'react-redux';
-import { featchDecreaseItemRequest, featchIncreaseItemRequest, featchRemoveItemCartRequest, fecthAddListPaymentChecked, fecthListPaymentChecked, fecthRemoveListPaymentChecked } from '../redux/login/Actions';
+import { featchDecreaseItemRequest, featchIncreaseItemRequest, featchRemoveItemCartRequest, fecthAddListPaymentChecked, fecthListPaymentChecked, fecthRemoveListPaymentChecked } from '../../redux/login/Actions';
 const SpanStylePrice = styled.span`
 margin : 0 10px;
 font-family: Montserrat, sans-serif;

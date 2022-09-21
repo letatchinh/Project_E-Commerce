@@ -7,9 +7,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useDispatch } from 'react-redux';
-import { fetchAddToCartRequest } from '../redux/login/Actions';
+import { fetchAddToCartRequest } from '../../redux/login/Actions';
 import Rating from '@mui/material/Rating';
-import './StyleComponent/Product.css'
+import '../StyleComponent/Product.css'
 import PriceSell from './PriceSell';
 export default function Product(props) {
   const {name , image , price , isSell , item ,rating , listRating} = props

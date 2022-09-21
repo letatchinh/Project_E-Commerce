@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material'
 import axios from 'axios'
-import { URL_BASE } from '../constant/UrlConstant'
+import { URL_BASE } from '../../constant/UrlConstant'
 export default function ItemListPaymentUser({data}) {
   const [item,setItem] = useState({})
   const [loading,setLoading] = useState(false)

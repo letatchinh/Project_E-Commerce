@@ -973,26 +973,6 @@
           "id": 1,
           "isCheckedPayment": true,
           "quanlity": 1
-        },
-        {
-          "name": "ao xau",
-          "price": "11",
-          "image": "https://minhtruc.vn/wp-content/uploads/2020/09/ao-kieu-nu-co-v-buoc-no-mau-xanh-ma-non-1-400x480.jpg",
-          "isSell": "true",
-          "discount": "1",
-          "rating": "4",
-          "listRating": [
-            {
-              "comment": "ok la",
-              "rating": 4,
-              "time": "18-9-2022 2:35:11 PM",
-              "username": "2367281133423878",
-              "id": 1
-            }
-          ],
-          "id": 2,
-          "isCheckedPayment": true,
-          "quanlity": 1
         }
       ],
       "id": 8,

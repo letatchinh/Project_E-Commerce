@@ -3,7 +3,7 @@ import { Stack } from '@mui/system';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRegisterRequest } from '../redux/login/Actions';
+import { fetchRegisterRequest } from '../../redux/login/Actions';
 
 export default function Register() {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
