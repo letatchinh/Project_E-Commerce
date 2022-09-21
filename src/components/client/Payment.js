@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react'
 import {  useSelector } from 'react-redux'
 import { v4 } from 'uuid'
 import ItemPayment from './ItemPayment'
+import Header from "../../layout/Header/Index"
+
 export default function Payment() {
   const [listChecked,setListChecked] = useState([])
   const listCheckedPayment = useSelector(state => state.user.loginSuccess.listCarts)
@@ -13,7 +15,9 @@ export default function Payment() {
    setListChecked(newList)
   },[listCheckedPayment])
   return (
-    <div style={{background : 'rgb(240, 242, 245)' , padding : '20px'}}>
+    <>
+    <Header />
+      <div style={{background : 'rgb(240, 242, 245)' , padding : '20px'}}>
     <Container sx={{background : 'white' , borderRadius : '10px'}}>
    <Stack>
    {listChecked?.map(value =>  <ItemPayment key={v4()} value={value}/>)}
@@ -24,5 +28,6 @@ export default function Payment() {
   </Stack>
     </Container>
     </div>
+    </>
   )
 }

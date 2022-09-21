@@ -37,7 +37,6 @@ function App() {
   }, []);
   return (
     <>
-      <Header />
       <Routes>
         {/* User */}
         <Route path="/" element={<ListProducts />} />
