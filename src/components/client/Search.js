@@ -5,6 +5,7 @@ import { Container, Stack } from "@mui/system";
 import { Grid, Pagination } from "@mui/material";
 import { v4 } from "uuid";
 import Product from "./Product";
+import Header from "../../layout/Header/Index"
 export default function Search() {
   const limit = 4;
   const [start, setStart] = useState(0);
@@ -25,7 +26,10 @@ export default function Search() {
     const newStart = (value - 1) * limit;
     setStart(newStart);
   };
-  return listShow.length === 0 ? (
+  return  <>
+     <Header />
+  
+{  listShow.length === 0 ? (
     <img style={{width : "50%" , marginLeft : "25%"}}
       src="https://i.pinimg.com/originals/20/d3/8b/20d38b1d0d3304dd80adc2e4029278ac.png"
       alt="error"
@@ -54,5 +58,6 @@ export default function Search() {
         <Pagination count={count} page={page} onChange={handleChange} />
       </Stack>
     </Container>
-  );
+  )}
+  </>
 }
