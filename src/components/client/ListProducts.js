@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
 import { URL_BASE } from "../../constant/UrlConstant";
+import Header from "../../layout/Header/Index"
 import Product from "./Product";
 export default function ListProducts() {
   const limit = 4;
@@ -34,7 +35,7 @@ export default function ListProducts() {
     setPage(value);
   };
   return (
-    <>
+    <> <Header />
       <Container>
         <Grid container spacing={3}>
           {loading
