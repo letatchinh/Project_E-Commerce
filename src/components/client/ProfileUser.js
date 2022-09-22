@@ -26,7 +26,6 @@ export default function ProfileUser({children}) {
   }
   return (
    <>
-   <Header />
    <div style={{ background: "#F0F2F5", padding: "10px" }}>
       <Container sx={{ background: "white", borderRadius: "20px" }}>
         <Stack direction="row">

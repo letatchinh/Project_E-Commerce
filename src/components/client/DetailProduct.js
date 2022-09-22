@@ -60,7 +60,6 @@ export default function DetailProduct() {
   };
   return (
       <>
- <Header />
       {loading ? 
  ( <Stack >
           <Skeleton variant="text" sx={{ fontSize: '1rem' }} />

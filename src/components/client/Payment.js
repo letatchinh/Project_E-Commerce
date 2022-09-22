@@ -5,9 +5,7 @@ import React, { useEffect, useState } from 'react'
 import {  useSelector } from 'react-redux'
 import { v4 } from 'uuid'
 import ItemPayment from './ItemPayment'
-import Header from "../../layout/Header/Index"
 import ErrorNoItem from './ErrorNoItem'
-
 export default function Payment() {
   const [listChecked,setListChecked] = useState([])
   const listCheckedPayment = useSelector(state => state.user.loginSuccess.listCarts)
@@ -17,7 +15,6 @@ export default function Payment() {
   },[listCheckedPayment])
   return (
     <>
-    <Header />
     {listChecked.length === 0 ? <ErrorNoItem src="https://i.pinimg.com/originals/ae/8a/c2/ae8ac2fa217d23aadcc913989fcc34a2.png"/> :  <div style={{background : 'rgb(240, 242, 245)' , padding : '20px'}}>
     <Container sx={{background : 'white' , borderRadius : '10px'}}>
    <Stack>

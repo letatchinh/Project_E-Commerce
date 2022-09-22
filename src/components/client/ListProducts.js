@@ -2,11 +2,10 @@ import { Grid, Pagination, Skeleton } from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import axios from "axios";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
 import { URL_BASE } from "../../constant/UrlConstant";
-import Header from "../../layout/Header/Index"
 import Product from "./Product";
 export default function ListProducts() {
   const limit = 4;
@@ -35,7 +34,7 @@ export default function ListProducts() {
     setPage(value);
   };
   return (
-    <> <Header />
+    <>
       <Container>
         <Grid container spacing={3}>
           {loading

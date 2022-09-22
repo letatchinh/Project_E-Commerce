@@ -5,7 +5,6 @@ import { Container, Stack } from "@mui/system";
 import { Grid, Pagination } from "@mui/material";
 import { v4 } from "uuid";
 import Product from "./Product";
-import Header from "../../layout/Header/Index"
 import ErrorNoItem from "./ErrorNoItem";
 export default function Search() {
   const limit = 4;
@@ -28,7 +27,6 @@ export default function Search() {
     setStart(newStart);
   };
   return  <>
-     <Header />
   
 {  listShow.length === 0 ? (
     <ErrorNoItem src="https://i.pinimg.com/originals/20/d3/8b/20d38b1d0d3304dd80adc2e4029278ac.png"/>
