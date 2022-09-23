@@ -966,25 +966,47 @@
           "id": 1,
           "isCheckedPayment": true,
           "quanlity": 1
-        },
-        {
-          "name": "ao dep23",
-          "price": "11",
-          "image": "https://cf.shopee.vn/file/68173dbc9c0260929a31cf1f8f41f6f9",
-          "isSell": "false",
-          "discount": "0",
-          "rating": 0,
-          "listRating": [],
-          "id": 2,
-          "isCheckedPayment": true,
-          "quanlity": 1
         }
       ],
       "id": 8,
-      "name": "le tat chinh 2",
+      "name": "adsasdasd",
       "email": "letatchinh123@gmail.com",
-      "phone": "0905970965",
-      "address": "67 nguyễn đình chiểu"
+      "phone": "312312",
+      "address": "254 nguyễn văn linh,Thạc Gián,Thanh Khê,Đà nẵng",
+      "listOrder" : [{
+        "id" : 31231231213,
+        "status" : false,
+        "listProductOrder" : [
+          {
+            "id" : 1
+          }
+          ,
+          {
+            "id" : 2
+          }
+        ],
+        "timeOrder" : "hom nay",
+        "addressShip" :"254 nguyễn văn linh,Thạc Gián,Thanh Khê,Đà nẵng",
+        "totalBill" : 90000,
+        "taxShip" : 15000
+      },
+      {
+        "id" : 31212315535235,
+        "status" : false,
+        "listProductOrder" : [
+          {
+            "id" : 1
+          }
+          ,
+          {
+            "id" : 2
+          }
+        ],
+        "timeOrder" : "ngay mai",
+        "addressShip" :"254 nguyễn văn linh,Thạc Gián,Thanh Khê,Đà nẵng",
+        "totalBill" : 100000,
+        "taxShip" : 15000
+      }]
     }
   ],
   "listPayment": [

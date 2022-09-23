@@ -1,12 +1,38 @@
 
-import { Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from '@mui/material'
+import { Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Step, StepLabel, Stepper, Typography } from '@mui/material'
 import { Container, Stack } from '@mui/system'
 import React, { useEffect, useMemo, useState } from 'react'
 import {  useSelector } from 'react-redux'
 import { v4 } from 'uuid'
 import ItemPayment from './ItemPayment'
 import ErrorNoItem from './ErrorNoItem'
+import axios from 'axios'
+import OrderSuccess from './OrderSuccess'
 export default function Payment() {
+  const steps = [
+    'Add to Cart',
+    'Choose Payment Method',
+    'Wait admin Check Order',
+  ];
+  const [activeStep,setActiveStep] = useState(1)
+  const [loading, setLoading] = useState(false);
+  const [distance, setDistance] = useState(0);
+  const user = useSelector((state) => state.user.loginSuccess);
+  useEffect(() => {
+    setLoading(true)
+    axios
+      .get(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${user.address}.json?access_token=pk.eyJ1IjoibGV0YXRjaGluaCIsImEiOiJjbDhjd2x1NTkwMzV0M3BvYmpweWJwZG9hIn0.crltMkQeuF92KSs1DRH2pQ`
+      )
+      .then((res) => {
+        setLoading(false)
+        axios
+          .get(
+            `https://api.mapbox.com/directions/v5/mapbox/driving/108.24861,16.03083;${res.data.features[0].center[0]},${res.data.features[0].center[1]}?geometries=geojson&access_token=pk.eyJ1IjoibGV0YXRjaGluaCIsImEiOiJjbDhjd2x1NTkwMzV0M3BvYmpweWJwZG9hIn0.crltMkQeuF92KSs1DRH2pQ`
+          )
+          .then((res) => setDistance((res.data.routes[0].distance / 1000).toFixed(1)));
+      }).catch(err => {});
+  }, [user]);
   const [value, setValue] = useState('');
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -22,19 +48,39 @@ export default function Payment() {
     return total
   }
   const totalPrice = useMemo(() => CalTotal(),[listChecked])
+  const handlePayment = () => {
+    setActiveStep(2)
+  }
   return (
     <>
     {listChecked.length === 0 ? <ErrorNoItem src="https://i.pinimg.com/originals/ae/8a/c2/ae8ac2fa217d23aadcc913989fcc34a2.png"/> 
     : <div style={{background : 'rgb(240, 242, 245)' , padding : '20px'}}>
-    <Container sx={{background : 'white' , borderRadius : '10px'}}>
+    {(activeStep === 1) ? <Container sx={{background : 'white' , borderRadius : '10px'}}>
+    <Stack spacing={3} borderBottom='2px solid #C4C4C4' padding='20px' textAlign='center'>
+    <Typography variant='h4'>Payment </Typography>
+    <Stepper activeStep={activeStep} alternativeLabel>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+    </Stack>
    <Stack>
    {listChecked?.map(value =>  <ItemPayment key={v4()} value={value}/>)}
    </Stack>
-  <Stack direction='row' justifyContent='flex-end' spacing={5} sx={{padding : '40px', borderBottom : '2px solid #C4C4C4'}}>
-    <Typography variant='h5' fontWeight='bold'>Total</Typography>
-    <Typography variant='h5' fontWeight='bold'>{totalPrice} $</Typography>
+  <Stack spacing={1} sx={{width : '400px',padding : '40px' , marginLeft : 'auto'}}>
+   <Stack width='100%' justifyContent='space-between' direction='row' >
+   <Typography variant='h6' >Phí Ship ( {distance}km)</Typography>
+    <Typography variant='h6' fontWeight='bold'>{distance * 2000} VND</Typography>
+   </Stack>
+   <Stack width='100%' justifyContent='space-between' direction='row' >
+   <Typography variant='h6' fontWeight='bold'>Total</Typography>
+    <Typography variant='h6' fontWeight='bold'>{totalPrice + distance * 2000} VND</Typography>
+   </Stack>
   </Stack>
-  <Stack direction='row' alignItems='center' justifyContent='space-between' sx={{padding : '20px', borderBottom : '2px solid #C4C4C4'}}> 
+  
+  <Stack direction='row' alignItems='center' justifyContent='space-between' sx={{padding : '20px', borderBottom : '2px solid #C4C4C4',borderTop : '2px solid #C4C4C4'}}> 
     <Stack>
     <FormControl>
       <FormLabel id="demo-row-radio-buttons-group-label"><Typography variant='h5' fontWeight='bold'>Payment Method</Typography></FormLabel>
@@ -55,12 +101,12 @@ export default function Payment() {
       </RadioGroup>
     </FormControl>
     </Stack>
-    <Button disabled={value === ''} variant="contained" >
+    <Button disabled={value === ''} variant="contained" onClick={handlePayment}>
     <Typography variant='h6' sx={{textTransform : 'capitalize'}} >Payment</Typography>
         </Button>
-  </Stack>
-    </Container>
 
+  </Stack>
+    </Container> : <Container sx={{background : 'white' , borderRadius : '10px'}}><OrderSuccess/></Container>}
     </div>}
      
     </>

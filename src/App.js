@@ -25,6 +25,7 @@ import UsersScreen from "./page/admin/screens/UsersScreen";
 import ProductEditScreen from "./page/admin/screens/ProductEditScreen";
 import NotFound from "./page/admin/screens/NotFound";
 import HomePage from "./page/client/HomePage";
+import ListOrder from "./components/client/ListOrder";
 
 function App() {
   const dispatch = useDispatch();
@@ -50,7 +51,12 @@ function App() {
             path="profile_ListPayment"
             element={<ProfileUser children={<ListPaymentUser />} />}
           />
+          <Route
+            path="profile_ListOrder"
+            element={<ProfileUser children={<ListOrder />} />}
+          />
           <Route path="payment" element={<Payment />} />
+          <Route path="/*" element={<NotFound />  }/>
         </Route>
         {/* Admin */}
 

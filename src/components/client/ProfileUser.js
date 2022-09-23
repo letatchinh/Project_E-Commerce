@@ -1,24 +1,16 @@
 import {
   Avatar,
-  IconButton,
-  List,
-  ListItem,
   ListItemIcon,
-  ListItemText,
   MenuItem,
   MenuList,
   Typography,
 } from "@mui/material";
 import { Container, Stack } from "@mui/system";
-import axios from "axios";
 import React, {  useState } from "react";
-import { useSelector } from "react-redux";
-import { URL_BASE } from "../../constant/UrlConstant";
 import InfoIcon from "@mui/icons-material/Info";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { Link } from "react-router-dom";
-import Header from "../../layout/Header/Index"
-
+import ListAltIcon from '@mui/icons-material/ListAlt';
 export default function ProfileUser({children}) {
   const [active, setActive] = useState(1);
   const handleCLickList = (active) => {
@@ -51,7 +43,16 @@ export default function ProfileUser({children}) {
                 </ListItemIcon>
                 <Typography variant="inherit">Payment</Typography>
               </MenuItem>
-             </Link>
+              </Link>
+          <Link to='/profile_ListOrder'>
+          <MenuItem onClick={() => handleCLickList(3)} sx={{background : (active === 3) ? "#a5d5ff8a" : 'none',borderRadius : '10px'}}>
+                <ListItemIcon>
+                  <ListAltIcon fontSize="small" />
+                </ListItemIcon>
+                <Typography variant="inherit">List Order</Typography>
+              </MenuItem>
+          </Link>
+             
             </MenuList>
           </Stack>
         <Container width='100%'>
