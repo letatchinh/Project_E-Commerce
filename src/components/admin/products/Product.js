@@ -16,7 +16,7 @@ const Product = (props) => {
             <div className="price mb-2">${product.price}</div>
             <div className="row">
               <Link
-                to={`/product/${product._id}/edit`}
+                to={`/admin/product/${product._id}/edit`}
                 className="btn btn-sm btn-outline-success p-2 pb-3 col-md-6"
               >
                 <i className="fas fa-pen"></i>
