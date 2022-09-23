@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchRegisterRequest } from '../../redux/login/Actions';
 
 export default function Register() {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit,  formState: { errors } } = useForm();
     const [error,setError] = useState(false)
     const user = useSelector(state => state.user.user)
     const dispatch = useDispatch()

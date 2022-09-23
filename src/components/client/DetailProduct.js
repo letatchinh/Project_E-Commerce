@@ -13,8 +13,6 @@ import PriceSell from "./PriceSell";
 import axios from "axios";
 import { URL_BASE } from "../../constant/UrlConstant";
 import { useParams } from "react-router-dom";
-import Header from "../../layout/Header/Index"
-
 export default function DetailProduct() {
     const [itemm,setItem] = useState({})
     const [loading,setLoading] = useState(false)

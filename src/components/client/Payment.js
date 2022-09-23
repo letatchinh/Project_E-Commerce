@@ -15,17 +15,14 @@ export default function Payment() {
     'Wait admin Check Order',
   ];
   const [activeStep,setActiveStep] = useState(1)
-  const [loading, setLoading] = useState(false);
   const [distance, setDistance] = useState(0);
   const user = useSelector((state) => state.user.loginSuccess);
   useEffect(() => {
-    setLoading(true)
     axios
       .get(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${user.address}.json?access_token=pk.eyJ1IjoibGV0YXRjaGluaCIsImEiOiJjbDhjd2x1NTkwMzV0M3BvYmpweWJwZG9hIn0.crltMkQeuF92KSs1DRH2pQ`
       )
       .then((res) => {
-        setLoading(false)
         axios
           .get(
             `https://api.mapbox.com/directions/v5/mapbox/driving/108.24861,16.03083;${res.data.features[0].center[0]},${res.data.features[0].center[1]}?geometries=geojson&access_token=pk.eyJ1IjoibGV0YXRjaGluaCIsImEiOiJjbDhjd2x1NTkwMzV0M3BvYmpweWJwZG9hIn0.crltMkQeuF92KSs1DRH2pQ`

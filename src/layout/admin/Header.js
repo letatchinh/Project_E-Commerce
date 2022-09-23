@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import $ from "jquery";
 
 const Header = (props) => {
-  const { isClick, handleClickMenu, isDisplay, handleDisplay } = props;
+  const {  handleClickMenu, isDisplay, handleDisplay } = props;
   return (
     <header className="main-header navbar">
       <div className="col-search">

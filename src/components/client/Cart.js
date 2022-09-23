@@ -1,33 +1,18 @@
 import {
-  Avatar,
   Button,
-  IconButton,
   List,
-  ListItem,
 } from "@mui/material";
-import React, { useCallback, useEffect,useState } from "react";
-import DeleteIcon from "@mui/icons-material/Delete";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 } from "uuid";
 import {
   calTotalBill,
-  featchDecreaseItemRequest,
-  featchIncreaseItemRequest,
-  featchRemoveItemCartRequest,
   fetchLogginSuccessRequest,
 } from "../../redux/login/Actions";
 import { Stack } from "@mui/system";
-import styled from "styled-components";
 import { KEY_USER } from "../../constant/LocalStored";
 import { Link } from "react-router-dom";
 import ItemCart from "./ItemCart";
-
-const SpanStylePrice = styled.span`
-margin : 0 10px;
-font-family: Montserrat, sans-serif;
-font-weight : 500;
-font-size : 18px
-`
  function Cart({ display,offCart }) {
   const dispatch = useDispatch();
   const cartUser = useSelector((state) => state.user.loginSuccess.listCarts);

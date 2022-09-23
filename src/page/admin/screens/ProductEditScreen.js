@@ -4,7 +4,7 @@ import Sidebar from "./../../../layout/admin/sidebar";
 import EditProductMain from "./../../../components/admin/products/EditProductMain";
 import products from "../../../data/Products";
 import { useParams } from "react-router-dom";
-const ProductEditScreen = ({ match }) => {
+const ProductEditScreen = () => {
   const params = useParams();
   const productId = products.find((p) => p._id === params.id);
   const [isClick, setClick] = useState(false);

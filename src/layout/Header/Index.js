@@ -13,7 +13,6 @@ import { IS_STATUS_LOGIN } from "../../redux/login/Types";
 import LogoutIcon from '@mui/icons-material/Logout';
 import Cart from "../../components/client/Cart";
 import { search, setSearch } from "../../redux/shopping/Shopping-actions";
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
