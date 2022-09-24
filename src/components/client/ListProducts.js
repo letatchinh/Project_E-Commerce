@@ -52,13 +52,6 @@ export default function ListProducts() {
                   <Link to={`/products/${e.id}`}>
                     <Product
                       item={e}
-                      image={e.image}
-                      name={e.name}
-                      price={e.price}
-                      isSell={e.isSell}
-                      id={e.id}
-                      rating={e.rating}
-                      listRating={e.listRating}
                     />
                   </Link>
                 </Grid>

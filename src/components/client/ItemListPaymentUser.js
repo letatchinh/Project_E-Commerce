@@ -15,15 +15,15 @@ export default function ItemListPaymentUser({data}) {
       <CardMedia
         component="img"
         height="140"
-        image={item.image}
+        image={item && item.image}
         alt="green iguana"
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {item.price}
+          {item && item.price}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-         {item.name}
+         {item && item.name}
         </Typography>
       </CardContent>
     </CardActionArea>

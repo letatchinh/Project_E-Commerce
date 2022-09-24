@@ -13,13 +13,14 @@ import PriceSell from "./PriceSell";
 import axios from "axios";
 import { URL_BASE } from "../../constant/UrlConstant";
 import { useParams } from "react-router-dom";
+import newdate from "../../constant/GetToday";
 export default function DetailProduct() {
   const [itemm, setItem] = useState({});
   const [loading, setLoading] = useState(false);
   let params = useParams();
   const username = useSelector((state) => state.user.loginSuccess);
   const listProduct = useSelector((state) => state.shop.listProduct);
-  const { name, image, price, isSell,  rating, id, listRating } = itemm;
+  const { name, image, price, isSell,  rating, id, listRating , discount } = itemm;
   useEffect(() => {
     setLoading(true)
     axios
@@ -49,12 +50,7 @@ export default function DetailProduct() {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    const dateObj = new Date();
-    const month = dateObj.getUTCMonth() + 1;
-    const day = dateObj.getUTCDate();
-    const year = dateObj.getUTCFullYear();
-    const date2 = new Date().toLocaleTimeString();
-    const newdate = day + "-" + month + "-" + year + " " + date2;
+    const today = newdate
     const sum = itemm.listRating.reduce((sum, arr) => sum + arr.rating, value);
     const newRating = (sum / (itemm.listRating.length + 1)).toFixed();
     dispatch(
@@ -66,7 +62,7 @@ export default function DetailProduct() {
             {
               ...data,
               rating: value,
-              time: newdate,
+              time: today,
               username: username.name,
               id: itemm.listRating.length + 1,
             },
@@ -109,7 +105,7 @@ export default function DetailProduct() {
                   sx={{ borderBottom: "2px solid #f3f3f3", padding: "10px" }}
                 >
                   <Typography variant="h6">Price</Typography>
-                  <PriceSell isSell={isSell} price={price} />
+                  <PriceSell discount={discount} isSell={isSell} price={price} />
                 </Stack>
                 <Stack
                   direction="row"

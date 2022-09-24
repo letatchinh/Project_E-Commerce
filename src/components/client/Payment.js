@@ -2,13 +2,16 @@
 import { Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Step, StepLabel, Stepper, Typography } from '@mui/material'
 import { Container, Stack } from '@mui/system'
 import React, { useEffect, useMemo, useState } from 'react'
-import {  useSelector } from 'react-redux'
+import {  useDispatch, useSelector } from 'react-redux'
 import { v4 } from 'uuid'
-import ItemPayment from './ItemPayment'
 import ErrorNoItem from './ErrorNoItem'
 import axios from 'axios'
 import OrderSuccess from './OrderSuccess'
+import ItemDetailistOrderUser from './ItemDetailistOrderUser'
+import newdate from '../../constant/GetToday'
+import {  fetchAddListOrderRequest } from '../../redux/login/Actions'
 export default function Payment() {
+  const dispatch = useDispatch()
   const steps = [
     'Add to Cart',
     'Choose Payment Method',
@@ -41,11 +44,31 @@ export default function Payment() {
    setListChecked(newList)
   },[listCheckedPayment])
   const CalTotal = () => {
-    const total = listChecked.reduce((sum,arr) => sum + parseInt(arr.price),0)
+    const total = listChecked.reduce((sum,arr) => {
+      if(arr.isSell){
+        return sum + (parseInt(arr.price) - parseInt(arr.price)*parseInt(arr.discount)/100)*arr.quanlity
+      }
+      else {
+       return sum + parseInt(arr.price)*arr.quanlity
+      }
+    },0)
     return total
+    
   }
   const totalPrice = useMemo(() => CalTotal(),[listChecked])
-  const handlePayment = () => {
+  const handlePayment = async() => {
+    const today = newdate
+    const newOrder = {
+      addressShip : user.address,
+      id : v4(),
+      listProductOrder : listChecked,
+      status : false,
+      taxShip : distance * 2000,
+      timeOrder : today,
+      totalBill : totalPrice + distance * 2000
+    }
+    const newUser = {...user,listOrder : [...user.listOrder,newOrder],listCarts : []}
+  await  dispatch(fetchAddListOrderRequest(newUser))
     setActiveStep(2)
   }
   return (
@@ -64,7 +87,9 @@ export default function Payment() {
       </Stepper>
     </Stack>
    <Stack>
-   {listChecked?.map(value =>  <ItemPayment key={v4()} value={value}/>)}
+   {listChecked?.map(value => 
+   <ItemDetailistOrderUser key={v4()} value={value}/>
+   )}
    </Stack>
   <Stack spacing={1} sx={{width : '400px',padding : '40px' , marginLeft : 'auto'}}>
    <Stack width='100%' justifyContent='space-between' direction='row' >

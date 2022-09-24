@@ -210,3 +210,22 @@ export const fecthRemoveListPaymentChecked = (list) => {
         type : TYPES.REMOVE_LIST_PAYMENT_CHECKED,
         payload : list
     } }
+export const fetchAddListOrderRequest = (user) => {
+    return (dispatch) => {
+        (async ()=>{
+            try {
+                await userApi.editUser(user,user.id)
+                localStorage.setItem(KEY_USER,JSON.stringify(user))
+                dispatch(fetchAddListOrder(user))
+            } catch (error) {
+                console.log(error);
+            }
+        })()
+    }
+}
+export const fetchAddListOrder = (user) => {
+    return {
+        type : TYPES.ADD_LIST_ORDER,
+        payload : user
+    }
+}

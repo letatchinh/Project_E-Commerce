@@ -42,20 +42,20 @@ function App() {
           {/* <Route path="/new" element={<CreateProduct />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="products/:productId" element={<DetailProduct />} />
+          <Route path="/products/:productId" element={<DetailProduct />} />
           <Route
-            path="profile_Info"
+            path="/profile_Info"
             element={<ProfileUser children={<InfoUser />} />}
           />
           <Route
-            path="profile_ListPayment"
+            path="/profile_ListPayment"
             element={<ProfileUser children={<ListPaymentUser />} />}
           />
           <Route
-            path="profile_ListOrder"
+            path="/profile_ListOrder"
             element={<ProfileUser children={<ListOrder />} />}
           />
-          <Route path="payment" element={<Payment />} />
+          <Route path="/payment" element={<Payment />} />
           <Route path="/*" element={<NotFound />  }/>
         </Route>
         {/* Admin */}

@@ -6,6 +6,7 @@ import {
   import { Stack } from "@mui/system";
 import PriceSell from './PriceSell'
 export default function ItemPayment({value}) {
+  console.log(value);
   return (
     <ListItem
     sx={{ justifyContent: "space-around" , borderBottom : "2px solid #C4C4C4"}}
