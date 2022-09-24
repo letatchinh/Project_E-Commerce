@@ -18,23 +18,28 @@ export default function DetailProduct() {
   const [loading, setLoading] = useState(false);
   let params = useParams();
   const username = useSelector((state) => state.user.loginSuccess);
+  const listProduct = useSelector((state) => state.shop.listProduct);
   const { name, image, price, isSell,  rating, id, listRating } = itemm;
   useEffect(() => {
+    setLoading(true)
     axios
       .get(`${URL_BASE}listProduct?id=${params.productId}`)
       .then((res) => setItem(res.data[0]))
       .finally(() => setLoading(false));
+   
+  }, [listProduct]);
+  useEffect(() => {
     axios
-      .get(
-        `${URL_BASE}listPayment?idUser=${username.id}&idProduct=${params.productId}`
-      )
-      .then((res) => {
-        if (res.data.length !== 0) {
-          setIsPayment(true);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, [username]);
+    .get(
+      `${URL_BASE}listPayment?idUser=${username.id}&idProduct=${params.productId}`
+    )
+    .then((res) => {
+      if (res.data.length !== 0) {
+        setIsPayment(true);
+      }
+    })
+    .catch((err) => console.log(err));
+  },[username])
   const [value, setValue] = useState(null);
   const [isPayment, setIsPayment] = useState(false);
   const dispatch = useDispatch();
