@@ -1,27 +1,19 @@
 import { Stack } from "@mui/system";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import ContainerScoll from "./ContainerScoll";
 import TextItemListOrder from "./TextItemListOrder";
-import { URL_BASE } from "../../constant/UrlConstant";
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import ItemDetailistOrderUser from "./ItemDetailistOrderUser";
 import { v4 } from "uuid";
 import TotalBill from "./TotalBill";
 export default function DetailListOrderUser({ id,click }) {
   const [item, setItem] = useState({});
   const listOrder = useSelector((state) => state.user.loginSuccess.listOrder);
-  const [listitemOrder, setListItemOrder] = useState([]);
   useEffect(() => {
     const newItem = listOrder.filter((e) => e.id === id);
     setItem(newItem[0]);
   }, []);
-  useEffect(() => {
-    // axios.get(`${URL_BASE}listProduct`)
-  }, [item]);
-  console.log(item);
   return (
     <Stack>
       <Stack

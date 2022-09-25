@@ -1,4 +1,4 @@
-import { Alert, Button, Skeleton, TextField, Typography } from "@mui/material";
+import { Alert, Button, Link, Skeleton, TextField, Typography } from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -13,7 +13,7 @@ import PriceSell from "./PriceSell";
 import axios from "axios";
 import { URL_BASE } from "../../constant/UrlConstant";
 import { useParams } from "react-router-dom";
-import newdate from "../../constant/GetToday";
+import {getToday} from "../../constant/FunctionCommom";
 export default function DetailProduct() {
   const [itemm, setItem] = useState({});
   const [loading, setLoading] = useState(false);
@@ -46,11 +46,12 @@ export default function DetailProduct() {
   const dispatch = useDispatch();
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    const today = newdate
+    const today = getToday();
     const sum = itemm.listRating.reduce((sum, arr) => sum + arr.rating, value);
     const newRating = (sum / (itemm.listRating.length + 1)).toFixed();
     dispatch(
@@ -72,7 +73,7 @@ export default function DetailProduct() {
         id
       )
     );
-   
+    reset()
   };
   return (
     <>
@@ -120,12 +121,12 @@ export default function DetailProduct() {
                       readOnly
                     />
 
-                    <a href="#review">
+                    <Link href="#review">
                       {" "}
                       <Typography variant="body2" component="span">
                         ({listRating && listRating.length})
                       </Typography>
-                    </a>
+                    </Link>
                   </Stack>
                 </Stack>
                 <Button
