@@ -167,6 +167,11 @@ const userReducer = (state = initvalue, action) => {
             ...state,
             loginSuccess : action.payload
           }
+        case TYPES.REMOVE_LIST_ORDER:
+          return{
+            ...state ,
+            loginSuccess : action.payload
+          }
     default:
       return state;
   }

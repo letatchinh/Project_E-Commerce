@@ -36,7 +36,6 @@ export default function ListPaymentUser() {
     setPage(value);
     setStart((value - 1) * limit);
   };
-  console.log(currentItems);
   return (
     <>
       <ContentTop value={"List Payment"} />

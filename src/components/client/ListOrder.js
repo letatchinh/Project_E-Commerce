@@ -6,6 +6,7 @@ import {v4} from 'uuid'
 import DetailListOrderUser from "./DetailListOrderUser";
 import ContainerScoll from "./ContainerScoll";
 import { reverses } from "../../constant/FunctionCommom";
+import ErrorNoItem from './ErrorNoItem'
 export default function ListOrder() {
   const [status,setStatus] = useState(true)
   const [orderShow,setOrderShow] = useState(null)
@@ -15,12 +16,12 @@ export default function ListOrder() {
   }
   const listOrders = useSelector((state) => state.user.loginSuccess.listOrder);
   const listOrdersReverse =listOrders && reverses(listOrders)
-  console.log(listOrdersReverse);
+  console.log(listOrders);
   return (
    status ?  <ContainerScoll sx={{ padding: "10px", color: "black" ,maxHeight : '22rem' , overflow : 'scroll' }}>
-   <Stack spacing={2}>
+ {listOrders && listOrders.length === 0 ? <ErrorNoItem src='https://i.pinimg.com/originals/6f/fd/64/6ffd64c5366898c59bbc91d9aec935c3.png'/> :   <Stack spacing={2}>
     {listOrders && listOrdersReverse.map((e) =>  <ItemListOrder key={v4()} click={() => handleClickSeeMore(e.id)} id={e.id} timeOrder={e.timeOrder} totalBill={e.totalBill}/>)}
-   </Stack>
+   </Stack>}
  </ContainerScoll> :
  <DetailListOrderUser click={() => setStatus(true)} id={orderShow}/>
   );

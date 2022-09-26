@@ -1,19 +1,28 @@
 import { Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ContainerScoll from "./ContainerScoll";
 import TextItemListOrder from "./TextItemListOrder";
 import { Button } from "@mui/material";
 import ItemDetailistOrderUser from "./ItemDetailistOrderUser";
 import { v4 } from "uuid";
 import TotalBill from "./TotalBill";
+import { fetchCancelOrderRequest } from "../../redux/sagas/Mysaga";
+import Dialo from "./Dialo";
 export default function DetailListOrderUser({ id,click }) {
+  const dispatch = useDispatch()
   const [item, setItem] = useState({});
   const listOrder = useSelector((state) => state.user.loginSuccess.listOrder);
+  const user = useSelector((state) => state.user.loginSuccess);
   useEffect(() => {
     const newItem = listOrder.filter((e) => e.id === id);
     setItem(newItem[0]);
   }, []);
+  const handleCancelBill = () => {
+    const newListorDer = listOrder.filter(e => e.id !== item.id)
+    const newUser = {...user,listOrder : newListorDer}
+    dispatch(fetchCancelOrderRequest(newUser))
+  }
   return (
     <Stack>
       <Stack
@@ -41,9 +50,8 @@ export default function DetailListOrderUser({ id,click }) {
         </Stack>
       </ContainerScoll>
       <Stack direction="row" alignItems='center'>
-      {!item.status && <Button sx={{textTransform : 'capitalize'}} variant="contained" color="error">
-        Cancel Order
-      </Button>}
+      {!item.status &&  <Dialo click={handleCancelBill}/>}
+     
         <Stack marginLeft='auto' width="200px">
           <Stack>
             <TotalBill title="Tax Ship" value={item.taxShip} />
