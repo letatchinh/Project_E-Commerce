@@ -8,7 +8,16 @@ import axios from "axios";
 import { URL_BASE } from "../../constant/UrlConstant";
 import { useSelector } from "react-redux";
 import { v4 } from "uuid";
+import { KEY_USER } from "../../constant/LocalStored";
+import { useNavigate } from "react-router-dom";
 export default function ListPaymentUser() {
+  const users = JSON.parse(localStorage.getItem(KEY_USER))
+  const navigate = useNavigate()
+  useEffect(() => {
+    if(users === null){
+      navigate('/login')
+    }
+  },[users])
   const limit = 4;
   const [list, setlist] = useState([]);
   const [loading, setLoading] = useState(false);

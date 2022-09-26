@@ -1,5 +1,5 @@
 import { Button, List, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ItemInfoUser from "./ItemInfoUser";
 import PeopleIcon from "@mui/icons-material/People";
 import EmailIcon from "@mui/icons-material/Email";
@@ -22,8 +22,17 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { v4 } from "uuid";
 import { CAM_LE , HAI_CHAU , HOA_VANG ,THANH_KHE ,NGU_HANH_SON ,SON_TRA , LIEN_CHIEU,QUAN } from "../../constant/Key";
+import { KEY_USER } from "../../constant/LocalStored";
+import { useNavigate } from "react-router-dom";
 
 export default function InfoUser() {
+  const users = JSON.parse(localStorage.getItem(KEY_USER))
+  const navigate = useNavigate()
+  useEffect(() => {
+    if(users === null){
+      navigate('/login')
+    }
+  },[users])
   const [status, setStatus] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isCheckDistrit, setisCheckDistrit] = useState(false);

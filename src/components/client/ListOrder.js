@@ -1,5 +1,5 @@
 import {   Stack } from "@mui/system";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ItemListOrder from "./ItemListOrder";
 import {v4} from 'uuid'
@@ -7,7 +7,16 @@ import DetailListOrderUser from "./DetailListOrderUser";
 import ContainerScoll from "./ContainerScoll";
 import { reverses } from "../../constant/FunctionCommom";
 import ErrorNoItem from './ErrorNoItem'
+import { KEY_USER } from "../../constant/LocalStored";
+import { useNavigate } from "react-router-dom";
 export default function ListOrder() {
+  const users = JSON.parse(localStorage.getItem(KEY_USER))
+  const navigate = useNavigate()
+  useEffect(() => {
+    if(users === null){
+      navigate('/login')
+    }
+  },[users])
   const [status,setStatus] = useState(true)
   const [orderShow,setOrderShow] = useState(null)
   const handleClickSeeMore = (id) => {
@@ -16,7 +25,6 @@ export default function ListOrder() {
   }
   const listOrders = useSelector((state) => state.user.loginSuccess.listOrder);
   const listOrdersReverse =listOrders && reverses(listOrders)
-  console.log(listOrders);
   return (
    status ?  <ContainerScoll sx={{ padding: "10px", color: "black" ,maxHeight : '22rem' , overflow : 'scroll' }}>
  {listOrders && listOrders.length === 0 ? <ErrorNoItem src='https://i.pinimg.com/originals/6f/fd/64/6ffd64c5366898c59bbc91d9aec935c3.png'/> :   <Stack spacing={2}>

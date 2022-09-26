@@ -20,7 +20,16 @@ import ItemDetailistOrderUser from "./ItemDetailistOrderUser";
 import { fetchAddListOrderRequest } from "../../redux/login/Actions";
 import {getToday} from "../../constant/FunctionCommom";
 import ErrorNoItem from './ErrorNoItem'
+import { KEY_USER } from "../../constant/LocalStored";
+import { useNavigate } from "react-router-dom";
 export default function Payment() {
+  const users = JSON.parse(localStorage.getItem(KEY_USER))
+  const navigate = useNavigate()
+  useEffect(() => {
+    if(users === null){
+      navigate('/login')
+    }
+  },[users])
   const dispatch = useDispatch();
   const steps = [
     "Add to Cart",
@@ -103,7 +112,6 @@ export default function Payment() {
   };
   return (
     <>
-       
         <div style={{ background: "rgb(240, 242, 245)", padding: "20px" }}>
         {activeStep === 0  && <ErrorNoItem src='https://bizweb.dktcdn.net/100/351/215/themes/713955/assets/empty-cart.png?1617619216743'/>}
           {activeStep === 1  && (

@@ -18,10 +18,11 @@ export default function DetailListOrderUser({ id,click }) {
     const newItem = listOrder.filter((e) => e.id === id);
     setItem(newItem[0]);
   }, []);
-  const handleCancelBill = () => {
+  const handleCancelBill = async() => {
     const newListorDer = listOrder.filter(e => e.id !== item.id)
     const newUser = {...user,listOrder : newListorDer}
-    dispatch(fetchCancelOrderRequest(newUser))
+   await dispatch(fetchCancelOrderRequest(newUser))
+    click()
   }
   return (
     <Stack>
