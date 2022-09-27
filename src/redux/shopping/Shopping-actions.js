@@ -66,6 +66,7 @@ export const fetchAddRatingProductRequest = (item,id) => {
         })()
     }
 }
+
 export const fecthProductAddRating = (item) => {
     return {
         type : TYPES.ADD_RATING,

@@ -22,6 +22,7 @@ import {getToday} from "../../constant/FunctionCommom";
 import ErrorNoItem from './ErrorNoItem'
 import { KEY_USER } from "../../constant/LocalStored";
 import { useNavigate } from "react-router-dom";
+import PaymentApi from "../../apis/PaymentApi";
 export default function Payment() {
   const users = JSON.parse(localStorage.getItem(KEY_USER))
   const navigate = useNavigate()
@@ -108,6 +109,7 @@ export default function Payment() {
       listCarts: [],
     };
     await dispatch(fetchAddListOrderRequest(newUser));
+   await listChecked.map(e => PaymentApi.add({idProduct : e.id,idUser : user.id}))
     setActiveStep(2);
   };
   return (
