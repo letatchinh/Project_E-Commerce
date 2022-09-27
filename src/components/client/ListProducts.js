@@ -6,32 +6,53 @@ import {  useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
 import { URL_BASE } from "../../constant/UrlConstant";
+import ErrorNoItem from "./ErrorNoItem";
 import Product from "./Product";
 export default function ListProducts() {
   const limit = 4;
+  const [start, setStart] = useState(0);
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [list, setList] = useState([]);
+  const [mainList,setMainList] = useState([])
   const [loading, setLoading] = useState(false);
   const listProduct = useSelector((state) => state.shop.listProduct);
-  const fetch = useCallback(async () => {
+  const inputSearch = useSelector((state) => state.shop.setSearchKeyword);
+const fetchSearch = useCallback(async () => {
+  if(inputSearch){
+    setLoading(true)
+    await axios
+    .get(`${URL_BASE}listProduct?name_like=${inputSearch}`)
+    .then((res) => {
+      setMainList(res.data)
+      setList(res.data.slice(start, start + limit))
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
+  }
+  else{
     setLoading(true)
     await axios
     .get(`${URL_BASE}listProduct?_page=${page}&_limit=${limit}`)
     .then((res) => {
+      setCount(Math.ceil(listProduct.length / limit));
       setList(res.data)
       })
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
-  }, [page]);
-  useEffect(() => {
-    fetch();
-  }, [fetch]);
+  }
+ 
+}, [inputSearch,page,listProduct]);
+useEffect(() => {
+  fetchSearch();
+}, [fetchSearch]);
   useMemo(() => {
-    setCount(Math.ceil(listProduct.length / limit));
-  }, [listProduct]);
+    setCount(Math.ceil(mainList.length / limit));
+  }, [mainList]);
   const handleChange = (event, value) => {
     setPage(value);
+    const newStart = (value - 1) * limit;
+    setStart(newStart);
   };
   return (
     <>
@@ -46,7 +67,7 @@ export default function ListProducts() {
                   <Skeleton variant="rounded" width={210} height={60} />
                 </Grid>
               ))
-            : list &&
+            : list.length === 0 ?  <ErrorNoItem src="https://i.pinimg.com/originals/20/d3/8b/20d38b1d0d3304dd80adc2e4029278ac.png"/> :(list &&
               list.map((e) => (
                 <Grid className="abc" key={v4()} xs={6} md={3} item>
                   <Link to={`/products/${e.id}`}>
@@ -55,11 +76,11 @@ export default function ListProducts() {
                     />
                   </Link>
                 </Grid>
-              ))}
+              )))}
         </Grid>
-        <Stack alignItems="center" spacing={2} sx={{marginTop : '20px'}}>
+       {list.length !== 0 &&  <Stack alignItems="center" spacing={2} sx={{marginTop : '20px'}}>
           <Pagination count={count} page={page} onChange={handleChange} />
-        </Stack>
+        </Stack>}
       </Container>
     </>
   );

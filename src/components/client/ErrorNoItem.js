@@ -5,10 +5,8 @@ import { Link } from 'react-router-dom'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 export default function ErrorNoItem({src}) {
   return (
-  <Stack alignItems='center'>
-
-
-      <img style={{width : "30%" }}
+  <Stack alignItems='center' margin='0 auto' width='40%'>
+      <img 
       src={src}
       alt="error"
     />

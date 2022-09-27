@@ -610,59 +610,7 @@
       "email": "letatchinh123@gmail.com",
       "phone": "312312",
       "address": "26 nại thịnh 7,Nại Hiên Đông,Sơn Trà,Đà nẵng",
-      "listOrder": [
-        {
-          "addressShip": "26 nại thịnh 7,Nại Hiên Đông,Sơn Trà,Đà nẵng",
-          "id": "2b8a87e4-45cf-4271-a300-7b05f7409317",
-          "listProductOrder": [
-            {
-              "name": "ao xau",
-              "price": "11",
-              "image": "https://minhtruc.vn/wp-content/uploads/2020/09/ao-kieu-nu-co-v-buoc-no-mau-xanh-ma-non-1-400x480.jpg",
-              "isSell": "true",
-              "discount": "1",
-              "rating": "3",
-              "listRating": [
-                {
-                  "comment": "ga",
-                  "rating": 0.5,
-                  "time": "25-9-2022 11:26:55 AM",
-                  "username": "adsasdasd",
-                  "id": 4
-                },
-                {
-                  "comment": "yeah",
-                  "rating": 4,
-                  "time": "25-9-2022 11:26:43 AM",
-                  "username": "adsasdasd",
-                  "id": 3
-                },
-                {
-                  "comment": "qua ok",
-                  "rating": 5,
-                  "time": "25-9-2022 11:25:18 AM",
-                  "username": "adsasdasd",
-                  "id": 2
-                },
-                {
-                  "comment": "ok la",
-                  "rating": 4,
-                  "time": "18-9-2022 2:35:11 PM",
-                  "username": "2367281133423878",
-                  "id": 1
-                }
-              ],
-              "id": 0,
-              "isCheckedPayment": true,
-              "quanlity": 1
-            }
-          ],
-          "status": false,
-          "taxShip": 17000,
-          "timeOrder": "26-9-2022 5:35:02 PM",
-          "totalBill": 17010.89
-        }
-      ]
+      "listOrder": []
     }
   ],
   "listPayment": [

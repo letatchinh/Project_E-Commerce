@@ -83,7 +83,7 @@ export default function Index() {
     <Container sx={{ flexGrow: 1 }}>
       <Grid container justifyContent={"space-around"} alignItems={"center"}>
         <Grid item xs={2} sx={{display : {xs : 'none' ,sm : 'block'}}}>
-         <Link to='/'><img
+         <Link onClick={() => dispatch(setInputSearch(""))} to='/'><img
             style={{ borderRadius: "50%", width: "100%" }}
             src="https://img.freepik.com/free-vector/fashion-logo-editorial-template_23-2148701249.jpg?w=2000"            alt="logo"
           /></Link>
@@ -92,9 +92,9 @@ export default function Index() {
           {" "}
           <div style={{ display: "flex", alignItems: "center" }}>
             <TextField onChange={changeInputSearch} value={searchKeyword} fullWidth label="Search" variant="outlined" />
-            <Link to='/search'><Button onClick={setInputSearch} variant="outlined" startIcon={<SearchIcon />}> <Typography sx={{display : {xs : 'none' , sm : 'inline'}}} variant="body1" >
+            <Button onClick={setInputSearch} variant="outlined" startIcon={<SearchIcon />}> <Typography sx={{display : {xs : 'none' , sm : 'inline'}}} variant="body1" >
         Search
-      </Typography></Button></Link>
+      </Typography></Button>
           </div>
         </Grid>
         <Grid sx={{display : "flex" , alignItems : "center"}} item >
