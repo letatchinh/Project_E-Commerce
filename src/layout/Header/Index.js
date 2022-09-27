@@ -12,13 +12,16 @@ import { fectchLogout } from "../../redux/login/Actions";
 import { IS_STATUS_LOGIN } from "../../redux/login/Types";
 import LogoutIcon from '@mui/icons-material/Logout';
 import Cart from "../../components/client/Cart";
-import { search, setSearch } from "../../redux/shopping/Shopping-actions";
+import {  setSearch } from "../../redux/shopping/Shopping-actions";
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import PinterestIcon from '@mui/icons-material/Pinterest';
 import { KEY_USER } from "../../constant/LocalStored";
+import { useForm } from "react-hook-form";
 export default function Index() {
+  const { register, handleSubmit , reset} = useForm();
+  const onSubmit = data => dispatch(setSearch(data.searchKeyword));
   const [user,setUser] = useState({})
   const [displayCart,setDisplayCart] = useState(false)
   const statusLogin = useSelector(state => state.user.statusLogin);
@@ -50,12 +53,6 @@ export default function Index() {
     navigate('/')
     
   }
-  const changeInputSearch = (e) => {
-    dispatch(search(e.target.value))
-  }
-  const setInputSearch = () => {
-    dispatch(setSearch(searchKeyword))
-  }
   return (
     <>
  <Grid alignItems={"center"} justifyContent={"space-around"} container sx={{background : "#F6F415", height : "50px" , display : {xs : 'none', sm : 'flex'}}}>
@@ -83,19 +80,19 @@ export default function Index() {
     <Container sx={{ flexGrow: 1 }}>
       <Grid container justifyContent={"space-around"} alignItems={"center"}>
         <Grid item xs={2} sx={{display : {xs : 'none' ,sm : 'block'}}}>
-         <Link onClick={() => dispatch(setInputSearch(""))} to='/'><img
+         <Link onClick={() => {dispatch(setSearch("")) ; reset() }} to='/'><img
             style={{ borderRadius: "50%", width: "100%" }}
             src="https://img.freepik.com/free-vector/fashion-logo-editorial-template_23-2148701249.jpg?w=2000"            alt="logo"
           /></Link>
         </Grid>
         <Grid item xs={8} sm={8}>
           {" "}
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <TextField onChange={changeInputSearch} value={searchKeyword} fullWidth label="Search" variant="outlined" />
-            <Button onClick={setInputSearch} variant="outlined" startIcon={<SearchIcon />}> <Typography sx={{display : {xs : 'none' , sm : 'inline'}}} variant="body1" >
+          <form style={{ display: "flex", alignItems: "center" }} onSubmit={handleSubmit(onSubmit)}>
+      <TextField placeholder="Search..."  fullWidth {...register("searchKeyword")} />
+      <Button type="submit" variant="outlined" startIcon={<SearchIcon />}> <Typography sx={{display : {xs : 'none' , sm : 'inline'}}} variant="body1" >
         Search
       </Typography></Button>
-          </div>
+    </form>
         </Grid>
         <Grid sx={{display : "flex" , alignItems : "center"}} item >
           <Button
