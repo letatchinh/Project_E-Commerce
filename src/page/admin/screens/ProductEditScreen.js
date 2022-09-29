@@ -1,31 +1,22 @@
-import React, { useState } from "react";
-import Header from "./../../../layout/admin/Header";
-import Sidebar from "./../../../layout/admin/sidebar";
+import React, { useCallback, useEffect, useState } from "react";
 import EditProductMain from "./../../../components/admin/products/EditProductMain";
-import products from "../../../data/Products";
 import { useParams } from "react-router-dom";
-const ProductEditScreen = () => {
-  const params = useParams();
-  const productId = products.find((p) => p._id === params.id);
-  const [isClick, setClick] = useState(false);
-  const [isDisplay, setDisplay] = useState(false);
-  const handleClickMenu = (e) => {
-    setClick(!isClick);
-  };
-  const handleDisplay = (e) => {
-    setDisplay(!isDisplay);
-  };
+import axios from "axios";
+const ProductEditScreen = ({ match }) => {
+  let params = useParams();
+  const [products, setProducts] = useState([]);
+  // console.log("a");
+  const fetchproducts = useCallback(async () => {
+    const data = await axios.get(`/api/products/${params.id}`);
+    setProducts(data.data);
+  }, []);
+  useEffect(() => {
+    fetchproducts();
+  }, [fetchproducts]);
+
   return (
     <>
-      <Sidebar click={isClick} handleClickMenu={handleClickMenu} />
-      <main className="main-wrap">
-        <Header
-          handleClickMenu={handleClickMenu}
-          isDisplay={isDisplay}
-          handleDisplay={handleDisplay}
-        />
-        <EditProductMain productId={productId} />
-      </main>
+      <EditProductMain productId={products} />
     </>
   );
 };

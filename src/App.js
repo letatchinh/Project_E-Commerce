@@ -26,11 +26,12 @@ import ProductEditScreen from "./page/admin/screens/ProductEditScreen";
 import NotFound from "./page/admin/screens/NotFound";
 import HomePage from "./page/client/HomePage";
 import ListOrder from "./components/client/ListOrder";
+import PrivateRouter from "./Auth/PrivateRouter";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fecthProductRequest())
+    dispatch(fecthProductRequest());
   }, []);
   return (
     <>
@@ -56,20 +57,28 @@ function App() {
             element={<ProfileUser children={<ListOrder />} />}
           />
           <Route path="payment" element={<Payment />} />
-          <Route path="/*" element={<NotFound />  }/>
+          <Route path="/*" element={<NotFound />} />
         </Route>
         {/* Admin */}
 
-        <Route path="/admin/" element={<HomeScreen />} exact />
-        <Route path="/admin/products" element={<ProductScreen />} />
-        <Route path="/admin/category" element={<CategoriesScreen />} />
-        <Route path="/admin/orders" element={<OrderScreen />} />
-        <Route path="/admin/order" element={<OrderDetailScreen />} />
-        <Route path="/admin/addproduct" element={<AddProducts />} />
-        <Route path="/admin/users" element={<UsersScreen />} />
-        <Route path="/admin/product/:id/edit" element={<ProductEditScreen />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/*" element={<NotFound />} />
+        <Route path="/admin/login" element={<Login />} />
+        <Route element={<HomePage />}>
+          <Route element={<PrivateRouter />}>
+            <Route path="/admin/" element={<HomeScreen />} />
+          </Route>
+          <Route path="/admin/addproduct" element={<AddProducts />} />
+          <Route path="/admin/" element={<HomeScreen />} />
+          <Route path="/admin/products" element={<ProductScreen />} />
+          <Route path="/admin/category" element={<CategoriesScreen />} />
+          <Route path="/admin/orders" element={<OrderScreen />} />
+          <Route path="/admin/order" element={<OrderDetailScreen />} />
+          <Route path="/admin/users" element={<UsersScreen />} />
+          <Route
+            path="/admin/product/:id/edit"
+            element={<ProductEditScreen />}
+          />
+          <Route path="/admin/*" element={<NotFound />} />
+        </Route>
       </Routes>
     </>
   );

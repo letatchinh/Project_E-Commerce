@@ -1,22 +1,9 @@
 @charset "UTF-8";
 
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400&display=swap');
-
-
-
-li {
-  list-style-type: none;
-}
-
-* {
-  font-family: 'Josefin Sans', sans-serif;
-}
-
-
 /* ==== CUSTOM UI ELEMENTS AND STYLES ====*/
 /* ========================
-  INCLUDE STYLES AND COMPONENTS
-  ===================== */
+INCLUDE STYLES AND COMPONENTS
+===================== */
 /* ================== HELPERS =================== */
 .table thead th {
   color: #adb5bd;
@@ -54,24 +41,24 @@ a.disabled {
 }
 
 /* .screen-overlay {
-    width: 0%;
-    height: 100%;
-    z-index: 30;
-    position: fixed;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    visibility: hidden;
-    background-color: rgba(34, 34, 34, 0.6);
-    transition: opacity 0.2s linear, visibility 0.1s, width 1s ease-in;
-  }
-  
-  .screen-overlay.show {
-    transition: opacity 0.5s ease, width 0s;
-    opacity: 1;
-    width: 100%;
-    visibility: visible;
-  } */
+  width: 0%;
+  height: 100%;
+  z-index: 30;
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  background-color: rgba(34, 34, 34, 0.6);
+  transition: opacity 0.2s linear, visibility 0.1s, width 1s ease-in;
+}
+
+.screen-overlay.show {
+  transition: opacity 0.5s ease, width 0s;
+  opacity: 1;
+  width: 100%;
+  visibility: visible;
+} */
 
 /* =================  DEFINED VARIABLES =================== */
 .icon-xs,
@@ -1054,8 +1041,4 @@ ul.row-sm {
 
 .pagination {
   justify-content: end;
-}
-a {
-  text-decoration: none;
-  color: black;
 }
