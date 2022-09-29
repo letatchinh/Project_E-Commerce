@@ -18,25 +18,24 @@ export default function ListProducts() {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [list, setList] = useState([]);
-  const [mainList, setMainList] = useState([]);
   const [loading, setLoading] = useState(false);
   const listProduct = useSelector((state) => state.shop.listProduct);
   const inputSearch = useSelector((state) => state.shop.setSearchKeyword);
   const listReducer = useSelector((state) => state.filterProduct.listShow);
+  const listMainReducer = useSelector((state) => state.filterProduct.listMain);
 const fetchSearch = useCallback(async () => {
   if(inputSearch){
     setLoading(true)
     await axios
     .get(`${URL_BASE}listProduct?name_like=${inputSearch}`)
     .then((res) => {
-      setMainList(res.data)
       setCount(Math.ceil(res.data.length / limit));
       dispatch(fetchReceiveListShow(res.data))
       })
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
   }
-}, [inputSearch,listProduct]);
+}, [inputSearch,dispatch]);
 useEffect(() => {
   fetchSearch();
 }, [fetchSearch]);
@@ -57,43 +56,28 @@ const fetchNoSearch = useCallback(async () => {
 useEffect(() => {
   fetchNoSearch();
 }, [fetchNoSearch]);
+
 useEffect(() => {
-  setList(listReducer.slice(start, start + limit))
-},[start,listReducer])
+  if(listReducer.length !== 0){
+
+    setList(listReducer.slice(start, start + limit))
+  }
+  else {
+    setList(listMainReducer.slice(start, start + limit))
+  }
+},[start,listReducer,listMainReducer])
+
   const handleChange = (event, value) => {
     setPage(value);
     const newStart = (value - 1) * limit;
     setStart(newStart);
   };
-  const unSetFilter = () => {
-    setList(mainList.slice(0, 0 + limit))
-    setPage(1);
-    setStart(0)
-  }
-  const FilterProductMore200k = () => {
-    const newMainList = mainList.filter(e => e.price > 200000)
-    setList(newMainList.slice(0, 0 + limit))
-    setPage(1);
-    setStart(0);
-  }
-  const FilterProductMore100k = () => {
-    const newMainList = mainList.filter(e => e.price > 100000)
-    setList(newMainList.slice(0, 0 + limit))
-    setPage(1);
-    setStart(0);
-  }
-  const FilterProductLow50k = () => {
-    const newMainList = mainList.filter(e => e.price < 50000)
-    setList(newMainList.slice(0, 0 + limit))
-    setPage(1);
-    setStart(0);
-  }
-  console.log(listReducer);
+
   return (
     <>
     
       <Stack sx={{background : 'rgb(240, 242, 245)'}} padding='20px' justifyContent='space-around' direction='row'>
-      { inputSearch &&  <SideBarFilter filter={{FilterProductMore200k,FilterProductMore100k,FilterProductLow50k}}  unSetFilter={unSetFilter} />}
+      { inputSearch &&  <SideBarFilter />}
         <div style={{width : '80%'}}>
         {inputSearch && <SortBar  />}
         <Grid container spacing={3}>
