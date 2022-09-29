@@ -153,7 +153,7 @@ export default function Index() {
               }}
             >
               <div style={{ display: statusLogin ? "block" : "none" }}>
-                <MenuItem onClick={handleClose}>{user.username}</MenuItem>
+                <MenuItem onClick={handleClose}>{user.name}</MenuItem>
                 <Link to="/profile_Info">
                   <MenuItem onClick={handleClose}>My account</MenuItem>
                 </Link>

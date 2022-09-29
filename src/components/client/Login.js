@@ -20,6 +20,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import axios from "axios";
 import { URL_BASE } from '../../constant/UrlConstant';
 import { v4 } from "uuid";
+import { KEY_USER } from "../../constant/LocalStored";
 
 export default function Login() {
   const [display, setDisplay] = useState(false);
@@ -42,7 +43,7 @@ export default function Login() {
   useEffect(() => {
     if (statusLogin) {
       navigate("/");
-      localStorage.setItem("userShopUt", JSON.stringify(loginSuccess));
+      localStorage.setItem(KEY_USER, JSON.stringify(loginSuccess));
     }
   }, [reRender]);
   const navigate = useNavigate();

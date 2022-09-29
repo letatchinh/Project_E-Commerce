@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material'
+import { Card, CardActionArea, CardContent, CardMedia, Stack, Typography } from '@mui/material'
 import axios from 'axios'
 import { URL_BASE } from '../../constant/UrlConstant'
+import PriceSell from './PriceSell'
 export default function ItemListPaymentUser({data}) {
   const [item,setItem] = useState({})
   const [loading,setLoading] = useState(false)
@@ -9,24 +10,15 @@ export default function ItemListPaymentUser({data}) {
     setLoading(true)
     axios.get(`${URL_BASE}listProduct?id=${data}`).then(res => setItem(res.data[0])).catch(err => console.log(err)).finally(() => setLoading(false))
   },[])
+  const {image,name,price,isSell,discount} = item
+
   return (
-    <Card sx={{width : '100%'}}>
-    <CardActionArea >
-      <CardMedia
-        component="img"
-        height="140"
-        image={item && item.image}
-        alt="green iguana"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {item && item.price}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-         {item && item.name}
-        </Typography>
-      </CardContent>
-    </CardActionArea>
-  </Card>
+    <Stack direction='row' spacing={3} borderBottom='1px solid #CACACA' padding='10px'>
+    <img style={{width : '100px',height : '100px',objectFit : 'cover'}} src={image} alt='22'/>
+    <Stack>
+        <Typography variant='body1' fontWeight='bold'>{name}</Typography>
+    </Stack>
+    <Typography sx={{marginLeft : 'auto!important'}} alignSelf='center' variant='h6'><PriceSell isSell={isSell} price={price} discount={discount}/></Typography>
+</Stack>
   )
 }

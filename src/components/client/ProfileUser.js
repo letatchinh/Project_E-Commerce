@@ -49,7 +49,7 @@ export default function ProfileUser({children}) {
                 <ListItemIcon>
                   <ShoppingBasketIcon fontSize="small" />
                 </ListItemIcon>
-                <Typography variant="body1">Payment</Typography>
+                <Typography variant="body1">purchased product</Typography>
               </MenuItem>
               </Link>
           <Link to='/profile_ListOrder'>

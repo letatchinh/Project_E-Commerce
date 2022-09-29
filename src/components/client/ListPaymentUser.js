@@ -18,7 +18,7 @@ export default function ListPaymentUser() {
       navigate('/login')
     }
   },[users])
-  const limit = 4;
+  const limit = 2;
   const [list, setlist] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentItems, setCurrentItems] = useState([]);
@@ -52,7 +52,7 @@ export default function ListPaymentUser() {
         <Stack
           justifyContent="space-between"
           spacing={3}
-          direction="row"
+        
           sx={{ padding: "10px" }}
         >
           {currentItems?.map((e) => (
