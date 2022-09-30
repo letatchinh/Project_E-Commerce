@@ -50,8 +50,7 @@ const shopReducer = (state = initvalue, action) => {
         case TYPES.ADD_RATING:
           const newListproduct = state.listProduct.map(e => {
             if(e.id === action.payload.id){
-              // e = action.payload
-              console.log(e);
+              e = action.payload
             }
             return e
           })

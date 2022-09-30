@@ -162,6 +162,16 @@ const userReducer = (state = initvalue, action) => {
           ...state,
           loginSuccess : {...state.loginSuccess , listCarts : newArr}
         }
+        case TYPES.ADD_LIST_ORDER:
+          return {
+            ...state,
+            loginSuccess : action.payload
+          }
+        case TYPES.REMOVE_LIST_ORDER:
+          return{
+            ...state ,
+            loginSuccess : action.payload
+          }
     default:
       return state;
   }

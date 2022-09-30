@@ -1,41 +1,85 @@
 import { Grid, Pagination, Skeleton } from "@mui/material";
-import { Container, Stack } from "@mui/system";
+import {  Stack } from "@mui/system";
 import axios from "axios";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import {  useSelector } from "react-redux";
+import React, { useCallback, useEffect, useState } from "react";
+import {  useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { v4 } from "uuid";
 import { URL_BASE } from "../../constant/UrlConstant";
+import { fetchReceiveListShow } from "../../redux/filterProduct/Actions";
+import ErrorNoItem from "./ErrorNoItem";
 import Product from "./Product";
+import SideBarFilter from "./SideBarFilter";
+import SortBar from "./SortBar";
 export default function ListProducts() {
+  const dispatch = useDispatch()
   const limit = 4;
+  const [start, setStart] = useState(0);
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
   const listProduct = useSelector((state) => state.shop.listProduct);
-  const fetch = useCallback(async () => {
+  const inputSearch = useSelector((state) => state.shop.setSearchKeyword);
+  const listReducer = useSelector((state) => state.filterProduct.listShow);
+  const listMainReducer = useSelector((state) => state.filterProduct.listMain);
+const fetchSearch = useCallback(async () => {
+  if(inputSearch){
+    setLoading(true)
+    await axios
+    .get(`${URL_BASE}listProduct?name_like=${inputSearch}`)
+    .then((res) => {
+      setCount(Math.ceil(res.data.length / limit));
+      dispatch(fetchReceiveListShow(res.data))
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
+  }
+}, [inputSearch,dispatch]);
+useEffect(() => {
+  fetchSearch();
+}, [fetchSearch]);
+
+const fetchNoSearch = useCallback(async () => {
+  if(!inputSearch){
     setLoading(true)
     await axios
     .get(`${URL_BASE}listProduct?_page=${page}&_limit=${limit}`)
     .then((res) => {
+      setCount(Math.ceil(listProduct.length / limit));
       setList(res.data)
       })
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
-  }, [page]);
-  useEffect(() => {
-    fetch();
-  }, [fetch]);
-  useMemo(() => {
-    setCount(Math.ceil(listProduct.length / limit));
-  }, [listProduct]);
+  }
+}, [inputSearch,listProduct,page]);
+useEffect(() => {
+  fetchNoSearch();
+}, [fetchNoSearch]);
+
+useEffect(() => {
+  if(listReducer.length !== 0){
+
+    setList(listReducer.slice(start, start + limit))
+  }
+  else {
+    setList(listMainReducer.slice(start, start + limit))
+  }
+},[start,listReducer,listMainReducer])
+
   const handleChange = (event, value) => {
     setPage(value);
+    const newStart = (value - 1) * limit;
+    setStart(newStart);
   };
+
   return (
     <>
-      <Container>
+    
+      <Stack sx={{background : 'rgb(240, 242, 245)'}} padding='20px' justifyContent='space-around' direction='row'>
+      { inputSearch &&  <SideBarFilter />}
+        <div style={{width : '80%'}}>
+        {inputSearch && <SortBar  />}
         <Grid container spacing={3}>
           {loading
             ? Array.from(new Array(limit)).map((e) => (
@@ -46,28 +90,22 @@ export default function ListProducts() {
                   <Skeleton variant="rounded" width={210} height={60} />
                 </Grid>
               ))
-            : list &&
-              list.map((e) => (
+            : list.length === 0 ?  <ErrorNoItem src="https://cdn.dribbble.com/users/2382015/screenshots/6065978/no_result_still_2x.gif?compress=1&resize=400x300"/> :(list &&
+             list.map((e) => (
                 <Grid className="abc" key={v4()} xs={6} md={3} item>
                   <Link to={`/products/${e.id}`}>
                     <Product
                       item={e}
-                      image={e.image}
-                      name={e.name}
-                      price={e.price}
-                      isSell={e.isSell}
-                      id={e.id}
-                      rating={e.rating}
-                      listRating={e.listRating}
                     />
                   </Link>
                 </Grid>
-              ))}
+              )))}
         </Grid>
-        <Stack alignItems="center" spacing={2} sx={{marginTop : '20px'}}>
+       {list.length !== 0 &&  <Stack alignItems="center" spacing={2} sx={{marginTop : '20px'}}>
           <Pagination count={count} page={page} onChange={handleChange} />
-        </Stack>
-      </Container>
+        </Stack>}
+        </div>
+      </Stack>
     </>
   );
 }

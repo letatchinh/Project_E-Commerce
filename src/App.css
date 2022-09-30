@@ -1041,4 +1041,10 @@ ul.row-sm {
 
 .pagination {
   justify-content: end;
+
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
