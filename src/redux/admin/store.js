@@ -5,7 +5,7 @@ import { composeWithDevTools } from "@redux-devtools/extension";
 import { userLoginReducer } from "./Reducers/userReducers";
 
 let reducer = combineReducers({
-  userLoginAdmin: userLoginReducer,
+  userLogin: userLoginReducer,
 });
 
 //login
