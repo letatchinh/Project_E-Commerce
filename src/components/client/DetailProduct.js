@@ -1,4 +1,4 @@
-import { Alert, Button, Skeleton, TextField, Typography } from "@mui/material";
+import { Alert, Button, Link, Skeleton, TextField, Typography } from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -13,43 +13,45 @@ import PriceSell from "./PriceSell";
 import axios from "axios";
 import { URL_BASE } from "../../constant/UrlConstant";
 import { useParams } from "react-router-dom";
+import {getToday} from "../../constant/FunctionCommom";
 export default function DetailProduct() {
   const [itemm, setItem] = useState({});
   const [loading, setLoading] = useState(false);
   let params = useParams();
   const username = useSelector((state) => state.user.loginSuccess);
-  const { name, image, price, isSell,  rating, id, listRating } = itemm;
+  const listProduct = useSelector((state) => state.shop.listProduct);
+  const { name, image, price, isSell,  rating, id, listRating , discount } = itemm;
   useEffect(() => {
+    setLoading(true)
     axios
       .get(`${URL_BASE}listProduct?id=${params.productId}`)
       .then((res) => setItem(res.data[0]))
       .finally(() => setLoading(false));
+   
+  }, [listProduct]);
+  useEffect(() => {
     axios
-      .get(
-        `${URL_BASE}listPayment?idUser=${username.id}&idProduct=${params.productId}`
-      )
-      .then((res) => {
-        if (res.data.length !== 0) {
-          setIsPayment(true);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, [username]);
+    .get(
+      `${URL_BASE}listPayment?idUser=${username.id}&idProduct=${params.productId}`
+    )
+    .then((res) => {
+      if (res.data.length !== 0) {
+        setIsPayment(true);
+      }
+    })
+    .catch((err) => console.log(err));
+  },[username])
   const [value, setValue] = useState(null);
   const [isPayment, setIsPayment] = useState(false);
   const dispatch = useDispatch();
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    const dateObj = new Date();
-    const month = dateObj.getUTCMonth() + 1;
-    const day = dateObj.getUTCDate();
-    const year = dateObj.getUTCFullYear();
-    const date2 = new Date().toLocaleTimeString();
-    const newdate = day + "-" + month + "-" + year + " " + date2;
+    const today = getToday();
     const sum = itemm.listRating.reduce((sum, arr) => sum + arr.rating, value);
     const newRating = (sum / (itemm.listRating.length + 1)).toFixed();
     dispatch(
@@ -61,7 +63,7 @@ export default function DetailProduct() {
             {
               ...data,
               rating: value,
-              time: newdate,
+              time: today,
               username: username.name,
               id: itemm.listRating.length + 1,
             },
@@ -71,7 +73,7 @@ export default function DetailProduct() {
         id
       )
     );
-   
+    reset()
   };
   return (
     <>
@@ -104,7 +106,7 @@ export default function DetailProduct() {
                   sx={{ borderBottom: "2px solid #f3f3f3", padding: "10px" }}
                 >
                   <Typography variant="h6">Price</Typography>
-                  <PriceSell isSell={isSell} price={price} />
+                  <PriceSell discount={discount} isSell={isSell} price={price} />
                 </Stack>
                 <Stack
                   direction="row"
@@ -119,12 +121,12 @@ export default function DetailProduct() {
                       readOnly
                     />
 
-                    <a href="#review">
+                    <Link href="#review">
                       {" "}
                       <Typography variant="body2" component="span">
                         ({listRating && listRating.length})
                       </Typography>
-                    </a>
+                    </Link>
                   </Stack>
                 </Stack>
                 <Button

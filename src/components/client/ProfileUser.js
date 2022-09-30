@@ -6,12 +6,20 @@ import {
   Typography,
 } from "@mui/material";
 import { Container, Stack } from "@mui/system";
-import React, {  useState } from "react";
+import React, {  useEffect, useState } from "react";
 import InfoIcon from "@mui/icons-material/Info";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ListAltIcon from '@mui/icons-material/ListAlt';
+import { KEY_USER } from "../../constant/LocalStored";
 export default function ProfileUser({children}) {
+  const users = JSON.parse(localStorage.getItem(KEY_USER))
+  const navigate = useNavigate()
+  useEffect(() => {
+    if(users === null){
+      navigate('/login')
+    }
+  },[users])
   const [active, setActive] = useState(1);
   const handleCLickList = (active) => {
     setActive(active)
@@ -33,7 +41,7 @@ export default function ProfileUser({children}) {
                 <ListItemIcon>
                   <InfoIcon fontSize="small" />
                 </ListItemIcon>
-                <Typography variant="inherit">Infomation</Typography>
+                <Typography variant="body1">Infomation</Typography>
               </MenuItem>
               </Link>
              <Link to='/profile_ListPayment'>
@@ -41,7 +49,7 @@ export default function ProfileUser({children}) {
                 <ListItemIcon>
                   <ShoppingBasketIcon fontSize="small" />
                 </ListItemIcon>
-                <Typography variant="inherit">Payment</Typography>
+                <Typography variant="body1">purchased product</Typography>
               </MenuItem>
               </Link>
           <Link to='/profile_ListOrder'>
@@ -49,7 +57,7 @@ export default function ProfileUser({children}) {
                 <ListItemIcon>
                   <ListAltIcon fontSize="small" />
                 </ListItemIcon>
-                <Typography variant="inherit">List Order</Typography>
+                <Typography variant="body1">List Order</Typography>
               </MenuItem>
           </Link>
             </MenuList>

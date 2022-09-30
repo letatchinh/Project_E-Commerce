@@ -14,7 +14,7 @@ export const userApi = {
     return res;
   },
   async editUser(user, id) {
-    await axiosClient.put(`users/${id}`, user);
-    
+  const res =  await axiosClient.put(`users/${id}`, user);
+    return  res
   },
 };

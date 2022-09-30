@@ -30,10 +30,10 @@ const Sidebar = (props) => {
             <ul className="menu-aside">
               <li className="menu-item">
                 <NavLink
-                  activeClassName="active"
+                  activeclassname="active"
                   className="menu-link"
                   to="/admin/"
-                  exact={true}
+                  // exact={true}
                 >
                   <i className="icon fas fa-home"></i>
                   <span className="text">Dashboard</span>
@@ -41,7 +41,7 @@ const Sidebar = (props) => {
               </li>
               <li className="menu-item">
                 <NavLink
-                  activeClassName="active"
+                  activeclassname="active"
                   className="menu-link"
                   to="/admin/products"
                 >
@@ -51,7 +51,7 @@ const Sidebar = (props) => {
               </li>
               <li className="menu-item">
                 <NavLink
-                  activeClassName="active"
+                  activeclassname="active"
                   className="menu-link"
                   to="/admin/addproduct"
                 >
@@ -61,7 +61,7 @@ const Sidebar = (props) => {
               </li>
               <li className="menu-item">
                 <NavLink
-                  activeClassName="active"
+                  activeclassname="active"
                   className="menu-link"
                   to="/admin/category"
                 >
@@ -71,7 +71,7 @@ const Sidebar = (props) => {
               </li>
               <li className="menu-item">
                 <NavLink
-                  activeClassName="active"
+                  activeclassname="active"
                   className="menu-link"
                   to="/admin/orders"
                 >
@@ -81,7 +81,7 @@ const Sidebar = (props) => {
               </li>
               <li className="menu-item">
                 <NavLink
-                  activeClassName="active"
+                  activeclassname="active"
                   className="menu-link"
                   to="/admin/users"
                 >
@@ -91,7 +91,7 @@ const Sidebar = (props) => {
               </li>
               <li className="menu-item">
                 <NavLink
-                  activeClassName="active"
+                  activeclassname="active"
                   className="menu-link disabled"
                   to="/admin/seller"
                 >
@@ -101,7 +101,7 @@ const Sidebar = (props) => {
               </li>
               <li className="menu-item">
                 <NavLink
-                  activeClassName="active"
+                  activeclassname="active"
                   className="menu-link disabled"
                   to="/admin/transaction"
                 >

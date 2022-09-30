@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 const Product = (props) => {
   const { product } = props;
+  console.log(product);
   return (
     <>
       <div className="col-md-6 col-sm-6 col-lg-3 mb-5">

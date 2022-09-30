@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Product from "./Product";
-import products from "../../../data/Products";
+// import products from "../../../data/Products";
+import axios from "axios";
 const MainProducts = () => {
+  const [products, setProducts] = useState([]);
+  // console.log("a");
+  const fetchproducts = useCallback(async () => {
+    const data = await axios.get("/api/products");
+    setProducts(data.data);
+  }, []);
+  useEffect(() => {
+    fetchproducts();
+  }, [fetchproducts]);
+  console.log(products);
   return (
     <section className="content-main">
       <div className="content-header">

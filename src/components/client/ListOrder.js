@@ -1,16 +1,36 @@
-import {  Container, Stack } from "@mui/system";
-import React from "react";
+import {   Stack } from "@mui/system";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ItemListOrder from "./ItemListOrder";
 import {v4} from 'uuid'
+import DetailListOrderUser from "./DetailListOrderUser";
+import ContainerScoll from "./ContainerScoll";
+import { reverses } from "../../constant/FunctionCommom";
+import ErrorNoItem from './ErrorNoItem'
+import { KEY_USER } from "../../constant/LocalStored";
+import { useNavigate } from "react-router-dom";
 export default function ListOrder() {
+  const users = JSON.parse(localStorage.getItem(KEY_USER))
+  const navigate = useNavigate()
+  useEffect(() => {
+    if(users === null){
+      navigate('/login')
+    }
+  },[users])
+  const [status,setStatus] = useState(true)
+  const [orderShow,setOrderShow] = useState(null)
+  const handleClickSeeMore = (id) => {
+    setStatus(false)
+    setOrderShow(id)
+  }
   const listOrders = useSelector((state) => state.user.loginSuccess.listOrder);
-  console.log(listOrders);
+  const listOrdersReverse =listOrders && reverses(listOrders)
   return (
-    <Container sx={{ padding: "10px", color: "black" ,maxHeight : '22rem' , overflow : 'scroll' }}>
-      <Stack spacing={2}>
-       {listOrders && listOrders.map((e) =>  <ItemListOrder key={v4()} id={e.id} timeOrder={e.timeOrder} totalBill={e.totalBill}/>)}
-      </Stack>
-    </Container>
+   status ?  <ContainerScoll sx={{ padding: "10px", color: "black" ,maxHeight : '22rem' , overflow : 'scroll' }}>
+ {listOrders && listOrders.length === 0 ? <ErrorNoItem src='https://i.pinimg.com/originals/6f/fd/64/6ffd64c5366898c59bbc91d9aec935c3.png'/> :   <Stack spacing={2}>
+    {listOrders && listOrdersReverse.map((e) =>  <ItemListOrder key={v4()} click={() => handleClickSeeMore(e.id)} id={e.id} timeOrder={e.timeOrder} totalBill={e.totalBill}/>)}
+   </Stack>}
+ </ContainerScoll> :
+ <DetailListOrderUser click={() => setStatus(true)} id={orderShow}/>
   );
 }

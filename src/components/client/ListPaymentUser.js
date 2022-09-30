@@ -8,8 +8,17 @@ import axios from "axios";
 import { URL_BASE } from "../../constant/UrlConstant";
 import { useSelector } from "react-redux";
 import { v4 } from "uuid";
+import { KEY_USER } from "../../constant/LocalStored";
+import { useNavigate } from "react-router-dom";
 export default function ListPaymentUser() {
-  const limit = 4;
+  const users = JSON.parse(localStorage.getItem(KEY_USER))
+  const navigate = useNavigate()
+  useEffect(() => {
+    if(users === null){
+      navigate('/login')
+    }
+  },[users])
+  const limit = 2;
   const [list, setlist] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentItems, setCurrentItems] = useState([]);
@@ -36,7 +45,6 @@ export default function ListPaymentUser() {
     setPage(value);
     setStart((value - 1) * limit);
   };
-  console.log(currentItems);
   return (
     <>
       <ContentTop value={"List Payment"} />
@@ -44,7 +52,7 @@ export default function ListPaymentUser() {
         <Stack
           justifyContent="space-between"
           spacing={3}
-          direction="row"
+        
           sx={{ padding: "10px" }}
         >
           {currentItems?.map((e) => (

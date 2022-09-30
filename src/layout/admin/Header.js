@@ -1,8 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/admin/Actions/UserActions";
 
 const Header = (props) => {
-  const {  handleClickMenu, isDisplay, handleDisplay } = props;
+  const dispatch = useDispatch();
+
+  const { handleClickMenu, isDisplay, handleDisplay } = props;
+
+  const logoutHandler = (e) => {
+    e.preventDefault();
+    dispatch(logout());
+    // console.log(dispatch(logout));
+  };
   return (
     <header className="main-header navbar">
       <div className="col-search">
@@ -67,7 +77,11 @@ const Header = (props) => {
                 <Link className="dropdown-item" to="#">
                   Settings
                 </Link>
-                <Link className="dropdown-item text-danger" to="#">
+                <Link
+                  onClick={logoutHandler}
+                  className="dropdown-item text-danger"
+                  to="#"
+                >
                   Exit
                 </Link>
               </div>

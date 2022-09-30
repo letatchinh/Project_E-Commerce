@@ -3,7 +3,7 @@ import Toasts from "../LoadingError/Toast";
 import { Link } from "react-router-dom";
 const EditProductMain = (props) => {
   const { productId } = props;
-
+  console.log(productId);
   return (
     <>
       <section className="content-main" style={{ maxWidth: "1200px" }}>
