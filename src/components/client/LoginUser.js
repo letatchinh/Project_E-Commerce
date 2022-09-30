@@ -1,4 +1,4 @@
-import React, {  useEffect,  useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, TextField } from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import Typography from "@mui/material/Typography";
@@ -16,13 +16,13 @@ import { Link, useNavigate } from "react-router-dom";
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
-import FacebookIcon from '@mui/icons-material/Facebook';
+import FacebookIcon from "@mui/icons-material/Facebook";
 import axios from "axios";
-import { URL_BASE } from '../../constant/UrlConstant';
+import { URL_BASE } from "../../constant/UrlConstant";
 import { v4 } from "uuid";
 import { KEY_USER } from "../../constant/LocalStored";
 
-export default function Login() {
+export default function LoginUser() {
   const [display, setDisplay] = useState(false);
   const [reRender, setReRender] = useState(false);
   const users = useSelector((state) => state.user.textLogin);
@@ -59,42 +59,41 @@ export default function Login() {
       username: response.id,
       password: response.id,
       listCarts: [],
-      listOrder : [],
-      email : response.email,
-      phone : '',
-      address : '',
-      name : response.name,
-      id : v4()
+      listOrder: [],
+      email: response.email,
+      phone: "",
+      address: "",
+      name: response.name,
+      id: v4(),
     };
-    const flag = await axios.get(`${URL_BASE}users?username=${response.id}`)
-    if(flag.data.length === 0)
-   { 
-    loginWithRegister(newUser);
-  }
-  else{
-    loginWithoutRegister(newUser);
-  }
+    const flag = await axios.get(`${URL_BASE}users?username=${response.id}`);
+    if (flag.data.length === 0) {
+      loginWithRegister(newUser);
+    } else {
+      loginWithoutRegister(newUser);
+    }
   };
   const responseGoogle = async (response) => {
     const newUser = {
       username: response.profileObj.email,
       password: response.profileObj.googleId,
-      email : response.profileObj.email,
+      email: response.profileObj.email,
       listCarts: [],
-      listOrder : [],
-      phone : '',
-      name : response.profileObj.givenName +" "+ response.profileObj.familyName,
-      address : '',
-      id : v4()
+      listOrder: [],
+      phone: "",
+      name:
+        response.profileObj.givenName + " " + response.profileObj.familyName,
+      address: "",
+      id: v4(),
     };
-    const flag = await axios.get(`${URL_BASE}users?username=${response.profileObj.email}`)
-        if(flag.data.length === 0)
-       { 
-        loginWithRegister(newUser);
-      }
-      else{
-        loginWithoutRegister(newUser);
-      }
+    const flag = await axios.get(
+      `${URL_BASE}users?username=${response.profileObj.email}`
+    );
+    if (flag.data.length === 0) {
+      loginWithRegister(newUser);
+    } else {
+      loginWithoutRegister(newUser);
+    }
   };
 
   const loginWithRegister = async (data) => {
@@ -165,7 +164,7 @@ export default function Login() {
             appId="3267114616941933"
             fields="name,email,picture"
             callback={responseFacebook}
-            icon={<FacebookIcon/>}
+            icon={<FacebookIcon />}
           />
           <GoogleLogin
             clientId="102456725904-0gb4rrpp4337idg21co7gar7a72mk5ll.apps.googleusercontent.com"

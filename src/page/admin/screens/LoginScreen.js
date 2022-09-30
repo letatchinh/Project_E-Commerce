@@ -5,14 +5,14 @@ import Message from "../../../components/admin/LoadingError/Error.js";
 import Loading from "../../../components/admin/LoadingError/Loading.js";
 // import { ToastContainer, toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
-import { login } from "../../../Redux/admin/Actions/UserActions.js";
+import { login } from "../../../redux/admin/Actions/UserActions.js";
 const Login = () => {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
-  const userLogin = useSelector((state) => state.userLogin);
+  const userLogin = useSelector((state) => state.userLoginAdmin);
   const { error, loading, userInfo } = userLogin;
 
   const submitHandler = (e) => {

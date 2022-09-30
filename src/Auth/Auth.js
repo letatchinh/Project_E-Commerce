@@ -1,5 +1,3 @@
-import { useSelector } from "react-redux";
-
 const CheckAuth = () => {
   const getUser = localStorage.getItem("userInfo")
     ? JSON.parse(localStorage.getItem("userInfo"))

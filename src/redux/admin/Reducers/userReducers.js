@@ -5,14 +5,14 @@ import {
   USER_LOGOUT,
 } from "../Constants/UserContants";
 
-//LOGIN
-// const initState = {
-//   userlogin2: {
-//     status: false,
-//     userInfo: {},
-//   },
-// };
-export const userLoginReducer = (state = {}, action) => {
+const userInfoFromLocalStorage = localStorage.getItem("userInfo")
+  ? JSON.parse(localStorage.getItem("userInfo"))
+  : null;
+
+const initialState = {
+  userLogin: { userInfo: userInfoFromLocalStorage },
+};
+export const userLoginReducer = (state = initialState, action) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
       return { ...state, loading: true };

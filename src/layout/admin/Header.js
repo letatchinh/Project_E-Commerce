@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logout } from "../../Redux/admin/Actions/UserActions";
+import { logout } from "../../redux/admin/Actions/UserActions";
 
 const Header = (props) => {
   const dispatch = useDispatch();
