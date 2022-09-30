@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import Message from "../../../components/admin/LoadingError/Error.js";
 import Loading from "../../../components/admin/LoadingError/Loading.js";
-// import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
 import { login } from "../../../redux/admin/Actions/UserActions.js";
 const Login = () => {
   let navigate = useNavigate();
@@ -19,14 +17,11 @@ const Login = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
-    // if (userInfo && email !== "admin@gmail.com") {
-    //   toast("Not is Admin");
-    //   localStorage.removeItem("userInfo");
   };
 
   useEffect(() => {
     if (userInfo && email !== "admin@gmail.com") {
-      toast("Not is Admin");
+      toast.error("Not is a Admin");
       localStorage.removeItem("userInfo");
     } else if (userInfo && email === "admin@gmail.com") {
       navigate("/admin");
