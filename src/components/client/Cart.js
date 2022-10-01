@@ -2,41 +2,19 @@ import {
   Button,
   List,
 } from "@mui/material";
-import React, { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import {  useSelector } from "react-redux";
 import { v4 } from "uuid";
-import {
-  calTotalBill,
-  fetchLogginSuccessRequest,
-} from "../../redux/login/Actions";
 import { Stack } from "@mui/system";
-import { KEY_USER } from "../../constant/LocalStored";
 import { Link } from "react-router-dom";
 import ItemCart from "./ItemCart";
- function Cart({ display,offCart }) {
-  const dispatch = useDispatch();
+ function Cart() {
   const cartUser = useSelector((state) => state.user.loginSuccess.listCarts);
   const totalBill = useSelector((state) => state.user.totalBill);
-  const fetch = useCallback(() => {
-    if (localStorage.getItem(KEY_USER)) {
-      dispatch(fetchLogginSuccessRequest());
-    }
-    dispatch(calTotalBill(cartUser))
-  }, [localStorage.getItem(KEY_USER)]);
-  useEffect(() => {
-    fetch();
-  }, [fetch]);
   return (
     <List
       sx={{
-        display: display ? "block" : "none",
-        bgcolor: "background.paper",
-        position: "absolute",
-        zIndex: 1,
         width: "450px",
-        background: "aliceblue",
-        top: "100%",
-        right: "100%",
         borderRadius: "20px",
         padding: "10px",
       }}
@@ -50,10 +28,9 @@ import ItemCart from "./ItemCart";
         <span style={{fontWeight : 700}}>{totalBill} Đ</span>
       </Stack>
      <Link style={{pointerEvents :(cartUser.length === 0) ?  'none' : 'auto'}} to='/payment'>
-     <Button disabled={cartUser.length === 0} onClick={offCart} fullWidth color="success" variant="outlined">Thanh Toán</Button>
+     <Button disabled={cartUser.length === 0} fullWidth color="warning" variant="contained">Thanh Toán</Button>
      </Link>
-
-    </List>
+</List>
   );
 }
 export default Cart

@@ -85,7 +85,8 @@ export default function DetailProduct() {
           <Skeleton variant="rounded" width={420} height={120} />
         </Stack>
       ) : (
-        <Container>
+      <div style={{background : 'rgb(244, 244, 244)' , padding : '20px 0'}}>
+      <Container sx={{background : 'white',padding : '10px 0'}}>
           <Stack justifyContent="space-between" direction="row" spacing={5}>
             <img style={{ width: "50%" }} src={image} alt="name" />
             <Stack width="70%" spacing={2}>
@@ -189,6 +190,7 @@ export default function DetailProduct() {
             {listRating && <ListReview data={listRating} />}
           </Stack>
         </Container>
+      </div>
       )}
     </>
   );

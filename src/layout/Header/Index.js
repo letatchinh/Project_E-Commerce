@@ -93,7 +93,8 @@ export default function Index() {
                 src={Logo}
                 alt="logo"
               /> */}
-              <LogoDevIcon  className="IconsWhite IconLarge"/>
+              <LogoDevIcon   className="IconsWhite IconLarge"/>
+              
             </Link>
           </Grid>
           <Grid item xs={8} sm={8}>

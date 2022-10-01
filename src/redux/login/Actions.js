@@ -56,10 +56,26 @@ export const fetchAddToCartRequest = (item) => {
         ( async() => {
             try {   
                 const list = JSON.parse(localStorage.getItem(KEY_USER))
-               const newList = {...list , listCarts : [...list.listCarts,{...item, quanlity : 1}]}
+                const flag = list.listCarts.find(e => e.id === item.id)
+               if(!flag){
+                const newList = {...list , listCarts : [...list.listCarts,{...item, quanlity : 1}]}
                 localStorage.setItem(KEY_USER,JSON.stringify(newList));
                 dispatch(fecthAddToCart(newList))
                 userApi.editUser(newList,list.id)
+               }
+               else{
+                const newListCart = list.listCarts.map(e => {
+                    if(e.id === item.id){
+                        e.quanlity++
+                    }
+                    return e
+                })
+                const newList = {...list,listCarts : newListCart}
+                localStorage.setItem(KEY_USER,JSON.stringify(newList));
+                dispatch(fecthAddToCart(newList))
+                userApi.editUser(newList,list.id)
+               }
+               
             } catch (error) {
                 console.log(error);
             }
