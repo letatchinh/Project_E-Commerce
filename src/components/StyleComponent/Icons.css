@@ -1,0 +1,10 @@
+.IconsWhite{
+    color: white;
+}
+.IconLarge{
+    font-size: 4rem!important;
+}
+.badgeCustom span{
+    background:  white;
+    color: #ee4d2d;
+}

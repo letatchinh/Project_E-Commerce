@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Container } from "@mui/system";
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';import { Container } from "@mui/system";
 import {  Grid, IconButton, InputBase, Menu, MenuItem, Paper } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,13 +9,11 @@ import { fectchLogout } from "../../redux/login/Actions";
 import { IS_STATUS_LOGIN } from "../../redux/login/Types";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { setSearch } from "../../redux/shopping/Shopping-actions";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-import PinterestIcon from "@mui/icons-material/Pinterest";
 import { KEY_USER } from "../../constant/LocalStored";
 import { useForm } from "react-hook-form";
 import IconCart from "../../components/client/IconCart";
+import '../../components/StyleComponent/Icons.css'
+import LogoDevIcon from '@mui/icons-material/LogoDev';
 export default function Index() {
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data) => {
@@ -50,7 +47,7 @@ export default function Index() {
   };
   return (
     <>
-      <Grid
+      {/* <Grid
         alignItems={"center"}
         justifyContent={"space-around"}
         container
@@ -80,9 +77,9 @@ export default function Index() {
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-      <Container sx={{ flexGrow: 1 }}>
-        <Grid container justifyContent={"space-around"} alignItems={"center"}>
+      </Grid> */}
+     <div style={{background: "linear-gradient(#ee4d2d,#ff7337)" , padding : '20px'}}> <Container sx={{ flexGrow: 1 }}>
+        <Grid flexWrap='nowrap' container justifyContent={"space-around"} alignItems={"center"}>
           <Grid item xs={2} sx={{ display: { xs: "none", sm: "block" } }}>
             <Link
               onClick={() => {
@@ -91,11 +88,12 @@ export default function Index() {
               }}
               to="/"
             >
-              <img
+              {/* <img
                 style={{ borderRadius: "50%", width: "100%" }}
-                src="https://img.freepik.com/premium-vector/orange-shop-letter-initial-logo_599932-269.jpg"
+                src={Logo}
                 alt="logo"
-              />
+              /> */}
+              <LogoDevIcon  className="IconsWhite IconLarge"/>
             </Link>
           </Grid>
           <Grid item xs={8} sm={8}>
@@ -121,7 +119,7 @@ export default function Index() {
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
             >
-              <AccountCircleIcon color="primary" fontSize="large" />
+              <AccountCircleOutlinedIcon className="IconsWhite" fontSize="large" />
             </Button>
             <Menu
               id="demo-positioned-menu"
@@ -160,12 +158,10 @@ export default function Index() {
                 </Link>
               </div>
             </Menu>
-         
               <IconCart />
-        
           </Grid>
         </Grid>
-      </Container>
+      </Container></div>
     </>
   );
 }

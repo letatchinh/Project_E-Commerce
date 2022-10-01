@@ -8,7 +8,7 @@ import { calTotalBill, fetchLogginSuccessRequest } from '../../redux/login/Actio
 import ItemCart from './ItemCart';
 import { v4 } from 'uuid';
 import { Link } from 'react-router-dom';
-
+import '../StyleComponent/Icons.css'
 export default function IconCart() {
     const dispatch = useDispatch();
   const cartUser = useSelector((state) => state.user.loginSuccess.listCarts);
@@ -41,11 +41,10 @@ export default function IconCart() {
   >
      <Badge
               sx={{ position: "relative" }}
-              color="warning"
-              badgeContent={2}
+              badgeContent={cartUser.length}
+              className='badgeCustom'
             >
-              <ShoppingBagOutlinedIcon
-                // onClick={() => setDisplayCart(!displayCart)}
+              <ShoppingBagOutlinedIcon className='IconsWhite'
                 fontSize="large"
                 sx={{ cursor: "pointer" }}
               />
@@ -74,7 +73,7 @@ export default function IconCart() {
       ))}
       <Stack direction="row" justifyContent="space-between" sx={{ fontFamily: "Montserrat, sans-serif", fontWeight: 500 , margin : "20px 0" }}>
         <span>Tổng Hoá Đơn</span>
-        <span style={{fontWeight : 700}}>asd Đ</span>
+        <span style={{fontWeight : 700}}>{totalBill} Đ</span>
       </Stack>
      <Link style={{pointerEvents :(cartUser.length === 0) ?  'none' : 'auto'}} to='/payment'>
      <Button disabled={cartUser.length === 0} fullWidth color="success" variant="outlined">Thanh Toán</Button>
