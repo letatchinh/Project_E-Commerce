@@ -4,7 +4,7 @@ import asyncHandler from "express-async-handler";
 // pro
 import generateToken from "../utils/generateToken.js";
 import User from "../Models/UserModel.js";
-import protect from "../MiddelWare/AuthMiddleware.js";
+import { protect, admin } from "../MiddelWare/AuthMiddleware.js";
 
 const userRouter = express.Router();
 
@@ -31,12 +31,47 @@ userRouter.post(
   })
 );
 
+//REGISTER
+userRouter.post(
+  "/",
+  asyncHandler(async (req, res) => {
+    const { name, email, password } = req.body;
+
+    const userExists = await User.findOne({ email });
+
+    if (userExists) {
+      res.status(400);
+      throw new Error("User already exists");
+    }
+
+    const user = await User.create({
+      name,
+      email,
+      password,
+    });
+
+    if (user) {
+      res.status(201).json({
+        _id: user.id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.idAdmin,
+        token: generateToken(user._id),
+      });
+    } else {
+      res.status(400);
+      throw new Error("Invalid User Data");
+    }
+  })
+);
+
 // PROFILE
 userRouter.get(
   "/profile",
   protect,
   asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id);
+
     if (user) {
       res.json({
         _id: user._id,
@@ -49,6 +84,46 @@ userRouter.get(
       res.status(404);
       throw new Error("User not found");
     }
+  })
+);
+
+//UPDATE PROFILE
+userRouter.put(
+  "/profile",
+  protect,
+  asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      if (req.body.password) {
+        user.password = req.body.password;
+      }
+      const updateUser = await user.save();
+      res.json({
+        _id: updateUser._id,
+        name: updateUser.name,
+        email: updateUser.email,
+        isAdmin: updateUser.isAdmin,
+        createdAt: updateUser.createdAt,
+        token: generateToken(updateUser._id),
+      });
+    } else {
+      res.status(404);
+      throw new Error("User not found");
+    }
+  })
+);
+
+// GET ALL USER ADMIN
+userRouter.get(
+  "/",
+  protect,
+  admin,
+  asyncHandler(async (req, res) => {
+    const users = await User.find({});
+    res.json(users);
   })
 );
 

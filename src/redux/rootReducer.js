@@ -1,4 +1,7 @@
-import { userLoginReducer } from "./admin/Reducers/userReducers";
+import {
+  userListReducer,
+  userLoginReducer,
+} from "./admin/Reducers/userReducers";
 import filterProductReducer from "./filterProduct/Reducers";
 import userReducer from "./login/Reducers";
 import shopReducer from "./shopping/Shopping-reducers";
@@ -10,6 +13,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   filterProduct: filterProductReducer,
   userLogin: userLoginReducer,
+  userList: userListReducer,
 });
 
 export default rootReducer;
