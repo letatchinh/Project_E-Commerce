@@ -1,5 +1,5 @@
 import { Grid, Pagination, Skeleton } from "@mui/material";
-import {  Stack } from "@mui/system";
+import {  Container, Stack } from "@mui/system";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import {  useDispatch, useSelector } from "react-redux";
@@ -7,9 +7,11 @@ import { Link } from "react-router-dom";
 import { v4 } from "uuid";
 import { URL_BASE } from "../../constant/UrlConstant";
 import { fetchReceiveListShow } from "../../redux/filterProduct/Actions";
+import Category from "./Category";
 import ErrorNoItem from "./ErrorNoItem";
 import Product from "./Product";
 import SideBarFilter from "./SideBarFilter";
+import Slider from "./Slider";
 import SortBar from "./SortBar";
 export default function ListProducts() {
   const dispatch = useDispatch()
@@ -31,6 +33,8 @@ const fetchSearch = useCallback(async () => {
     .then((res) => {
       setCount(Math.ceil(res.data.length / limit));
       dispatch(fetchReceiveListShow(res.data))
+      setPage(1)
+      setStart(0)
       })
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
@@ -59,7 +63,6 @@ useEffect(() => {
 
 useEffect(() => {
   if(listReducer.length !== 0){
-
     setList(listReducer.slice(start, start + limit))
   }
   else {
@@ -72,13 +75,18 @@ useEffect(() => {
     const newStart = (value - 1) * limit;
     setStart(newStart);
   };
-
   return (
     <>
-    
-      <Stack sx={{background : 'rgb(240, 242, 245)'}} padding='20px' justifyContent='space-around' direction='row'>
+   <Container>
+   <Slider />
+   </Container>
+   <div style={{background  : '#F4F4F4' , padding : '10px 0'}}>
+     <Container>
+     <Stack spacing={2}>
+     <Category />
+      <Stack padding='20px' justifyContent='space-around' direction='row' sx={{background : 'white'}}>
       { inputSearch &&  <SideBarFilter />}
-        <div style={{width : '80%'}}>
+        <Stack style={{width : '90%'}}>
         {inputSearch && <SortBar  />}
         <Grid container spacing={3}>
           {loading
@@ -104,8 +112,12 @@ useEffect(() => {
        {list.length !== 0 &&  <Stack alignItems="center" spacing={2} sx={{marginTop : '20px'}}>
           <Pagination count={count} page={page} onChange={handleChange} />
         </Stack>}
-        </div>
-      </Stack>
+        </Stack>
+      </Stack> 
+     </Stack>
+     </Container>
+   </div>
+  
     </>
   );
 }

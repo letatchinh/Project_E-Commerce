@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Container } from "@mui/system";
-import { Badge, Grid, Menu, MenuItem, Typography } from "@mui/material";
+import {  Grid, IconButton, InputBase, Menu, MenuItem, Paper } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { fectchLogout } from "../../redux/login/Actions";
 import { IS_STATUS_LOGIN } from "../../redux/login/Types";
 import LogoutIcon from "@mui/icons-material/Logout";
-import Cart from "../../components/client/Cart";
 import { setSearch } from "../../redux/shopping/Shopping-actions";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -19,6 +16,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import PinterestIcon from "@mui/icons-material/Pinterest";
 import { KEY_USER } from "../../constant/LocalStored";
 import { useForm } from "react-hook-form";
+import IconCart from "../../components/client/IconCart";
 export default function Index() {
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data) => {
@@ -26,9 +24,7 @@ export default function Index() {
     navigate("/");
   };
   const [user, setUser] = useState({});
-  const [displayCart, setDisplayCart] = useState(false);
   const statusLogin = useSelector((state) => state.user.statusLogin);
-  const loginSuccess = useSelector((state) => state.user.loginSuccess);
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -59,9 +55,10 @@ export default function Index() {
         justifyContent={"space-around"}
         container
         sx={{
-          background: "#F6F415",
+          background: "linear-gradient(#ee4d2d,#ff7337)",
           height: "50px",
           display: { xs: "none", sm: "flex" },
+          color : 'white'
         }}
       >
         <Grid item xs={4}>
@@ -96,36 +93,25 @@ export default function Index() {
             >
               <img
                 style={{ borderRadius: "50%", width: "100%" }}
-                src="https://img.freepik.com/free-vector/fashion-logo-editorial-template_23-2148701249.jpg?w=2000"
+                src="https://img.freepik.com/premium-vector/orange-shop-letter-initial-logo_599932-269.jpg"
                 alt="logo"
               />
             </Link>
           </Grid>
           <Grid item xs={8} sm={8}>
-            {" "}
-            <form
-              style={{ display: (window.location.href).includes('http://localhost:3000/profile_')? 'none' : "flex", alignItems: "center" }}
-              onSubmit={handleSubmit(onSubmit)}
-            >
-              <TextField
-                placeholder="Search..."
-                fullWidth
-                {...register("searchKeyword")}
-              />
-              <Button
-                type="submit"
-                variant="outlined"
-                startIcon={<SearchIcon />}
-              >
-                {" "}
-                <Typography
-                  sx={{ display: { xs: "none", sm: "inline" } }}
-                  variant="body1"
-                >
-                  Search
-                </Typography>
-              </Button>
-            </form>
+              <Paper onSubmit={handleSubmit(onSubmit)}
+      component="form"
+      sx={{ p: '2px 4px', display: (window.location.href).includes('http://localhost:3000/profile_')? 'none' : "flex", alignItems: 'center', width: '100%' }}
+    >
+      <InputBase  {...register("searchKeyword")}
+        sx={{ ml: 1, flex: 1 }}
+        placeholder="Search"
+        inputProps={{ 'aria-label': 'search' }}
+      />
+      <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+        <SearchIcon />
+      </IconButton>
+    </Paper>
           </Grid>
           <Grid sx={{ display: "flex", alignItems: "center" }} item>
             <Button
@@ -174,25 +160,9 @@ export default function Index() {
                 </Link>
               </div>
             </Menu>
-            <Badge
-              sx={{ position: "relative" }}
-              color="secondary"
-              badgeContent={loginSuccess.listCarts.length}
-            >
-              <ShoppingBagOutlinedIcon
-                onClick={() => setDisplayCart(!displayCart)}
-                fontSize="large"
-                sx={{ cursor: "pointer" }}
-              />
-              <Cart
-                offCart={() => setDisplayCart(!displayCart)}
-                display={displayCart}
-              />
-            </Badge>
-            {/* <Badge sx={{position : "relative"}} color="secondary" badgeContent={2}>
-        <NotificationsIcon onClick={() => setDisplayCart(!displayCart)} fontSize="large" sx={{ cursor :"pointer"}}/>
-        <Cart display={displayCart}/>
-      </Badge> */}
+         
+              <IconCart />
+        
           </Grid>
         </Grid>
       </Container>
