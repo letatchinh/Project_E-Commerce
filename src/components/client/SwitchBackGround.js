@@ -2,8 +2,14 @@ import React from 'react'
 import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material/styles';
 import { FormControlLabel } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { changeBgRequest } from '../../redux/Common/Actions';
 
 export default function SwitchBackGround() {
+  const dispatch = useDispatch()
+  const handleChangeBg = () => {
+    dispatch(changeBgRequest())
+  }
     const MaterialUISwitch = styled(Switch)(({ theme }) => ({
         width: 62,
         height: 34,
@@ -51,7 +57,7 @@ export default function SwitchBackGround() {
         },
       }));
   return (
-    <FormControlLabel
+    <FormControlLabel onClick={handleChangeBg}
     control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
   />
   )

@@ -9,6 +9,7 @@ import { URL_BASE } from "../../constant/UrlConstant";
 import { fetchReceiveListShow } from "../../redux/filterProduct/Actions";
 import Category from "./Category";
 import ErrorNoItem from "./ErrorNoItem";
+import MyPagination from "./MyPagination";
 import Product from "./Product";
 import SideBarFilter from "./SideBarFilter";
 import Slider from "./Slider";
@@ -25,6 +26,8 @@ export default function ListProducts() {
   const inputSearch = useSelector((state) => state.shop.setSearchKeyword);
   const listReducer = useSelector((state) => state.filterProduct.listShow);
   const listMainReducer = useSelector((state) => state.filterProduct.listMain);
+  const mainBackGround2 = useSelector((state) => state.common.mainBackGround2);
+  const mainBackGround = useSelector((state) => state.common.mainBackGround);
 const fetchSearch = useCallback(async () => {
   if(inputSearch){
     setLoading(true)
@@ -77,14 +80,16 @@ useEffect(() => {
   };
   return (
     <>
+    <div style={{background : mainBackGround}}>
    <Container>
    <Slider />
    </Container>
-   <div style={{background  : '#F4F4F4' , padding : '10px 0'}}>
+    </div>
+   <div style={{background  : mainBackGround2 , padding : '10px 0'}}>
      <Container>
      <Stack spacing={2}>
      <Category />
-      <Stack padding='20px' justifyContent='space-around' direction='row' sx={{background : 'white'}}>
+      <Stack padding='20px' justifyContent='space-around' direction='row' sx={{background : mainBackGround}}>
       { inputSearch &&  <SideBarFilter />}
         <Stack style={{width : '90%'}}>
         {inputSearch && <SortBar  />}
@@ -110,7 +115,7 @@ useEffect(() => {
               )))}
         </Grid>
        {list.length !== 0 &&  <Stack alignItems="center" spacing={2} sx={{marginTop : '20px'}}>
-          <Pagination count={count} page={page} onChange={handleChange} />
+          <MyPagination  count={count} page={page} onChange={handleChange} />
         </Stack>}
         </Stack>
       </Stack> 

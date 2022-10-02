@@ -6,10 +6,25 @@ import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import '../StyleComponent/Product.css'
 import PriceSell from './PriceSell';
+import { useSelector } from 'react-redux';
+import { styled } from '@mui/material/styles';
 export default function Product({item}) {
   const {name , image , price , isSell ,rating , listRating , discount} = item
+  const mainBackGround2 = useSelector((state) => state.common.mainBackGround2);
+  const mainColorText = useSelector(state => state.common.mainColorText)
+  const mainColorRating = useSelector(state => state.common.mainColorRating)
+
+  const StyledRating = styled(Rating)({
+    '& .MuiRating-iconFilled': {
+      color: '#faaf00',
+    },
+    '& .MuiRating-iconEmpty .MuiSvgIcon-root':{
+      color : mainColorRating
+    }
+    
+  });
   return (
-    <Card className='cardHover' sx={{display : "flex" , flexDirection : "column" ,position : "relative" , cursor:"pointer"  }}>
+    <Card className='cardHover' sx={{display : "flex" , flexDirection : "column" ,position : "relative" , cursor:"pointer" ,background :mainBackGround2 }}>
     <CardMedia sx={{position : "absolute" , width : "30%" , left : "-5px" , top : "-8px" , display : (isSell === 'true') ? "block" : "none"}} component="img" alt='sale' image='https://tochat.be/click-to-chat/wp-content/uploads/2020/09/sale-logo-download.png'/>
       <CardMedia className='imgProduct' sx={{height:{md : '150px' , xs : '130px'},objectFit : 'cover'}}
         component="img"
@@ -17,14 +32,14 @@ export default function Product({item}) {
         image={image}
       />
       <CardContent sx={{padding : '5px'}}>
-        <Typography  gutterBottom variant="body2"  fontWeight='400' >
+        <Typography  gutterBottom variant="body2"  fontWeight='400' color={mainColorText} >
           {name}
         </Typography>
         <PriceSell discount={discount} price={price} isSell={isSell}/>
       </CardContent>
      <CardContent sx={{padding : '5px'}} >
-     <Rating name="read-only" value={parseInt(rating)} readOnly size="small"/>
- <Typography  gutterBottom variant="h6" component="span">
+     <StyledRating  value={parseInt(rating)} readOnly size="small"/>
+ <Typography  gutterBottom variant="body2" component="span" color={mainColorText}>
           ({listRating.length})
         </Typography>
      </CardContent>

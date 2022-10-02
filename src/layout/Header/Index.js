@@ -99,7 +99,7 @@ export default function Index() {
             </Menu>
     </Stack>
         <Grid flexWrap='nowrap' container justifyContent={"space-around"} alignItems={"center"}>
-          <Grid item xs={2}>
+          <Grid item xs={1}>
             <Link
               onClick={() => {
                 dispatch(setSearch(""));
@@ -108,7 +108,6 @@ export default function Index() {
               to="/"
             >
               <LogoDevIcon   className="IconsWhite IconLarge"/>
-              
             </Link>
           </Grid>
           <Grid item xs={8} sm={8}>

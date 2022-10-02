@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
+import { useSelector } from "react-redux";
 import { v4 } from "uuid";
 import ContentTop from "./ContentTop";
 import ItemCategory from "./ItemCategory";
@@ -37,8 +38,10 @@ export default function Category() {
         "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/8c21a747-cd31-4ade-83c8-5e7610f057c6/10k-2-in-1-running-shorts-QBd76d.png",
     },
   ];
+  const mainBackGround = useSelector((state) => state.common.mainBackGround);
+
   return (
-    <Stack sx={{ background: "white" }}>
+    <Stack sx={{ background: mainBackGround }}>
       <ContentTop value="CATEGORY" />
       <Grid container
         direction="row"
