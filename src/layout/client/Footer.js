@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@mui/material';
+import {  Typography } from '@mui/material';
 import React from 'react';
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -16,10 +16,10 @@ const mainColorText = useSelector(state => state.common.mainColorText)
       <TabsComponent />
      <Typography variant='h5' color={mainColorText}> Contact me</Typography>
       <Stack direction='row' spacing={2}>
-    <FacebookIcon color={mainColorText}/>
-    <InstagramIcon/>
-    <YouTubeIcon/>
-    <PinterestIcon/>
+    <FacebookIcon color='primary'/>
+    <InstagramIcon color='primary'/>
+    <YouTubeIcon color='primary'/>
+    <PinterestIcon color='primary'/>
       </Stack>
       <Stack>
         Thank Yous

@@ -1,11 +1,12 @@
 import { FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { sortHighToLow, sortLowToHigh, sortRatingHighToLow, sortRatingLowtoHigh } from '../../redux/filterProduct/Actions'
 import '../StyleComponent/SideBarFilter.css'
 
 export default function SortBar() {
+  const mainColorText = useSelector(state => state.common.mainColorText)
   const dispatch = useDispatch()
   const [price, setPrice] = useState('');
   const handleChangePrice = (event) => {
@@ -31,7 +32,7 @@ export default function SortBar() {
   };
   return (
    <Stack className='SortBar' spacing={5} direction='row' padding='10px' alignItems='center' >
-    <Typography>Sort Follow</Typography>
+    <Typography color={mainColorText}>Sort Follow</Typography>
     <FormControl sx={{width : '200px' , background : 'white'}}>
         <InputLabel id="demo-simple-select-label">Price</InputLabel>
         <Select
