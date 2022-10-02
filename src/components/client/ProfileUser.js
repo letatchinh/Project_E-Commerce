@@ -28,8 +28,8 @@ export default function ProfileUser({children}) {
    <>
    <div style={{ background: "#F0F2F5", padding: "10px" }}>
       <Container sx={{ background: "white", borderRadius: "20px" }}>
-        <Stack direction="row">
-          <Stack width="30%" borderRight="1px solid #F0F2F5">
+        <Stack direction={{sm : 'row' , xs : 'column'}}>
+          <Stack direction={{sm : 'column' , xs : 'row'}} width="30%" borderRight="1px solid #F0F2F5">
             <Avatar
               sx={{ height: "170px", width: "170px" }}
               alt="Remy Sharp"

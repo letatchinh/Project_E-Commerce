@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';import { Container } from "@mui/system";
-import {  Grid, IconButton, InputBase, Menu, MenuItem, Paper } from "@mui/material";
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';import { Container, Stack } from "@mui/system";
+import {  Grid, IconButton, InputBase, Menu, MenuItem, Paper, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fectchLogout } from "../../redux/login/Actions";
@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import IconCart from "../../components/client/IconCart";
 import '../../components/StyleComponent/Icons.css'
 import LogoDevIcon from '@mui/icons-material/LogoDev';
+import SwitchBackGround from "../../components/client/SwitchBackGround";
 export default function Index() {
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data) => {
@@ -47,80 +48,18 @@ export default function Index() {
   };
   return (
     <>
-      {/* <Grid
-        alignItems={"center"}
-        justifyContent={"space-around"}
-        container
-        sx={{
-          background: "linear-gradient(#ee4d2d,#ff7337)",
-          height: "50px",
-          display: { xs: "none", sm: "flex" },
-          color : 'white'
-        }}
-      >
-        <Grid item xs={4}>
-          <span>0905970965</span>
-        </Grid>
-        <Grid item xs={4} md={4}>
-          <Grid justifyContent="flex-end" container spacing={5}>
-            <Grid item>
-              <FacebookIcon />
-            </Grid>
-            <Grid item>
-              <InstagramIcon />
-            </Grid>
-            <Grid item>
-              <YouTubeIcon />
-            </Grid>
-            <Grid item>
-              <PinterestIcon />
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid> */}
-     <div style={{background: "linear-gradient(#ee4d2d,#ff7337)" , padding : '20px'}}> <Container sx={{ flexGrow: 1 }}>
-        <Grid flexWrap='nowrap' container justifyContent={"space-around"} alignItems={"center"}>
-          <Grid item xs={2} sx={{ display: { xs: "none", sm: "block" } }}>
-            <Link
-              onClick={() => {
-                dispatch(setSearch(""));
-                reset();
-              }}
-              to="/"
-            >
-              {/* <img
-                style={{ borderRadius: "50%", width: "100%" }}
-                src={Logo}
-                alt="logo"
-              /> */}
-              <LogoDevIcon   className="IconsWhite IconLarge"/>
-              
-            </Link>
-          </Grid>
-          <Grid item xs={8} sm={8}>
-              <Paper onSubmit={handleSubmit(onSubmit)}
-      component="form"
-      sx={{ p: '2px 4px', display: (window.location.href).includes('http://localhost:3000/profile_')? 'none' : "flex", alignItems: 'center', width: '100%' }}
-    >
-      <InputBase  {...register("searchKeyword")}
-        sx={{ ml: 1, flex: 1 }}
-        placeholder="Search"
-        inputProps={{ 'aria-label': 'search' }}
-      />
-      <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
-        <SearchIcon />
-      </IconButton>
-    </Paper>
-          </Grid>
-          <Grid sx={{ display: "flex", alignItems: "center" }} item>
-            <Button
+     <div style={{background: "linear-gradient(#ee4d2d,#ff7337)" , padding : '5px'}}> <Container sx={{ flexGrow: 1 }}>
+    <Stack direction='row' padding='0 20px' alignItems='center' justifyContent='flex-end'>
+    <SwitchBackGround />
+    <Button sx={{textTransform : 'capitalize'}}
               id="demo-positioned-button"
               aria-controls={open ? "demo-positioned-menu" : undefined}
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
             >
-              <AccountCircleOutlinedIcon className="IconsWhite" fontSize="large" />
+              <AccountCircleOutlinedIcon className="IconsWhite" fontSize="medium" />
+            <Typography fontSize='12px' color='white'>{user.name}</Typography>
             </Button>
             <Menu
               id="demo-positioned-menu"
@@ -138,7 +77,6 @@ export default function Index() {
               }}
             >
               <div style={{ display: statusLogin ? "block" : "none" }}>
-                <MenuItem onClick={handleClose}>{user.name}</MenuItem>
                 <Link to="/profile_Info">
                   <MenuItem onClick={handleClose}>My account</MenuItem>
                 </Link>
@@ -159,6 +97,37 @@ export default function Index() {
                 </Link>
               </div>
             </Menu>
+    </Stack>
+        <Grid flexWrap='nowrap' container justifyContent={"space-around"} alignItems={"center"}>
+          <Grid item xs={2}>
+            <Link
+              onClick={() => {
+                dispatch(setSearch(""));
+                reset();
+              }}
+              to="/"
+            >
+              <LogoDevIcon   className="IconsWhite IconLarge"/>
+              
+            </Link>
+          </Grid>
+          <Grid item xs={8} sm={8}>
+              <Paper onSubmit={handleSubmit(onSubmit)}
+      component="form"
+      sx={{ p: '2px 4px', display: (window.location.href).includes('http://localhost:3000/profile_')? 'none' : "flex", alignItems: 'center', width: '100%' }}
+    >
+      <InputBase  {...register("searchKeyword")}
+        sx={{ ml: 1, flex: 1 }}
+        placeholder="Search"
+        inputProps={{ 'aria-label': 'search' }}
+      />
+      <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+        <SearchIcon />
+      </IconButton>
+    </Paper>
+          </Grid>
+          <Grid sx={{ display: "flex", alignItems: "center" }} item>
+           
               <IconCart />
           </Grid>
         </Grid>

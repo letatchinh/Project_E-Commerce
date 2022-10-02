@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Avatar, Button, Checkbox, IconButton, ListItem, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Stack } from "@mui/system";

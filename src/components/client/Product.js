@@ -17,7 +17,7 @@ export default function Product({item}) {
         image={image}
       />
       <CardContent sx={{padding : '5px'}}>
-        <Typography  gutterBottom variant="body1"   >
+        <Typography  gutterBottom variant="body2"  fontWeight='400' >
           {name}
         </Typography>
         <PriceSell discount={discount} price={price} isSell={isSell}/>
