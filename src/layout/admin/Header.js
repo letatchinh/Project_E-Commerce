@@ -28,12 +28,12 @@ const Header = (props) => {
               <i className="fa fa-search"></i>
             </button>
           </div>
-          <datalist id="search_terms">
+          {/* <datalist id="search_terms">
             <option value="Products" />
             <option value="New orders" />
             <option value="Apple iphone" />
             <option value="Ahmed Hassan" />
-          </datalist>
+          </datalist> */}
         </form>
       </div>
 

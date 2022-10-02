@@ -152,4 +152,49 @@
     display: inline-block;
     margin-left: 5px;
   }
+
+  .spMoblie~.aside-mini .show {
+    visibility: hidden;
+    transform: translateX(-100%);
+    border-radius: 0;
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1200;
+    width: 80%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    transition: visibility 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+
+  .drop-active .dropdown-menu {
+    left: -43px;
+  }
+
+  .pcShow {
+    display: none !important;
+  }
+
+  .spShow {
+    display: block !important;
+  }
+
+  .btn-box {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .content-title {
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .form-select {
+    width: 80%;
+  }
 }

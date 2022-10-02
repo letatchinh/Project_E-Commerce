@@ -1048,3 +1048,7 @@ a {
   text-decoration: none;
   color: black;
 }
+
+.spShow {
+  display: none !important;
+}

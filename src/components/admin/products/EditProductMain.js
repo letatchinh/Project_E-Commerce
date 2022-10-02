@@ -1,5 +1,4 @@
 import React from "react";
-import Toasts from "../LoadingError/Toast";
 import { Link } from "react-router-dom";
 const EditProductMain = (props) => {
   const { productId } = props;
@@ -8,15 +7,35 @@ const EditProductMain = (props) => {
     <>
       <section className="content-main" style={{ maxWidth: "1200px" }}>
         <form>
-          <div className="content-header">
-            <Link to="/admin/products" className="btn btn-danger text-white">
-              Go to products
-            </Link>
-            <h2 className="content-title">Update Product</h2>
-            <div>
-              <button type="submit" className="btn btn-primary">
-                Publish now
-              </button>
+          <div className="pcShow">
+            <div className="content-header">
+              <Link to="/admin/products" className="btn btn-danger text-white">
+                Go to products
+              </Link>
+              <h2 className="content-title">Update Product</h2>
+              <div>
+                <button type="submit" className="btn btn-primary">
+                  Publish now
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="spShow">
+            <div className="content-header">
+              <div className="btn-box">
+                <Link
+                  to="/admin/products"
+                  className="btn btn-danger text-white"
+                >
+                  Go to products
+                </Link>
+                <div>
+                  <button type="submit" className="btn btn-primary">
+                    Publish now
+                  </button>
+                </div>
+              </div>
+              <h2 className="content-title">Update Product</h2>
             </div>
           </div>
 

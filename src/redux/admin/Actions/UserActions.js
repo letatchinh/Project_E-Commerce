@@ -59,7 +59,7 @@ export const listUser = () => async (dispatch, getState) => {
   try {
     await dispatch({ type: USER_LIST_REQUEST });
 
-    let { userLogin: userInfo } = getState();
+    // let { userLogin: userInfo } = getState();
 
     const config = {
       headers: {

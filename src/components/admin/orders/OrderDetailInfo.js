@@ -9,7 +9,7 @@ const OrderDetailInfo = () => {
             <i className="text-success fas fa-user"></i>
           </span>
           <div className="text">
-            <h6 className="mb-1">Cusomer</h6>
+            <h6 className="mb-1">Cutsomer</h6>
             <p className="mb-1">
               User Adam <br />
               <a href={`mailto:user@example.com`}>user@example.com</a>
@@ -24,6 +24,19 @@ const OrderDetailInfo = () => {
           </span>
           <div className="text">
             <h6 className="mb-1">Order info</h6>
+            <p className="mb-1">
+              Shipping: Tanza <br /> Pay method: PayPal
+            </p>
+          </div>
+        </article>
+      </div>
+      <div className="col-md-6 col-lg-4">
+        <article className="icontext align-items-start">
+          <span className="icon icon-sm rounded-circle alert-success">
+            <i className="text-success fa-solid fa-circle-check"></i>
+          </span>
+          <div className="text">
+            <h6 className="mb-1">Delivered</h6>
             <p className="mb-1">
               Shipping: Tanza <br /> Pay method: PayPal
             </p>

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { listUser } from "../../../redux/admin/Actions/UserActions.js";
@@ -16,7 +16,7 @@ const UserComponent = () => {
   return (
     <section className="content-main">
       <div className="content-header">
-        <h2 className="content-title">Cusomer</h2>
+        <h2 className="content-title">Customer</h2>
         <div>
           <Link to="#" className="btn btn-primary">
             <i className="material-icons md-plus"></i>Create new

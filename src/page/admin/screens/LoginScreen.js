@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import Message from "../../../components/admin/LoadingError/Error.js";
 import Loading from "../../../components/admin/LoadingError/Loading.js";
-import { listUser, login } from "../../../redux/admin/Actions/UserActions.js";
+import { login } from "../../../redux/admin/Actions/UserActions.js";
 const Login = () => {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -12,7 +12,6 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
-  // const users = useSelector((state) => state.userList);
   const { error, loading, userInfo } = userLogin;
 
   const submitHandler = (e) => {

@@ -17,7 +17,7 @@ const MainProducts = () => {
   return (
     <section className="content-main">
       <div className="content-header">
-        <h2 className="cotent-title">Products</h2>
+        <h2 className="content-title">Products</h2>
         <div>
           <Link to="/admin/addproduct" className="btn btn-primary">
             Create New
