@@ -1,19 +1,41 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Product from "./Product";
 // import products from "../../../data/Products";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { listProducts } from "../../../redux/admin/Actions/ProductActions.js";
+import Loading from "../LoadingError/Loading";
+import Message from "../LoadingError/Error";
 const MainProducts = () => {
-  const [products, setProducts] = useState([]);
-  // console.log("a");
-  const fetchproducts = useCallback(async () => {
-    const data = await axios.get("/api/products");
-    setProducts(data.data);
-  }, []);
+  let [arrProduct, setarrProduct] = useState([]);
+  const dispatch = useDispatch();
+  let navigator = useNavigate();
+
+  const productList = useSelector((state) => state.productList);
+  const { loading, error, products } = productList;
+
+  const productDelete = useSelector((state) => state.productDelete);
+  const { error: errorDelete, success: successDelete } = productDelete;
+  const fetch = useCallback(async () => {
+    await dispatch(listProducts());
+  }, [dispatch, productDelete]);
   useEffect(() => {
-    fetchproducts();
-  }, [fetchproducts]);
-  console.log(products);
+    fetch();
+    // setarrProduct(arrProduct);
+  }, [fetch]);
+  // let arrProduct = [];
+  for (const key in products) {
+    arrProduct.push(products[key].name);
+  }
+  // console.log(arrProduct.includes("Veraaaaa1"));
+  const handleInputOnChange = (e) => {
+    e.preventDefault();
+    if (arrProduct.includes(e.target.value.trim())) {
+      console.log("OK");
+    } else {
+      console.log("Not OK");
+    }
+  };
   return (
     <section className="content-main">
       <div className="content-header">
@@ -33,6 +55,7 @@ const MainProducts = () => {
                 type="search"
                 placeholder="Search..."
                 className="form-control p-2"
+                onChange={handleInputOnChange}
               />
             </div>
             <div className="col-lg-2 col-6 col-md-3">
@@ -55,12 +78,21 @@ const MainProducts = () => {
         </header>
 
         <div className="card-body">
-          <div className="row">
-            {/* Products */}
-            {products.map((product) => (
-              <Product product={product} key={product._id} />
-            ))}
-          </div>
+          {errorDelete && (
+            <Message variant="alert-danger">{errorDelete}</Message>
+          )}
+          {loading ? (
+            <Loading />
+          ) : error ? (
+            <Message variant="alert-danger">{error}</Message>
+          ) : (
+            <div className="row">
+              {/* Products */}
+              {products.map((product) => (
+                <Product product={product} key={product._id} />
+              ))}
+            </div>
+          )}
 
           <nav className="float-end mt-4" aria-label="Page navigation">
             <ul className="pagination">

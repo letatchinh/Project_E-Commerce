@@ -1,4 +1,11 @@
 import {
+  productCreateReducer,
+  productDeleteReducer,
+  productEditReducer,
+  productListReducer,
+  productUpdateReducer,
+} from "./admin/Reducers/ProductReducers";
+import {
   userListReducer,
   userLoginReducer,
 } from "./admin/Reducers/userReducers";
@@ -14,6 +21,11 @@ const rootReducer = combineReducers({
   filterProduct: filterProductReducer,
   userLogin: userLoginReducer,
   userList: userListReducer,
+  productList: productListReducer,
+  productDelete: productDeleteReducer,
+  productCreate: productCreateReducer,
+  productEdit: productEditReducer,
+  productUpdate: productUpdateReducer,
 });
 
 export default rootReducer;
