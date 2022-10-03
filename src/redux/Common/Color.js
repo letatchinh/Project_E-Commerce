@@ -4,7 +4,7 @@ const initvalue = {
   status : true,
   colorPrimary : "#ee4d2d",
   colorBackgroungLight : 'white',
-  colorTextLight : 'white',
+  colorTextLight : 'rgb(178, 186, 194)',
   colorTextDark : '#212529',
   mainColorText : '#212529',
   mainColorStartRatingDark : 'rgba(0, 0, 0, 0.26)',
