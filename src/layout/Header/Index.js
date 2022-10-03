@@ -99,7 +99,7 @@ export default function Index() {
             </Menu>
     </Stack>
         <Grid flexWrap='nowrap' container justifyContent={"space-around"} alignItems={"center"}>
-          <Grid item xs={1}>
+          <Grid item xs={2}>
             <Link
               onClick={() => {
                 dispatch(setSearch(""));
