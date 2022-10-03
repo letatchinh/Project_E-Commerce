@@ -860,7 +860,7 @@
           "listRating": [],
           "id": 4,
           "isCheckedPayment": true,
-          "quanlity": 1
+          "quanlity": 2
         }
       ],
       "listOrder": [
@@ -928,6 +928,28 @@
           "taxShip": 0,
           "timeOrder": "2-10-2022 11:26:23 PM",
           "totalBill": 55
+        },
+        {
+          "addressShip": "",
+          "id": "26620f7c-c3cd-4f78-a490-ae5cfcfb02b8",
+          "listProductOrder": [
+            {
+              "name": "ao dep234",
+              "price": "11",
+              "image": "https://baoduyenbabyhouse.com/wp-content/uploads/2022/03/anh-ao-co-tron_045453429.jpg",
+              "isSell": "false",
+              "discount": "0",
+              "rating": 0,
+              "listRating": [],
+              "id": 4,
+              "isCheckedPayment": true,
+              "quanlity": 1
+            }
+          ],
+          "status": false,
+          "taxShip": 0,
+          "timeOrder": "3-10-2022 4:32:05 PM",
+          "totalBill": 11
         }
       ],
       "phone": "",
@@ -1059,6 +1081,11 @@
       "idProduct": 3,
       "idUser": "3de95727-a00a-4dd9-af44-b014ee2d9034",
       "id": 21
+    },
+    {
+      "idProduct": 4,
+      "idUser": "3de95727-a00a-4dd9-af44-b014ee2d9034",
+      "id": 22
     }
   ]
 }

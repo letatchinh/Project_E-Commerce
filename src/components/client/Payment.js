@@ -120,14 +120,14 @@ export default function Payment() {
         <div style={{ background: mainBackGround2, padding: "20px" }}>
         {activeStep === 0  && <ErrorNoItem src='https://bizweb.dktcdn.net/100/351/215/themes/713955/assets/empty-cart.png?1617619216743'/>}
           {activeStep === 1  && (
-            <Container sx={{ background: mainBackGround, borderRadius: "10px" }}>
+            <Container sx={{ background: 'white', borderRadius: "10px" }}>
               <Stack
                 spacing={3}
                 borderBottom="2px solid #C4C4C4"
                 padding="20px"
                 textAlign="center"
               >
-                <Typography variant="h4" color={mainColorText}>Payment </Typography>
+                <Typography variant="h4">Payment </Typography>
                 <Stepper activeStep={activeStep} alternativeLabel>
                   {steps.map((label) => (
                     <Step key={label}>
@@ -237,7 +237,7 @@ export default function Payment() {
               </Stack>
             </Container>) }
           { activeStep === 2 && (
-            <Container sx={{ background: mainBackGround, borderRadius: "10px" }}>
+            <Container sx={{ background: 'white', borderRadius: "10px"  , padding : '10px'}}>
               <OrderSuccess />
             </Container>
           )}
