@@ -78,6 +78,14 @@ useEffect(() => {
     const newStart = (value - 1) * limit;
     setStart(newStart);
   };
+  useEffect(() => {
+    if(listReducer.length !== 0){
+      setCount(Math.ceil(listReducer.length / limit));
+    }
+    else{
+      setCount(Math.ceil(listMainReducer.length / limit));
+    }
+  },[listReducer])
   return (
     <>
     <div style={{background : mainBackGround}}>

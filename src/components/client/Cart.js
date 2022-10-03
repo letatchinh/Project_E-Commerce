@@ -14,7 +14,7 @@ import ItemCart from "./ItemCart";
   return (
     <List
       sx={{
-        width: "450px",
+        maxWidth: "450px",
         borderRadius: "20px",
         padding: "10px",
       }}

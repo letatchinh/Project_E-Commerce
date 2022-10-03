@@ -46,7 +46,7 @@ export default function ItemCart({ value }) {
         alt="Remy Sharp"
         src={value.image}
       />
-      <Stack margin='0 35px'>
+      <Stack margin='0 10px'>
         
           <Typography variant="body1" fontWeight='500'>{value.name}</Typography>
         

@@ -5,7 +5,7 @@ import Header from "../../layout/Header/Index";
 
 export default function HomePageUser() {
   return (
-    <div>
+    <div style={{minWidth : '435px'}}>
       <Header />
       <Outlet />
       <Footer />
