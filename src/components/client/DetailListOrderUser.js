@@ -28,10 +28,11 @@ export default function DetailListOrderUser({ id,click }) {
     <Stack>
       <Stack
         justifyContent="space-between"
-        direction="row"
+        direction={{sm : 'row' , xs : 'column'}}
         padding="10px"
         borderBottom="1px solid #CACACA"
-        alignItems='center'
+        alignItems={{sm : 'center' , xs : 'flex-start'}}
+        spacing={1}
       >
       <Button onClick={click} variant="outlined">
         Back

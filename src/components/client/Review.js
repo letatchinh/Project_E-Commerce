@@ -6,7 +6,7 @@ import Rating from '@mui/material/Rating';
 export default function Review(props) {
     const {comment,rating,time,username} = props
   return (
-    <Stack sx={{border : '2px solid #f3f3f3', padding : '10px' , borderRadius : '10px' , width : '50%' , margin : '10px 0'}}>
+    <Stack sx={{border : '2px solid #f3f3f3', padding : '10px' , borderRadius : '10px' , width : {sm : '50%' , sx : '90%'} , margin : '10px 0'}}>
     <Typography variant="h6">{username}</Typography>
     <Rating name="half-rating" defaultValue={rating} precision={0.5} />
     <Typography>{time}</Typography>

@@ -9,6 +9,7 @@ import {
   userListReducer,
   userLoginReducer,
 } from "./admin/Reducers/userReducers";
+import commonReducer from "./Common/Color";
 import filterProductReducer from "./filterProduct/Reducers";
 import userReducer from "./login/Reducers";
 import shopReducer from "./shopping/Shopping-reducers";
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   productCreate: productCreateReducer,
   productEdit: productEditReducer,
   productUpdate: productUpdateReducer,
+  common: commonReducer,
 });
 
 export default rootReducer;

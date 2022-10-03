@@ -1,4 +1,4 @@
-import { Alert, Button, Link, Skeleton, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Link, Skeleton, TextField, Typography } from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -85,15 +85,18 @@ export default function DetailProduct() {
           <Skeleton variant="rounded" width={420} height={120} />
         </Stack>
       ) : (
-        <Container>
-          <Stack justifyContent="space-between" direction="row" spacing={5}>
-            <img style={{ width: "50%" }} src={image} alt="name" />
-            <Stack width="70%" spacing={2}>
-              <Typography variant="h5" fontWeight="600">
+      <div style={{background : 'rgb(244, 244, 244)' , padding : '20px 0'}}>
+      <Container sx={{background : 'white',padding : '10px 0'}}>
+          <Stack  justifyContent="space-between" direction={{sm : 'row' , xs : 'column'}} spacing={1}>
+          <Box sx={ {width :{sm : '50%' , xs : '100%'}}} >
+            <img src={image} alt="name" />
+          </Box>
+            <Stack alignItems={{sm : 'flex-start', xs : 'center'}} width={{sm : '60%' , xs : '100%'}} spacing={2}>
+              <Typography variant="h5" fontWeight="500">
                 {name}
               </Typography>
               <Stack
-                width="50%"
+                width={{sm : '60%' , xs : '80%'}} 
                 sx={{
                   padding: "20px",
                   border: "2px solid #f3f3f3",
@@ -119,6 +122,7 @@ export default function DetailProduct() {
                       name="read-only"
                       value={parseInt(rating)}
                       readOnly
+                      size="small"
                     />
 
                     <Link href="#review">
@@ -144,8 +148,9 @@ export default function DetailProduct() {
                   ADD
                 </Button>
               </Stack>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <Stack spacing={2}>
+              <Box width='80%'>
+              <form  onSubmit={handleSubmit(onSubmit)}>
+                <Stack spacing={2} >
                   <Typography variant="h6">WRITE A CUSTOMER REVIEW</Typography>
                   <Typography variant="h5">Rating</Typography>
                   <Rating
@@ -174,6 +179,7 @@ export default function DetailProduct() {
                   </Button>
                 </Stack>
               </form>
+              </Box>
               {errors.comment && errors.comment.type === "maxLength" && (
                 <Alert severity="error">Không được quá 100 kí tự</Alert>
               )}
@@ -182,13 +188,14 @@ export default function DetailProduct() {
               )}
             </Stack>
           </Stack>
-          <Stack sx={{ marginTop: "50px" }}>
+          <Stack  sx={{  padding : '50px 10px'}}>
             <Typography id="review" variant="h5">
               Review
             </Typography>
             {listRating && <ListReview data={listRating} />}
           </Stack>
         </Container>
+      </div>
       )}
     </>
   );
