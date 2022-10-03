@@ -24,6 +24,9 @@ import { KEY_USER } from "../../constant/LocalStored";
 import { useNavigate } from "react-router-dom";
 import PaymentApi from "../../apis/PaymentApi";
 export default function Payment() {
+  const mainBackGround = useSelector(state => state.common.mainBackGround)
+  const mainBackGround2 = useSelector(state => state.common.mainBackGround2)
+  const mainColorText = useSelector(state => state.common.mainColorText)
   const users = JSON.parse(localStorage.getItem(KEY_USER))
   const navigate = useNavigate()
   useEffect(() => {
@@ -114,21 +117,21 @@ export default function Payment() {
   };
   return (
     <>
-        <div style={{ background: "rgb(240, 242, 245)", padding: "20px" }}>
+        <div style={{ background: mainBackGround2, padding: "20px" }}>
         {activeStep === 0  && <ErrorNoItem src='https://bizweb.dktcdn.net/100/351/215/themes/713955/assets/empty-cart.png?1617619216743'/>}
           {activeStep === 1  && (
-            <Container sx={{ background: "white", borderRadius: "10px" }}>
+            <Container sx={{ background: mainBackGround, borderRadius: "10px" }}>
               <Stack
                 spacing={3}
                 borderBottom="2px solid #C4C4C4"
                 padding="20px"
                 textAlign="center"
               >
-                <Typography variant="h4">Payment </Typography>
+                <Typography variant="h4" color={mainColorText}>Payment </Typography>
                 <Stepper activeStep={activeStep} alternativeLabel>
                   {steps.map((label) => (
                     <Step key={label}>
-                      <StepLabel>{label}</StepLabel>
+                      <StepLabel color='primary'>{label}</StepLabel>
                     </Step>
                   ))}
                 </Stepper>
@@ -234,7 +237,7 @@ export default function Payment() {
               </Stack>
             </Container>) }
           { activeStep === 2 && (
-            <Container sx={{ background: "white", borderRadius: "10px" }}>
+            <Container sx={{ background: mainBackGround, borderRadius: "10px" }}>
               <OrderSuccess />
             </Container>
           )}

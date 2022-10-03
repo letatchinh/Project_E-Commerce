@@ -255,10 +255,10 @@ export default function InfoUser() {
         </Stack>
       </form>
       <List style={{ display: !status ? "block" : "none" }}>
-        <ItemInfoUser icon={<PeopleIcon />} value={user.name} />
-        <ItemInfoUser icon={<EmailIcon />} value={user.email} />
-        <ItemInfoUser icon={<PhoneIcon />} value={user.phone} />
-        <ItemInfoUser icon={<LocationOnIcon />} value={user.address} />
+        <ItemInfoUser icon={<PeopleIcon color="primary" />} value={user.name} />
+        <ItemInfoUser icon={<EmailIcon color="primary" />} value={user.email} />
+        <ItemInfoUser icon={<PhoneIcon color="primary" />} value={user.phone} />
+        <ItemInfoUser icon={<LocationOnIcon  color="primary"/>} value={user.address} />
       </List>
       <Button
         onClick={() => setStatus(!status)}
