@@ -17,9 +17,13 @@ import shopReducer from "./shopping/Shopping-reducers";
 const { combineReducers } = require("redux");
 
 const rootReducer = combineReducers({
+  //user
+  common: commonReducer,
   shop: shopReducer,
   user: userReducer,
   filterProduct: filterProductReducer,
+
+  //admin
   userLogin: userLoginReducer,
   userList: userListReducer,
   productList: productListReducer,
@@ -27,7 +31,6 @@ const rootReducer = combineReducers({
   productCreate: productCreateReducer,
   productEdit: productEditReducer,
   productUpdate: productUpdateReducer,
-  common: commonReducer,
 });
 
 export default rootReducer;
