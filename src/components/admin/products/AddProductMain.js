@@ -1,19 +1,77 @@
-import React from "react";
+import { wait } from "@testing-library/user-event/dist/utils";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { createProduct } from "../../../redux/admin/Actions/ProductActions";
+import { PRODUCT_CREATE_RESET } from "../../../redux/admin/Constants/ProductContants";
+import Message from "../LoadingError/Error";
+import Loading from "../LoadingError/Loading";
 const AddProductMain = () => {
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState(0);
+  const [image, setImage] = useState("");
+  const [countInStock, setCountInStock] = useState(0);
+  const [description, setDescription] = useState("");
+
+  const dispatch = useDispatch();
+  const productCreate = useSelector((state) => state.productCreate);
+  const { loading, error, product } = productCreate;
+  const fetch = useCallback(async () => {
+    if (product) {
+      toast.success("Product Added");
+      dispatch({ type: PRODUCT_CREATE_RESET });
+      setName("");
+      setDescription("");
+      setCountInStock(0);
+      setImage("");
+      setPrice(0);
+    }
+  }, [product, dispatch]);
+  useEffect(() => {
+    fetch();
+  }, [fetch]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(createProduct(name, price, description, image, countInStock));
+  };
   return (
     <>
+      <ToastContainer />
       <section className="content-main" style={{ maxWidth: "1200px" }}>
-        <form>
-          <div className="content-header">
-            <Link to="/admin/products" className="btn btn-danger text-white">
-              Go to products
-            </Link>
-            <h2 className="content-title">Add product</h2>
-            <div>
-              <button type="submit" className="btn btn-primary">
-                Publish now
-              </button>
+        <form onSubmit={submitHandler}>
+          <div className="pcShow">
+            <div className="content-header">
+              <Link to="/admin/products" className="btn btn-danger text-white">
+                Go to products
+              </Link>
+              <h2 className="content-title">Add product</h2>
+              <div>
+                <button type="submit" className="btn btn-primary">
+                  Publish now
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="spShow">
+            <div className="content-header">
+              <div className="btn-box">
+                <div>
+                  <Link
+                    to="/admin/products"
+                    className="btn btn-danger text-white"
+                  >
+                    Go to products
+                  </Link>
+                </div>
+                <div>
+                  <button type="submit" className="btn btn-primary">
+                    Publish now
+                  </button>
+                </div>
+              </div>
+              <h2 className="content-title">Add product</h2>
             </div>
           </div>
 
@@ -21,6 +79,8 @@ const AddProductMain = () => {
             <div className="col-xl-8 col-lg-8">
               <div className="card mb-4 shadow-sm">
                 <div className="card-body">
+                  {error && <Message variant="alert-danger">{error}</Message>}
+                  {loading && <Loading />}
                   <div className="mb-4">
                     <label htmlFor="product_title" className="form-label">
                       Product title
@@ -31,6 +91,8 @@ const AddProductMain = () => {
                       className="form-control"
                       id="product_title"
                       required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                     />
                   </div>
                   <div className="mb-4">
@@ -43,6 +105,8 @@ const AddProductMain = () => {
                       className="form-control"
                       id="product_price"
                       required
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
                     />
                   </div>
                   <div className="mb-4">
@@ -55,6 +119,8 @@ const AddProductMain = () => {
                       className="form-control"
                       id="product_price"
                       required
+                      value={countInStock}
+                      onChange={(e) => setCountInStock(e.target.value)}
                     />
                   </div>
                   <div className="mb-4">
@@ -64,6 +130,8 @@ const AddProductMain = () => {
                       className="form-control"
                       rows="7"
                       required
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                   </div>
                   <div className="mb-4">
@@ -72,8 +140,11 @@ const AddProductMain = () => {
                       placeholder="Enter Image URL"
                       className="form-control"
                       type="text"
+                      value={image}
+                      required
+                      onChange={(e) => setImage(e.target.value)}
                     />
-                    <input className="form-control mt-3" type="file" />
+                    {/* <input className="form-control mt-3" type="file" /> */}
                   </div>
                 </div>
               </div>

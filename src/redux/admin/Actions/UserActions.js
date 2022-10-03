@@ -1,4 +1,8 @@
 import {
+  USER_LIST_FAIL,
+  USER_LIST_REQUEST,
+  USER_LIST_RESET,
+  USER_LIST_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -27,12 +31,16 @@ export const login = (email, password) => async (dispatch) => {
 
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
     dispatch({
       type: USER_LOGIN_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: message,
     });
   }
 };
@@ -41,4 +49,39 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
+  dispatch({ type: USER_LIST_RESET });
+};
+
+//ALL USER
+export const listUser = () => async (dispatch, getState) => {
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMmVjNWQxMDMzY2YwMWM1Zjc4MDI5ZSIsImlhdCI6MTY2NDYxMTU1MCwiZXhwIjoxNjY3MjAzNTUwfQ.qEqyNfDJtKHm8qbD1oRZFOsyPLFs8Unp3bqQ-74Y3Gs";
+  try {
+    await dispatch({ type: USER_LIST_REQUEST });
+
+    // let { userLogin: userInfo } = getState();
+
+    const config = {
+      headers: {
+        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/users`, config);
+
+    dispatch({ type: USER_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: USER_LIST_FAIL,
+      payload: message,
+    });
+  }
 };

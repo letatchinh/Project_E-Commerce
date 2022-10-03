@@ -6,13 +6,16 @@ import { logout } from "../../redux/admin/Actions/UserActions";
 const Header = (props) => {
   const dispatch = useDispatch();
 
-  const { handleClickMenu, isDisplay, handleDisplay } = props;
+  const { handleClickMenu, isDisplay, handleDisplay, isClickMobile } = props;
 
   const logoutHandler = (e) => {
     e.preventDefault();
     dispatch(logout());
     // console.log(dispatch(logout));
   };
+  // handleDisplay = (e) => {
+  //   isClickMobile = false;
+  // };
   return (
     <header className="main-header navbar">
       <div className="col-search">
@@ -28,12 +31,12 @@ const Header = (props) => {
               <i className="fa fa-search"></i>
             </button>
           </div>
-          <datalist id="search_terms">
+          {/* <datalist id="search_terms">
             <option value="Products" />
             <option value="New orders" />
             <option value="Apple iphone" />
             <option value="Ahmed Hassan" />
-          </datalist>
+          </datalist> */}
         </form>
       </div>
 
@@ -61,7 +64,12 @@ const Header = (props) => {
               English
             </Link>
           </li>
-          <li className="dropdown nav-item" onClick={() => handleDisplay()}>
+          <li
+            className="dropdown nav-item"
+            onClick={() => {
+              handleDisplay();
+            }}
+          >
             <Link className="dropdown-toggle" data-bs-toggle="dropdown" to="#">
               <img
                 className="img-xs rounded-circle"
