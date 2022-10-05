@@ -949,7 +949,7 @@
           "listRating": [],
           "id": 4,
           "isCheckedPayment": true,
-          "quanlity": 5
+          "quanlity": 6
         },
         {
           "name": "Áo Polo Nữ Cafe Phối Bo Kiểm Soát Mùi Chống Tia UV",
@@ -966,7 +966,7 @@
           "listRating": [],
           "id": 6,
           "isCheckedPayment": true,
-          "quanlity": 3
+          "quanlity": 4
         },
         {
           "name": "Áo Polo Nữ Coolmax Lacoste",
@@ -1011,7 +1011,7 @@
           ],
           "id": 5,
           "isCheckedPayment": true,
-          "quanlity": 5
+          "quanlity": 7
         }
       ],
       "listOrder": [

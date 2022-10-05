@@ -24,9 +24,9 @@ import EmailIcon from "@mui/icons-material/Email";
 import MyTypography from "../../components/client/MyTypography";
 import BlockIconFooter from "../../components/client/BlockIconFooter";
 const Footer = () => {
-  const mainBackGround = useSelector((state) => state.common.mainBackGround);
+  const mainBackGround2 = useSelector((state) => state.common.mainBackGround2);
   return (
-    <div style={{ background: mainBackGround, margin: "20px 0",position : 'relative' }}>
+    <div style={{ background: mainBackGround2, marginTop: "20px",position : 'relative' }}>
     <div className="buttonGoTop" style={{position : 'absolute',right : '10px',top : '40px',boxShadow : '0 0 5px 2px white', borderRadius : '50%',padding : '2px'}}><BackToTop/></div>
       <Container>
         <Grid container spacing={2}>
@@ -88,7 +88,7 @@ const Footer = () => {
               </MyTypography>
             </Stack>
           </Grid>
-          <Grid item md={4} xs={6}>
+          <Grid item md={4} xs={12}>
             <Stack spacing={2}>
               <Stack direction="row" alignItems="center" spacing={2}>
               <BlockIconFooter><LocationOnIcon color="primary" /></BlockIconFooter>

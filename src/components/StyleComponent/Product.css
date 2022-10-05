@@ -21,7 +21,7 @@ transition: all 0.3s ease;
 }
 .boxMain:hover{
     box-shadow: 0 0 6px 2px #e5e3e3;
-
+    transition: 0.5s ease;
 }
 .boxMain:hover .ButtonHoverAddAndBut{
     transform : translateY(30px);
