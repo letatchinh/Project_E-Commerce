@@ -10,17 +10,17 @@ import {
   fecthUserRequest,
   fetchCheckLogin,
   fetchRegisterRequest,
-} from "../../redux/login/Actions";
-import * as TYPES from "../../redux/login/Types";
+} from "../../../redux/login/Actions";
+import * as TYPES from "../../../redux/login/Types";
 import { Link, useNavigate } from "react-router-dom";
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import axios from "axios";
-import { URL_BASE } from "../../constant/UrlConstant";
+import { URL_BASE } from "../../../constant/UrlConstant";
 import { v4 } from "uuid";
-import { KEY_USER } from "../../constant/LocalStored";
+import { KEY_USER } from "../../../constant/LocalStored";
 
 export default function LoginUser() {
   const [display, setDisplay] = useState(false);

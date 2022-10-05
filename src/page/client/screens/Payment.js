@@ -15,14 +15,14 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 } from "uuid";
 import axios from "axios";
-import OrderSuccess from "./OrderSuccess";
-import ItemDetailistOrderUser from "./ItemDetailistOrderUser";
-import { fetchAddListOrderRequest } from "../../redux/login/Actions";
-import {getToday} from "../../constant/FunctionCommom";
-import ErrorNoItem from './ErrorNoItem'
-import { KEY_USER } from "../../constant/LocalStored";
+import OrderSuccess from "../../../components/client/OrderSuccess";
+import ItemDetailistOrderUser from "../../../components/client/ItemDetailistOrderUser";
+import { fetchAddListOrderRequest } from "../../../redux/login/Actions";
+import {getToday} from "../../../constant/FunctionCommom";
+import ErrorNoItem from '../../../components/client/ErrorNoItem'
+import { KEY_USER } from "../../../constant/LocalStored";
 import { useNavigate } from "react-router-dom";
-import PaymentApi from "../../apis/PaymentApi";
+import PaymentApi from "../../../apis/PaymentApi";
 export default function Payment() {
   const mainBackGround = useSelector(state => state.common.mainBackGround)
   const mainBackGround2 = useSelector(state => state.common.mainBackGround2)

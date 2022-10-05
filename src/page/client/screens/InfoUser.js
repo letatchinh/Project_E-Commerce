@@ -1,28 +1,28 @@
 import { Button, List, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import ItemInfoUser from "./ItemInfoUser";
+import ItemInfoUser from "../../../components/client/ItemInfoUser";
 import PeopleIcon from "@mui/icons-material/People";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import { Stack } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
-import ContentTop from "./ContentTop";
+import ContentTop from "../../../components/client/ContentTop";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useForm } from "react-hook-form";
 import "@fontsource/roboto/700.css";
 import DoneIcon from "@mui/icons-material/Done";
-import { fetchEditUserRequest } from "../../redux/login/Actions";
+import { fetchEditUserRequest } from "../../../redux/login/Actions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import * as regex from "../../constant/YupGlobal.js";
+import * as regex from "../../../constant/YupGlobal.js";
 import Alert from "@mui/material/Alert";
-import "../StyleComponent/StyleCommomUser.css";
+import "../../../components/StyleComponent/StyleCommomUser.css";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { v4 } from "uuid";
-import { CAM_LE , HAI_CHAU , HOA_VANG ,THANH_KHE ,NGU_HANH_SON ,SON_TRA , LIEN_CHIEU,QUAN } from "../../constant/Key";
-import { KEY_USER } from "../../constant/LocalStored";
+import { CAM_LE , HAI_CHAU , HOA_VANG ,THANH_KHE ,NGU_HANH_SON ,SON_TRA , LIEN_CHIEU,QUAN } from "../../../constant/Key";
+import { KEY_USER } from "../../../constant/LocalStored";
 import { useNavigate } from "react-router-dom";
 
 export default function InfoUser() {

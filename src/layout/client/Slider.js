@@ -1,8 +1,8 @@
-import { Container, Stack } from '@mui/system'
+import {  Stack } from '@mui/system'
 import React from 'react'
 import Carousel from 'react-material-ui-carousel'
-import ItemSlider from './ItemSlider'
-import '../StyleComponent/Slider.css'
+import ItemSlider from '../../components/client/ItemSlider'
+import '../../components/StyleComponent/Slider.css'
 import { Grid } from '@mui/material'
 export default function Slider() {
     var items = [

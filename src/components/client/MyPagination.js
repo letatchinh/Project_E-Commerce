@@ -10,6 +10,6 @@ export default function MyPagination({count,page,onChange}) {
         
       });
   return (
-    <StyledPagination showFirstButton showLastButton color='primary'  variant="outlined" shape="rounded" count={count} page={page} onChange={onChange} />
+    <StyledPagination sx={{margin : '5px 0'}} showFirstButton showLastButton color='primary'  variant="outlined" shape="rounded" count={count} page={page} onChange={onChange} />
     )
 }

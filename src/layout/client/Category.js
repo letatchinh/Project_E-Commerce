@@ -3,8 +3,8 @@ import { Stack } from "@mui/system";
 import React from "react";
 import { useSelector } from "react-redux";
 import { v4 } from "uuid";
-import ContentTop from "./ContentTop";
-import ItemCategory from "./ItemCategory";
+import ContentTop from "../../components/client/ContentTop";
+import ItemCategory from "../../components/client/ItemCategory";
 export default function Category() {
   const listCategory = [
     {

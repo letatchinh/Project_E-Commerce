@@ -1,14 +1,14 @@
 import { Button, Pagination } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
-import ContentTop from "./ContentTop";
-import ItemListPaymentUser from "./ItemListPaymentUser";
+import ContentTop from "../../../components/client/ContentTop";
+import ItemListPaymentUser from "../../../components/client/ItemListPaymentUser";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
-import { URL_BASE } from "../../constant/UrlConstant";
+import { URL_BASE } from "../../../constant/UrlConstant";
 import { useSelector } from "react-redux";
 import { v4 } from "uuid";
-import { KEY_USER } from "../../constant/LocalStored";
+import { KEY_USER } from "../../../constant/LocalStored";
 import { useNavigate } from "react-router-dom";
 export default function ListPaymentUser() {
   const users = JSON.parse(localStorage.getItem(KEY_USER))

@@ -2,6 +2,7 @@
 import { userApi } from '../../apis/usersApi'
 import { KEY_USER } from '../../constant/LocalStored'
 import * as TYPES from './Types'
+import {  toast } from 'react-toastify';
 
 export const changeText = (type,payload) => {
     return {
@@ -62,6 +63,14 @@ export const fetchAddToCartRequest = (item) => {
                 localStorage.setItem(KEY_USER,JSON.stringify(newList));
                 dispatch(fecthAddToCart(newList))
                 userApi.editUser(newList,list.id)
+                (toast('Add Cart Success!', {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    draggable: true,
+                    progress: undefined,
+                    }))()
                }
                else{
                 const newListCart = list.listCarts.map(e => {
@@ -74,6 +83,14 @@ export const fetchAddToCartRequest = (item) => {
                 localStorage.setItem(KEY_USER,JSON.stringify(newList));
                 dispatch(fecthAddToCart(newList))
                 userApi.editUser(newList,list.id)
+                (toast('Add Cart Success!', {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    draggable: true,
+                    progress: undefined,
+                    }))()
                }
                
             } catch (error) {

@@ -5,16 +5,16 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import {  Grid, IconButton, InputBase, Menu, MenuItem, Paper, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fectchLogout } from "../../redux/login/Actions";
-import { IS_STATUS_LOGIN } from "../../redux/login/Types";
+import { fectchLogout } from "../../../redux/login/Actions"
+import { IS_STATUS_LOGIN } from "../../../redux/login/Types";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { setSearch } from "../../redux/shopping/Shopping-actions";
-import { KEY_USER } from "../../constant/LocalStored";
+import { setSearch } from "../../../redux/shopping/Shopping-actions";
+import { KEY_USER } from "../../../constant/LocalStored";
 import { useForm } from "react-hook-form";
-import IconCart from "../../components/client/IconCart";
-import '../../components/StyleComponent/Icons.css'
+import IconCart from "../../../components/client/IconCart";
+import '../../../components/StyleComponent/Icons.css'
 import LogoDevIcon from '@mui/icons-material/LogoDev';
-import SwitchBackGround from "../../components/client/SwitchBackGround";
+import SwitchBackGround from "../../../components/client/SwitchBackGround";
 export default function Index() {
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data) => {
@@ -48,7 +48,7 @@ export default function Index() {
   };
   return (
     <>
-     <div style={{background: "linear-gradient(#ee4d2d,#ff7337)" , padding : '5px'}}> <Container sx={{ flexGrow: 1 }}>
+     <div id="top" style={{background: "linear-gradient(#ee4d2d,#ff7337)" , padding : '5px'}}> <Container sx={{ flexGrow: 1 }}>
     <Stack direction='row' padding='0 20px' alignItems='center' justifyContent='flex-end'>
     <SwitchBackGround />
     <Button sx={{textTransform : 'capitalize'}}

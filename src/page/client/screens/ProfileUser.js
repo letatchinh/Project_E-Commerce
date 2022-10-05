@@ -11,7 +11,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { Link, useNavigate } from "react-router-dom";
 import ListAltIcon from '@mui/icons-material/ListAlt';
-import { KEY_USER } from "../../constant/LocalStored";
+import { KEY_USER } from "../../../constant/LocalStored";
 import { useSelector } from "react-redux";
 export default function ProfileUser({children}) {
   const users = JSON.parse(localStorage.getItem(KEY_USER))

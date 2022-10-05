@@ -3,12 +3,12 @@ import { Stack } from '@mui/system';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux';
-import { fetchRegisterRequest } from '../../redux/login/Actions';
-import { CAM_LE , HAI_CHAU , HOA_VANG ,THANH_KHE ,NGU_HANH_SON ,SON_TRA , LIEN_CHIEU,QUAN } from "../../constant/Key";
+import { fetchRegisterRequest } from '../../../redux/login/Actions';
+import { CAM_LE , HAI_CHAU , HOA_VANG ,THANH_KHE ,NGU_HANH_SON ,SON_TRA , LIEN_CHIEU,QUAN } from "../../../constant/Key";
 import { v4 } from 'uuid';
 import axios from 'axios';
-import { URL_BASE } from '../../constant/UrlConstant';
-import * as regex from "../../constant/YupGlobal.js";
+import { URL_BASE } from '../../../constant/UrlConstant';
+import * as regex from "../../../constant/YupGlobal.js";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 

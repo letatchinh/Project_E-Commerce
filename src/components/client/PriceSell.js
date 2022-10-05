@@ -4,7 +4,7 @@ import React from "react";
 export default function PriceSell(props) {
   const { isSell, price, discount, fontSize } = props;
   return (
-    <Stack direction="row">
+    <Stack direction="row" sx={{cursor : 'auto'}}>
       <span
         style={{
           display: isSell === "true" ? "block" : "none",
@@ -12,7 +12,7 @@ export default function PriceSell(props) {
           fontSize: fontSize ? fontSize : "20px",
         }}
       >
-        {price - (price * discount) / 100}Đ
+        đ{price - (price * discount) / 100}
       </span>
       <span
         style={{
@@ -22,7 +22,7 @@ export default function PriceSell(props) {
             isSell === "false" ? (fontSize ? fontSize : "20px") : "12px",
         }}
       >
-        {price}Đ
+        đ{price}
       </span>
     </Stack>
   );
