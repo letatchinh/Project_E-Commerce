@@ -13,10 +13,11 @@ const AddProductMain = () => {
   const [image, setImage] = useState("");
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
-
+  const [images, setImages] = useState([]);
   const dispatch = useDispatch();
   const productCreate = useSelector((state) => state.productCreate);
   const { loading, error, product } = productCreate;
+  console.log(product);
   const fetch = useCallback(async () => {
     if (product) {
       toast.success("Product Added");
@@ -26,15 +27,25 @@ const AddProductMain = () => {
       setCountInStock(0);
       setImage("");
       setPrice(0);
+      setImages([]);
     }
   }, [product, dispatch]);
   useEffect(() => {
     fetch();
   }, [fetch]);
-
+  const fileSelectedHandler = (e) => {
+    const newFiles = [];
+    for (let i = 0; i < e.target.files.length; i++) {
+      newFiles.push(e.target.files[i].name);
+    }
+    setImages(newFiles);
+  };
+  // console.log(images);
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(createProduct(name, price, description, image, countInStock));
+    dispatch(
+      createProduct(name, price, description, image, countInStock, images)
+    );
   };
   return (
     <>
@@ -143,6 +154,16 @@ const AddProductMain = () => {
                       value={image}
                       required
                       onChange={(e) => setImage(e.target.value)}
+                    />
+                    {/* <input className="form-control mt-3" type="file" /> */}
+                  </div>
+                  <div className="mb-4">
+                    <label className="form-label">ImageSub</label>
+                    <input
+                      type="file"
+                      multiple
+                      onChange={fileSelectedHandler}
+                      className="form-control mt-3"
                     />
                     {/* <input className="form-control mt-3" type="file" /> */}
                   </div>

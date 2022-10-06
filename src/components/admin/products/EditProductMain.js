@@ -17,6 +17,7 @@ const EditProductMain = (props) => {
   const [image, setImage] = useState("");
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
+  const [images, setImages] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -29,7 +30,14 @@ const EditProductMain = (props) => {
     error: errorUpdate,
     success: successUpdate,
   } = productUpdate;
-
+  const fileSelectedHandler = (e) => {
+    const newFiles = [];
+    for (let i = 0; i < e.target.files.length; i++) {
+      newFiles.push(e.target.files[i].name);
+    }
+    setImages(newFiles);
+  };
+  console.log(images);
   const fetch = useCallback(async () => {
     // if (!successUpdate) {
     //   // dispatch({ type: PRODUCT_UPDATE_RESET });
@@ -43,6 +51,7 @@ const EditProductMain = (props) => {
       setCountInStock(product.countInStock);
       setImage(product.image);
       setPrice(product.price);
+      setImages(product.images);
     }
     // }
   }, [product, dispatch, productId]);
@@ -60,6 +69,7 @@ const EditProductMain = (props) => {
         description,
         image,
         countInStock,
+        images,
       })
     );
     toast.success("Product Update");
@@ -177,6 +187,16 @@ const EditProductMain = (props) => {
                           value={image}
                           required
                           onChange={(e) => setImage(e.target.value)}
+                        />
+                        {/* <input className="form-control mt-3" type="file" /> */}
+                      </div>
+                      <div className="mb-4">
+                        <label className="form-label">ImageSub</label>
+                        <input
+                          type="file"
+                          multiple
+                          onChange={fileSelectedHandler}
+                          className="form-control mt-3"
                         />
                         {/* <input className="form-control mt-3" type="file" /> */}
                       </div>

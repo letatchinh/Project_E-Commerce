@@ -1142,7 +1142,63 @@
       "password": "100239989468106104646",
       "email": "cuonghuynh936@gmail.com",
       "listCarts": [],
-      "listOrder": [],
+      "listOrder": [
+        {
+          "addressShip": "64 trần cao vân,Tam Thuận,Thanh Khê,Đà nẵng",
+          "id": "7091bf26-6dec-4974-ab97-fae4e1405825",
+          "listProductOrder": [
+            {
+              "name": "Áo Polo Nữ Coolmax Lacoste",
+              "price": "11",
+              "image": [
+                "https://bizweb.sapocdn.net/thumb/large/100/438/408/products/apn3516-cba-3.jpg?v=1664173701000",
+                "https://bizweb.sapocdn.net/thumb/large/100/438/408/products/apn3516-hog-8.jpg?v=1664173701000",
+                "https://bizweb.sapocdn.net/thumb/large/100/438/408/products/apn3516-nau-cvn3186-bee-5.jpg?v=1664173701000"
+              ],
+              "isSell": "true",
+              "discount": "1",
+              "rating": "3",
+              "listRating": [
+                {
+                  "comment": "yeah",
+                  "rating": 4,
+                  "time": "25-9-2022 11:26:43 AM",
+                  "username": "adsasdasd",
+                  "id": 3
+                },
+                {
+                  "comment": "qua ok",
+                  "rating": 5,
+                  "time": "25-9-2022 11:25:18 AM",
+                  "username": "adsasdasd",
+                  "id": 2
+                },
+                {
+                  "comment": "ok la",
+                  "rating": 4,
+                  "time": "18-9-2022 2:35:11 PM",
+                  "username": "2367281133423878",
+                  "id": 1
+                },
+                {
+                  "comment": "ga",
+                  "rating": 0.5,
+                  "time": "25-9-2022 11:26:55 AM",
+                  "username": "adsasdasd",
+                  "id": 4
+                }
+              ],
+              "id": 5,
+              "isCheckedPayment": true,
+              "quanlity": 2
+            }
+          ],
+          "status": false,
+          "taxShip": 19200,
+          "timeOrder": "5-10-2022 19:51:28",
+          "totalBill": 19221.78
+        }
+      ],
       "phone": "32342423432",
       "name": "Cường Huỳnh Bá",
       "address": "64 trần cao vân,Tam Thuận,Thanh Khê,Đà nẵng",
@@ -1269,6 +1325,11 @@
       "idProduct": 4,
       "idUser": "3de95727-a00a-4dd9-af44-b014ee2d9034",
       "id": 24
+    },
+    {
+      "idProduct": 5,
+      "idUser": "e3a806b9-6296-4bad-8297-242828214bc9",
+      "id": 25
     }
   ]
 }

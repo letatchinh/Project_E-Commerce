@@ -26,8 +26,26 @@ import BlockIconFooter from "../../components/client/BlockIconFooter";
 const Footer = () => {
   const mainBackGround2 = useSelector((state) => state.common.mainBackGround2);
   return (
-    <div style={{ background: mainBackGround2, marginTop: "20px",position : 'relative' }}>
-    <div className="buttonGoTop" style={{position : 'absolute',right : '10px',top : '40px',boxShadow : '0 0 5px 2px white', borderRadius : '50%',padding : '2px'}}><BackToTop/></div>
+    <div
+      style={{
+        background: mainBackGround2,
+        paddingBottom: "10px",
+        position: "relative",
+      }}
+    >
+      <div
+        className="buttonGoTop"
+        style={{
+          position: "absolute",
+          right: "10px",
+          top: "40px",
+          boxShadow: "0 0 5px 2px white",
+          borderRadius: "50%",
+          padding: "2px",
+        }}
+      >
+        <BackToTop />
+      </div>
       <Container>
         <Grid container spacing={2}>
           <Grid item md={5} xs={6}>
@@ -71,7 +89,7 @@ const Footer = () => {
               </Stack>
             </Stack>
           </Grid>
-          <Grid item md={2} xs={6}>
+          <Grid item md={3} xs={6}>
             <MyTypography>About us</MyTypography>
             <Stack>
               <MyTypography className="cardContentHover" fontSize="14px">
@@ -91,20 +109,23 @@ const Footer = () => {
           <Grid item md={4} xs={12}>
             <Stack spacing={2}>
               <Stack direction="row" alignItems="center" spacing={2}>
-              <BlockIconFooter><LocationOnIcon color="primary" /></BlockIconFooter>
+                <BlockIconFooter>
+                  <LocationOnIcon color="primary" />
+                </BlockIconFooter>
                 <Stack>
-                <MyTypography fontWeight="400" fontSize="14px">
+                  <MyTypography fontWeight="400" fontSize="14px">
                     Công ty cổ phần Thời trang Ut Fashion
                   </MyTypography>
                   <MyTypography fontWeight="400" fontSize="14px">
                     Địa chỉ: Đường An Định - Phường Việt Hòa - Thành phố Hải
                     Dương - Hải Dương
                   </MyTypography>
-                 
                 </Stack>
               </Stack>
               <Stack direction="row" alignItems="center" spacing={2}>
-                <BlockIconFooter><PhoneIcon color="primary"/></BlockIconFooter>
+                <BlockIconFooter>
+                  <PhoneIcon color="primary" />
+                </BlockIconFooter>
                 <Stack>
                   <MyTypography fontWeight="400" fontSize="14px">
                     Liên hệ đặt hàng: 0905970965
@@ -118,14 +139,15 @@ const Footer = () => {
                 </Stack>
               </Stack>
               <Stack direction="row" spacing={2}>
-                <BlockIconFooter><EmailIcon color="primary"/></BlockIconFooter>
+                <BlockIconFooter>
+                  <EmailIcon color="primary" />
+                </BlockIconFooter>
                 <MyTypography fontWeight="400" fontSize="14px">
                   Email: letatchinh123@gmail.com
                 </MyTypography>
               </Stack>
             </Stack>
           </Grid>
-         
         </Grid>
       </Container>
     </div>

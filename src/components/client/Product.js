@@ -86,6 +86,7 @@ export default function Product({ item }) {
         </Typography>
       </CardContent>
       <Stack
+        className="scrollBarProduct"
         direction="row"
         spacing={1}
         padding="2px"

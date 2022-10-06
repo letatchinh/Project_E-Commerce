@@ -111,7 +111,7 @@ productRoute.post(
   protect,
   admin,
   asyncHandler(async (req, res) => {
-    const { name, price, description, image, countInStock } = req.body;
+    const { name, price, description, image, countInStock, images } = req.body;
     const productExists = await Product.findOne({ name });
     if (productExists) {
       res.status(400);
@@ -124,6 +124,7 @@ productRoute.post(
         image,
         countInStock,
         user: req.user._id,
+        images,
       });
       if (product) {
         const createdproduct = await product.save();
@@ -142,7 +143,7 @@ productRoute.put(
   protect,
   admin,
   asyncHandler(async (req, res) => {
-    const { name, price, description, image, countInStock } = req.body;
+    const { name, price, description, image, countInStock, images } = req.body;
     const product = await Product.findById(req.params.id);
 
     if (product) {
@@ -151,6 +152,7 @@ productRoute.put(
       product.description = description || product.description;
       product.image = image || product.image;
       product.countInStock = countInStock || product.countInStock;
+      product.images = images || product.images;
 
       const updatedProduct = await product.save();
       res.json(updatedProduct);
