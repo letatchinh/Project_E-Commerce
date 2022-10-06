@@ -5,13 +5,14 @@ import {
   IconButton,
   InputBase,
   Paper,
+  Typography,
 } from "@mui/material";
 import React from "react";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import PinterestIcon from "@mui/icons-material/Pinterest";
-import { Stack } from "@mui/system";
+import { Stack, styled } from "@mui/system";
 import { useSelector } from "react-redux";
 import "../../components/StyleComponent/Footer.css";
 import BackToTop from "../../components/client/BackToTop";
@@ -24,21 +25,23 @@ import EmailIcon from "@mui/icons-material/Email";
 import MyTypography from "../../components/client/MyTypography";
 import BlockIconFooter from "../../components/client/BlockIconFooter";
 const Footer = () => {
-  const mainBackGround2 = useSelector((state) => state.common.mainBackGround2);
+  const CustomTypoGraphy = styled(Typography)({
+    color : 'white'
+  })
   return (
-    <div style={{ background: mainBackGround2, marginTop: "20px",position : 'relative' }}>
+    <div style={{ background: 'linear-gradient(rgb(238, 77, 45), rgb(255, 115, 55))', paddingBottom: "20px",position : 'relative' }}>
     <div className="buttonGoTop" style={{position : 'absolute',right : '10px',top : '40px',boxShadow : '0 0 5px 2px white', borderRadius : '50%',padding : '2px'}}><BackToTop/></div>
       <Container>
         <Grid container spacing={2}>
           <Grid item md={5} xs={6}>
             <Stack spacing={3}>
-              <MyTypography fontWeight="400" fontSize="14px">
+              <CustomTypoGraphy   fontWeight="400" fontSize="14px">
                 “Đặt sự hài lòng của khách hàng là ưu tiên số 1 trong mọi suy
                 nghĩ hành động của mình” là sứ mệnh, là triết lý, chiến lược..
                 luôn cùng Ut Fashion tiến bước
-              </MyTypography>
+              </CustomTypoGraphy>
               <Stack spacing={1}>
-                <MyTypography>ĐĂNG KÝ NHẬN THÔNG TIN</MyTypography>
+                <CustomTypoGraphy>ĐĂNG KÝ NHẬN THÔNG TIN</CustomTypoGraphy>
                 <Paper
                   variant="outlined"
                   component="form"
@@ -55,8 +58,7 @@ const Footer = () => {
                   />
                   <Divider sx={{ height: 28 }} orientation="vertical" />
                   <IconButton
-                    color="primary"
-                    sx={{ p: "10px" }}
+                  sx={{color : 'white', p: "10px"}}
                     aria-label="directions"
                   >
                     <SendIcon />
@@ -64,64 +66,64 @@ const Footer = () => {
                 </Paper>
               </Stack>
               <Stack direction="row" spacing={2}>
-                <IconFooter icon={<FacebookIcon color="primary" />} />
-                <IconFooter icon={<InstagramIcon color="primary" />} />
-                <IconFooter icon={<YouTubeIcon color="primary" />} />
-                <IconFooter icon={<PinterestIcon color="primary" />} />
+                <IconFooter icon={<FacebookIcon sx={{color : 'white'}} />} />
+                <IconFooter icon={<InstagramIcon sx={{color : 'white'}} />} />
+                <IconFooter icon={<YouTubeIcon sx={{color : 'white'}} />} />
+                <IconFooter icon={<PinterestIcon sx={{color : 'white'}} />} />
               </Stack>
             </Stack>
           </Grid>
           <Grid item md={2} xs={6}>
-            <MyTypography>About us</MyTypography>
+            <CustomTypoGraphy>About us</CustomTypoGraphy>
             <Stack>
-              <MyTypography className="cardContentHover" fontSize="14px">
+              <CustomTypoGraphy className="cardContentHover" fontSize="14px">
                 Intro
-              </MyTypography>
-              <MyTypography className="cardContentHover" fontSize="14px">
+              </CustomTypoGraphy>
+              <CustomTypoGraphy className="cardContentHover" fontSize="14px">
                 Contact
-              </MyTypography>
-              <MyTypography className="cardContentHover" fontSize="14px">
+              </CustomTypoGraphy>
+              <CustomTypoGraphy className="cardContentHover" fontSize="14px">
                 recruit
-              </MyTypography>
-              <MyTypography className="cardContentHover" fontSize="14px">
+              </CustomTypoGraphy>
+              <CustomTypoGraphy className="cardContentHover" fontSize="14px">
                 News
-              </MyTypography>
+              </CustomTypoGraphy>
             </Stack>
           </Grid>
           <Grid item md={4} xs={12}>
             <Stack spacing={2}>
               <Stack direction="row" alignItems="center" spacing={2}>
-              <BlockIconFooter><LocationOnIcon color="primary" /></BlockIconFooter>
+              <BlockIconFooter><LocationOnIcon sx={{color : 'white'}} /></BlockIconFooter>
                 <Stack>
-                <MyTypography fontWeight="400" fontSize="14px">
+                <CustomTypoGraphy fontWeight="400" fontSize="14px">
                     Công ty cổ phần Thời trang Ut Fashion
-                  </MyTypography>
-                  <MyTypography fontWeight="400" fontSize="14px">
+                  </CustomTypoGraphy>
+                  <CustomTypoGraphy fontWeight="400" fontSize="14px">
                     Địa chỉ: Đường An Định - Phường Việt Hòa - Thành phố Hải
                     Dương - Hải Dương
-                  </MyTypography>
+                  </CustomTypoGraphy>
                  
                 </Stack>
               </Stack>
               <Stack direction="row" alignItems="center" spacing={2}>
-                <BlockIconFooter><PhoneIcon color="primary"/></BlockIconFooter>
+                <BlockIconFooter><PhoneIcon sx={{color : 'white'}}/></BlockIconFooter>
                 <Stack>
-                  <MyTypography fontWeight="400" fontSize="14px">
+                  <CustomTypoGraphy fontWeight="400" fontSize="14px">
                     Liên hệ đặt hàng: 0905970965
-                  </MyTypography>
-                  <MyTypography fontWeight="400" fontSize="14px">
+                  </CustomTypoGraphy>
+                  <CustomTypoGraphy fontWeight="400" fontSize="14px">
                     Thắc mắc đơn hàng: 0905970965
-                  </MyTypography>
-                  <MyTypography fontWeight="400" fontSize="14px">
+                  </CustomTypoGraphy>
+                  <CustomTypoGraphy fontWeight="400" fontSize="14px">
                     Góp ý khiếu nại: 1800 2086
-                  </MyTypography>
+                  </CustomTypoGraphy>
                 </Stack>
               </Stack>
               <Stack direction="row" spacing={2}>
-                <BlockIconFooter><EmailIcon color="primary"/></BlockIconFooter>
-                <MyTypography fontWeight="400" fontSize="14px">
+                <BlockIconFooter><EmailIcon sx={{color : 'white'}}/></BlockIconFooter>
+                <CustomTypoGraphy fontWeight="400" fontSize="14px">
                   Email: letatchinh123@gmail.com
-                </MyTypography>
+                </CustomTypoGraphy>
               </Stack>
             </Stack>
           </Grid>

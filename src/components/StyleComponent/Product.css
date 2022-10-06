@@ -24,8 +24,33 @@ transition: all 0.3s ease;
     transition: 0.5s ease;
 }
 .boxMain:hover .ButtonHoverAddAndBut{
-    transform : translateY(30px);
+    transform : translateY(30px) translateX(-5px);
     z-index : 2;
     opacity: 1;
     transition: 0.5s ease;
+}
+.hoverAddCart:hover{
+    border-color: #ee4d2d!important;
+    background-color: #FFEFEA!important;
+    transition: 0.5s ease;
+}
+.hoverAddCart:hover .hoverIconAddCart{
+    animation: rung 0.5s linear infinite;
+}
+@keyframes rung {
+    0%{
+        transform: rotate(0deg);
+    }
+    25%{
+        transform: rotate(-30deg);
+    }
+    50%{
+        transform: rotate(0deg);
+    }
+    75%{
+        transform: rotate(30deg);
+    }
+    100%{
+        transform: rotate(0deg);
+    }
 }

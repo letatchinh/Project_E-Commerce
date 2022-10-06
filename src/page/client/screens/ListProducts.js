@@ -10,6 +10,7 @@ import ErrorNoItem from "../../../components/client/ErrorNoItem";
 import MyPagination from "../../../components/client/MyPagination";
 import Product from "../../../components/client/Product";
 import SkeletonPruductUser from "../../../components/client/SkeletonPruductUser";
+import MyTypography from "../../../components/client/MyTypography";
 export default function ListProducts() {
   const dispatch = useDispatch()
   const limit = 8;
@@ -81,7 +82,15 @@ useEffect(() => {
     }
   },[listReducer])
   return (
-    <>
+    <Stack>
+
+  
+ 
+
+    {list.length !== 0 &&   <Stack  borderBottom='4px solid rgb(238, 77, 45)' alignItems='center'>
+          <MyTypography fontSize="1.5rem">Today's Suggestions
+      </MyTypography>
+        </Stack>} 
    <Grid container spacing={3}>
 {
 loading
@@ -93,18 +102,21 @@ loading
 : 
 list.length === 0 ?  <ErrorNoItem src="https://cdn.dribbble.com/users/2382015/screenshots/6065978/no_result_still_2x.gif?compress=1&resize=400x300"/> 
 :
-(list &&
+(
+  list &&
  list.map((e) => (
     <Grid className="abc" key={v4()} xs={6} md={(inputSearch) ? 4 : 3} item>
         <Product 
           item={e}
         />
     </Grid>
-  )))}
+  )))
+  }
 </Grid>
 {list.length !== 0 &&  <Stack alignItems="center" spacing={2} sx={{marginTop : '20px'}}>
 <MyPagination  count={count} page={page} onChange={handleChange} />
 </Stack>} 
-    </>
+   
+    </Stack>
   );
 }

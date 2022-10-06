@@ -7,7 +7,7 @@ export default function ItemCategory({value,image}) {
         <Button  sx={{textTransform : 'capitalize' , width : '100px', height :' 100px' , margin : '5px 0'}} variant="outlined" >
        <Stack width='70%' alignItems='center'>
        <img src={image} alt='2'/>
-          <Typography>{value}</Typography>
+          <Typography textTransform='capitalize'>{value}</Typography>
        </Stack>
         </Button>
   )

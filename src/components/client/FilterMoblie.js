@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux';
 
 export default function FilterMoblie() {
   const mainBackGround = useSelector(state => state.common.mainBackGround)
-
     const [state, setState] = useState({
         left: false,
       });
@@ -29,7 +28,7 @@ export default function FilterMoblie() {
      
        
           <Button onClick={toggleDrawer('left', true)}>
-        <Button variant="contained"><FilterAltIcon/></Button>
+        <div style={{background : '#1976d2',color : 'white',padding : '7px 10px',borderRadius : '5px'}}><FilterAltIcon/></div>
 
           </Button>
           <Drawer

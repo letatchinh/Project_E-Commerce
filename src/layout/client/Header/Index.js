@@ -21,8 +21,8 @@ export default function Index() {
     dispatch(setSearch(data.searchKeyword));
     navigate("/");
   };
-  const [user, setUser] = useState({});
   const statusLogin = useSelector((state) => state.user.statusLogin);
+  const loginSuccess = useSelector((state) => state.user.loginSuccess);
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -33,8 +33,6 @@ export default function Index() {
 
   useEffect(() => {
     if (localStorage.getItem(KEY_USER)) {
-      const item = JSON.parse(localStorage.getItem(KEY_USER));
-      setUser(item);
       dispatch({ type: IS_STATUS_LOGIN, dispatch: "" });
     }
   }, [localStorage.getItem(KEY_USER)]);
@@ -59,7 +57,7 @@ export default function Index() {
               onClick={handleClick}
             >
               <AccountCircleOutlinedIcon className="IconsWhite" fontSize="medium" />
-            <Typography fontSize='12px' color='white'>{user.name}</Typography>
+            <Typography fontSize='12px' color='white'>{loginSuccess.name}</Typography>
             </Button>
             <Menu
               id="demo-positioned-menu"
@@ -120,7 +118,7 @@ export default function Index() {
         placeholder="Search"
         inputProps={{ 'aria-label': 'search' }}
       />
-      <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+      <IconButton  type="submit" sx={{ p: '10px' }} aria-label="search">
         <SearchIcon />
       </IconButton>
     </Paper>

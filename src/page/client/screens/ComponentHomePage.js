@@ -7,6 +7,11 @@ import ListProducts from "./ListProducts";
 import Slider from '../../../layout/client/Slider'
 import Category from '../../../layout/client/Category'
 import SortBar from '../../../components/client/SortBar'
+import ListProductCommon from "../../../components/client/ListProductCommon";
+import ListProductSale from "../../../components/client/ListProductSale";
+import ListProductNew from "../../../components/client/ListProductNew";
+import ListProductTrending from "../../../components/client/ListProductTrending";
+import MyTypography from "../../../components/client/MyTypography";
 
 export default function ComponentHomePage() {
     const mainBackGround2 = useSelector((state) => state.common.mainBackGround2);
@@ -23,11 +28,16 @@ export default function ComponentHomePage() {
      <Container>
      <Stack spacing={2}>
      <Category />
-      <Stack padding='20px' justifyContent='space-around' direction='row' sx={{background : mainBackGround}}>
+    <ListProductSale />
+    <ListProductNew />
+    <ListProductTrending />
+      <Stack id='search' padding='20px' justifyContent='space-around' direction='row' sx={{background : mainBackGround}}>
       { inputSearch &&  <SideBarFilter />}
         <Stack style={{width : '90%'}}>
         {inputSearch && <SortBar  />}
-      <ListProducts />
+      <Stack>
+        <ListProducts/>
+      </Stack>
         </Stack>
       </Stack> 
      </Stack>

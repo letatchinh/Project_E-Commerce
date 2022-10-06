@@ -29,6 +29,10 @@ import HomePage from "./page/admin/HomePage/HomePage";
 import LoginUser from "./page/client/screens/LoginUser";
 import Login from "./page/admin/screens/LoginScreen";
 import ComponentHomePage from "./page/client/screens/ComponentHomePage";
+import CategoryFlashSale from "./page/client/screens/CategoryFlashSale";
+import CategoryNew from "./page/client/screens/CategoryNew";
+import CategoryTrending from "./page/client/screens/CategoryTrending";
+import CategoryCommon from "./components/client/CategoryCommon";
 
 function App() {
   const dispatch = useDispatch();
@@ -59,6 +63,15 @@ function App() {
           />
 
           <Route path="/payment" element={<Payment />} />
+          <Route path="/flash-sale" element={<CategoryFlashSale />}/>
+          <Route path="/new-product" element={<CategoryNew />}/>
+          <Route path="/trending-product" element={<CategoryTrending />}/>
+          <Route path="/shirt" element={<CategoryCommon valueOfContentTop='Shirt' type='shirt' />}/>
+          <Route path="/coat" element={<CategoryCommon valueOfContentTop='Coat' type='coat' />}/>
+          <Route path="/trousers" element={<CategoryCommon valueOfContentTop='Trousers' type='trousers' />}/>
+          <Route path="/dress" element={<CategoryCommon valueOfContentTop='Dress' type='dress' />}/>
+          <Route path="/bikini" element={<CategoryCommon valueOfContentTop='Bikini' type='bikini' />}/>
+          <Route path="/shorts" element={<CategoryCommon valueOfContentTop='Shorts' type='shorts' />}/>
           <Route path="/*" element={<NotFound />} />
         </Route>
 

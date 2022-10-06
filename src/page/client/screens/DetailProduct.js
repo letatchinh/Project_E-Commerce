@@ -17,6 +17,10 @@ import StyledRating from "../../../components/client/StyledRating";
 import { styled } from '@mui/material/styles';
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
+import MyCarousel from "./MyCarousel";
+import SelectDetailSize from "../../../components/client/SelectDetailSize";
+import AmoutDetailToOrder from "../../../components/client/AmoutDetailToOrder";
+import '../../../components/StyleComponent/Product.css'
 export default function DetailProduct() {
   const StyledTextField = styled(TextField)({
     '& .css-1d3z3hw-MuiOutlinedInput-notchedOutline':{
@@ -45,9 +49,9 @@ export default function DetailProduct() {
   });
   const [itemm, setItem] = useState({});
   const [loading, setLoading] = useState(false);
+  const [active,setActive] = useState(0)
   let params = useParams();
   const username = useSelector((state) => state.user.loginSuccess);
-  const listProduct = useSelector((state) => state.shop.listProduct);
   const mainColorText = useSelector(state => state.common.mainColorText)
   const mainBackGround2 = useSelector((state) => state.common.mainBackGround2);
   const mainBackGround = useSelector((state) => state.common.mainBackGround);
@@ -59,7 +63,7 @@ export default function DetailProduct() {
       .then((res) => setItem(res.data[0]))
       .finally(() => setLoading(false));
    
-  }, [listProduct]);
+  }, []);
   useEffect(() => {
     axios
     .get(
@@ -75,9 +79,7 @@ export default function DetailProduct() {
   const [value, setValue] = useState(null);
   const [isPayment, setIsPayment] = useState(false);
   const dispatch = useDispatch();
-  console.log(errors);
   const onSubmit = (data) => {
-    console.log(errors);
     const today = getToday();
     const sum = itemm.listRating.reduce((sum, arr) => sum + arr.rating, value);
     const newRating = (sum / (itemm.listRating.length + 1)).toFixed();
@@ -102,6 +104,9 @@ export default function DetailProduct() {
     );
     reset()
   };
+  const onHoverChangeActive = (index) => {
+    setActive(index)
+  }
   return (
     <>
       {loading ? (
@@ -114,11 +119,12 @@ export default function DetailProduct() {
       ) : (
       <div style={{background : mainBackGround2 , padding : '20px 0'}}>
       <Container sx={{background : mainBackGround,padding : '10px 0'}}>
-          <Stack  justifyContent="space-between" direction={{sm : 'row' , xs : 'column'}} spacing={1}>
-          <Box sx={ {width :{sm : '50%' , xs : '100%'}}} >
-            <img src={image} alt="name" />
-          </Box>
-            <Stack alignItems={{sm : 'flex-start', xs : 'center'}} width={{sm : '60%' , xs : '100%'}} spacing={2}>
+          <Stack   justifyContent="space-between" direction={{md : 'row' , xs : 'column'}} spacing={1}>
+          <Stack margin='0 auto' sx={ {width :{md : '35%',sm : '70%' , xs : '100%'}}} spacing={1}>
+            <img src={image && image[active]} alt="name" />
+            {image && <MyCarousel hover={onHoverChangeActive} limit={4} data={image}/>}
+          </Stack>
+            <Stack margin='0 auto' alignItems={{md : 'flex-start', xs : 'center'}} width={{md : '60%' , xs : '100%'}} spacing={2}>
               <Typography variant="h5" fontWeight="500" color={mainColorText}>
                 {name}
               </Typography>
@@ -141,7 +147,7 @@ export default function DetailProduct() {
                 <Stack
                   direction="row"
                   justifyContent="space-between"
-                  sx={{ borderBottom: "2px solid #f3f3f3", padding: "10px" }}
+                  sx={{  padding: "10px" }}
                 >
                   <Typography variant="h6" color={mainColorText}>Review</Typography>
                   <Stack direction="row">
@@ -155,20 +161,19 @@ export default function DetailProduct() {
                     </Link>
                   </Stack>
                 </Stack>
-                <Button
-                  onClick={() =>
-                    dispatch(
-                      fetchAddToCartRequest({
-                        ...itemm,
-                        isCheckedPayment: true,
-                      })
-                    )
-                  }
-                  variant="outlined"
-                  endIcon={<ShoppingCartIcon />}
-                >
-                  ADD
-                </Button>
+              </Stack>
+              <SelectDetailSize />
+              <AmoutDetailToOrder />
+              <Stack direction='row' width='70%' justifyContent='space-between'> 
+              <Button sx={{width : '45%',textTransform : 'capitalize',}} variant="contained"><Typography fontSize='1.2rem'>Buy</Typography></Button>
+              <Button onClick={() =>
+      dispatch(
+        fetchAddToCartRequest({
+          ...itemm,
+          isCheckedPayment: true,
+        })
+      )
+    } sx={{display : 'block',width : '45%',textTransform : 'capitalize',background : 'rgba(255,87,34,0.1)',borderColor : '#ee4d2d',color : '#ee4d2d'}} color='warning' variant="outlined"><ShoppingCartIcon /><Typography>Add To Cart</Typography></Button>
               </Stack>
               <Box width='80%'>
               <form  onSubmit={handleSubmit(onSubmit)}>
