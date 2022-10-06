@@ -16,10 +16,6 @@ const CreateCategory = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="form-label">Images</label>
-          <input type="file" className="form-control" />
-        </div>
-        <div className="mb-4">
           <label className="form-label">Description</label>
           <textarea
             placeholder="Type here"

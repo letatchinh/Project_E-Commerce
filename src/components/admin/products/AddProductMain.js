@@ -10,7 +10,7 @@ import Loading from "../LoadingError/Loading";
 const AddProductMain = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
-  const [image, setImage] = useState("");
+  const [category, setCategory] = useState("");
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
@@ -25,7 +25,7 @@ const AddProductMain = () => {
       setName("");
       setDescription("");
       setCountInStock(0);
-      setImage("");
+      setCategory("");
       setPrice(0);
       setImages([]);
     }
@@ -44,7 +44,7 @@ const AddProductMain = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(
-      createProduct(name, price, description, image, countInStock, images)
+      createProduct(name, price, description, countInStock, images, category)
     );
   };
   return (
@@ -146,6 +146,33 @@ const AddProductMain = () => {
                     ></textarea>
                   </div>
                   <div className="mb-4">
+                    <label className="form-label form-label-cate">
+                      Category
+                    </label>
+                    <select
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                    >
+                      <option value="trousers">trousers</option>
+                      <option value="shirt">shirt</option>
+                      <option value="hat">hat</option>
+                      <option value="shoe">shoe</option>
+                    </select>
+                  </div>
+                  {/* <div className="mb-4">
+                    <label htmlFor="product_category" className="form-label">
+                      Category
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Type here"
+                      className="form-control"
+                      id="product_category"
+                      required
+                      
+                    />
+                  </div> */}
+                  {/* <div className="mb-4">
                     <label className="form-label">Image</label>
                     <input
                       placeholder="Enter Image URL"
@@ -154,11 +181,11 @@ const AddProductMain = () => {
                       value={image}
                       required
                       onChange={(e) => setImage(e.target.value)}
-                    />
-                    {/* <input className="form-control mt-3" type="file" /> */}
-                  </div>
+                    /> */}
+                  {/* <input className="form-control mt-3" type="file" /> */}
+                  {/* </div> */}
                   <div className="mb-4">
-                    <label className="form-label">ImageSub</label>
+                    <label className="form-label">Image</label>
                     <input
                       type="file"
                       multiple

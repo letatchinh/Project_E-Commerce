@@ -14,7 +14,7 @@ const EditProductMain = (props) => {
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
-  const [image, setImage] = useState("");
+  const [category, setCategory] = useState("");
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
@@ -37,7 +37,7 @@ const EditProductMain = (props) => {
     }
     setImages(newFiles);
   };
-  console.log(images);
+  // console.log(images);
   const fetch = useCallback(async () => {
     // if (!successUpdate) {
     //   // dispatch({ type: PRODUCT_UPDATE_RESET });
@@ -49,7 +49,7 @@ const EditProductMain = (props) => {
       setName(product.name);
       setDescription(product.description);
       setCountInStock(product.countInStock);
-      setImage(product.image);
+      setCategory(product.category);
       setPrice(product.price);
       setImages(product.images);
     }
@@ -67,13 +67,14 @@ const EditProductMain = (props) => {
         name,
         price,
         description,
-        image,
         countInStock,
         images,
+        category,
       })
     );
     toast.success("Product Update");
   };
+
   return (
     <>
       <ToastContainer />
@@ -179,6 +180,20 @@ const EditProductMain = (props) => {
                         ></textarea>
                       </div>
                       <div className="mb-4">
+                        <label className="form-label form-label-cate">
+                          Category
+                        </label>
+                        <select
+                          value={category}
+                          onChange={(e) => setCategory(e.target.value)}
+                        >
+                          <option value="trousers">trousers</option>
+                          <option value="shirt">shirt</option>
+                          <option value="hat">hat</option>
+                          <option value="shoe">shoe</option>
+                        </select>
+                      </div>
+                      {/* <div className="mb-4">
                         <label className="form-label">Image</label>
                         <input
                           placeholder="Enter Image URL"
@@ -187,11 +202,11 @@ const EditProductMain = (props) => {
                           value={image}
                           required
                           onChange={(e) => setImage(e.target.value)}
-                        />
-                        {/* <input className="form-control mt-3" type="file" /> */}
-                      </div>
+                        /> */}
+                      {/* <input className="form-control mt-3" type="file" /> */}
+                      {/* </div> */}
                       <div className="mb-4">
-                        <label className="form-label">ImageSub</label>
+                        <label className="form-label">Image</label>
                         <input
                           type="file"
                           multiple

@@ -25,6 +25,7 @@ const Product = (props) => {
               {product.name}
             </Link>
             <div className="price mb-2">${product.price}</div>
+            <div className="price mb-2">Category: {product.category}</div>
             <div className="row productImageSub">
               {product.images.map((e, i) => (
                 <img

@@ -23,5 +23,13 @@ ImportData.post(
     res.send({ importProducts });
   })
 );
+// ImportData.post(
+//   "/categorys",
+//   asyncHandler(async (req, res) => {
+//     await Category.remove({});
+//     const importCategorys = await Category.insertMany(categorys);
+//     res.send({ importCategorys });
+//   })
+// );
 
 export default ImportData;

@@ -33,13 +33,11 @@ const OrderDetailInfo = () => {
       <div className="col-md-6 col-lg-4">
         <article className="icontext align-items-start">
           <span className="icon icon-sm rounded-circle alert-success">
-            <i className="text-success fa-solid fa-circle-check"></i>
+            <i className="text-success fas fa-map-marker-alt"></i>
           </span>
           <div className="text">
             <h6 className="mb-1">Delivered</h6>
-            <p className="mb-1">
-              Shipping: Tanza <br /> Pay method: PayPal
-            </p>
+            <p className="mb-1">Address: Arusha</p>
           </div>
         </article>
       </div>

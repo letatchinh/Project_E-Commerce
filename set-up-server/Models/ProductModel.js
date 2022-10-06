@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 const reviewSchema = mongoose.Schema({
   name: {
     type: String,
@@ -23,10 +22,6 @@ const reviewSchema = mongoose.Schema({
 const productSchema = mongoose.Schema(
   {
     name: {
-      type: String,
-      require: true,
-    },
-    image: {
       type: String,
       require: true,
     },
@@ -55,6 +50,10 @@ const productSchema = mongoose.Schema(
       type: Number,
       require: true,
       default: 0,
+    },
+    category: {
+      type: String,
+      require: true,
     },
   },
   {

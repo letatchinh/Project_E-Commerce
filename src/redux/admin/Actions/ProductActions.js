@@ -88,7 +88,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
 
 // CREATE PRODUCT
 export const createProduct =
-  (name, price, description, image, countInStock, images) =>
+  (name, price, description, countInStock, images, category) =>
   async (dispatch, getState) => {
     const token =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMmVjNWQxMDMzY2YwMWM1Zjc4MDI5ZSIsImlhdCI6MTY2NDYxMTU1MCwiZXhwIjoxNjY3MjAzNTUwfQ.qEqyNfDJtKHm8qbD1oRZFOsyPLFs8Unp3bqQ-74Y3Gs";
@@ -107,7 +107,7 @@ export const createProduct =
 
       const { data } = await axios.post(
         `/api/products/`,
-        { name, price, description, image, countInStock, images },
+        { name, price, description, countInStock, images, category },
         config
       );
 
