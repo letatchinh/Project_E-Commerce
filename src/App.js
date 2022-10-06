@@ -1,8 +1,8 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import ListProducts from "./page/client/screens/ListProducts"
-import Register from "./page/client/screens/Register"
-import {  useDispatch } from "react-redux";
+import ListProducts from "./page/client/screens/ListProducts";
+import Register from "./page/client/screens/Register";
+import { useDispatch, useSelector } from "react-redux";
 import { fecthProductRequest } from "./redux/shopping/Shopping-actions";
 import DetailProduct from "./page/client/screens/DetailProduct";
 import ProfileUser from "./page/client/screens/ProfileUser";
@@ -35,6 +35,7 @@ function App() {
   useEffect(() => {
     dispatch(fecthProductRequest());
   }, []);
+
   return (
     <>
       <Routes>
@@ -76,7 +77,7 @@ function App() {
           <Route path="/admin/products" element={<ProductScreen />} />
           <Route path="/admin/category" element={<CategoriesScreen />} />
           <Route path="/admin/orders" element={<OrderScreen />} />
-          <Route path="/admin/order" element={<OrderDetailScreen />} />
+          <Route path="/admin/order/:id" element={<OrderDetailScreen />} />
           <Route path="/admin/users" element={<UsersScreen />} />
           <Route
             path="/admin/product/:id/edit"

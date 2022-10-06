@@ -4,6 +4,8 @@ import users from "./data/users.js";
 import Product from "./Models/ProductModel.js";
 import products from "./data/Products.js";
 import asyncHandler from "express-async-handler";
+import Order from "./Models/OrderModel.js";
+import orders from "./data/Order.js";
 const ImportData = express.Router();
 
 ImportData.post(
@@ -31,5 +33,14 @@ ImportData.post(
 //     res.send({ importCategorys });
 //   })
 // );
+
+ImportData.post(
+  "/orders",
+  asyncHandler(async (req, res) => {
+    await Order.remove({});
+    const importOrders = await Order.insertMany(orders);
+    res.send({ importOrders });
+  })
+);
 
 export default ImportData;

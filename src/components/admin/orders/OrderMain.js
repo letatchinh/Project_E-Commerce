@@ -1,6 +1,21 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { listOrders } from "../../../redux/admin/Actions/OrderActions";
+import Message from "../LoadingError/Error";
+import Loading from "../LoadingError/Loading";
 import Orders from "./Orders";
 const OrderMain = () => {
+  const orderList = useSelector((state) => state.orderList);
+  const { loading, error, orders } = orderList;
+
+  const dispatch = useDispatch();
+  const fetch = useCallback(async () => {
+    await dispatch(listOrders());
+  }, [dispatch]);
+  useEffect(() => {
+    fetch();
+    // setarrProduct(arrProduct);
+  }, [fetch]);
   return (
     <section className="content-main">
       <div className="content-header">
@@ -37,7 +52,13 @@ const OrderMain = () => {
         </header>
         <div className="card-body">
           <div className="table-responsive">
-            <Orders />
+            {loading ? (
+              <Loading />
+            ) : error ? (
+              <Message variant="alert-danger">{error}</Message>
+            ) : (
+              <Orders orders={orders} />
+            )}
           </div>
         </div>
       </div>

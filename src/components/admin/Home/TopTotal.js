@@ -1,6 +1,18 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { listOrders } from "../../../redux/admin/Actions/OrderActions";
+import { listProducts } from "../../../redux/admin/Actions/ProductActions";
 
 const TopTotal = () => {
+  const dispatch = useDispatch();
+  const fetch = useCallback(async () => {
+    await dispatch(listProducts());
+    await dispatch(listOrders());
+  }, [dispatch]);
+  useEffect(() => {
+    fetch();
+    // setarrProduct(arrProduct);
+  }, [fetch]);
   return (
     <div className="row">
       <div className="col-lg-4">

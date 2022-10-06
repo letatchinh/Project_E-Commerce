@@ -1,6 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
-const OrderDetailProduct = () => {
+const OrderDetailProduct = (props) => {
+  const { order, loading } = props;
+
+  if (!loading) {
+    //Caculate Price
+    const addDecimals = (num) => {
+      return (Math.round(num * 100) / 100).toFixed(2);
+    };
+    order.itemsPrice = addDecimals(
+      order.orderItem.reduce((acc, item) => acc + item.price * item.qty, 0)
+    );
+  }
   return (
     <table className="table border table-lg">
       <thead>
@@ -14,47 +25,55 @@ const OrderDetailProduct = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>
-            <Link className="itemside" to="#">
-              <div className="left">
-                <img
-                  src="/images/img03.png"
-                  alt="product"
-                  style={{ width: "40px", height: "40px" }}
-                  className="img-xs"
-                />
-              </div>
-              <div className="info">Verclo</div>
-            </Link>
-          </td>
-          <td>$568</td>
-          <td>3</td>
-          <td className="text-end">$2534</td>
-        </tr>
+        {order.orderItem.map((item, index) => (
+          <tr key={index}>
+            <td>
+              <Link className="itemside" to="#">
+                <div className="left">
+                  <img
+                    src={`/images/${item.image}`}
+                    alt={item.name}
+                    style={{ width: "40px", height: "40px" }}
+                    className="img-xs"
+                  />
+                </div>
+                <div className="info">{item.name}</div>
+              </Link>
+            </td>
+            <td>${item.price}</td>
+            <td>{item.qty}</td>
+            <td className="text-end">${item.qty * item.price}</td>
+          </tr>
+        ))}
         <tr>
           <td colSpan="4">
             <article className="float-end">
               <dl className="dlist">
                 <dt>Subtotal:</dt>
-                <dd>$3,556</dd>
+                <dd>${order.itemsPrice}</dd>
               </dl>
               <dl className="dlist">
                 <dt>Shipping cost:</dt>
-                <dd>$56,907</dd>
+                <dd>${order.shippingPrice}</dd>
               </dl>
               <dl className="dlist">
                 <dt>Grand total:</dt>
                 <dd>
-                  <b className="h5">$2,345</b>
+                  <b className="h5">${order.totalPrice}</b>
                 </dd>
               </dl>
               <dl className="dlist">
                 <dt className="text-muted">Status</dt>
                 <dd>
-                  <span className="badge rounded-pill alert alert-success text-success">
-                    Payment done
-                  </span>
+                  {order.isPaid ? (
+                    <span className="badge rounded-pill alert alert-success text-success">
+                      Payment done
+                    </span>
+                  ) : (
+                    <span className="badge rounded-pill alert alert-danger text-danger">
+                      Not Paid
+                    </span>
+                  )}
                 </dd>
               </dl>
             </article>

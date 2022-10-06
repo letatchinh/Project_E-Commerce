@@ -1,6 +1,8 @@
 import React from "react";
 
-const OrderDetailInfo = () => {
+const OrderDetailInfo = (props) => {
+  const { order } = props;
+
   return (
     <div className="row mb-5 order-info-wrap">
       <div className="col-md-6 col-lg-4">
@@ -11,8 +13,8 @@ const OrderDetailInfo = () => {
           <div className="text">
             <h6 className="mb-1">Cutsomer</h6>
             <p className="mb-1">
-              User Adam <br />
-              <a href={`mailto:user@example.com`}>user@example.com</a>
+              {order.user.name} <br />
+              <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
             </p>
           </div>
         </article>
@@ -25,7 +27,8 @@ const OrderDetailInfo = () => {
           <div className="text">
             <h6 className="mb-1">Order info</h6>
             <p className="mb-1">
-              Shipping: Tanza <br /> Pay method: PayPal
+              Shipping: {order.shippingAddress.country} <br /> Pay method:{" "}
+              {order.paymentMethod}
             </p>
           </div>
         </article>
@@ -36,8 +39,14 @@ const OrderDetailInfo = () => {
             <i className="text-success fas fa-map-marker-alt"></i>
           </span>
           <div className="text">
-            <h6 className="mb-1">Delivered</h6>
-            <p className="mb-1">Address: Arusha</p>
+            <h6 className="mb-1">Deliver to</h6>
+            <p className="mb-1">
+              Address: {order.shippingAddress.city}
+              <br />
+              {order.shippingAddress.address}
+              <br />
+              {order.shippingAddress.postalCode}
+            </p>
           </div>
         </article>
       </div>

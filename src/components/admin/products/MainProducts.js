@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../../../redux/admin/Actions/ProductActions.js";
 import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
+import { listOrders } from "../../../redux/admin/Actions/OrderActions";
 const MainProducts = () => {
   let [arrProduct, setarrProduct] = useState([]);
   const dispatch = useDispatch();
