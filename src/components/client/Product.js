@@ -12,6 +12,7 @@ import { Avatar, Button } from "@mui/material";
 import { v4 } from "uuid";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { fetchAddToCartRequest } from "../../redux/login/Actions";
+import ChatIcon from '@mui/icons-material/Chat';
 export default function Product({ item }) {
   const dispatch = useDispatch();
   const { name, image, price, isSell, rating, listRating, discount } = item;
@@ -122,7 +123,7 @@ export default function Product({ item }) {
           opacity: 0,
         }}
       >
-        <Button
+        <Button className="hoverAddCart"
           onClick={() =>
             dispatch(
               fetchAddToCartRequest({
@@ -132,12 +133,12 @@ export default function Product({ item }) {
             )
           }
           variant="outlined"
-          sx={{ width: "40%" }}
+          sx={{ width: "100%" ,background : 'rgba(255,87,34,0.1)',borderColor : '#ee4d2d',color : '#ee4d2d'}}
         >
-          <AddShoppingCartIcon />
+          <AddShoppingCartIcon className="hoverIconAddCart" />
         </Button>
         <Button variant="outlined" sx={{ width: "40%" }}>
-          Buy
+         <ChatIcon/>
         </Button>
       </Stack>
     </Box>

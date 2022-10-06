@@ -108,7 +108,7 @@ export default function LoginUser() {
     setReRender(!reRender);
   };
   return (
-    <Container sx={{ width: "30%" }}>
+    <Container sx={{ width: "30%" , padding : '50px 0'}}>
       <form onSubmit={clickLogin}>
         <Stack alignItems={"center"} spacing={2}>
           <Typography variant="h3" gutterBottom>

@@ -11,7 +11,6 @@ import {FILTER_LOW_50, FILTER_MORE_100, FILTER_MORE_200} from '../../redux/filte
 export default function ItemFilter() {
     const dispatch = useDispatch()
     const mainColorText = useSelector(state => state.common.mainColorText)
-
   return (
     <>
     <Stack padding='10px' justifyContent='center' direction='row' alignItems='center'> <FilterAltIcon color='primary'/><Typography variant='h6' fontWeight='bold' component='span' color={mainColorText}>Search Filter</Typography></Stack>
