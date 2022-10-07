@@ -1,4 +1,5 @@
 import {
+  orderDeliveredReducer,
   orderDetailsReducer,
   orderListReducer,
 } from "./admin/Reducers/OrderReducers";
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   productUpdate: productUpdateReducer,
   orderList: orderListReducer,
   orderDetail: orderDetailsReducer,
+  orderDelivered: orderDeliveredReducer,
 });
 
 export default rootReducer;
