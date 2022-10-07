@@ -6,6 +6,7 @@ import products from "./data/Products.js";
 import asyncHandler from "express-async-handler";
 import Order from "./Models/OrderModel.js";
 import orders from "./data/Order.js";
+import ordersUser from "./data/Orderuser.js";
 const ImportData = express.Router();
 
 ImportData.post(
@@ -35,10 +36,10 @@ ImportData.post(
 // );
 
 ImportData.post(
-  "/orders",
+  "/orderUser",
   asyncHandler(async (req, res) => {
     await Order.remove({});
-    const importOrders = await Order.insertMany(orders);
+    const importOrders = await Order.insertMany(ordersUser);
     res.send({ importOrders });
   })
 );

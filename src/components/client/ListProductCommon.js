@@ -8,6 +8,7 @@ import SkeletonPruductUser from "./SkeletonPruductUser";
 import ErrorNoItem from "./ErrorNoItem";
 import Product from "./Product";
 import MyPagination from "./MyPagination";
+import ProductClient from "./ProductClient";
 export default function ListProductCommon({limit,data}) {
     const dispatch = useDispatch()
     const [start, setStart] = useState(0);
@@ -37,7 +38,7 @@ export default function ListProductCommon({limit,data}) {
  (list &&
   list.map((e) => (
      <Grid className="abc" key={v4()} xs={6} md={3} item>
-         <Product 
+         <ProductClient 
            item={e}
          />
      </Grid>

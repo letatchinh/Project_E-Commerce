@@ -11,20 +11,23 @@ import { URL_BASE } from '../../../constant/UrlConstant';
 import * as regex from "../../../constant/YupGlobal.js";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
+  const navigate = useNavigate()
   const schema = yup.object().shape({
     name: yup.string().required("Required").min(2).max(20),
-    username: yup.string().required("Required").min(2).max(20),
+    // username: yup.string().required("Required").min(2).max(20),
     password: yup.string().required("Required").min(2).max(20),
     email: yup.string().required("Required").email(),
-    quan: yup.string().required("Required"),
-    phuong: yup.string().required("Required"),
-    numberHouse: yup.string().required("Required").min(2).max(30),
-    phone: yup
-      .string()
-      .required("Required")
-      .matches(regex.REGEX_ONLY_NUMBER, "Không đúng định dạng"),
+    // quan: yup.string().required("Required"),
+    // phuong: yup.string().required("Required"),
+    // numberHouse: yup.string().required("Required").min(2).max(30),
+    // phone: yup
+    //   .string()
+    //   .required("Required")
+    //   .matches(regex.REGEX_ONLY_NUMBER, "Không đúng định dạng"),
   });
   const [isCheckDistrit, setisCheckDistrit] = useState(false);
   const [addressSelect, setAddressSelect] = useState("");
@@ -35,59 +38,83 @@ export default function Register() {
     });
     const dispatch = useDispatch()
     const onSubmit = async(data) => {
-      const newAddress =
-      data.numberHouse + "," + data.phuong + "," + data.quan + ",Đà nẵng";
+      // const newAddress =
+      // data.numberHouse + "," + data.phuong + "," + data.quan + ",Đà nẵng";
         const newUser = {
-            username : data.username,
-            password : data.password,
+            // username : data.username,
             name:data.name,
-            phone : data.phone,
+            password : data.password,
             email : data.email,
-            listCarts : [],
-            listOrder : [],
-            address : newAddress,
-            id : v4()
+            // phone : data.phone,
+            // listCarts : [],
+            // listOrder : [],
+            // address : newAddress,
+            // id : v4()
         }
-        const flag = await axios.get(`${URL_BASE}users?username=${data.username}`)
-        if(flag.data.length === 0)
-       { 
-         dispatch(fetchRegisterRequest(newUser))
-        alert("dkty rhanh cong")
+      //   const flag = await axios.get(`${URL_BASE}users?username=${data.username}`)
+      //   if(flag.data.length === 0)
+      //  { 
+        //  dispatch(fetchRegisterRequest(newUser))
+        axios.post(`/api/users/`,newUser).then(res => {
+          (toast('Resgister Success!', {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            draggable: true,
+            progress: undefined,
+            }))()
+            navigate("/login")
+        }).catch(error => {
+          toast.warn(error.response.data.message,{
+            position: "top-center",
+autoClose: 2000,
+hideProgressBar: false,
+closeOnClick: true,
+pauseOnHover: true,
+draggable: true,
+progress: undefined,
+          })
+        })
+      //   alert("dkty rhanh cong")
        
-      }
-      else{
+      // }
+      // else{
       
-        alert("dky that bai")
-      }
+      //   alert("dky that bai")
+      // }
+      console.log(newUser);
     };
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} style={{padding : '50px 0'}}>
     <Stack spacing={3} sx={{width : "30%" , margin : "0 auto"}}>
-    <TextField  {...register("username",{ required: true })} label="UserName" variant="outlined" />
+    {/* <TextField  {...register("username",{ required: true })} label="UserName" variant="outlined" />
     {errors.username && (
             <Alert severity="error">{errors.username?.message}</Alert>
-          )}
-    <TextField  {...register("password",{ required: true })} type='password' label="PassWord" variant="outlined" />
-    {errors.password && (
-            <Alert severity="error">{errors.password?.message}</Alert>
-          )}
-    <TextField  {...register("name",{ required: true })} label="Name" variant="outlined" />
+          )} */}
+          <TextField  {...register("name",{ required: true })} label="Name" variant="outlined" />
     {errors.name && (
             <Alert severity="error">{errors.name?.message}</Alert>
           )}
-    <TextField  {...register("phone",{ required: true })}  label="Phone" variant="outlined" />
+   
+   
+    {/* <TextField  {...register("phone",{ required: true })}  label="Phone" variant="outlined" />
     {errors.phone && (
             <Alert severity="error">{errors.phone?.message}</Alert>
-          )}
+          )} */}
     <TextField  {...register("email",{ required: true })}  label="Email" variant="outlined" />
     {errors.email && (
             <Alert severity="error">{errors.email?.message}</Alert>
           )}
-    <InputLabel id="demo-simple-select-label">
+          <TextField  {...register("password",{ required: true })} type='password' label="PassWord" variant="outlined" />
+    {errors.password && (
+            <Alert severity="error">{errors.password?.message}</Alert>
+          )}
+    {/* <InputLabel id="demo-simple-select-label">
             Vui lòng chọn đúng địa chỉ , nếu không bạn sẽ mất quyền lợi
-          </InputLabel>
+          </InputLabel> */}
          
-          <InputLabel id="demo-simple-select-label">Quận Huyện</InputLabel>
+          {/* <InputLabel id="demo-simple-select-label">Quận Huyện</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -192,7 +219,7 @@ export default function Register() {
           />
            {errors.numberHouse && (
             <Alert severity="error">{errors.numberHouse?.message}</Alert>
-          )}
+          )} */}
     <Button type='submit' variant="contained">Register</Button>
     </Stack>
 

@@ -12,7 +12,7 @@ export default function CategoryCommon({type,valueOfContentTop}) {
   const [loading,setLoading] = useState(false)
   useEffect(() => {
       setLoading(true)
-      axios.get(`${URL_BASE}listProduct?type=${type}`).then(res => setData(res.data)).catch(err => console.log(err)).finally(() => setLoading(false))
+      axios.get(`api/products/search?category=${type}`).then(res => setData(res.data)).catch(err => console.log(err)).finally(() => setLoading(false))
   },[])
   const mainBackGround = useSelector((state) => state.common.mainBackGround);
   return (
@@ -27,7 +27,8 @@ export default function CategoryCommon({type,valueOfContentTop}) {
        <Typography fontSize='1.2rem' color='#7a7a9d' sx={{textShadow : '0 0 1px gray'}}>{data?.length} Products</Typography>
         <SortBar />
        </Stack>
-       <ListProductCommon data={data} limit={16}/>
+       {loading ? <p>loading...</p> : <ListProductCommon data={data} limit={16}/>}
+       
    </Stack>
     </Stack>
     </Stack>

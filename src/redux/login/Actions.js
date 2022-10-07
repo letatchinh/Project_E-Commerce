@@ -3,7 +3,11 @@ import { userApi } from '../../apis/usersApi'
 import { KEY_USER } from '../../constant/LocalStored'
 import * as TYPES from './Types'
 import {  toast } from 'react-toastify';
-
+import axios from 'axios';
+import userApis from '../../apis/client/usersApis';
+import AxiosUser from '../../apis/client/AxiosUser';
+import ToastError from '../../components/client/ToastError';
+import ToastSuccess from '../../components/client/ToastSuccess';
 export const changeText = (type,payload) => {
     return {
         type : type ,
@@ -14,6 +18,22 @@ export const fetchCheckLogin = (user) => {
     return {
         type : TYPES.CHECK_LOGIN , 
         payload : user
+    }
+}
+export const fetchLoginRequest=(data) =>{
+    return (dispatch) => {
+        (async () => {
+            try {
+                const res = await AxiosUser.post('/api/users/loginUser',data)
+                localStorage.setItem(KEY_USER,JSON.stringify({...res.data,listCarts : []}));
+                dispatch(fecthLogginSuccess({...res.data,listCarts : []}))
+                ToastSuccess("Login Success")
+                return res.data
+            } catch (error) {
+                console.log(error.response.data.message);
+                ToastError(error.response.data.message)
+            }
+        })()
     }
 }
 export const fectchLogin = (user) => {
@@ -200,8 +220,10 @@ export const fetchRegisterRequest = (user) => {
     return (dispatch)=>{
         (()=>{
             try {   
-                 userApi.addUser(user)
-                dispatch(fetchRegister(user))
+                //  userApi.addUser(user)
+                axios.post(`/api/users/`,user)
+                // dispatch(fetchRegister(user))
+
             } catch (error) {
                 console.log(error);
             }

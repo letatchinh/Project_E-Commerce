@@ -107,21 +107,12 @@ const userReducer = (state = initvalue, action) => {
         statusLogin: accLogin.length > 0,
       };
     case TYPES.LOGIN:
-      if (state.statusLogin) {
-        const accLogin = state.user.filter(
-          (e) =>
-            e.username === action.payload.username &&
-            e.password === action.payload.password
-        );
+  
         return {
           ...state,
-          loginSuccess: accLogin[0],
+          loginSuccess: action.payload,
         };
-      } else {
-        return {
-          ...state,
-        };
-      }
+       
     case TYPES.LOGOUT: {
       return {
         ...state,

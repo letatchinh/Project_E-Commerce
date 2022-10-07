@@ -11,23 +11,22 @@ orderRouter.post(
   protect,
   asyncHandler(async (req, res) => {
     const {
-      orderItems,
+      orderItem,
       shippingAddress,
       paymentMethod,
       itemsPrice,
       taxPrice,
       shippingPrice,
       totalPrice,
-    } = res.body;
+    } = req.body;
 
-    if (orderItems && orderItems.length === 0) {
+    if (orderItem && orderItem.length === 0) {
       res.status(400);
       throw new Error("No order items");
-      return;
     } else {
       const order = new Order({
-        orderItems,
         user: req.user._id,
+        orderItem,
         shippingAddress,
         paymentMethod,
         itemsPrice,

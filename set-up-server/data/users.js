@@ -21,6 +21,11 @@ const users = [
     email: "User@gmail.com",
     password: brcypt.hashSync("123456", 10),
   },
+  {
+    name: "letatchinh",
+    email: "letatchinh123@gmail.com",
+    password: brcypt.hashSync("123456", 10),
+  }
 ];
 
 export default users;

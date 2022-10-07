@@ -1,12 +1,16 @@
 
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Footer from "../../layout/client/Footer";
 import Header from "../../layout/client/Header/Index"
 import 'react-toastify/dist/ReactToastify.css';
+import productApi from "../../apis/testProductApi";
+import axios from "axios";
 
 export default function HomePageUser() {
+
+  
   return (
     <div style={{minWidth : '435px'}}>
       <Header />
