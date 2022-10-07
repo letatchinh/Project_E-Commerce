@@ -21,7 +21,7 @@ import { logout } from "./UserActions";
 //ALL PRODUCT
 export const listProducts = () => async (dispatch, getState) => {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMmVjNWQxMDMzY2YwMWM1Zjc4MDI5ZSIsImlhdCI6MTY2NDYxMTU1MCwiZXhwIjoxNjY3MjAzNTUwfQ.qEqyNfDJtKHm8qbD1oRZFOsyPLFs8Unp3bqQ-74Y3Gs";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
   try {
     await dispatch({ type: PRODUCT_LIST_REQUEST });
 
@@ -55,7 +55,7 @@ export const listProducts = () => async (dispatch, getState) => {
 //DELETE PRODUCT
 export const deleteProduct = (id) => async (dispatch, getState) => {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMmVjNWQxMDMzY2YwMWM1Zjc4MDI5ZSIsImlhdCI6MTY2NDYxMTU1MCwiZXhwIjoxNjY3MjAzNTUwfQ.qEqyNfDJtKHm8qbD1oRZFOsyPLFs8Unp3bqQ-74Y3Gs";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
   try {
     await dispatch({ type: PRODUCT_DELETE_REQUEST });
 
@@ -91,7 +91,7 @@ export const createProduct =
   (name, price, description, countInStock, images, category) =>
   async (dispatch, getState) => {
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMmVjNWQxMDMzY2YwMWM1Zjc4MDI5ZSIsImlhdCI6MTY2NDYxMTU1MCwiZXhwIjoxNjY3MjAzNTUwfQ.qEqyNfDJtKHm8qbD1oRZFOsyPLFs8Unp3bqQ-74Y3Gs";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
     try {
       await dispatch({ type: PRODUCT_CREATE_REQUEST });
 
@@ -151,7 +151,7 @@ export const editProduct = (id) => async (dispatch) => {
 //UPDATE PRODUCT
 export const updateProduct = (product) => async (dispatch, getState) => {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMmVjNWQxMDMzY2YwMWM1Zjc4MDI5ZSIsImlhdCI6MTY2NDYxMTU1MCwiZXhwIjoxNjY3MjAzNTUwfQ.qEqyNfDJtKHm8qbD1oRZFOsyPLFs8Unp3bqQ-74Y3Gs";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
   try {
     await dispatch({ type: PRODUCT_UPDATE_REQUEST });
 

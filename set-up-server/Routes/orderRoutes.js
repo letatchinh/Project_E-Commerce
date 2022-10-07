@@ -18,7 +18,7 @@ orderRouter.post(
       taxPrice,
       shippingPrice,
       totalPrice,
-    } = res.body;
+    } = req.body;
 
     if (orderItems && orderItems.length === 0) {
       res.status(400);
