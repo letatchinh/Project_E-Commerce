@@ -11,7 +11,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useForm } from "react-hook-form";
 import "@fontsource/roboto/700.css";
 import DoneIcon from "@mui/icons-material/Done";
-import { fetchEditUserRequest } from "../../../redux/login/Actions";
+import { fecthLogginSuccess, fetchEditUserRequest } from "../../../redux/login/Actions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import * as regex from "../../../constant/YupGlobal.js";
@@ -24,6 +24,8 @@ import { v4 } from "uuid";
 import { CAM_LE , HAI_CHAU , HOA_VANG ,THANH_KHE ,NGU_HANH_SON ,SON_TRA , LIEN_CHIEU,QUAN } from "../../../constant/Key";
 import { KEY_USER } from "../../../constant/LocalStored";
 import { useNavigate } from "react-router-dom";
+import AxiosUser from "../../../apis/client/AxiosUser";
+import ToastSuccess from "../../../components/client/ToastSuccess";
 
 export default function InfoUser() {
   const users = JSON.parse(localStorage.getItem(KEY_USER))
@@ -35,6 +37,7 @@ export default function InfoUser() {
   },[users])
   const [status, setStatus] = useState(false);
   const [loading, setLoading] = useState(false);
+  const userLogin = JSON.parse(localStorage.getItem(KEY_USER))
   const [isCheckDistrit, setisCheckDistrit] = useState(false);
   const [addressSelect, setAddressSelect] = useState("");
   const [SubDistrict, setSubDistrict] = useState("");
@@ -42,14 +45,14 @@ export default function InfoUser() {
   const user = useSelector((state) => state.user.loginSuccess);
   const schema = yup.object().shape({
     name: yup.string().required("Required").min(2).max(20),
-    email: yup.string().required("Required").email(),
-    quan: yup.string().required("Required"),
-    phuong: yup.string().required("Required"),
-    numberHouse: yup.string().required("Required"),
-    phone: yup
-      .string()
-      .required("Required")
-      .matches(regex.REGEX_ONLY_NUMBER, "Không đúng định dạng"),
+    // email: yup.string().required("Required").email(),
+    // quan: yup.string().required("Required"),
+    // phuong: yup.string().required("Required"),
+    // numberHouse: yup.string().required("Required"),
+    // phone: yup
+    //   .string()
+    //   .required("Required")
+    //   .matches(regex.REGEX_ONLY_NUMBER, "Không đúng định dạng"),
     // address: yup.string().required("Required"),
   });
   const {
@@ -61,22 +64,27 @@ export default function InfoUser() {
     resolver: yupResolver(schema),
   });
   const onSubmit = async (data) => {
-    console.log(data);
-    setLoading(true);
-    const newAddress =
-      data.numberHouse + "," + data.phuong + "," + data.quan + ",Đà nẵng";
-    const userEdit = {
-      ...user,
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      address: newAddress,
-    };
-    console.log(data);
-    await dispatch(fetchEditUserRequest(userEdit));
-    setStatus(!status);
-    reset();
-    setLoading(false);
+    const user = {...userLogin,email : data.email,name : data.name}
+  await AxiosUser.put(`/api/users/profileUser/${userLogin._id}`,user).then(res => {
+    localStorage.setItem(KEY_USER,JSON.stringify({...res.data,listCarts : []}))
+    dispatch(fecthLogginSuccess({...res.data,listCarts : []}))
+    ToastSuccess("Update Success")
+  })
+    // setLoading(true);
+    // const newAddress =
+    //   data.numberHouse + "," + data.phuong + "," + data.quan + ",Đà nẵng";
+    // const userEdit = {
+    //   ...user,
+    //   name: data.name,
+    //   email: data.email,
+    //   phone: data.phone,
+    //   address: newAddress,
+    // };
+    // console.log(data);
+    // await dispatch(fetchEditUserRequest(userEdit));
+    // setStatus(!status);
+    // reset();
+    // setLoading(false);
   };
   return (
     <>
@@ -102,18 +110,19 @@ export default function InfoUser() {
             {...register("email")}
             label="Email"
             variant="outlined"
+            
           />
           {errors.email && (
             <Alert severity="error">{errors.email?.message}</Alert>
           )}
-          <TextField
+          {/* <TextField
             defaultValue={user.phone}
             fullWidth
             {...register("phone")}
             label="Phone"
             variant="outlined"
-          />{" "}
-          {errors.phone && (
+          />{" "} */}
+          {/* {errors.phone && (
             <Alert severity="error">{errors.phone?.message}</Alert>
           )}
           <InputLabel id="demo-simple-select-label">
@@ -217,7 +226,7 @@ export default function InfoUser() {
           />{" "}
           {errors.numberHouse && (
             <Alert severity="error">{errors.numberHouse?.message}</Alert>
-          )}
+          )} */}
           <Stack
             sx={{ marginLeft: "auto!important" }}
             direction="row"

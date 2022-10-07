@@ -14,6 +14,7 @@ import {
 } from "../../redux/login/Actions";
 import PriceSell from "./PriceSell";
 export default function ItemCart({ value }) {
+  console.log(value);
   const dispatch = useDispatch();
   const handleChange = (event) => {
     if (event.target.checked) {
@@ -44,7 +45,7 @@ export default function ItemCart({ value }) {
       <Avatar
         sx={{ width: "70px", height: "70px", borderRadius: 0 }}
         alt="Remy Sharp"
-        src={value.image}
+        src={`/images/${value.images[0]}`}
       />
       <Stack margin='0 10px'>
         
@@ -69,7 +70,8 @@ export default function ItemCart({ value }) {
           </Button>
         </Stack>
       </Stack>
-      <div><PriceSell
+      <div>
+      <PriceSell
         isSell={value.isSell}
         price={value.price}
         discount={value.discount}

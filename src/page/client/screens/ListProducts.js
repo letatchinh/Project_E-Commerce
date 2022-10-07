@@ -11,6 +11,7 @@ import MyPagination from "../../../components/client/MyPagination";
 import Product from "../../../components/client/Product";
 import SkeletonPruductUser from "../../../components/client/SkeletonPruductUser";
 import MyTypography from "../../../components/client/MyTypography";
+import ProductClient from "../../../components/client/ProductClient";
 export default function ListProducts() {
   const dispatch = useDispatch()
   const limit = 8;
@@ -27,7 +28,7 @@ const fetchSearch = useCallback(async () => {
   if(inputSearch){
     setLoading(true)
     await axios
-    .get(`${URL_BASE}listProduct?name_like=${inputSearch}`)
+    .get(`api/products/search?name=${inputSearch}`)
     .then((res) => {
       setCount(Math.ceil(res.data.length / limit));
       dispatch(fetchReceiveListShow(res.data))
@@ -42,22 +43,22 @@ useEffect(() => {
   fetchSearch();
 }, [fetchSearch]);
 
-const fetchNoSearch = useCallback(async () => {
-  if(!inputSearch){
-    setLoading(true)
-    await axios
-    .get(`${URL_BASE}listProduct?_page=${page}&_limit=${limit}`)
-    .then((res) => {
-      setCount(Math.ceil(listProduct.length / limit));
-      setList(res.data)
-      })
-      .catch((err) => console.log(err))
-      .finally(() => setLoading(false));
-  }
-}, [listProduct,inputSearch,page]);
-useEffect(() => {
-  fetchNoSearch();
-}, [fetchNoSearch]);
+// const fetchNoSearch = useCallback(async () => {
+//   if(!inputSearch){
+//     setLoading(true)
+//     await axios
+//     .get(`${URL_BASE}listProduct?_page=${page}&_limit=${limit}`)
+//     .then((res) => {
+//       setCount(Math.ceil(listProduct.length / limit));
+//       setList(res.data)
+//       })
+//       .catch((err) => console.log(err))
+//       .finally(() => setLoading(false));
+//   }
+// }, [listProduct,inputSearch,page]);
+// useEffect(() => {
+//   fetchNoSearch();
+// }, [fetchNoSearch]);
 
 useEffect(() => {
   if(listReducer.length !== 0){
@@ -106,7 +107,7 @@ list.length === 0 ?  <ErrorNoItem src="https://cdn.dribbble.com/users/2382015/sc
   list &&
  list.map((e) => (
     <Grid className="abc" key={v4()} xs={6} md={(inputSearch) ? 4 : 3} item>
-        <Product 
+        <ProductClient
           item={e}
         />
     </Grid>

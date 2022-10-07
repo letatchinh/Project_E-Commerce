@@ -5,7 +5,7 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import {  Grid, IconButton, InputBase, Menu, MenuItem, Paper, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fectchLogout } from "../../../redux/login/Actions"
+import { fectchLogout, fecthLogginSuccess } from "../../../redux/login/Actions"
 import { IS_STATUS_LOGIN } from "../../../redux/login/Types";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { setSearch } from "../../../redux/shopping/Shopping-actions";
@@ -33,7 +33,9 @@ export default function Index() {
 
   useEffect(() => {
     if (localStorage.getItem(KEY_USER)) {
+      dispatch(fecthLogginSuccess(JSON.parse(localStorage.getItem(KEY_USER))))
       dispatch({ type: IS_STATUS_LOGIN, dispatch: "" });
+      console.log("Ok");
     }
   }, [localStorage.getItem(KEY_USER)]);
   const handleClose = () => {

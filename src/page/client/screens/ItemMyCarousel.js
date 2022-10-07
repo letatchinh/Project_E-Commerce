@@ -6,8 +6,8 @@ export default function ItemMyCarousel({item,hover,indexItem}) {
   return (
     <Stack direction='row' width='100%' spacing={1}>
    { item && item.map((e,i) =>  <img className='imgSmallHover'
-    onMouseEnter={() => {hover(indexItem + i + indexItem * 3) ; console.log(e)}}  
-    style={{width : '23.5%'}} key={v4()} src={e} alt='s'/>)}
+    onMouseEnter={() => hover(indexItem + i + indexItem * 3)}  
+    style={{width : '23.5%'}} key={v4()} src={`/images/${e}`} alt='s'/>)}
     </Stack>
   )
 }

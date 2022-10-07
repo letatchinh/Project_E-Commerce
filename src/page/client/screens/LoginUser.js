@@ -9,6 +9,8 @@ import {
   fectchLogin,
   fecthUserRequest,
   fetchCheckLogin,
+  fetchLogginSuccessRequest,
+  fetchLoginRequest,
   fetchRegisterRequest,
 } from "../../../redux/login/Actions";
 import * as TYPES from "../../../redux/login/Types";
@@ -21,16 +23,28 @@ import axios from "axios";
 import { URL_BASE } from "../../../constant/UrlConstant";
 import { v4 } from "uuid";
 import { KEY_USER } from "../../../constant/LocalStored";
+import { useForm } from "react-hook-form";
 
 export default function LoginUser() {
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  
   const [display, setDisplay] = useState(false);
   const [reRender, setReRender] = useState(false);
   const users = useSelector((state) => state.user.textLogin);
   const loginSuccess = useSelector((state) => state.user.loginSuccess);
   const statusLogin = useSelector((state) => state.user.statusLogin);
   const dispatch = useDispatch();
+  const onSubmit = data => {
+    dispatch(fetchLoginRequest(data))
+  };
   useEffect(() => {
-    dispatch(fecthUserRequest());
+    if(localStorage.getItem(KEY_USER)){
+      navigate("/")
+    }
+  
+  },[localStorage.getItem(KEY_USER)])
+  useEffect(() => {
+    // dispatch(fecthUserRequest());
     function start() {
       gapi.client.init({
         clientId:
@@ -47,13 +61,13 @@ export default function LoginUser() {
     }
   }, [reRender]);
   const navigate = useNavigate();
-  const clickLogin = async (e) => {
-    e.preventDefault();
-    await dispatch(fetchCheckLogin(users));
-    dispatch(fectchLogin(users));
-    setDisplay(true);
-    setReRender(!reRender);
-  };
+  // const clickLogin = async (e) => {
+  //   e.preventDefault();
+  //   await dispatch(fetchCheckLogin(users));
+  //   dispatch(fectchLogin(users));
+  //   setDisplay(true);
+  //   setReRender(!reRender);
+  // };
   const responseFacebook = async (response) => {
     const newUser = {
       username: response.id,
@@ -63,7 +77,6 @@ export default function LoginUser() {
       email: response.email,
       phone: "",
       address: "",
-      name: response.name,
       id: v4(),
     };
     const flag = await axios.get(`${URL_BASE}users?username=${response.id}`);
@@ -109,33 +122,24 @@ export default function LoginUser() {
   };
   return (
     <Container sx={{ width: "30%" , padding : '50px 0'}}>
-      <form onSubmit={clickLogin}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Stack alignItems={"center"} spacing={2}>
           <Typography variant="h3" gutterBottom>
             Login
           </Typography>
           <TextField
-            value={users.username}
-            onChange={(e) =>
-              dispatch(changeText(TYPES.CHANGE_USERNAME, e.target.value))
-            }
+            {...register("email")}
             fullWidth
-            autoComplete="on"
-            label="User Name"
+            label="Email"
             variant="outlined"
           />
           <TextField
-            value={users.password}
-            onChange={(e) =>
-              dispatch(changeText(TYPES.CHANGE_PASSWORD, e.target.value))
-            }
-            type={"password"}
+            {...register("password")}
             fullWidth
-            autoComplete="on"
             label="Password"
             variant="outlined"
           />
-          <div style={{ display: display ? " block" : "none" }}>
+          {/* <div style={{ display: display ? " block" : "none" }}>
             <h3
               style={{ color: "red", display: !statusLogin ? "block" : "none" }}
             >
@@ -149,7 +153,7 @@ export default function LoginUser() {
             >
               Login SusscessFul !
             </h3>
-          </div>
+          </div> */}
 
           <Button fullWidth type="submit" variant="contained">
             Login
@@ -160,7 +164,7 @@ export default function LoginUser() {
               Register
             </Button>
           </Link>
-          <FacebookLogin
+          {/* <FacebookLogin
             appId="3267114616941933"
             fields="name,email,picture"
             callback={responseFacebook}
@@ -172,7 +176,7 @@ export default function LoginUser() {
             onSuccess={responseGoogle}
             onFailure={responseGoogle}
             cookiePolicy={"single_host_origin"}
-          />
+          /> */}
         </Stack>
       </form>
     </Container>

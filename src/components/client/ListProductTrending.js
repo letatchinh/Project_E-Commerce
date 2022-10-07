@@ -13,7 +13,7 @@ export default function ListProductTrending() {
     const [loading,setLoading] = useState(false)
     useEffect(() => {
         setLoading(true)
-        axios.get(`${URL_BASE}listProduct?isSell=true`).then(res => setData(res.data)).catch(err => console.log(err)).finally(() => setLoading(false))
+        axios.get(`api/products/search?category=`).then(res => setData(res.data)).catch(err => console.log(err)).finally(() => setLoading(false))
     },[])
     const mainBackGround = useSelector((state) => state.common.mainBackGround);
 
