@@ -3,10 +3,10 @@ import React from "react";
 const LoadingDashboard = () => {
   return (
     <div className="d-flex justify-content-center">
-      <div class="spinner-info">
-        <div class="circle one"></div>
-        <div class="circle two"></div>
-        <div class="circle three"></div>
+      <div className="spinner-info">
+        <div className="circle one"></div>
+        <div className="circle two"></div>
+        <div className="circle three"></div>
       </div>
     </div>
   );

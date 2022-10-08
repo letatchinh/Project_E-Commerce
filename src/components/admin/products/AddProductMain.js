@@ -18,7 +18,7 @@ const AddProductMain = () => {
   const dispatch = useDispatch();
   const productCreate = useSelector((state) => state.productCreate);
   const { loading, error, product } = productCreate;
-  console.log(product);
+  // console.log(product);
   const fetch = useCallback(async () => {
     if (product) {
       toast.success("Product Added");
@@ -41,6 +41,7 @@ const AddProductMain = () => {
     }
     setImages(newFiles);
   };
+
   // console.log(images);
   const submitHandler = (e) => {
     e.preventDefault();
@@ -54,16 +55,24 @@ const AddProductMain = () => {
       <section className="content-main" style={{ maxWidth: "1200px" }}>
         <form onSubmit={submitHandler}>
           <div className="pcShow">
-            <div className="content-header">
+            <div
+              className="content-header"
+              style={{ justifyContent: "inherit" }}
+            >
               <Link to="/admin/products" className="btn btn-danger text-white">
                 Go to products
               </Link>
-              <h2 className="content-title">Add product</h2>
-              <div>
+              <h2
+                className="content-title"
+                style={{ display: "block", width: "50%", textAlign: "center" }}
+              >
+                Add product
+              </h2>
+              {/* <div>
                 <button type="submit" className="btn btn-primary">
                   Publish now
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="spShow">
@@ -160,31 +169,7 @@ const AddProductMain = () => {
                       <option value="shoe">shoe</option>
                     </select>
                   </div>
-                  {/* <div className="mb-4">
-                    <label htmlFor="product_category" className="form-label">
-                      Category
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Type here"
-                      className="form-control"
-                      id="product_category"
-                      required
-                      
-                    />
-                  </div> */}
-                  {/* <div className="mb-4">
-                    <label className="form-label">Image</label>
-                    <input
-                      placeholder="Enter Image URL"
-                      className="form-control"
-                      type="text"
-                      value={image}
-                      required
-                      onChange={(e) => setImage(e.target.value)}
-                    /> */}
-                  {/* <input className="form-control mt-3" type="file" /> */}
-                  {/* </div> */}
+
                   <div className="mb-4">
                     <label className="form-label">Image</label>
                     <input
@@ -193,9 +178,46 @@ const AddProductMain = () => {
                       onChange={fileSelectedHandler}
                       className="form-control mt-3"
                     />
-                    {/* <input className="form-control mt-3" type="file" /> */}
+                  </div>
+                  <div className="mb-4">
+                    <div
+                      style={{
+                        display: "flex",
+
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      {images &&
+                        images.map((item) => (
+                          <img
+                            key={item.length}
+                            src={`/images/${item}`}
+                            alt={item}
+                            style={{
+                              width: "90px",
+                              height: "90px",
+                              objectFit: "cover",
+                              marginRight: "10px",
+                              marginBottom: "5px",
+                            }}
+                          />
+                        ))}
+                    </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div className="pcShow">
+            <div className="content-header">
+              {/* <Link to="/admin/products" className="btn btn-danger text-white">
+                Go to products
+              </Link>
+              <h2 className="content-title">Add product</h2> */}
+              <div>
+                <button type="submit" className="btn btn-primary">
+                  Publish now
+                </button>
               </div>
             </div>
           </div>
