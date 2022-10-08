@@ -14,6 +14,7 @@ import {
   userListReducer,
   userLoginReducer,
 } from "./admin/Reducers/userReducers";
+import cartReducers from "./client/cart/Reducers";
 import commonReducer from "./Common/Color";
 import filterProductReducer from "./filterProduct/Reducers";
 import userReducer from "./login/Reducers";
@@ -27,7 +28,7 @@ const rootReducer = combineReducers({
   shop: shopReducer,
   user: userReducer,
   filterProduct: filterProductReducer,
-
+  cart : cartReducers,
   //admin
   userLogin: userLoginReducer,
   userList: userListReducer,

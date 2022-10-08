@@ -56,6 +56,14 @@ export default function IconCart() {
     MenuListProps={{
       'aria-labelledby': 'basic-button',
     }}
+    anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
   >
     <Cart />
   </Menu>

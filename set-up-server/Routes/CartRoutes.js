@@ -67,14 +67,22 @@ CartRoutes.post(
   asyncHandler(async (req, res) => {
     const {
       user,
-      product
+      product,
     } = req.body;
+    const carts = await Carts.findOne({ user: user , product : product });
+    if(carts){
+      res.status(404);
+        throw new Error("Product Is Exits In Your");
+    }
+    else{
       const cart = new Carts({
         user: user,
         product : product
       });
       const createCart = await cart.save();
       res.status(201).json(createCart);
+    }
+     
   })
 );
 

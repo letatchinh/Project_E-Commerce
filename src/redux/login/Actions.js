@@ -72,53 +72,55 @@ export const fetchLogginSuccessRequest = () => {
         })()
     }
 }
-export const fetchAddToCartRequest = (item) => {
-    return (dispatch) => {
-        ( async() => {
-            try {   
-                const list = JSON.parse(localStorage.getItem(KEY_USER))
-                const flag = list.listCarts.find(e => e.id === item.id)
-               if(!flag){
-                const newList = {...list , listCarts : [...list.listCarts,{...item, quanlity : 1}]}
-                localStorage.setItem(KEY_USER,JSON.stringify(newList));
-                dispatch(fecthAddToCart(newList))
-                userApi.editUser(newList,list.id)
-                (toast('Add Cart Success!', {
-                    position: "top-center",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    draggable: true,
-                    progress: undefined,
-                    }))()
-               }
-               else{
-                const newListCart = list.listCarts.map(e => {
-                    if(e.id === item.id){
-                        e.quanlity++
-                    }
-                    return e
-                })
-                const newList = {...list,listCarts : newListCart}
-                localStorage.setItem(KEY_USER,JSON.stringify(newList));
-                dispatch(fecthAddToCart(newList))
-                userApi.editUser(newList,list.id)
-                (toast('Add Cart Success!', {
-                    position: "top-center",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    draggable: true,
-                    progress: undefined,
-                    }))()
-               }
+// export const fetchAddToCartRequest = (item) => {
+//     return (dispatch) => {
+//         ( async() => {
+//             try {   
+//                 const list = JSON.parse(localStorage.getItem(KEY_USER))
+//                 const flag = list.listCarts.find(e => e.id === item.id)
+//                if(!flag){
+//                 const newList = {...list , listCarts : [...list.listCarts,{...item, quanlity : 1}]}
+//                 localStorage.setItem(KEY_USER,JSON.stringify(newList));
+//                 dispatch(fecthAddToCart(newList))
+//                 userApi.editUser(newList,list.id)
+//                 (toast('Add Cart Success!', {
+//                     position: "top-center",
+//                     autoClose: 2000,
+//                     hideProgressBar: false,
+//                     closeOnClick: true,
+//                     draggable: true,
+//                     progress: undefined,
+//                     }))()
+//                }
+//                else{
+//                 const newListCart = list.listCarts.map(e => {
+//                     if(e.id === item.id){
+//                         e.quanlity++
+//                     }
+//                     return e
+//                 })
+//                 const newList = {...list,listCarts : newListCart}
+//                 localStorage.setItem(KEY_USER,JSON.stringify(newList));
+//                 dispatch(fecthAddToCart(newList))
+//                 userApi.editUser(newList,list.id)
+//                 (toast('Add Cart Success!', {
+//                     position: "top-center",
+//                     autoClose: 2000,
+//                     hideProgressBar: false,
+//                     closeOnClick: true,
+//                     draggable: true,
+//                     progress: undefined,
+//                     }))()
+//                }
                
-            } catch (error) {
-                console.log(error);
-            }
-        })()
-    }
-}
+//             } catch (error) {
+//                 console.log(error);
+//             }
+//         })()
+//     }
+// }
+
+
 export const featchRemoveItemCartRequest = (item) => {
     return (dispatch) => {
         (async ()=>{
