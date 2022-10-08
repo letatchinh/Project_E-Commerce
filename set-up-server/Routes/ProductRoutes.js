@@ -6,44 +6,44 @@ import { admin, protect } from "./../MiddelWare/AuthMiddleware.js";
 const productRoute = express.Router();
 
 //GET ALL PRODUCT
-// productRoute.get(
-//   "/",
-//   asyncHandler(async (req, res) => {
-//     // const pageSize = 12;
-//     // const page = Number(req.query.pageNumber) || 1;
-//     // const keyword = req.query.keyword
-//     //   ? { name: { $regex: req.query.keyword, $options: "i" } }
-//     //   : {};
-//     // const count = await Product.countDocuments({ ...keyword });
-//     // const products = await Product.find({ ...keyword })
-//     //   .limit(pageSize)
-//     //   .skip(pageSize * (page - 1))
-//     //   .sort({ _id: -1 });
-//     // res.json({ products, page, pages: Math.ceil(count / pageSize) });
-//     // const products = await Product.find({});
-//     // res.json(products);
-//     const products = await Product.find({}).sort({ _id: -1 });
-//     const length = products.length
-//     res.json(length);
-//   })
-// );
+productRoute.get(
+  "/",
+  asyncHandler(async (req, res) => {
+    // const pageSize = 12;
+    // const page = Number(req.query.pageNumber) || 1;
+    // const keyword = req.query.keyword
+    //   ? { name: { $regex: req.query.keyword, $options: "i" } }
+    //   : {};
+    // const count = await Product.countDocuments({ ...keyword });
+    // const products = await Product.find({ ...keyword })
+    //   .limit(pageSize)
+    //   .skip(pageSize * (page - 1))
+    //   .sort({ _id: -1 });
+    // res.json({ products, page, pages: Math.ceil(count / pageSize) });
+    // const products = await Product.find({});
+    // res.json(products);
+    const products = await Product.find({}).sort({ _id: -1 });
+    const length = products.length;
+    res.json(length);
+  })
+);
 
 productRoute.get(
   "/search",
   asyncHandler(async (req, res) => {
-    const name = req.query.name ||  "";
-    const nameFilter = name ? { name : {$regex : name , $options : 'i'}}:{}
+    const name = req.query.name || "";
+    const nameFilter = name ? { name: { $regex: name, $options: "i" } } : {};
 
     const category = req.query.category || "";
-    const categoryFilter = category ? { category : {$regex : category , $options : 'i'}}:{}
-
-
+    const categoryFilter = category
+      ? { category: { $regex: category, $options: "i" } }
+      : {};
 
     const products = await Product.find({
       ...nameFilter,
-      ...categoryFilter
-    })
-    res.send(products)
+      ...categoryFilter,
+    });
+    res.send(products);
   })
 );
 

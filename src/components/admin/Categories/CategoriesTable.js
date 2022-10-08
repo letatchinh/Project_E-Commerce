@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { listProducts } from "../../../redux/admin/Actions/ProductActions";
 import Message from "../LoadingError/Error";
 import Loading from "../LoadingError/Loading";
+import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const CategoriesTable = () => {
   const dispatch = useDispatch();
   let id = 1;
@@ -48,7 +49,7 @@ const CategoriesTable = () => {
     <>
       <div className="col-md-12 col-lg-12">
         {loading ? (
-          <Loading />
+          <LoadingDashboard />
         ) : error ? (
           <Message variant="alert-danger">{error}</Message>
         ) : (

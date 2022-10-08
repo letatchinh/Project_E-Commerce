@@ -6,7 +6,8 @@ import { toast, ToastContainer } from "react-toastify";
 import { createProduct } from "../../../redux/admin/Actions/ProductActions";
 import { PRODUCT_CREATE_RESET } from "../../../redux/admin/Constants/ProductContants";
 import Message from "../LoadingError/Error";
-import Loading from "../LoadingError/Loading";
+// import Loading from "../LoadingError/Loading";
+import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const AddProductMain = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
@@ -91,7 +92,7 @@ const AddProductMain = () => {
               <div className="card mb-4 shadow-sm">
                 <div className="card-body">
                   {error && <Message variant="alert-danger">{error}</Message>}
-                  {loading && <Loading />}
+                  {loading && <LoadingDashboard />}
                   <div className="mb-4">
                     <label htmlFor="product_title" className="form-label">
                       Product title

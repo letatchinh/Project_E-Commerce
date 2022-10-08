@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import Message from "../../../components/admin/LoadingError/Error.js";
-import Loading from "../../../components/admin/LoadingError/Loading.js";
+// import Loading from "../../../components/admin/LoadingError/Loading.js";
+import LoadingDashboard from "../../../components/admin/LoadingError/LoadingDashboard.js";
 import { login } from "../../../redux/admin/Actions/UserActions.js";
 const Login = () => {
   let navigate = useNavigate();
@@ -36,7 +37,7 @@ const Login = () => {
       >
         <div className="card-body">
           {error && <Message variant="alert-danger">{error}</Message>}
-          {loading && <Loading />}
+          {loading && <LoadingDashboard />}
           <h4 className="card-title mb-4 text-center">sign in</h4>
           <form onSubmit={submitHandler}>
             <div className="mb-3">
