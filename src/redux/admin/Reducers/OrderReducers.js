@@ -1,4 +1,7 @@
 import {
+  ORDER_DELIVERED_REQUEST,
+  ORDER_DELIVERED_RESET,
+  ORDER_DELIVERED_SUCCESS,
   ORDER_DETAILS_FAIL,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
@@ -41,6 +44,27 @@ export const orderDetailsReducer = (
       };
     case ORDER_DETAILS_FAIL:
       return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+//ORDER DELIVERED
+export const orderDeliveredReducer = (state = { data: {} }, action) => {
+  switch (action.type) {
+    case ORDER_DELIVERED_REQUEST:
+      return { ...state, loading: true };
+    case ORDER_DELIVERED_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        data: action.payload,
+      };
+    case ORDER_DETAILS_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case ORDER_DELIVERED_RESET:
+      return { ...state };
     default:
       return state;
   }

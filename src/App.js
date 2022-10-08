@@ -64,15 +64,39 @@ function App() {
           />
 
           <Route path="/payment" element={<Payment />} />
-          <Route path="/flash-sale" element={<CategoryFlashSale />}/>
-          <Route path="/new-product" element={<CategoryNew />}/>
-          <Route path="/trending-product" element={<CategoryTrending />}/>
-          <Route path="/shirt" element={<CategoryCommon valueOfContentTop='Shirt' type='shirt' />}/>
-          <Route path="/coat" element={<CategoryCommon valueOfContentTop='Coat' type='coat' />}/>
-          <Route path="/trousers" element={<CategoryCommon valueOfContentTop='Trousers' type='trousers' />}/>
-          <Route path="/dress" element={<CategoryCommon valueOfContentTop='Dress' type='dress' />}/>
-          <Route path="/bikini" element={<CategoryCommon valueOfContentTop='Bikini' type='bikini' />}/>
-          <Route path="/shorts" element={<CategoryCommon valueOfContentTop='Shorts' type='shorts' />}/>
+          <Route path="/flash-sale" element={<CategoryFlashSale />} />
+          <Route path="/new-product" element={<CategoryNew />} />
+          <Route path="/trending-product" element={<CategoryTrending />} />
+          <Route
+            path="/shirt"
+            element={<CategoryCommon valueOfContentTop="Shirt" type="shirt" />}
+          />
+          <Route
+            path="/coat"
+            element={<CategoryCommon valueOfContentTop="Coat" type="coat" />}
+          />
+          <Route
+            path="/trousers"
+            element={
+              <CategoryCommon valueOfContentTop="Trousers" type="trousers" />
+            }
+          />
+          <Route
+            path="/dress"
+            element={<CategoryCommon valueOfContentTop="Dress" type="dress" />}
+          />
+          <Route
+            path="/bikini"
+            element={
+              <CategoryCommon valueOfContentTop="Bikini" type="bikini" />
+            }
+          />
+          <Route
+            path="/shorts"
+            element={
+              <CategoryCommon valueOfContentTop="Shorts" type="shorts" />
+            }
+          />
           <Route path="/*" element={<NotFound />} />
         </Route>
 

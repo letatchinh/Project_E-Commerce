@@ -4,6 +4,7 @@ import OrderDetailProduct from "./OrderDetailProduct";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deliverOrder,
   getOrderDetails,
   listOrders,
 } from "../../../redux/admin/Actions/OrderActions";
@@ -16,14 +17,24 @@ const OrderDetailmain = (props) => {
 
   const orderDetails = useSelector((state) => state.orderDetail);
   const { loading, error, order } = orderDetails;
+  const orderDelivereds = useSelector((state) => state.orderDelivered);
+  const {
+    loading: loadingDelivered,
+    success: successDelivered,
+    data,
+  } = orderDelivereds;
 
   const fetch = useCallback(async () => {
     dispatch(getOrderDetails(orderId));
-  }, [dispatch, orderId]);
+  }, [dispatch, orderId, successDelivered]);
 
   useEffect(() => {
     fetch();
   }, [fetch]);
+  console.log(order);
+  const deliverHanlder = (e) => {
+    dispatch(deliverOrder(order));
+  };
   return (
     <section className="content-main">
       <div className="content-header">
@@ -82,9 +93,22 @@ const OrderDetailmain = (props) => {
               {/* Payment Info */}
               <div className="col-lg-3">
                 <div className="box shadow-sm bg-light">
-                  <button className="btn btn-dark col-12">
-                    Mask As delivered
-                  </button>
+                  {data.isDelivered ? (
+                    <button className="btn btn-success col-12">
+                      DELIVERED AT ({" "}
+                      {moment(data.isDeleveredAt).format("MMM Do YY")})
+                    </button>
+                  ) : (
+                    <>
+                      {loadingDelivered && <Loading />}
+                      <button
+                        onClick={() => deliverHanlder()}
+                        className="btn btn-dark col-12"
+                      >
+                        Mask As delivered
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
