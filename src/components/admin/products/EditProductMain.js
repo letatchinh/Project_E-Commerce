@@ -11,6 +11,7 @@ import Message from "../LoadingError/Error";
 // import Loading from "../LoadingError/Loading";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const EditProductMain = (props) => {
+  let id = 0;
   const { productId } = props;
 
   const [name, setName] = useState("");
@@ -24,6 +25,9 @@ const EditProductMain = (props) => {
 
   const productEdit = useSelector((state) => state.productEdit);
   const { loading, error, product } = productEdit;
+
+  const productList = useSelector((state) => state.productList);
+  const { products } = productList;
 
   const productUpdate = useSelector((state) => state.productUpdate);
   const {
@@ -44,6 +48,7 @@ const EditProductMain = (props) => {
     //   // dispatch({ type: PRODUCT_UPDATE_RESET });
     //   // toast.success("Product Update");
     // } else {
+
     if (!product.name || product._id !== productId) {
       dispatch(editProduct(productId));
     } else {
@@ -73,9 +78,10 @@ const EditProductMain = (props) => {
         category,
       })
     );
-    toast.success("Product Update");
+    if (product.name !== name && !products.includes(product.name)) {
+      toast.success("Edit success");
+    }
   };
-
   return (
     <>
       <ToastContainer />
@@ -215,6 +221,31 @@ const EditProductMain = (props) => {
                           className="form-control mt-3"
                         />
                         {/* <input className="form-control mt-3" type="file" /> */}
+                      </div>
+                      <div className="mb-4">
+                        <div
+                          style={{
+                            display: "flex",
+
+                            flexWrap: "wrap",
+                          }}
+                        >
+                          {images &&
+                            images.map((item) => (
+                              <img
+                                key={id++}
+                                src={`/images/${item}`}
+                                alt={item}
+                                style={{
+                                  width: "90px",
+                                  height: "90px",
+                                  objectFit: "cover",
+                                  marginRight: "10px",
+                                  marginBottom: "5px",
+                                }}
+                              />
+                            ))}
+                        </div>
                       </div>
                     </>
                   )}

@@ -168,8 +168,11 @@ productRoute.put(
     const { name, price, description, countInStock, images, category } =
       req.body;
     const product = await Product.findById(req.params.id);
-
-    if (product) {
+    const productExists = await Product.findOne({ name });
+    if (productExists) {
+      res.status(400);
+      throw new Error("Product name must be edit");
+    } else if (product) {
       product.name = name || product.name;
       product.price = price || product.price;
       product.description = description || product.description;

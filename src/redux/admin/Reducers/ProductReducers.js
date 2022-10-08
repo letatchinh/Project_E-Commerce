@@ -67,6 +67,7 @@ export const productEditReducer = (
         ...state,
         loading: false,
         product: action.payload,
+        error: "",
       };
     case PRODUCT_EDIT_FAIL:
       return { ...state, loading: false, error: action.payload };
@@ -108,6 +109,7 @@ export const productUpdateReducer = (state = { product: {} }, action) => {
         loading: false,
         success: true,
         product: action.payload,
+        error: "",
       };
     case PRODUCT_UPDATE_FAIL:
       return { ...state, loading: false, error: action.payload };

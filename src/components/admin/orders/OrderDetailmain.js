@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import OrderDetailInfo from "./OrderDetailInfo";
 import OrderDetailProduct from "./OrderDetailProduct";
 import { Link } from "react-router-dom";
@@ -12,8 +12,10 @@ import {
 import Message from "../LoadingError/Error";
 import moment from "moment";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
+import { CSVLink } from "react-csv";
 const OrderDetailmain = (props) => {
   const { orderId } = props;
+  const [sheetData, setSheetData] = useState("");
   const dispatch = useDispatch();
 
   const orderDetails = useSelector((state) => state.orderDetail);
@@ -32,11 +34,14 @@ const OrderDetailmain = (props) => {
   useEffect(() => {
     fetch();
   }, [fetch]);
-  console.log(order);
+
   const deliverHanlder = (e) => {
     dispatch(deliverOrder(order));
   };
-  console.log(order);
+
+  let dataExcel = JSON.stringify(order);
+  let str = dataExcel && dataExcel.replace(/{|}|"/g, "");
+
   return (
     <section className="content-main">
       <div className="content-header">
@@ -75,9 +80,13 @@ const OrderDetailmain = (props) => {
                   <option>Confirmed</option>
                   <option>Delivered</option>
                 </select>
-                <Link to="#" className="btn btn-success ms-2">
+                <CSVLink
+                  // to="#"
+                  data={str && str}
+                  className="btn btn-success ms-2"
+                >
                   <i className="fas fa-print"></i>
-                </Link>
+                </CSVLink>
               </div>
             </div>
           </header>
