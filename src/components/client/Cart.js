@@ -1,30 +1,13 @@
 import { Button, List } from "@mui/material";
-import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { v4 } from "uuid";
 import { Stack } from "@mui/system";
 import { Link } from "react-router-dom";
 import ItemCart from "./ItemCart";
-import AxiosUser from "../../apis/client/AxiosUser";
-import { KEY_USER } from "../../constant/LocalStored";
-import { didMoutfetchCart, fetchCart } from "../../redux/client/cart/Actions";
 function Cart() {
-  // const cartUser = useSelector((state) => state.user.loginSuccess.listCarts);
-  // const totalBill = useSelector((state) => state.user.totalBill);
-  const [data,setData] = useState([])
-  const dispatch = useDispatch()
-  useEffect(() => {
-    if (localStorage.getItem(KEY_USER)) {
-      const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id;
-      AxiosUser.get(`/api/carts/filterCarts/${idUser}`)
-        .then( (res) => {
-          setData(res.data)
-        })
-        .catch((err) => console.log(err))
-        .finally(() => {
-        });
-    }
-  }, [dispatch]);
+  const listCarts = useSelector(state => state.cart.listCarts)
+  console.log(listCarts);
   return (
     <List
       sx={{
@@ -35,9 +18,9 @@ function Cart() {
       }}
     >
       {
-       data?.map((value) => <ItemCart  key={v4()} item={value} />)
+       listCarts?.map((value,i) => <ItemCart  key={v4()}  value={value} />)
       }
-      {data.length === 0 && (
+      {listCarts.length === 0 && (
         <img
         style={{width : '24rem'}}
           src="https://rtworkspace.com/wp-content/plugins/rtworkspace-ecommerce-wp-plugin/assets/img/empty-cart.png"
@@ -57,11 +40,11 @@ function Cart() {
         <span style={{ fontWeight: 700 }}>{200} Đ</span>
       </Stack>
       <Link
-        style={{ pointerEvents: data.length === 0 ? "none" : "auto" }}
+        style={{ pointerEvents: listCarts && listCarts.length === 0 ? "none" : "auto" }}
         to="/payment"
       >
         <Button
-          disabled={data.length === 0}
+          disabled={listCarts && listCarts.length === 0}
           fullWidth
           color="warning"
           variant="contained"

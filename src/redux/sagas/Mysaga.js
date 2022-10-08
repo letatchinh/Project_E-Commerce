@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
+import { call, put, take, takeEvery, takeLatest } from 'redux-saga/effects'
 import AxiosUser from '../../apis/client/AxiosUser';
 import { userApi } from '../../apis/usersApi';
 import { KEY_USER } from '../../constant/LocalStored';
 import { STATUS_CODE } from '../../constant/StatusCode';
+import { fetchCart } from '../client/cart/Actions';
 import { FILTER_LIST } from '../filterProduct/Types';
 export const fetchCancelOrderRequest = (user) => {
   return {
@@ -61,6 +62,21 @@ export  function* fetchFilterPrice(action){
 //    }
 // }
 function* mySaga() {
+  // if (localStorage.getItem(KEY_USER)) {
+  //   const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id;
+  //    const response = yield call(AxiosUser.get(`/api/carts/filterCarts/`),idUser)
+  //     const {status,data} = response
+  //     console.log(response);
+  //   // .then( (res) => {
+  //   //   const newAr = res.data.map(e => ({...e,quanlity : 1}))
+  //   //   put(fetchCart(newAr))
+  //   // })
+  //   // .catch((err) => console.log(err))) 
+  // }
+  // else {
+  //   console.log("ok");
+  // }
+  
   yield takeEvery("REMOVE_LIST_ORDER_REQUEST", fetchCancelOrder)
   yield takeEvery("FETCH_FILTER_PRICE", fetchFilterPrice)
   // yield takeLatest("LOGIN_REQUEST", fetchLogin)
