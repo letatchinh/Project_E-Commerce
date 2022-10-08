@@ -44,7 +44,6 @@ export default function LoginUser() {
   
   },[localStorage.getItem(KEY_USER)])
   useEffect(() => {
-    // dispatch(fecthUserRequest());
     function start() {
       gapi.client.init({
         clientId:

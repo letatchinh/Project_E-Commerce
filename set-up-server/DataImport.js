@@ -7,6 +7,8 @@ import asyncHandler from "express-async-handler";
 import Order from "./Models/OrderModel.js";
 import orders from "./data/Order.js";
 import ordersUser from "./data/Orderuser.js";
+import listCartss from "./data/listCarts.js";
+import Carts from "./Models/ListCartModel.js";
 const ImportData = express.Router();
 
 ImportData.post(
@@ -26,6 +28,7 @@ ImportData.post(
     res.send({ importProducts });
   })
 );
+
 // ImportData.post(
 //   "/categorys",
 //   asyncHandler(async (req, res) => {
@@ -43,5 +46,12 @@ ImportData.post(
     res.send({ importOrders });
   })
 );
-
+ImportData.post(
+  "/listCartsUser",
+  asyncHandler(async (req,res) => {
+    await Carts.remove({});
+    const importCarts = await Carts.insertMany(listCartss);
+    res.send({importCarts})
+  })
+)
 export default ImportData;

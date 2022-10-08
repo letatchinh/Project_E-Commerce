@@ -65,12 +65,13 @@ export default function InfoUser() {
   });
   const onSubmit = async (data) => {
     const user = {...userLogin,email : data.email,name : data.name}
+        setLoading(true);
   await AxiosUser.put(`/api/users/profileUser/${userLogin._id}`,user).then(res => {
     localStorage.setItem(KEY_USER,JSON.stringify({...res.data,listCarts : []}))
     dispatch(fecthLogginSuccess({...res.data,listCarts : []}))
     ToastSuccess("Update Success")
-  })
-    // setLoading(true);
+    setStatus(!status);
+  }).catch(err => console.log(err)).finally(() =>  setLoading(false))
     // const newAddress =
     //   data.numberHouse + "," + data.phuong + "," + data.quan + ",Đà nẵng";
     // const userEdit = {
