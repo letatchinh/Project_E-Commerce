@@ -23,7 +23,7 @@ productRoute.get(
     // const products = await Product.find({});
     // res.json(products);
     const products = await Product.find({}).sort({ _id: -1 });
-    const length = products.length
+    const length = products.length;
     res.json(length);
   })
 );
@@ -31,19 +31,19 @@ productRoute.get(
 productRoute.get(
   "/search",
   asyncHandler(async (req, res) => {
-    const name = req.query.name ||  "";
-    const nameFilter = name ? { name : {$regex : name , $options : 'i'}}:{}
+    const name = req.query.name || "";
+    const nameFilter = name ? { name: { $regex: name, $options: "i" } } : {};
 
     const category = req.query.category || "";
-    const categoryFilter = category ? { category : {$regex : category , $options : 'i'}}:{}
-
-
+    const categoryFilter = category
+      ? { category: { $regex: category, $options: "i" } }
+      : {};
 
     const products = await Product.find({
       ...nameFilter,
-      ...categoryFilter
-    })
-    res.send(products)
+      ...categoryFilter,
+    });
+    res.send(products);
   })
 );
 //ADMIN GET ALL PRODUCT WITHOUT SEARCH AND PAGENATION

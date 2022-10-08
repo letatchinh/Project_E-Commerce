@@ -7,6 +7,7 @@ import { listProducts } from "../../../redux/admin/Actions/ProductActions.js";
 import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
 import { listOrders } from "../../../redux/admin/Actions/OrderActions";
+import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const MainProducts = () => {
   let [arrProduct, setarrProduct] = useState([]);
   const dispatch = useDispatch();
@@ -83,7 +84,7 @@ const MainProducts = () => {
             <Message variant="alert-danger">{errorDelete}</Message>
           )}
           {loading ? (
-            <Loading />
+            <LoadingDashboard />
           ) : error ? (
             <Message variant="alert-danger">{error}</Message>
           ) : (

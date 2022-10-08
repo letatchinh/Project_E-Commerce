@@ -1080,3 +1080,54 @@ a {
 .form-label-cate {
   margin-right: 10px;
 }
+
+.spinner-info {
+  margin: 2px auto;
+  width: 100px;
+  height: 102px;
+  background: #FFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative
+}
+
+.spinner-info .circle {
+  animation: spinners linear infinite;
+  position: absolute;
+  border: 5px solid transparent;
+  border-top-color: #F00;
+  border-radius: 50%
+}
+
+.spinner-info .one {
+  width: 50px;
+  height: 50px;
+  border-top-color: #8f3b76;
+  animation-duration: .85s
+}
+
+.spinner-info .two {
+  width: 70px;
+  height: 70px;
+  border-top-color: #c7417b;
+  animation-duration: .95s
+}
+
+.spinner-info .three {
+  width: 100px;
+  height: 100px;
+  border-top-color: #f5487f;
+  animation-duration: 1.05s
+}
+
+
+@keyframes spinners {
+  0% {
+    transform: rotate(0deg)
+  }
+
+  100% {
+    transform: rotate(360deg)
+  }
+}

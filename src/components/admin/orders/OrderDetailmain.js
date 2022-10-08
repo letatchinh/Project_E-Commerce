@@ -8,9 +8,10 @@ import {
   getOrderDetails,
   listOrders,
 } from "../../../redux/admin/Actions/OrderActions";
-import Loading from "../LoadingError/Loading";
+// import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
 import moment from "moment";
+import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const OrderDetailmain = (props) => {
   const { orderId } = props;
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const OrderDetailmain = (props) => {
   const deliverHanlder = (e) => {
     dispatch(deliverOrder(order));
   };
+  console.log(order);
   return (
     <section className="content-main">
       <div className="content-header">
@@ -44,7 +46,7 @@ const OrderDetailmain = (props) => {
       </div>
 
       {loading ? (
-        <Loading />
+        <LoadingDashboard />
       ) : error ? (
         <Message variant="alert-danger">{error}</Message>
       ) : (
@@ -91,16 +93,17 @@ const OrderDetailmain = (props) => {
               </div>
 
               {/* Payment Info */}
+
               <div className="col-lg-3">
                 <div className="box shadow-sm bg-light">
-                  {data.isDelivered ? (
+                  {order.isDelivered ? (
                     <button className="btn btn-success col-12">
                       DELIVERED AT ({" "}
-                      {moment(data.isDeleveredAt).format("MMM Do YY")})
+                      {moment(order.isDeleveredAt).format("MMM Do YY")})
                     </button>
                   ) : (
                     <>
-                      {loadingDelivered && <Loading />}
+                      {loadingDelivered && <LoadingDashboard />}
                       <button
                         onClick={() => deliverHanlder()}
                         className="btn btn-dark col-12"

@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { listUser } from "../../../redux/admin/Actions/UserActions.js";
 import Message from "../LoadingError/Error.js";
-import Loading from "../LoadingError/Loading.js";
+// import Loading from "../LoadingError/Loading.js";
+import LoadingDashboard from "../LoadingError/LoadingDashboard.js";
 const UserComponent = () => {
   const dispatch = useDispatch();
 
@@ -55,7 +56,7 @@ const UserComponent = () => {
         {/* Card */}
         <div className="card-body">
           {loading ? (
-            <Loading />
+            <LoadingDashboard />
           ) : error ? (
             <Message variant={"alert-danger"}>{error}</Message>
           ) : (

@@ -8,7 +8,8 @@ import {
 } from "../../../redux/admin/Actions/ProductActions";
 import { PRODUCT_UPDATE_RESET } from "../../../redux/admin/Constants/ProductContants";
 import Message from "../LoadingError/Error";
-import Loading from "../LoadingError/Loading";
+// import Loading from "../LoadingError/Loading";
+import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const EditProductMain = (props) => {
   const { productId } = props;
 
@@ -119,9 +120,9 @@ const EditProductMain = (props) => {
                   {errorUpdate && (
                     <Message variant="alert-danger">{errorUpdate}</Message>
                   )}
-                  {loadingUpdate && <Loading />}
+                  {loadingUpdate && <LoadingDashboard />}
                   {loading ? (
-                    <Loading />
+                    <LoadingDashboard />
                   ) : error ? (
                     <Message variant="alert-danger">{error}</Message>
                   ) : (
