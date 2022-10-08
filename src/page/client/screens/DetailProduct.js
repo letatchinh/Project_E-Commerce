@@ -168,14 +168,16 @@ export default function DetailProduct() {
               <AmoutDetailToOrder />
               <Stack direction='row' width='70%' justifyContent='space-between'> 
               <Button sx={{width : '45%',textTransform : 'capitalize',}} variant="contained"><Typography fontSize='1.2rem'>Buy</Typography></Button>
-              <Button onClick={() =>
-      dispatch(
-        fetchAddToCartRequest({
-          ...itemm,
-          isCheckedPayment: true,
-        })
-      )
-    } sx={{display : 'block',width : '45%',textTransform : 'capitalize',background : 'rgba(255,87,34,0.1)',borderColor : '#ee4d2d',color : '#ee4d2d'}} color='warning' variant="outlined"><ShoppingCartIcon /><Typography>Add To Cart</Typography></Button>
+              <Button 
+    //           onClick={() =>
+    //   dispatch(
+    //     fetchAddToCartRequest({
+    //       ...itemm,
+    //       isCheckedPayment: true,
+    //     })
+    //   )
+    // } 
+    sx={{display : 'block',width : '45%',textTransform : 'capitalize',background : 'rgba(255,87,34,0.1)',borderColor : '#ee4d2d',color : '#ee4d2d'}} color='warning' variant="outlined"><ShoppingCartIcon /><Typography>Add To Cart</Typography></Button>
               </Stack>
               {/* <Box width='80%'>
               <form  onSubmit={handleSubmit(onSubmit)}>

@@ -11,12 +11,14 @@ import { Box, Stack } from "@mui/system";
 import { Avatar, Button } from "@mui/material";
 import { v4 } from "uuid";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { fetchAddToCartRequest } from "../../redux/login/Actions";
 import ChatIcon from '@mui/icons-material/Chat';
+import { KEY_USER } from "../../constant/LocalStored";
+import { fetchAddToCartRequest } from "../../redux/client/cart/Actions";
 export default function ProductClient({ item }) {
   const dispatch = useDispatch();
   const { name, images, price, isSell, rating, reviews, discount ,countInStock,category,numReviews ,_id} = item;
   const mainColorText = useSelector((state) => state.common.mainColorText);
+  const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id
   const [active, setActive] = useState(0);
   return (
     <Box
@@ -127,8 +129,8 @@ export default function ProductClient({ item }) {
           onClick={() =>
             dispatch(
               fetchAddToCartRequest({
-                ...item,
-                isCheckedPayment: true,
+                product : _id,
+                user : idUser
               })
             )
           }

@@ -92,7 +92,7 @@ progress: undefined,
     {errors.username && (
             <Alert severity="error">{errors.username?.message}</Alert>
           )} */}
-          <TextField  {...register("name",{ required: true })} label="Name" variant="outlined" />
+          <TextField  {...register("name")} label="Name" variant="outlined" />
     {errors.name && (
             <Alert severity="error">{errors.name?.message}</Alert>
           )}

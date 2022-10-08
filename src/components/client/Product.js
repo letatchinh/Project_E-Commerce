@@ -123,7 +123,7 @@ export default function Product({ item }) {
           opacity: 0,
         }}
       >
-        <Button className="hoverAddCart"
+        {/* <Button className="hoverAddCart"
           onClick={() =>
             dispatch(
               fetchAddToCartRequest({
@@ -136,7 +136,7 @@ export default function Product({ item }) {
           sx={{ width: "100%" ,background : 'rgba(255,87,34,0.1)',borderColor : '#ee4d2d',color : '#ee4d2d'}}
         >
           <AddShoppingCartIcon className="hoverIconAddCart" />
-        </Button>
+        </Button> */}
         <Button variant="outlined" sx={{ width: "40%" }}>
          <ChatIcon/>
         </Button>

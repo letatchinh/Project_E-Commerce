@@ -1,5 +1,5 @@
 import { Badge, Button,  Menu } from '@mui/material';
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { useDispatch, useSelector } from 'react-redux';
 import { KEY_USER } from '../../constant/LocalStored';
@@ -8,7 +8,7 @@ import '../StyleComponent/Icons.css'
 import Cart from './Cart';
 export default function IconCart() {
     const dispatch = useDispatch();
-  const cartUser = useSelector((state) => state.user.loginSuccess.listCarts);
+  const listCarts = useSelector(state => state.cart.listCarts)
     const fetch = useCallback(async() => {
     if (localStorage.getItem(KEY_USER)) {
     await  dispatch(fetchLogginSuccessRequest());
@@ -18,8 +18,8 @@ export default function IconCart() {
     fetch();
   }, [fetch]);
   useEffect(() => {
-    dispatch(calTotalBill(cartUser))
-  },[cartUser])
+    dispatch(calTotalBill(listCarts))
+  },[listCarts])
     const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -39,7 +39,7 @@ export default function IconCart() {
   >
      <Badge
               sx={{ position: "relative" }}
-              badgeContent={cartUser.length}
+              badgeContent={listCarts.length}
               className='badgeCustom'
             >
               <ShoppingBagOutlinedIcon className='IconsWhite'
@@ -56,6 +56,14 @@ export default function IconCart() {
     MenuListProps={{
       'aria-labelledby': 'basic-button',
     }}
+    anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
   >
     <Cart />
   </Menu>
