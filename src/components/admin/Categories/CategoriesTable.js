@@ -1,7 +1,10 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { listProducts } from "../../../redux/admin/Actions/ProductActions";
+import {
+  listAllProducts,
+  listProducts,
+} from "../../../redux/admin/Actions/ProductActions";
 import Message from "../LoadingError/Error";
 import Loading from "../LoadingError/Loading";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
@@ -10,17 +13,18 @@ const CategoriesTable = () => {
   let id = 1;
 
   let counter = 0;
-  const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
 
+  const productsListAll = useSelector((state) => state.productsListAll);
+  const { loading, error, productsAll } = productsListAll;
+  console.log(productsListAll);
   const fecth = useCallback(async () => {
-    await dispatch(listProducts());
+    await dispatch(listAllProducts());
   }, [dispatch]);
 
   useEffect(() => {
     fecth();
   }, [fecth]);
-
+  // console.log(productsAll);
   // console.log(products);
   const category = [
     {
@@ -41,7 +45,7 @@ const CategoriesTable = () => {
     },
   ];
   const newCate = category.map((el) => {
-    const newNum = products.filter((e) => e.category === el.name).length;
+    const newNum = productsAll.filter((e) => e.category === el.name).length;
     return { ...el, num: newNum };
   });
 

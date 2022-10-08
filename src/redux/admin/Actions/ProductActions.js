@@ -9,6 +9,9 @@ import {
   PRODUCT_EDIT_FAIL,
   PRODUCT_EDIT_REQUEST,
   PRODUCT_EDIT_SUCCESS,
+  PRODUCT_LISTALL_FAIL,
+  PRODUCT_LISTALL_REQUEST,
+  PRODUCT_LISTALL_SUCCESS,
   PRODUCT_LIST_FAIL,
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
@@ -18,12 +21,85 @@ import {
 } from "../Constants/ProductContants";
 import { logout } from "./UserActions";
 
-//ALL PRODUCT
-export const listProducts = () => async (dispatch, getState) => {
+//ALL PRODUCT WITH PAGENITION
+export const listProducts =
+  (pageNumber = "") =>
+  async (dispatch, getState) => {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+    try {
+      await dispatch({ type: PRODUCT_LIST_REQUEST });
+
+      // let { userLogin: userInfo } = getState();
+
+      const config = {
+        headers: {
+          // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await axios.get(
+        `/api/products/all?pageNumber=${pageNumber}`,
+        config
+      );
+
+      dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === "Not authorized, token failed") {
+        dispatch(logout());
+      }
+      dispatch({
+        type: PRODUCT_LIST_FAIL,
+        payload: message,
+      });
+    }
+  };
+
+//ALL PRODUCT WITH PAGENITION
+// export const listProductsSortHight = () => async (dispatch) => {
+//   const token =
+//     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+//   try {
+//     await dispatch({ type: PRODUCT_LIST_REQUEST });
+
+//     // let { userLogin: userInfo } = getState();
+
+//     const config = {
+//       headers: {
+//         // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
+//         Authorization: `Bearer ${token}`,
+//       },
+//     };
+
+//     const { data } = await axios.get(`/api/products/allSortHigh`, config);
+
+//     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+//   } catch (error) {
+//     const message =
+//       error.response && error.response.data.message
+//         ? error.response.data.message
+//         : error.message;
+//     if (message === "Not authorized, token failed") {
+//       dispatch(logout());
+//     }
+//     dispatch({
+//       type: PRODUCT_LIST_FAIL,
+//       payload: message,
+//     });
+//   }
+// };
+
+//ALL PRODUCT NO PAGENATION
+export const listAllProducts = () => async (dispatch, getState) => {
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
   try {
-    await dispatch({ type: PRODUCT_LIST_REQUEST });
+    await dispatch({ type: PRODUCT_LISTALL_REQUEST });
 
     // let { userLogin: userInfo } = getState();
 
@@ -34,9 +110,9 @@ export const listProducts = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/products/all`, config);
+    const { data } = await axios.get(`/api/products/allProduct`, config);
 
-    dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+    dispatch({ type: PRODUCT_LISTALL_SUCCESS, payload: data });
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -46,7 +122,7 @@ export const listProducts = () => async (dispatch, getState) => {
       dispatch(logout());
     }
     dispatch({
-      type: PRODUCT_LIST_FAIL,
+      type: PRODUCT_LISTALL_FAIL,
       payload: message,
     });
   }

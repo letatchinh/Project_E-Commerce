@@ -112,6 +112,14 @@ function App() {
           <Route path="/admin/addproduct" element={<AddProducts />} />
           <Route path="/admin/" element={<HomeScreen />} />
           <Route path="/admin/products" element={<ProductScreen />} />
+          <Route
+            path="/admin/products/page/:pagenumber"
+            element={<ProductScreen />}
+          />
+          {/* <Route
+            path="/admin/products/allSortHigh"
+            element={<ProductScreen />}
+          /> */}
           <Route path="/admin/category" element={<CategoriesScreen />} />
           <Route path="/admin/orders" element={<OrderScreen />} />
           <Route path="/admin/order/:id" element={<OrderDetailScreen />} />

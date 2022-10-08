@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Product from "./Product";
 // import products from "../../../data/Products";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,34 +9,31 @@ import Message from "../LoadingError/Error";
 import { listOrders } from "../../../redux/admin/Actions/OrderActions";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const MainProducts = () => {
+  const params = useParams();
+  const pagenumber = params.pagenumber;
   let [arrProduct, setarrProduct] = useState([]);
   const dispatch = useDispatch();
   let navigator = useNavigate();
-
+  const [values, setVlaues] = useState("");
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+  const { loading, error, products, page, pages } = productList;
 
   const productDelete = useSelector((state) => state.productDelete);
   const { error: errorDelete, success: successDelete } = productDelete;
   const fetch = useCallback(async () => {
-    await dispatch(listProducts());
-  }, [dispatch, productDelete]);
+    await dispatch(listProducts(pagenumber));
+  }, [dispatch, productDelete, pagenumber]);
   useEffect(() => {
     fetch();
+    // sortLoswtoHight();
     // setarrProduct(arrProduct);
   }, [fetch]);
   // let arrProduct = [];
   for (const key in products) {
-    arrProduct.push(products[key].name);
+    arrProduct.push(products[key].price);
   }
-  // console.log(arrProduct.includes("Veraaaaa1"));
-  const handleInputOnChange = (e) => {
-    e.preventDefault();
-    if (arrProduct.includes(e.target.value.trim())) {
-      console.log("OK");
-    } else {
-      console.log("Not OK");
-    }
+  const handleChange = (e) => {
+    navigator(`/admin/products/${e.target.value}`);
   };
   return (
     <section className="content-main">
@@ -57,7 +54,7 @@ const MainProducts = () => {
                 type="search"
                 placeholder="Search..."
                 className="form-control p-2"
-                onChange={handleInputOnChange}
+                // onChange={handleInputOnChange}
               />
             </div>
             <div className="col-lg-2 col-6 col-md-3">
@@ -70,10 +67,10 @@ const MainProducts = () => {
             </div>
 
             <div className="col-lg-2 col-6 col-md-3">
-              <select className="form-select">
+              <select className="form-select" onChange={handleChange}>
                 <option>Latest added</option>
                 <option>Cheap first</option>
-                <option>Most viewed</option>
+                <option value="allSortHigh">Most viewed</option>
               </select>
             </div>
           </div>
@@ -95,36 +92,35 @@ const MainProducts = () => {
               ))}
             </div>
           )}
-
-          <nav className="float-end mt-4" aria-label="Page navigation">
-            <ul className="pagination">
-              <li className="page-item disabled">
-                <Link className="page-link" to="#">
-                  Previous
-                </Link>
-              </li>
-              <li className="page-item active">
-                <Link className="page-link" to="#">
-                  1
-                </Link>
-              </li>
-              <li className="page-item">
-                <Link className="page-link" to="#">
-                  2
-                </Link>
-              </li>
-              <li className="page-item">
-                <Link className="page-link" to="#">
-                  3
-                </Link>
-              </li>
-              <li className="page-item">
-                <Link className="page-link" to="#">
-                  Next
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          {pages > 1 && (
+            <nav className="float-end mt-4" aria-label="Page navigation">
+              <ul className="pagination">
+                <li className="page-item disabled">
+                  <Link className="page-link" to={"#"}>
+                    Previous
+                  </Link>
+                </li>
+                {[...Array(pages).keys()].map((x) => (
+                  <li
+                    className={`page-item ${x + 1 === page ? "active" : ""}`}
+                    key={x + 1}
+                  >
+                    <Link
+                      className="page-link"
+                      to={`/admin/products/page/${x + 1}`}
+                    >
+                      {x + 1}
+                    </Link>
+                  </li>
+                ))}
+                {/* <li className={`page-item`}>
+                  <Link className="page-link" to={"#"}>
+                    Next
+                  </Link>
+                </li> */}
+              </ul>
+            </nav>
+          )}
         </div>
       </div>
     </section>

@@ -46,9 +46,42 @@ productRoute.get(
     res.send(products);
   })
 );
-//ADMIN GET ALL PRODUCT WITHOUT SEARCH AND PAGENATION
+// ADMIN GET ALL PRODUCT WITHOUT SEARCH AND PAGENATION
 productRoute.get(
   "/all",
+  protect,
+  admin,
+  asyncHandler(async (req, res) => {
+    const pageSize = 2;
+    const page = Number(req.query.pageNumber) || 1;
+    const count = await Product.countDocuments({});
+    const products = await Product.find({})
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
+      .sort({ _id: -1 });
+    res.json({ products, page, pages: Math.ceil(count / pageSize) });
+  })
+);
+
+//ADMIN PAGINATION HIGH
+productRoute.get(
+  "/allSortHigh",
+  protect,
+  admin,
+  asyncHandler(async (req, res) => {
+    const pageSize = 2;
+    const page = Number(req.query.pageNumber) || 1;
+    const count = await Product.countDocuments({});
+    const products = await Product.find({})
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
+      .sort({ price: -1 });
+    res.json({ products, page, pages: Math.ceil(count / pageSize) });
+  })
+);
+
+productRoute.get(
+  "/allProduct",
   protect,
   admin,
   asyncHandler(async (req, res) => {

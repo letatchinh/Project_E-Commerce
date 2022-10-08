@@ -346,6 +346,7 @@ body.offcanvas-active {
   color: #adb5bd;
   margin-right: 10px;
   font-size: 18px;
+  width: 10%;
 }
 
 .menu-aside .active .icon {
@@ -365,6 +366,7 @@ body.offcanvas-active {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: flex;
 }
 
 .menu-aside .menu-link .text {

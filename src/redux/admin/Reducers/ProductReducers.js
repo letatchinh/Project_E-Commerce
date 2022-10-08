@@ -9,6 +9,9 @@ import {
   PRODUCT_EDIT_FAIL,
   PRODUCT_EDIT_REQUEST,
   PRODUCT_EDIT_SUCCESS,
+  PRODUCT_LISTALL_FAIL,
+  PRODUCT_LISTALL_REQUEST,
+  PRODUCT_LISTALL_SUCCESS,
   PRODUCT_LIST_FAIL,
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
@@ -18,7 +21,7 @@ import {
   PRODUCT_UPDATE_SUCCESS,
 } from "../Constants/ProductContants";
 
-//ALL PRODUCTS
+//ALL PRODUCTS WITH PAGINATION
 export const productListReducer = (state = { products: [] }, action) => {
   switch (action.type) {
     case PRODUCT_LIST_REQUEST:
@@ -27,7 +30,9 @@ export const productListReducer = (state = { products: [] }, action) => {
       return {
         ...state,
         loading: false,
-        products: action.payload,
+        pages: action.payload.pages,
+        page: action.payload.page,
+        products: action.payload.products,
       };
     case PRODUCT_LIST_FAIL:
       return { ...state, loading: false, error: action.payload };
@@ -36,6 +41,42 @@ export const productListReducer = (state = { products: [] }, action) => {
   }
 };
 
+// export const productListSortHighReducer = (
+//   state = { productss: [] },
+//   action
+// ) => {
+//   switch (action.type) {
+//     case PRODUCT_LIST_REQUEST:
+//       return { ...state, loading: true, productss: [] };
+//     case PRODUCT_LIST_SUCCESS:
+//       return {
+//         ...state,
+//         loading: false,
+//         productss: action.payload.products,
+//       };
+//     case PRODUCT_LIST_FAIL:
+//       return { ...state, loading: false, error: action.payload };
+//     default:
+//       return state;
+//   }
+// };
+//ALL PRODUCTS
+export const productListAllReducer = (state = { productsAll: [] }, action) => {
+  switch (action.type) {
+    case PRODUCT_LISTALL_REQUEST:
+      return { ...state, loading: true, productsAll: [] };
+    case PRODUCT_LISTALL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        productsAll: action.payload,
+      };
+    case PRODUCT_LISTALL_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
 //DELETE PRODUCT
 export const productDeleteReducer = (state = {}, action) => {
   switch (action.type) {
