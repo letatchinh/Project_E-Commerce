@@ -108,7 +108,7 @@ const OrderDetailmain = (props) => {
                   {order.isDelivered ? (
                     <button className="btn btn-success col-12">
                       DELIVERED AT ({" "}
-                      {moment(order.isDeleveredAt).format("MMM Do YY")})
+                      {moment(order.deliveredAt).format("MMM Do YY")})
                     </button>
                   ) : (
                     <>

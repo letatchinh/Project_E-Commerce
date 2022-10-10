@@ -16,7 +16,7 @@ const CategoriesTable = () => {
 
   const productsListAll = useSelector((state) => state.productsListAll);
   const { loading, error, productsAll } = productsListAll;
-  console.log(productsListAll);
+  // console.log(productsListAll);
   const fecth = useCallback(async () => {
     await dispatch(listAllProducts());
   }, [dispatch]);
