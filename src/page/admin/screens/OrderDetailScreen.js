@@ -6,7 +6,7 @@ const OrderDetailScreen = () => {
   const param = useParams();
 
   const orderId = param.id;
-  console.log(orderId);
+  // console.log(orderId);
   return (
     <>
       <OrderDetailmain orderId={orderId} />

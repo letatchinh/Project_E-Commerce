@@ -23,7 +23,7 @@ import { logout } from "./UserActions";
 
 //ALL PRODUCT WITH PAGENITION
 export const listProducts =
-  (pageNumber = "") =>
+  (keyword = "", pageNumber = "") =>
   async (dispatch, getState) => {
     const token =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
@@ -40,7 +40,7 @@ export const listProducts =
       };
 
       const { data } = await axios.get(
-        `/api/products/all?pageNumber=${pageNumber}`,
+        `/api/products/all?keyword=${keyword}&&pageNumber=${pageNumber}`,
         config
       );
 

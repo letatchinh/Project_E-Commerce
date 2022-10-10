@@ -9,20 +9,21 @@ import Message from "../LoadingError/Error";
 import { listOrders } from "../../../redux/admin/Actions/OrderActions";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const MainProducts = () => {
+  const [keyword, setKeyword] = useState();
   const params = useParams();
   const pagenumber = params.pagenumber;
+
   let [arrProduct, setarrProduct] = useState([]);
   const dispatch = useDispatch();
   let navigator = useNavigate();
   const [values, setVlaues] = useState("");
   const productList = useSelector((state) => state.productList);
   const { loading, error, products, page, pages } = productList;
-
   const productDelete = useSelector((state) => state.productDelete);
   const { error: errorDelete, success: successDelete } = productDelete;
   const fetch = useCallback(async () => {
-    await dispatch(listProducts(pagenumber));
-  }, [dispatch, productDelete, pagenumber]);
+    await dispatch(listProducts(keyword, pagenumber));
+  }, [dispatch, productDelete, pagenumber, keyword]);
   useEffect(() => {
     fetch();
     // sortLoswtoHight();
@@ -34,6 +35,14 @@ const MainProducts = () => {
   }
   const handleChange = (e) => {
     navigator(`/admin/products/${e.target.value}`);
+  };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (keyword.trim()) {
+      navigator(`/admin/products/search/${keyword}`);
+    } else {
+      navigator("/admin/products");
+    }
   };
   return (
     <section className="content-main">
@@ -49,14 +58,17 @@ const MainProducts = () => {
       <div className="card mb-4 shadow-sm">
         <header className="card-header bg-white">
           <div className="row gx-3 py-3">
-            <div className="col-lg-4 col-md-6 me-auto">
+            <form
+              className="col-lg-4 col-md-6 me-auto d-flex"
+              onSubmit={submitHandler}
+            >
               <input
                 type="search"
                 placeholder="Search..."
                 className="form-control p-2"
-                // onChange={handleInputOnChange}
+                onChange={(e) => setKeyword(e.target.value)}
               />
-            </div>
+            </form>
             <div className="col-lg-2 col-6 col-md-3">
               <select className="form-select">
                 <option>All category</option>
@@ -95,11 +107,26 @@ const MainProducts = () => {
           {pages > 1 && (
             <nav className="float-end mt-4" aria-label="Page navigation">
               <ul className="pagination">
-                <li className="page-item disabled">
-                  <Link className="page-link" to={"#"}>
-                    Previous
-                  </Link>
-                </li>
+                {page === 1 ? (
+                  <li disabled className="page-item disabled">
+                    <Link
+                      className="page-link"
+                      to={`/admin/products/page/${page && page - 1}`}
+                    >
+                      Previous
+                    </Link>
+                  </li>
+                ) : (
+                  <li disabled className="page-item">
+                    <Link
+                      className="page-link"
+                      to={`/admin/products/page/${page && page - 1}`}
+                    >
+                      Previous
+                    </Link>
+                  </li>
+                )}
+
                 {[...Array(pages).keys()].map((x) => (
                   <li
                     className={`page-item ${x + 1 === page ? "active" : ""}`}
@@ -107,17 +134,35 @@ const MainProducts = () => {
                   >
                     <Link
                       className="page-link"
-                      to={`/admin/products/page/${x + 1}`}
+                      to={
+                        keyword
+                          ? `/admin/products/search/${keyword}/page/${x + 1}`
+                          : `/admin/products/page/${x + 1}`
+                      }
                     >
                       {x + 1}
                     </Link>
                   </li>
                 ))}
-                {/* <li className={`page-item`}>
-                  <Link className="page-link" to={"#"}>
-                    Next
-                  </Link>
-                </li> */}
+                {page === pages ? (
+                  <li disabled className="page-item disabled">
+                    <Link
+                      className="page-link"
+                      to={`/admin/products/page/${page && page - 1}`}
+                    >
+                      Next
+                    </Link>
+                  </li>
+                ) : (
+                  <li disabled className="page-item">
+                    <Link
+                      className="page-link"
+                      to={`/admin/products/page/${page && page + 1}`}
+                    >
+                      Next
+                    </Link>
+                  </li>
+                )}
               </ul>
             </nav>
           )}
