@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 const OrderDetailProduct = (props) => {
   const { order, loading } = props;
-
+  console.log(order);
   if (!loading) {
     //Caculate Price
     const addDecimals = (num) => {
@@ -31,7 +31,7 @@ const OrderDetailProduct = (props) => {
               <Link className="itemside" to="#">
                 <div className="left">
                   <img
-                    src={`/images/${item.image}`}
+                    src={`/images/${item.images[0]}`}
                     alt={item.name}
                     style={{ width: "40px", height: "40px" }}
                     className="img-xs"

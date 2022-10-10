@@ -4,19 +4,15 @@ import Product from "./Product";
 // import products from "../../../data/Products";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../../../redux/admin/Actions/ProductActions.js";
-import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
-import { listOrders } from "../../../redux/admin/Actions/OrderActions";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const MainProducts = () => {
   const [keyword, setKeyword] = useState();
   const params = useParams();
   const pagenumber = params.pagenumber;
 
-  let [arrProduct, setarrProduct] = useState([]);
   const dispatch = useDispatch();
   let navigator = useNavigate();
-  const [values, setVlaues] = useState("");
   const productList = useSelector((state) => state.productList);
   const { loading, error, products, page, pages } = productList;
   const productDelete = useSelector((state) => state.productDelete);
@@ -30,9 +26,7 @@ const MainProducts = () => {
     // setarrProduct(arrProduct);
   }, [fetch]);
   // let arrProduct = [];
-  for (const key in products) {
-    arrProduct.push(products[key].price);
-  }
+
   const handleChange = (e) => {
     navigator(`/admin/products/${e.target.value}`);
   };

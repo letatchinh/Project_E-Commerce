@@ -42,16 +42,16 @@ ImportData.post(
   "/orderUser",
   asyncHandler(async (req, res) => {
     await Order.remove({});
-    const importOrders = await Order.insertMany(ordersUser);
+    const importOrders = await Order.insertMany(orders);
     res.send({ importOrders });
   })
 );
 ImportData.post(
   "/listCartsUser",
-  asyncHandler(async (req,res) => {
+  asyncHandler(async (req, res) => {
     await Carts.remove({});
     const importCarts = await Carts.insertMany(listCartss);
-    res.send({importCarts})
+    res.send({ importCarts });
   })
-)
+);
 export default ImportData;

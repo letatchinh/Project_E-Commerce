@@ -5,9 +5,9 @@ const orders = [
       {
         name: "User1",
         qty: 1,
-        image: "img04.png",
+        images: ["img02.png", "img03.png", "img04.png"],
         price: 10,
-        product: "633e65d4d687892aba076da0",
+        product: "633e4bafd687892aba076cdd",
       },
     ],
     shippingAddress: {
@@ -27,31 +27,18 @@ const orders = [
     user: "633fa66986afa2e2964d1c55",
     orderItem: [
       {
-        name: "zczxc",
+        name: "bbbbbbb",
         qty: 1,
-        image: "img11.png",
-        price: 10,
-        product: "633e65d4d687892aba076da0",
+        images: ["img01.png", "img02png", "img03.png"],
+        price: 1,
+        product: "633e551fd687892aba076d0d",
       },
-    ],
-    shippingAddress: {
-      address: "kkk",
-      city: "aa",
-      postalCode: "POX : 12233",
-      country: "aaa",
-    },
-    taxPrice: 123,
-    totalPrice: 100,
-  },
-  {
-    user: "633fa66986afa2e2964d1c56",
-    orderItem: [
       {
-        name: "User1",
-        qty: 3,
-        image: "img04.png",
-        price: 10,
-        product: "633e65d4d687892aba076da0",
+        name: "T-shirt men1husdadsasd",
+        qty: 1,
+        images: ["img03.png", "img04png", "img05.png", "img06.png"],
+        price: 200,
+        product: "634029aca0b04055ed6a5694",
       },
     ],
     shippingAddress: {
@@ -62,74 +49,10 @@ const orders = [
     },
     taxPrice: 123,
     isPaid: true,
-    totalPrice: 307.05,
+    totalPrice: 200.05,
     paidAt: "2022-10-06T09:34:22.919Z",
     createdAt: "2022-10-06T09:34:22.919Z",
     updatedAt: "2022-10-06T09:34:22.919Z",
-  },
-  {
-    user: "633fa66986afa2e2964d1c55",
-    orderItem: [
-      {
-        name: "zczxc",
-        qty: 1,
-        image: "img11.png",
-        price: 10,
-        product: "633e65d4d687892aba076da0",
-      },
-    ],
-    shippingAddress: {
-      address: "kkk",
-      city: "aa",
-      postalCode: "POX : 12233",
-      country: "aaa",
-    },
-    taxPrice: 123,
-    totalPrice: 100,
-  },
-  {
-    user: "633fa66986afa2e2964d1c55",
-    orderItem: [
-      {
-        name: "User1",
-        qty: 1,
-        image: "img04.png",
-        price: 10,
-        product: "633e65d4d687892aba076da0",
-      },
-    ],
-    shippingAddress: {
-      address: "kkk",
-      city: "aa",
-      postalCode: "POX : 12233",
-      country: "aaa",
-    },
-    taxPrice: 123,
-    isPaid: true,
-    totalPrice: 307.05,
-    paidAt: "2022-10-06T09:34:22.919Z",
-    createdAt: "2022-10-06T09:34:22.919Z",
-    updatedAt: "2022-10-06T09:34:22.919Z",
-  },
-  {
-    user: "633fa66986afa2e2964d1c56",
-    orderItem: [
-      {
-        name: "zczxc",
-        qty: 1,
-        image: "img11.png",
-        price: 10,
-        product: "633e65d4d687892aba076da0",
-      },
-    ],
-    shippingAddress: {
-      address: "kkk",
-      city: "aa",
-      postalCode: "POX : 12233",
-      country: "aaa",
-    },
-    taxPrice: 123,
-    totalPrice: 100,
   },
 ];
 
