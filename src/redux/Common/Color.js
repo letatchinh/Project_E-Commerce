@@ -7,6 +7,7 @@ const initvalue = {
   colorTextLight : 'rgb(178, 186, 194)',
   colorTextDark : '#212529',
   mainColorText : '#212529',
+  mainTextShadow : 'none',
   mainColorStartRatingDark : 'rgba(0, 0, 0, 0.26)',
   mainColorStartRatingLight : 'white',
   mainColorRating : 'rgba(0, 0, 0, 0.26)',
@@ -14,9 +15,9 @@ const initvalue = {
   colorBackgroungDarkBlue : '#061E3C',
   colorBackgroungLight2 : 'rgb(244, 244, 244)',
   mainBackGround : 'white',
-  mainBackGround2 : 'rgb(244, 244, 244)'
+  mainBackGround2 : 'rgb(244, 244, 244)',
 };
-const commonReducer = (state = initvalue, action) => {
+const MyColorCommonReducer = (state = initvalue, action) => {
   switch (action.type) {
     case CHANGE_BACKGROUND:
       if(state.status){
@@ -25,8 +26,9 @@ const commonReducer = (state = initvalue, action) => {
           mainBackGround : state.colorBackgroungDark,
           mainBackGround2 : state.colorBackgroungDarkBlue,
           mainColorText:state.colorTextLight,
+          mainTextShadow: '0 0 25px #0080ff',
           mainColorRating : state.mainColorStartRatingLight,
-          status : !state.status
+          status : false
         }
       }
       else {
@@ -35,8 +37,9 @@ const commonReducer = (state = initvalue, action) => {
           mainBackGround : state.colorBackgroungLight,
           mainBackGround2 : state.colorBackgroungLight2,
           mainColorText:state.colorTextDark,
+          mainTextShadow : 'none',
           mainColorRating : state.mainColorStartRatingDark,
-          status : !state.status
+          status : true
         }
       }
       
@@ -44,4 +47,4 @@ const commonReducer = (state = initvalue, action) => {
       return state;
   }
 };
-export default commonReducer;
+export default MyColorCommonReducer;

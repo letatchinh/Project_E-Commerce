@@ -5,6 +5,7 @@ const initvalue = {
 const cartReducers = (state = initvalue, action) => {
   switch (action.type) {
     case TYPES.FETCH_CART:
+      console.log(action.payload);
         return {
             ...state,
             listCarts : action.payload
@@ -15,8 +16,8 @@ const cartReducers = (state = initvalue, action) => {
             listCarts : [...state.listCarts,action.payload]
         }
     case TYPES.DELETE_CART:
-      const {user,product} = action.payload
-      const newArr = state.listCarts.filter(e => e.user !== user || e.product !== product)
+      const {product} = action.payload
+      const newArr = state.listCarts.filter(e => e._id !== product)
         return {
             ...state,
             listCarts : newArr

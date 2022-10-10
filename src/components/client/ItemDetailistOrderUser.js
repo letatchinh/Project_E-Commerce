@@ -4,7 +4,7 @@ import PriceSell from './PriceSell'
 import { useSelector } from "react-redux";
 export default function ItemDetailistOrderUser({value}) {
   const {images,name,quanlity,price,isSell,discount} = value
-  const mainColorText = useSelector(state => state.common.mainColorText)
+  const mainColorText = useSelector(state => state.colorCommon.mainColorText)
   return (
     <Stack direction='row' spacing={3} borderBottom='1px solid #CACACA' padding='10px'>
     <img style={{width : '120px',height : '120px',objectFit : 'cover'}} src={`/images/${images[0]}`} alt='22'/>

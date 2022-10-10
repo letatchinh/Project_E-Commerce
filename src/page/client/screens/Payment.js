@@ -24,9 +24,9 @@ import { KEY_USER } from "../../../constant/LocalStored";
 import { useNavigate } from "react-router-dom";
 import PaymentApi from "../../../apis/PaymentApi";
 export default function Payment() {
-  const mainBackGround = useSelector(state => state.common.mainBackGround)
-  const mainBackGround2 = useSelector(state => state.common.mainBackGround2)
-  const mainColorText = useSelector(state => state.common.mainColorText)
+  const mainBackGround = useSelector(state => state.colorCommon.mainBackGround)
+  const mainBackGround2 = useSelector(state => state.colorCommon.mainBackGround2)
+  const mainColorText = useSelector(state => state.colorCommon.mainColorText)
   const users = JSON.parse(localStorage.getItem(KEY_USER))
   const navigate = useNavigate()
   useEffect(() => {

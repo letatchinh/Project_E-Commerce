@@ -1,0 +1,12 @@
+.buttonHeader{
+    padding : 5px 10px;
+    border-radius: 10px;
+    transition: 0.5s ease;
+    border : none;
+    outline : none;
+    background: transparent;
+    color:  white;
+}
+.buttonHeader:hover{
+    background: #75757536;
+}

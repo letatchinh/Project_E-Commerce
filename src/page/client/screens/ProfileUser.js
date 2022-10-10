@@ -15,9 +15,9 @@ import { KEY_USER } from "../../../constant/LocalStored";
 import { useSelector } from "react-redux";
 export default function ProfileUser({children}) {
   const users = JSON.parse(localStorage.getItem(KEY_USER))
-  const mainBackGround2 = useSelector((state) => state.common.mainBackGround2);
-  const mainBackGround = useSelector((state) => state.common.mainBackGround);
-  const mainColorText = useSelector(state => state.common.mainColorText)
+  const mainBackGround2 = useSelector((state) => state.colorCommon.mainBackGround2);
+  const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
+  const mainColorText = useSelector(state => state.colorCommon.mainColorText)
 
   const navigate = useNavigate()
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function ProfileUser({children}) {
   }
   return (
    <>
-   <div style={{ background: mainBackGround2, padding: "10px" }}>
+   <div style={{ background: mainBackGround2, padding: "50px 0" }}>
       <Container sx={{ background: mainBackGround, borderRadius: "20px" }}>
         <Stack direction={{sm : 'row' , xs : 'column'}}>
           <Stack direction={{sm : 'column' , xs : 'row'}} width="30%" borderRight="1px solid #F0F2F5">

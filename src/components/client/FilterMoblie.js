@@ -8,7 +8,7 @@ import ItemFilter from './ItemFilter';
 import { useSelector } from 'react-redux';
 
 export default function FilterMoblie() {
-  const mainBackGround = useSelector(state => state.common.mainBackGround)
+  const mainBackGround = useSelector(state => state.colorCommon.mainBackGround)
     const [state, setState] = useState({
         left: false,
       });

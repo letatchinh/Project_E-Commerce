@@ -16,7 +16,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 export default function Product({ item }) {
   const dispatch = useDispatch();
   const { name, image, price, isSell, rating, listRating, discount } = item;
-  const mainColorText = useSelector((state) => state.common.mainColorText);
+  const mainColorText = useSelector((state) => state.colorCommon.mainColorText);
   const [active, setActive] = useState(0);
   return (
     <Box

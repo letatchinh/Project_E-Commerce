@@ -10,7 +10,7 @@ import { fetchFilterPriceRequest } from '../../redux/sagas/Mysaga';
 import {FILTER_LOW_50, FILTER_MORE_100, FILTER_MORE_200} from '../../redux/filterProduct/Types'
 export default function ItemFilter() {
     const dispatch = useDispatch()
-    const mainColorText = useSelector(state => state.common.mainColorText)
+    const mainColorText = useSelector(state => state.colorCommon.mainColorText)
   return (
     <>
     <Stack padding='10px' justifyContent='center' direction='row' alignItems='center'> <FilterAltIcon color='primary'/><Typography variant='h6' fontWeight='bold' component='span' color={mainColorText}>Search Filter</Typography></Stack>

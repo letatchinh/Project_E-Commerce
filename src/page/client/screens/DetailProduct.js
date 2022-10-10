@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Link, Skeleton, TextField, Typography } from "@mui/material";
+import { Alert, Box, Button, Link, Skeleton, TextField, Typography} from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -21,6 +21,8 @@ import MyCarousel from "./MyCarousel";
 import SelectDetailSize from "../../../components/client/SelectDetailSize";
 import AmoutDetailToOrder from "../../../components/client/AmoutDetailToOrder";
 import '../../../components/StyleComponent/Product.css'
+import MyTypography from "../../../components/client/MyTypography";
+import Category from "../../../layout/client/Category";
 export default function DetailProduct() {
   
   const StyledTextField = styled(TextField)({
@@ -53,9 +55,9 @@ export default function DetailProduct() {
   const [active,setActive] = useState(0)
   let params = useParams();
   const username = useSelector((state) => state.user.loginSuccess);
-  const mainColorText = useSelector(state => state.common.mainColorText)
-  const mainBackGround2 = useSelector((state) => state.common.mainBackGround2);
-  const mainBackGround = useSelector((state) => state.common.mainBackGround);
+  const mainColorText = useSelector(state => state.colorCommon.mainColorText)
+  const mainBackGround2 = useSelector((state) => state.colorCommon.mainBackGround2);
+  const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
   const { name, images, price, isSell,  numReviews, id, listRating , discount } = itemm;
   
   useEffect(() => {
@@ -65,7 +67,6 @@ export default function DetailProduct() {
       .finally(() => setLoading(false));
    
   }, [params.productId]);
-  console.log(itemm);
   // useEffect(() => {
   //   axios
   //   .get(
@@ -111,6 +112,7 @@ export default function DetailProduct() {
   }
   return (
     <>
+    <Category />
       {loading ? (
         <Stack>
           <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
@@ -127,9 +129,9 @@ export default function DetailProduct() {
             {images && <MyCarousel hover={onHoverChangeActive} limit={4} data={images}/>}
           </Stack>
             <Stack margin='0 auto' alignItems={{md : 'flex-start', xs : 'center'}} width={{md : '60%' , xs : '100%'}} spacing={2}>
-              <Typography variant="h5" fontWeight="500" color={mainColorText}>
+              <MyTypography variant="h5" fontWeight="500" color={mainColorText}>
                 {name}
-              </Typography>
+              </MyTypography>
               <Stack
                 width={{sm : '60%' , xs : '80%'}} 
                 sx={{
@@ -143,7 +145,7 @@ export default function DetailProduct() {
                   justifyContent="space-between"
                   sx={{ borderBottom: "2px solid #f3f3f3", padding: "10px" }}
                 >
-                  <Typography variant="h6" color={mainColorText}>Price</Typography>
+                  <MyTypography variant="h6" color={mainColorText}>Price</MyTypography>
                   <PriceSell discount={discount} isSell={isSell} price={price} />
                 </Stack>
                 <Stack
@@ -151,15 +153,15 @@ export default function DetailProduct() {
                   justifyContent="space-between"
                   sx={{  padding: "10px" }}
                 >
-                  <Typography variant="h6" color={mainColorText}>Review</Typography>
+                  <MyTypography variant="h6" color={mainColorText}>Review</MyTypography>
                   <Stack direction="row">
     <StyledRating   value={parseInt(numReviews)} readOnly={true} />
 
                     <Link href="#review">
                       {" "}
-                      <Typography variant="body2" component="span">
+                      <MyTypography variant="body2" component="span">
                         {/* ({listRating && listRating.length}) */}
-                      </Typography>
+                      </MyTypography>
                     </Link>
                   </Stack>
                 </Stack>
@@ -167,7 +169,7 @@ export default function DetailProduct() {
               <SelectDetailSize />
               <AmoutDetailToOrder />
               <Stack direction='row' width='70%' justifyContent='space-between'> 
-              <Button sx={{width : '45%',textTransform : 'capitalize',}} variant="contained"><Typography fontSize='1.2rem'>Buy</Typography></Button>
+              <Button sx={{width : '45%',textTransform : 'capitalize',}} variant="contained"><Typography  fontSize='1.2rem'>Buy</Typography></Button>
               <Button 
     //           onClick={() =>
     //   dispatch(
@@ -177,19 +179,19 @@ export default function DetailProduct() {
     //     })
     //   )
     // } 
-    sx={{display : 'block',width : '45%',textTransform : 'capitalize',background : 'rgba(255,87,34,0.1)',borderColor : '#ee4d2d',color : '#ee4d2d'}} color='warning' variant="outlined"><ShoppingCartIcon /><Typography>Add To Cart</Typography></Button>
+    sx={{display : 'block',width : '45%',textTransform : 'capitalize',background : 'rgba(255,87,34,0.1)',borderColor : '#ee4d2d',color : '#ee4d2d'}} color='warning' variant="outlined"><ShoppingCartIcon /><MyTypography>Add To Cart</MyTypography></Button>
               </Stack>
               {/* <Box width='80%'>
               <form  onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing={2} >
-                  <Typography variant="h6" color={mainColorText}>WRITE A CUSTOMER REVIEW</Typography>
-                  <Typography variant="h5" color={mainColorText}>Rating</Typography>
+                  <MyTypography variant="h6" color={mainColorText}>WRITE A CUSTOMER REVIEW</MyTypography>
+                  <MyTypography variant="h5" color={mainColorText}>Rating</MyTypography>
                   <StyledRating precision={0.5}
                     value={value}
                     onChange={(event, newValue) => {
                       setValue(newValue);
                     }} />
-                  <Typography variant="h5" color={mainColorText}>Comment</Typography>
+                  <MyTypography variant="h5" color={mainColorText}>Comment</MyTypography>
                   <StyledTextField
                     {...register("comment")}
                     label="Write Commet Here ..."
@@ -222,9 +224,9 @@ export default function DetailProduct() {
             </Stack>
           </Stack>
           <Stack  sx={{  padding : '50px 10px'}}>
-            <Typography id="review" variant="h5" color={mainColorText}>
+            <MyTypography id="review" variant="h5" color={mainColorText}>
               Review
-            </Typography>
+            </MyTypography>
             {/* {listRating && <ListReview data={listRating} />} */}
           </Stack>
         </Container>

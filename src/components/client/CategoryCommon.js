@@ -3,7 +3,7 @@ import { Stack } from '@mui/system'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { URL_BASE } from '../../constant/UrlConstant'
+import Category from '../../layout/client/Category'
 import ListProductCommon from './ListProductCommon'
 import SideBarFilter from './SideBarFilter'
 import SortBar from './SortBar'
@@ -14,13 +14,17 @@ export default function CategoryCommon({type,valueOfContentTop}) {
       setLoading(true)
       axios.get(`api/products/search?category=${type}`).then(res => setData(res.data)).catch(err => console.log(err)).finally(() => setLoading(false))
   },[])
-  const mainBackGround = useSelector((state) => state.common.mainBackGround);
+  const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
   return (
-    <Stack  alignItems='center' spacing={1} padding='30px 50px' sx={{background :mainBackGround}}>
-   
-   <Typography color='#fcaf17' fontSize='1.5rem'>{valueOfContentTop}</Typography>
+    <Stack   alignItems='center' spacing={1} padding='30px 50px' sx={{background :mainBackGround , width : '100%'}}>
+   <Category />
+   <Stack width = '100%' direction='row' alignItems='center' >
+     <div style={{flex : 1 , height : '2px' , background : 'gray', width : '100%'}}></div>
+     <Typography sx={{border : "2px solid gray" , padding : '2px' , borderRadius : '10px'}} color='#fcaf17' fontSize='1.5rem'>{valueOfContentTop}</Typography>
+     <div style={{flex : 1 , height : '2px' , background : 'gray', width : '100%'}}></div>
+   </Stack>
   
-    <Stack width='100%' borderTop='4px solid rgb(238, 77, 45)' direction='row' >
+    <Stack width='100%'  direction='row' >
     <SideBarFilter/>
    <Stack flex={1}>
     <Stack  direction='row' justifyContent='space-between'   alignItems='center'>

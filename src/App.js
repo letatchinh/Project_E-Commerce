@@ -9,7 +9,7 @@ import ProfileUser from "./page/client/screens/ProfileUser";
 import InfoUser from "./page/client/screens/InfoUser";
 import ListPaymentUser from "./page/client/screens/ListPaymentUser";
 import Payment from "./page/client/screens/Payment";
-import React, { useEffect } from "react";
+import React from "react";
 import "./responsive.css";
 import "react-toastify/dist/ReactToastify.css";
 import HomeScreen from "./page/admin/screens/HomeScreen";
@@ -28,23 +28,21 @@ import HomePageUser from "./page/client/HomePageUser";
 import HomePage from "./page/admin/HomePage/HomePage";
 import LoginUser from "./page/client/screens/LoginUser";
 import Login from "./page/admin/screens/LoginScreen";
-import ComponentHomePage from "./page/client/screens/ComponentHomePage";
 import CategoryFlashSale from "./page/client/screens/CategoryFlashSale";
 import CategoryNew from "./page/client/screens/CategoryNew";
 import CategoryTrending from "./page/client/screens/CategoryTrending";
 import CategoryCommon from "./components/client/CategoryCommon";
+import LoadingHomePage from "./components/client/LoadingHomePage";
+const ComponentHomePage = React.lazy(() => import("./page/client/screens/ComponentHomePage"));
 
 function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fecthProductRequest());
-  }, []);
-
   return (
     <>
       <Routes>
         <Route element={<HomePageUser />}>
-          <Route path="/" element={<ComponentHomePage />} />
+          <Route path="/" element={<React.Suspense fallback={<LoadingHomePage/>}>
+            <ComponentHomePage />
+          </React.Suspense>} />
           {/* <Route path="/search" element={<Search />} /> */}
           {/* <Route path="/new" element={<CreateProduct />} /> */}
           <Route path="/login" element={<LoginUser />} />
