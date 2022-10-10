@@ -5,6 +5,7 @@ import ItemCategoryBanner from "./ItemCategoryBanner";
 import ItemFilter from "./ItemFilter";
 import ListIcon from "@mui/icons-material/List";
 import { listCategory } from "../../constant/Key";
+import { v4 } from "uuid";
 export default function CategoryBannerMobile() {
   const [state, setState] = useState({
     left: false,
@@ -20,7 +21,7 @@ export default function CategoryBannerMobile() {
     >
       <Stack>
       {
-        listCategory.map((e,i) =>  <ItemCategoryBanner delay={i*0.5} value={e.name} linkTo={`/${e.name}`} />
+        listCategory.map((e,i) =>  <ItemCategoryBanner key={v4()} delay={i*0.5} value={e.name} linkTo={`/${e.name}`} />
 )
       }
       </Stack>

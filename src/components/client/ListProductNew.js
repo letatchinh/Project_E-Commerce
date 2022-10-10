@@ -1,14 +1,16 @@
-import { Button, Stack, Typography } from '@mui/material'
+import { Button, Stack } from '@mui/material'
 import axios from 'axios'
-import React, {  useEffect, useState } from 'react'
-import { URL_BASE } from '../../constant/UrlConstant'
+import React, {  useEffect, useRef, useState } from 'react'
 import ListProductCommon from './ListProductCommon'
 import LoadingListProduct from './LoadingListProduct'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useSelector } from "react-redux";
-import MyTypography from './MyTypography'
 import { Link } from 'react-router-dom'
+import "../StyleComponent/ListProduct.css";
+
 export default function ListProductNew() {
+  const componentRef = useRef();
+  const [isAppear, setIsAppear] = useState(false);
     const [data,setData] = useState([])
     const [loading,setLoading] = useState(false)
     useEffect(() => {
@@ -16,10 +18,19 @@ export default function ListProductNew() {
         axios.get(`api/products/search?category=`).then(res => setData(res.data)).catch(err => console.log(err)).finally(() => setLoading(false))
     },[])
     const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
-
+    useEffect(() => {
+      if (!componentRef?.current) return;
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          setIsAppear(true);
+        }
+      });
+      observer.observe(componentRef.current);
+    }, [componentRef]);
   return (
 
-     <Stack sx={{background : mainBackGround, padding : '10px'}}>
+     <Stack  className={isAppear ? "appear" : ""}
+     ref={componentRef} sx={{background : mainBackGround, padding : '10px'}}>
        <Stack direction='row' alignItems='center' justifyContent={{md : 'center' , xs : 'flex-start'}} spacing={2} position='relative'>
        <img style={{width  : '60px' ,height : '30px'}} src="https://upload.wikimedia.org/wikipedia/commons/9/95/New_logo.svg" alt="flashsale"/>
        <Link style={{position : 'absolute', right : 0}} to='new-product'>
