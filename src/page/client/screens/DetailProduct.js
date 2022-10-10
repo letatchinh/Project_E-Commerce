@@ -125,7 +125,7 @@ export default function DetailProduct() {
       <Container sx={{background : mainBackGround,padding : '10px 0'}}>
           <Stack   justifyContent="space-between" direction={{md : 'row' , xs : 'column'}} spacing={1}>
           <Stack margin='0 auto' sx={ {width :{md : '35%',sm : '70%' , xs : '100%'}}} spacing={1}>
-           {images && <img src={`/images/${images[active]}`} alt="name" />}
+           {images && <img style={{height : '30rem'}} src={`/images/${images[active]}`} alt="name" />}
             {images && <MyCarousel hover={onHoverChangeActive} limit={4} data={images}/>}
           </Stack>
             <Stack margin='0 auto' alignItems={{md : 'flex-start', xs : 'center'}} width={{md : '60%' , xs : '100%'}} spacing={2}>
