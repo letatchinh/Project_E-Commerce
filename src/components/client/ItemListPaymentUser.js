@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 export default function ItemListPaymentUser({data}) {
   const [item,setItem] = useState({})
   const [loading,setLoading] = useState(false)
-  const mainColorText = useSelector(state => state.common.mainColorText)
+  const mainColorText = useSelector(state => state.colorCommon.mainColorText)
 
   useEffect(() => {
     setLoading(true)

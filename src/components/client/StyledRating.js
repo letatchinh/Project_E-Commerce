@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 
 export default function StyledRating({value,readOnly,precision,defaultValue,onChange}) {
-    const mainColorRating = useSelector(state => state.common.mainColorRating)
+    const mainColorRating = useSelector(state => state.colorCommon.mainColorRating)
 
     const StyledRating = styled(Rating)({
         '& .MuiRating-iconFilled': {

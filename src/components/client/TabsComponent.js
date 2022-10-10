@@ -10,7 +10,7 @@ export default function TabsComponent() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const mainColorText = useSelector(state => state.common.mainColorText)
+  const mainColorText = useSelector(state => state.colorCommon.mainColorText)
 
   return (
     <TabContext  value={value}>

@@ -15,7 +15,6 @@ import PriceSell from "./PriceSell";
 import { KEY_USER } from "../../constant/LocalStored";
 import {  decreaseQuanlity, fetchDeleteCartRequest, increaseQuanlity } from "../../redux/client/cart/Actions";
 export default function ItemCart({ value }) {
-  console.log(value);
   const dispatch = useDispatch();
   const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id;
   return (

@@ -15,7 +15,7 @@ export default function CategoryNew() {
       setLoading(true)
       axios.get(`${URL_BASE}listProduct?isSell=true`).then(res => setData(res.data)).catch(err => console.log(err)).finally(() => setLoading(false))
   },[])
-  const mainBackGround = useSelector((state) => state.common.mainBackGround);
+  const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
   return (
     <Stack alignItems='center' spacing={1} padding='30px 50px' sx={{background :mainBackGround}}>
     <img style={{width  : '60px' ,height : '30px'}} src="https://upload.wikimedia.org/wikipedia/commons/9/95/New_logo.svg" alt="flashsale"/>

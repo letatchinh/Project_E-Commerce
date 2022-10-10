@@ -6,7 +6,7 @@ import { sortHighToLow, sortLowToHigh, sortRatingHighToLow, sortRatingLowtoHigh 
 import '../StyleComponent/SideBarFilter.css'
 
 export default function SortBar() {
-  const mainColorText = useSelector(state => state.common.mainColorText)
+  const mainColorText = useSelector(state => state.colorCommon.mainColorText)
   const dispatch = useDispatch()
   const [price, setPrice] = useState('');
   const handleChangePrice = (event) => {
