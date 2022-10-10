@@ -70,12 +70,10 @@ export default function ProductClient({ item }) {
       </div>
       <Link to={`/products/${_id}`}>
         <div className="cardHover">
-          <LazyLoadImage
+          <CardMedia
             className="imgProduct"
-            style={{ height: '300px', objectFit: "cover" }}
-            // component="img"
-            width='100%'
-            effect='blur'
+            sx={{ height: { md: "300px", xs: "200px" }, objectFit: "cover" }}
+            component="img"
             alt="green iguana"
             src={`/images/${images[active]}`}
           />

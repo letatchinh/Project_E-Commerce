@@ -1,6 +1,6 @@
 import { Button,  Stack } from '@mui/material'
 import axios from 'axios'
-import React, {  useEffect, useState } from 'react'
+import React, {  useEffect, useRef, useState } from 'react'
 import { URL_BASE } from '../../constant/UrlConstant'
 import ListProductCommon from './ListProductCommon'
 import LoadingListProduct from './LoadingListProduct'
@@ -10,15 +10,19 @@ import CountdownTimer from './CountdownTimer'
 import { Link } from 'react-router-dom'
 
 export default function ListProductSale({scrollPosition}) {
+  const componentRef = useRef()
     const [data,setData] = useState([])
     const [loading,setLoading] = useState(false)
     useEffect(() => {
         setLoading(true)
         axios.get(`api/products/search?category=`).then(res => setData(res.data)).catch(err => console.log(err)).finally(() => setLoading(false))
     },[])
+    useEffect(() => {
+
+    },[])
     const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
   return (
-   <Stack sx={{background : mainBackGround, padding : '10px'}}>
+   <Stack ref={componentRef} sx={{background : mainBackGround, padding : '10px'}}>
        <Stack direction='row' alignItems='center' justifyContent={{md : 'center' , xs : 'flex-start'}} spacing={2} position='relative'>
        <img style={{width  : '114px' ,height : '30px'}} src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/flashsale/fb1088de81e42c4e538967ec12cb5caa.png" alt="flashsale"/> 
          <CountdownTimer/>
