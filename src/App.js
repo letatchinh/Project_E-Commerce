@@ -33,16 +33,23 @@ import CategoryNew from "./page/client/screens/CategoryNew";
 import CategoryTrending from "./page/client/screens/CategoryTrending";
 import CategoryCommon from "./components/client/CategoryCommon";
 import LoadingHomePage from "./components/client/LoadingHomePage";
-const ComponentHomePage = React.lazy(() => import("./page/client/screens/ComponentHomePage"));
+const ComponentHomePage = React.lazy(() =>
+  import("./page/client/screens/ComponentHomePage")
+);
 
 function App() {
   return (
     <>
       <Routes>
         <Route element={<HomePageUser />}>
-          <Route path="/" element={<React.Suspense fallback={<LoadingHomePage/>}>
-            <ComponentHomePage />
-          </React.Suspense>} />
+          <Route
+            path="/"
+            element={
+              <React.Suspense fallback={<LoadingHomePage />}>
+                <ComponentHomePage />
+              </React.Suspense>
+            }
+          />
           {/* <Route path="/search" element={<Search />} /> */}
           {/* <Route path="/new" element={<CreateProduct />} /> */}
           <Route path="/login" element={<LoginUser />} />
@@ -113,6 +120,11 @@ function App() {
           <Route path="/admin/products" element={<ProductScreen />} />
           <Route
             path="/admin/products/search/:keyword"
+            element={<ProductScreen />}
+            exact
+          />
+          <Route
+            path="/admin/products/page/:pagenumber/:sortPrice"
             element={<ProductScreen />}
             exact
           />

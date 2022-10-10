@@ -8,6 +8,7 @@ import Message from "../LoadingError/Error";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const MainProducts = () => {
   const [keyword, setKeyword] = useState();
+  const [sortPrice, setSortPrice] = useState();
   const params = useParams();
   const pagenumber = params.pagenumber;
 
@@ -18,8 +19,8 @@ const MainProducts = () => {
   const productDelete = useSelector((state) => state.productDelete);
   const { error: errorDelete, success: successDelete } = productDelete;
   const fetch = useCallback(async () => {
-    await dispatch(listProducts(keyword, pagenumber));
-  }, [dispatch, productDelete, pagenumber, keyword]);
+    await dispatch(listProducts(keyword, pagenumber, sortPrice));
+  }, [dispatch, productDelete, pagenumber, keyword, sortPrice]);
   useEffect(() => {
     fetch();
     // sortLoswtoHight();
@@ -27,8 +28,9 @@ const MainProducts = () => {
   }, [fetch]);
   // let arrProduct = [];
 
-  const handleChange = (e) => {
-    navigator(`/admin/products/${e.target.value}`);
+  const handlesortPrice = (e) => {
+    setSortPrice(e.target.value);
+    navigator(`/admin/products/page/${page}/${e.target.value}`);
   };
   const submitHandler = (e) => {
     e.preventDefault();
@@ -73,10 +75,10 @@ const MainProducts = () => {
             </div>
 
             <div className="col-lg-2 col-6 col-md-3">
-              <select className="form-select" onChange={handleChange}>
-                <option>Latest added</option>
-                <option>Cheap first</option>
-                <option value="allSortHigh">Most viewed</option>
+              <select className="form-select" onChange={handlesortPrice}>
+                <option value="">All price</option>
+                <option value="-1">High to Low</option>
+                <option value="1">Low to High</option>
               </select>
             </div>
           </div>

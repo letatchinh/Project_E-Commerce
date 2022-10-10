@@ -62,13 +62,15 @@ productRoute.get(
           },
         }
       : {};
+    const prices = req.query.sortPrice || null;
+
     const pageSize = 2;
     const page = Number(req.query.pageNumber) || 1;
     const count = await Product.countDocuments({ ...keyword });
     const products = await Product.find({ ...keyword })
       .limit(pageSize)
       .skip(pageSize * (page - 1))
-      .sort({ _id: -1 });
+      .sort(!prices ? { _id: -1 } : { price: prices });
     res.json({ products, page, pages: Math.ceil(count / pageSize) });
   })
 );
