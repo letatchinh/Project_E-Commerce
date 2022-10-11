@@ -6,10 +6,11 @@ import MainProducts from "./../../../components/admin/products/MainProducts";
 const ProductScreen = () => {
   const params = useParams();
   const keyword = params.keyword;
+  const keywordCategory = params.keywordCategory;
   // console.log(keyword);
   return (
     <>
-      <MainProducts keyword={keyword} />
+      <MainProducts keyword={keyword} keywordCategory={keywordCategory} />
     </>
   );
 };

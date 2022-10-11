@@ -9,6 +9,7 @@ import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const MainProducts = () => {
   const [keyword, setKeyword] = useState();
   const [sortPrice, setSortPrice] = useState();
+  const [keywordCategory, setKeywordCategory] = useState();
   const params = useParams();
   const pagenumber = params.pagenumber;
 
@@ -19,8 +20,17 @@ const MainProducts = () => {
   const productDelete = useSelector((state) => state.productDelete);
   const { error: errorDelete, success: successDelete } = productDelete;
   const fetch = useCallback(async () => {
-    await dispatch(listProducts(keyword, pagenumber, sortPrice));
-  }, [dispatch, productDelete, pagenumber, keyword, sortPrice]);
+    await dispatch(
+      listProducts(keyword, pagenumber, sortPrice, keywordCategory)
+    );
+  }, [
+    dispatch,
+    productDelete,
+    pagenumber,
+    keyword,
+    sortPrice,
+    keywordCategory,
+  ]);
   useEffect(() => {
     fetch();
     // sortLoswtoHight();
@@ -31,6 +41,10 @@ const MainProducts = () => {
   const handlesortPrice = (e) => {
     setSortPrice(e.target.value);
     navigator(`/admin/products/page/${page}/${e.target.value}`);
+  };
+  const handlesortCategory = (e) => {
+    setKeywordCategory(e.target.value);
+    navigator(`/admin/products/page/${page}/category/${e.target.value}`);
   };
   const submitHandler = (e) => {
     e.preventDefault();
@@ -66,11 +80,12 @@ const MainProducts = () => {
               />
             </form>
             <div className="col-lg-2 col-6 col-md-3">
-              <select className="form-select">
-                <option>All category</option>
-                <option>Electronics</option>
-                <option>Clothing</option>
-                <option>Something else</option>
+              <select className="form-select" onChange={handlesortCategory}>
+                <option value="">All category</option>
+                <option value="trousers">Trousers</option>
+                <option value="hat">hat</option>
+                <option value="shirt">Shirt</option>
+                <option value="shoe">Shoe</option>
               </select>
             </div>
 

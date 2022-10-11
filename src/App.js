@@ -130,6 +130,11 @@ function App() {
             exact
           />
           <Route
+            path="/admin/products/page/:pagenumber/category/:keywordCategory"
+            element={<ProductScreen />}
+            exact
+          />
+          <Route
             path="/admin/products/search/:keyword/page/:pagenumber"
             element={<ProductScreen />}
             exact

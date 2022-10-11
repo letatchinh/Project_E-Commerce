@@ -62,12 +62,24 @@ productRoute.get(
           },
         }
       : {};
-    const prices = req.query.sortPrice || null;
+    const keywordCategory = req.query.category
+      ? {
+          category: {
+            $regex: req.query.category,
+            $options: "i",
+          },
+        }
+      : {};
 
+    const prices = req.query.sortPrice || null;
+    // const categorie = req.query.sortCategory || null;
     const pageSize = 2;
     const page = Number(req.query.pageNumber) || 1;
-    const count = await Product.countDocuments({ ...keyword });
-    const products = await Product.find({ ...keyword })
+    const count = await Product.countDocuments({
+      ...keyword,
+      ...keywordCategory,
+    });
+    const products = await Product.find({ ...keyword, ...keywordCategory })
       .limit(pageSize)
       .skip(pageSize * (page - 1))
       .sort(!prices ? { _id: -1 } : { price: prices });
