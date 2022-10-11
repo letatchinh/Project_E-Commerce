@@ -24,7 +24,11 @@ const Product = (props) => {
             <Link to="#" className="title text-truncate">
               {product.name}
             </Link>
-            <div className="price mb-2">${product.price}</div>
+            <div className="price mb-2">
+              {product.price < 1000
+                ? "$" + product.price
+                : product.price + "VND"}
+            </div>
             <div className="price mb-2">Category: {product.category}</div>
             <div className="row productImageSub">
               {product.images.map((e, i) => (

@@ -1133,3 +1133,62 @@ a {
     transform: rotate(360deg)
   }
 }
+
+.btn-ripple {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  transition: all ease-in-out .5s;
+}
+
+.btn-ripple::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 25%;
+  height: 100%;
+  width: 50%;
+  background-color: #000;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  transition: all ease-in-out 1s;
+  transform: scale(5, 5);
+}
+
+.btn-ripple:active::after {
+  padding: 0;
+  margin: 0;
+  opacity: .2;
+  transition: 0s;
+  transform: scale(0, 0);
+}
+
+.box-currency {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+}
+
+.box-currency>button {
+  margin: 0 5px;
+  width: 20%;
+}
+
+.btn-notice {
+  position: relative;
+}
+
+.btn-notice-number {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 15px;
+  height: 15px;
+  background-color: red;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 10px;
+}

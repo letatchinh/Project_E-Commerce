@@ -33,6 +33,7 @@ import CategoryNew from "./page/client/screens/CategoryNew";
 import CategoryTrending from "./page/client/screens/CategoryTrending";
 import CategoryCommon from "./components/client/CategoryCommon";
 import LoadingHomePage from "./components/client/LoadingHomePage";
+import CurrencyScreen from "./page/admin/screens/CurrencyScreen";
 const ComponentHomePage = React.lazy(() =>
   import("./page/client/screens/ComponentHomePage")
 );
@@ -142,7 +143,9 @@ function App() {
             path="/admin/products/allSortHigh"
             element={<ProductScreen />}
           /> */}
+
           <Route path="/admin/category" element={<CategoriesScreen />} />
+          <Route path="/admin/currency" element={<CurrencyScreen />} />
           <Route path="/admin/orders" element={<OrderScreen />} />
           <Route path="/admin/order/:id" element={<OrderDetailScreen />} />
           <Route path="/admin/users" element={<UsersScreen />} />

@@ -163,6 +163,7 @@ const AddProductMain = () => {
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
                     >
+                      <option value="">Select</option>
                       <option value="trousers">trousers</option>
                       <option value="shirt">shirt</option>
                       <option value="hat">hat</option>

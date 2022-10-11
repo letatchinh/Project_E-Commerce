@@ -1,13 +1,29 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/admin/Actions/UserActions";
+import { listOrders } from "../../redux/admin/Actions/OrderActions";
 
 const Header = (props) => {
   const dispatch = useDispatch();
 
-  const { handleClickMenu, isDisplay, handleDisplay, isClickMobile } = props;
-
+  const {
+    handleClickMenu,
+    isDisplay,
+    handleDisplay,
+    isClickMobile,
+    isColor,
+    handleColor,
+  } = props;
+  const orderList = useSelector((state) => state.orderList);
+  const { orders } = orderList;
+  const fetch = useCallback(async () => {
+    await dispatch(listOrders());
+  }, [dispatch]);
+  useEffect(() => {
+    fetch();
+    // setarrProduct(arrProduct);
+  }, [fetch]);
   const logoutHandler = (e) => {
     e.preventDefault();
     dispatch(logout());
@@ -16,8 +32,12 @@ const Header = (props) => {
   // handleDisplay = (e) => {
   //   isClickMobile = false;
   // };
+
   return (
-    <header className="main-header navbar">
+    <header
+      className="main-header navbar"
+      style={{ background: isColor ? "#000" : "#fff" }}
+    >
       <div className="col-search">
         <form className="searchform">
           <div className="input-group">
@@ -50,13 +70,19 @@ const Header = (props) => {
         </button>
         <ul className="nav">
           <li className="nav-item">
-            <Link className={`nav-link btn-icon`} title="Dark mode" to="#">
+            <Link
+              className={`nav-link btn-icon`}
+              title="Dark mode"
+              to="#"
+              onClick={() => handleColor()}
+            >
               <i className="fas fa-moon"></i>
             </Link>
           </li>
-          <li className="nav-item">
-            <Link className="nav-link btn-icon" to="#">
+          <li className="nav-item btn-notice">
+            <Link className="nav-link btn-icon" to="/admin/orders">
               <i className="fas fa-bell"></i>
+              <span className="btn-notice-number">{orders.length}</span>
             </Link>
           </li>
           <li className="nav-item">
@@ -82,9 +108,9 @@ const Header = (props) => {
                 <Link className="dropdown-item" to="/admin/">
                   My profile
                 </Link>
-                <Link className="dropdown-item" to="#">
+                {/*  <Link className="dropdown-item" to="#">
                   Settings
-                </Link>
+                </Link> */}
                 <Link
                   onClick={logoutHandler}
                   className="dropdown-item text-danger"

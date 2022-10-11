@@ -24,6 +24,10 @@ const HomePage = () => {
       navigator("/admin/login");
     }
   }, [user]);
+  const [isColor, setIsColor] = useState(false);
+  const handleColor = () => {
+    setIsColor(!isColor);
+  };
   return (
     <>
       <div
@@ -35,13 +39,22 @@ const HomePage = () => {
         }}
         onClick={handleClickMoblie}
       ></div>
-      <Sidebar click={isClick} handleClickMenu={handleClickMenu} />
+      <Sidebar
+        click={isClick}
+        handleClickMenu={handleClickMenu}
+        isColor={isColor}
+      />
       <div className={isClick ? "aside-mini" : ""}>
-        <main className="main-wrap">
+        <main
+          className="main-wrap "
+          style={{ background: isColor ? "#000" : "#f8f9fa" }}
+        >
           <Header
             handleClickMenu={handleClickMenu}
             isDisplay={isDisplay}
             handleDisplay={handleDisplay}
+            isColor={isColor}
+            handleColor={handleColor}
           />
           <Outlet />
         </main>

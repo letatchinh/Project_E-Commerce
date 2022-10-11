@@ -1,12 +1,16 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 const Sidebar = (props) => {
-  const { click, handleClickMenu } = props;
+  const { click, handleClickMenu, isColor } = props;
 
   return (
     <div className={click ? "aside-mini" : ""}>
       <div className={click ? "show" : ""}>
-        <aside className="navbar-aside mobile-offcanvas" id="offcanvas_aside">
+        <aside
+          className="navbar-aside mobile-offcanvas"
+          id="offcanvas_aside"
+          style={{ background: isColor ? "#000" : "#fff" }}
+        >
           <div className="aside-top">
             <Link to="/admin/" className="brand-wrap">
               <img
@@ -102,11 +106,11 @@ const Sidebar = (props) => {
               <li className="menu-item">
                 <NavLink
                   activeclassname="active"
-                  className="menu-link disabled"
-                  to="/admin/transaction"
+                  className="menu-link"
+                  to="/admin/currency"
                 >
                   <i className="icon fas fa-usd"></i>
-                  <span className="text">Transaction</span>
+                  <span className="text">Exchange</span>
                 </NavLink>
               </li>
             </ul>

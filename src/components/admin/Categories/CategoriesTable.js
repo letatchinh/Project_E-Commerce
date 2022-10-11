@@ -44,11 +44,18 @@ const CategoriesTable = () => {
       num: 0,
     },
   ];
-  const newCate = category.map((el) => {
-    const newNum = productsAll.filter((e) => e.category === el.name).length;
-    return { ...el, num: newNum };
-  });
+  // console.log(productsAll);
+  const newCate =
+    category &&
+    category.map((el) => {
+      const newNum =
+        (!productsAll.products &&
+          productsAll.filter((e) => e.category === el.name).length) ||
+        (productsAll.product &&
+          productsAll.products.filter((e) => e.category === el.name).length);
 
+      return { ...el, num: newNum };
+    });
   return (
     <>
       <div className="col-md-12 col-lg-12">
@@ -68,15 +75,16 @@ const CategoriesTable = () => {
             {/* Table Data */}
             <tbody>
               {/* Products */}
-              {newCate.map((cate) => (
-                <tr key={id}>
-                  <td>{id++}</td>
-                  <td>
-                    <b>{cate.name}</b>
-                  </td>
-                  <td>{cate.num} products</td>
-                </tr>
-              ))}
+              {newCate &&
+                newCate?.map((cate) => (
+                  <tr key={id}>
+                    <td>{id++}</td>
+                    <td>
+                      <b>{cate.name}</b>
+                    </td>
+                    <td>{cate.num ? cate.num + " product" : "0 product"}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         )}

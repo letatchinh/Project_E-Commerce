@@ -2,7 +2,7 @@ const products = [
   {
     name: "Veraaaaa",
     description: "Aaaaa",
-    price: 20,
+    price: 1,
     countInStock: 2,
     rating: 3,
     numReviews: 4,
@@ -12,7 +12,7 @@ const products = [
   {
     name: "Veraaaaa1",
     description: "Aaaaa",
-    price: 50,
+    price: 2,
     countInStock: 5,
     rating: 1,
     numReviews: 4,

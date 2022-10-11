@@ -128,6 +128,76 @@ export const listAllProducts = () => async (dispatch, getState) => {
   }
 };
 
+//CURRENCY VND
+export const currencyVND = () => async (dispatch) => {
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+  try {
+    await dispatch({ type: PRODUCT_LISTALL_REQUEST });
+
+    // let { userLogin: userInfo } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
+        // Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.post(`/api/products/currencyVND`, config);
+
+    dispatch({ type: PRODUCT_LISTALL_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: PRODUCT_LISTALL_FAIL,
+      payload: message,
+    });
+  }
+};
+
+//CURRENCY USD
+export const currencyUSD = () => async (dispatch) => {
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+  try {
+    await dispatch({ type: PRODUCT_LISTALL_REQUEST });
+
+    // let { userLogin: userInfo } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
+        // Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.post(`/api/products/currencyUSD`, config);
+
+    dispatch({ type: PRODUCT_LISTALL_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: PRODUCT_LISTALL_FAIL,
+      payload: message,
+    });
+  }
+};
+
 //DELETE PRODUCT
 export const deleteProduct = (id) => async (dispatch, getState) => {
   const token =

@@ -9,6 +9,8 @@ import orders from "./data/Order.js";
 import ordersUser from "./data/Orderuser.js";
 import listCartss from "./data/listCarts.js";
 import Carts from "./Models/ListCartModel.js";
+import Voucher from "./Models/VocherModel.js";
+import vouches from "./data/Voucher.js";
 const ImportData = express.Router();
 
 ImportData.post(
@@ -52,6 +54,15 @@ ImportData.post(
     await Carts.remove({});
     const importCarts = await Carts.insertMany(listCartss);
     res.send({ importCarts });
+  })
+);
+
+ImportData.post(
+  "/listVoucher",
+  asyncHandler(async (req, res) => {
+    await Voucher.remove({});
+    const importVoucher = await Voucher.insertMany(vouches);
+    res.send({ importVoucher });
   })
 );
 export default ImportData;

@@ -204,6 +204,42 @@ productRoute.post(
   })
 );
 
+//CONVERT CURRENCY USD TO VND
+productRoute.post(
+  "/currencyVND",
+  asyncHandler(async (req, res) => {
+    const products = await Product.find({});
+    await products.map((product) => {
+      product.price = Math.ceil(product.price * 23000).toFixed(2);
+      return product;
+    });
+    if (products) {
+      res.json({ products });
+    } else {
+      res.status(404);
+      throw new Error("Product Not Found");
+    }
+  })
+);
+
+//CONVERT CURRENCY USD TO VND
+productRoute.post(
+  "/currencyUSD",
+  asyncHandler(async (req, res) => {
+    const products = await Product.find({});
+    await products.map((product) => {
+      product.price = Math.ceil(product.price).toFixed(2);
+      return product;
+    });
+    if (products) {
+      res.json({ products });
+    } else {
+      res.status(404);
+      throw new Error("Product Not Found");
+    }
+  })
+);
+
 //UPDATE PRODUCT
 productRoute.put(
   "/:id",

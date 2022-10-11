@@ -29,7 +29,7 @@ const rootReducer = combineReducers({
   shop: shopReducer,
   user: userReducer,
   filterProduct: filterProductReducer,
-  cart : cartReducers,
+  cart: cartReducers,
   //admin
   userLogin: userLoginReducer,
   userList: userListReducer,
