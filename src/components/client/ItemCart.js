@@ -21,7 +21,7 @@ export default function ItemCart({ value }) {
     <>
       {
         <ListItem
-          sx={{ borderBottom: "1px solid #C4C4C4" }}
+          sx={{ borderBottom: "1px solid #C4C4C4" , justifyContent : 'space-between' }}
           key={v4()}
           disableGutters
           secondaryAction={
@@ -48,10 +48,9 @@ export default function ItemCart({ value }) {
               {value.name}
             </Typography>
 
-            <Stack direction="row" alignItems="center">
+            {/* <Stack direction="row" alignItems="center">
               <Button
                 sx={{ padding: 0, minWidth: "40px" }}
-                // disabled={c.current === 0}
                 onClick={() => dispatch(decreaseQuanlity(value))}
                 variant="outlined"
               >
@@ -65,15 +64,16 @@ export default function ItemCart({ value }) {
               >
                 +
               </Button>
-            </Stack>
+            </Stack> */}
           </Stack>
           <div>
-            <PriceSell
+            {/* <PriceSell
               isSell={value.isSell}
               price={value.price}
               discount={value.discount}
               fontSize="16px"
-            />
+            /> */}
+            <Typography color='#f57224'>{value.price}</Typography>
           </div>
         </ListItem>
       }

@@ -1,4 +1,12 @@
-import { Alert, Box, Button, Link, Skeleton, TextField, Typography} from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Link,
+  Skeleton,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -12,33 +20,37 @@ import PriceSell from "../../../components/client/PriceSell";
 import axios from "axios";
 import { URL_BASE } from "../../../constant/UrlConstant";
 import { useParams } from "react-router-dom";
-import {getToday} from "../../../constant/FunctionCommom";
+import { getToday } from "../../../constant/FunctionCommom";
 import StyledRating from "../../../components/client/StyledRating";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 import * as yup from "yup";
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from "@hookform/resolvers/yup";
 import MyCarousel from "./MyCarousel";
 import SelectDetailSize from "../../../components/client/SelectDetailSize";
 import AmoutDetailToOrder from "../../../components/client/AmoutDetailToOrder";
-import '../../../components/StyleComponent/Product.css'
+import "../../../components/StyleComponent/Product.css";
 import MyTypography from "../../../components/client/MyTypography";
 import Category from "../../../layout/client/Category";
+import { KEY_USER } from "../../../constant/LocalStored";
+import { fetchAddToCartRequestSaga } from "../../../redux/sagas/Mysaga";
+import ContentTop from "../../../components/client/ContentTop";
+import ListProductCommon from "../../../components/client/ListProductCommon";
+import AxiosUser from "../../../apis/client/AxiosUser";
 export default function DetailProduct() {
-  
   const StyledTextField = styled(TextField)({
-    '& .css-1d3z3hw-MuiOutlinedInput-notchedOutline':{
-      borderColor : '#1976d2!important'
+    "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+      borderColor: "#1976d2!important",
     },
-    '& .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root':{
-      color : '#1976d2'
+    "& .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root": {
+      color: "#1976d2",
     },
-    '& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root':{
-      color : '#1976d2'
+    "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root": {
+      color: "#1976d2",
     },
-    '& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root':{
-      color : '#1976d2'
-    }
-  })
+    "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root": {
+      color: "#1976d2",
+    },
+  });
   const schema = yup.object().shape({
     comment: yup.string().required("Required").min(2).max(50),
   });
@@ -48,25 +60,34 @@ export default function DetailProduct() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver : yupResolver(schema)
+    resolver: yupResolver(schema),
   });
   const [itemm, setItem] = useState({});
+  const [listItem, setListItem] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [active,setActive] = useState(0)
+  const [active, setActive] = useState(0);
   let params = useParams();
   const username = useSelector((state) => state.user.loginSuccess);
-  const mainColorText = useSelector(state => state.colorCommon.mainColorText)
-  const mainBackGround2 = useSelector((state) => state.colorCommon.mainBackGround2);
-  const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
-  const { name, images, price, isSell,  numReviews, id, listRating , discount } = itemm;
-  
+  const mainColorText = useSelector((state) => state.colorCommon.mainColorText);
+  const mainBackGround2 = useSelector(
+    (state) => state.colorCommon.mainBackGround2
+  );
+  const mainBackGround = useSelector(
+    (state) => state.colorCommon.mainBackGround
+  );
+  const { name, images, price, isSell, numReviews, id, _id, discount } = itemm;
+  const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id;
   useEffect(() => {
-    setLoading(true)
-    axios.get(`/api/products/${params.productId}`)
-      .then((res) => setItem(res.data))
+    setLoading(true);
+    axios
+      .get(`/api/products/${params.productId}`)
+      .then((res) =>  setItem(res.data)
+      )
       .finally(() => setLoading(false));
-   
   }, [params.productId]);
+useEffect(() => {
+   AxiosUser.get(`/api/products/search?category=${itemm.category}`).then(res => setListItem(res.data))
+},[itemm])
   // useEffect(() => {
   //   axios
   //   .get(
@@ -105,14 +126,14 @@ export default function DetailProduct() {
         id
       )
     );
-    reset()
+    reset();
   };
   const onHoverChangeActive = (index) => {
-    setActive(index)
-  }
+    setActive(index);
+  };
   return (
     <>
-    <Category />
+      <Category />
       {loading ? (
         <Stack>
           <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
@@ -121,116 +142,192 @@ export default function DetailProduct() {
           <Skeleton variant="rounded" width={420} height={120} />
         </Stack>
       ) : (
-      <div style={{background : mainBackGround2 , padding : '20px 0'}}>
-      <Container sx={{background : mainBackGround,padding : '10px 0'}}>
-          <Stack   justifyContent="space-between" direction={{md : 'row' , xs : 'column'}} spacing={1}>
-          <Stack margin='0 auto' sx={ {width :{md : '35%',sm : '70%' , xs : '100%'}}} spacing={1}>
-           {images && <img style={{height : '30rem'}} src={`/images/${images[active]}`} alt="name" />}
-            {images && <MyCarousel hover={onHoverChangeActive} limit={4} data={images}/>}
-          </Stack>
-            <Stack margin='0 auto' alignItems={{md : 'flex-start', xs : 'center'}} width={{md : '60%' , xs : '100%'}} spacing={2}>
-              <MyTypography variant="h5" fontWeight="500" color={mainColorText}>
-                {name}
-              </MyTypography>
+        <div style={{ background: mainBackGround2, padding: "20px 0" }}>
+          <Container sx={{ background: mainBackGround, padding: "10px 0" }}>
+            <Stack
+              justifyContent="space-between"
+              direction={{ md: "row", xs: "column" }}
+              spacing={1}
+            >
               <Stack
-                width={{sm : '60%' , xs : '80%'}} 
-                sx={{
-                  padding: "20px",
-                  border: "2px solid #f3f3f3",
-                  borderRadius: "10px",
-                }}
+                margin="0 auto"
+                sx={{ width: { md: "35%", sm: "70%", xs: "100%" } }}
+                spacing={1}
               >
-                <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  sx={{ borderBottom: "2px solid #f3f3f3", padding: "10px" }}
+                {images && (
+                  <img
+                    style={{ height: "30rem" }}
+                    src={`/images/${images[active]}`}
+                    alt="name"
+                  />
+                )}
+                {images && (
+                  <MyCarousel
+                    hover={onHoverChangeActive}
+                    limit={4}
+                    data={images}
+                  />
+                )}
+              </Stack>
+              <Stack
+                margin="0 auto"
+                alignItems={{ md: "flex-start", xs: "center" }}
+                width={{ md: "60%", xs: "100%" }}
+                spacing={2}
+              >
+                <MyTypography
+                  variant="h5"
+                  fontWeight="500"
+                  color={mainColorText}
                 >
-                  <MyTypography variant="h6" color={mainColorText}>Price</MyTypography>
-                  <PriceSell discount={discount} isSell={isSell} price={price} />
-                </Stack>
+                  {name}
+                </MyTypography>
                 <Stack
-                  direction="row"
-                  justifyContent="space-between"
-                  sx={{  padding: "10px" }}
+                  width={{ sm: "60%", xs: "80%" }}
+                  sx={{
+                    padding: "20px",
+                    border: "2px solid #f3f3f3",
+                    borderRadius: "10px",
+                  }}
                 >
-                  <MyTypography variant="h6" color={mainColorText}>Review</MyTypography>
-                  <Stack direction="row">
-    <StyledRating   value={parseInt(numReviews)} readOnly={true} />
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    sx={{ borderBottom: "2px solid #f3f3f3", padding: "10px" }}
+                  >
+                    <MyTypography variant="h6" color={mainColorText}>
+                      Price
+                    </MyTypography>
+                    <PriceSell
+                      discount={discount}
+                      isSell={isSell}
+                      price={price}
+                    />
+                  </Stack>
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    sx={{ padding: "10px" }}
+                  >
+                    <MyTypography variant="h6" color={mainColorText}>
+                      Review
+                    </MyTypography>
+                    <Stack direction="row">
+                      <StyledRating
+                        value={parseInt(numReviews)}
+                        readOnly={true}
+                      />
 
-                    <Link href="#review">
-                      {" "}
-                      <MyTypography variant="body2" component="span">
-                        {/* ({listRating && listRating.length}) */}
-                      </MyTypography>
-                    </Link>
+                      <Link href="#review">
+                        {" "}
+                        <MyTypography variant="body2" component="span">
+                          {/* ({listRating && listRating.length}) */}
+                        </MyTypography>
+                      </Link>
+                    </Stack>
                   </Stack>
                 </Stack>
-              </Stack>
-              <SelectDetailSize />
-              <AmoutDetailToOrder />
-              <Stack direction='row' width='70%' justifyContent='space-between'> 
-              <Button sx={{width : '45%',textTransform : 'capitalize',}} variant="contained"><Typography  fontSize='1.2rem'>Buy</Typography></Button>
-              <Button 
-    //           onClick={() =>
-    //   dispatch(
-    //     fetchAddToCartRequest({
-    //       ...itemm,
-    //       isCheckedPayment: true,
-    //     })
-    //   )
-    // } 
-    sx={{display : 'block',width : '45%',textTransform : 'capitalize',background : 'rgba(255,87,34,0.1)',borderColor : '#ee4d2d',color : '#ee4d2d'}} color='warning' variant="outlined"><ShoppingCartIcon /><MyTypography>Add To Cart</MyTypography></Button>
-              </Stack>
-              {/* <Box width='80%'>
-              <form  onSubmit={handleSubmit(onSubmit)}>
-                <Stack spacing={2} >
-                  <MyTypography variant="h6" color={mainColorText}>WRITE A CUSTOMER REVIEW</MyTypography>
-                  <MyTypography variant="h5" color={mainColorText}>Rating</MyTypography>
-                  <StyledRating precision={0.5}
-                    value={value}
-                    onChange={(event, newValue) => {
-                      setValue(newValue);
-                    }} />
-                  <MyTypography variant="h5" color={mainColorText}>Comment</MyTypography>
-                  <StyledTextField
-                    {...register("comment")}
-                    label="Write Commet Here ..."
-                    variant="outlined"
-                  />
+                <SelectDetailSize />
+                <AmoutDetailToOrder />
+                <Stack
+                  direction="row"
+                  width="70%"
+                  justifyContent="space-between"
+                >
                   <Button
-                    disabled={value === null || !isPayment}
-                    type="submit"
-                    sx={{ width: "40%", marginLeft: "auto!important" }}
+                    sx={{ width: "45%", textTransform: "capitalize" }}
                     variant="contained"
-                    endIcon={<SendIcon />}
                   >
-                    Send
+                    <Typography fontSize="1.2rem">Buy</Typography>
+                  </Button>
+                  <Button
+                    onClick={() =>
+                      dispatch(
+                        fetchAddToCartRequestSaga({
+                          product: _id,
+                          user: idUser,
+                        })
+                      )
+                    }
+                    sx={{
+                      display: "block",
+                      width: "45%",
+                      textTransform: "capitalize",
+                      background: "rgba(255,87,34,0.1)",
+                      borderColor: "#ee4d2d",
+                      color: "#ee4d2d",
+                    }}
+                    color="warning"
+                    variant="outlined"
+                  >
+                    <ShoppingCartIcon />
+                    <MyTypography>Add To Cart</MyTypography>
                   </Button>
                 </Stack>
-              </form>
-              </Box>
-              {errors.comment && errors.comment.type === "required" && (
-                <Alert severity="error">{errors.comment.message}</Alert>
-              )}
-              {errors.comment && errors.comment.type === "min" && (
-                <Alert severity="error">{errors.comment.message}</Alert>
-              )}
-              {errors.comment && errors.comment.type === "max" && (
-                <Alert severity="error">{errors.comment.message}</Alert>
-              )}
-              {!isPayment && (
-                <Alert severity="error">Chưa mua mà đòi Rating</Alert>
-              )} */}
+                <Box width="80%">
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <Stack spacing={2}>
+                      <MyTypography variant="h6" color={mainColorText}>
+                        WRITE A CUSTOMER REVIEW
+                      </MyTypography>
+                      <MyTypography variant="h5" color={mainColorText}>
+                        Rating
+                      </MyTypography>
+                      <StyledRating
+                        precision={0.5}
+                        value={value}
+                        onChange={(event, newValue) => {
+                          setValue(newValue);
+                        }}
+                      />
+                      <MyTypography variant="h5" color={mainColorText}>
+                        Comment
+                      </MyTypography>
+                      <StyledTextField
+                        {...register("comment")}
+                        label="Write Commet Here ..."
+                        variant="outlined"
+                      />
+                      <Button
+                        disabled={value === null || !isPayment}
+                        type="submit"
+                        sx={{ width: "40%", marginLeft: "auto!important" }}
+                        variant="contained"
+                        endIcon={<SendIcon />}
+                      >
+                        Send
+                      </Button>
+                    </Stack>
+                  </form>
+                </Box>
+                {errors.comment && errors.comment.type === "required" && (
+                  <Alert severity="error">{errors.comment.message}</Alert>
+                )}
+                {errors.comment && errors.comment.type === "min" && (
+                  <Alert severity="error">{errors.comment.message}</Alert>
+                )}
+                {errors.comment && errors.comment.type === "max" && (
+                  <Alert severity="error">{errors.comment.message}</Alert>
+                )}
+                {!isPayment && (
+                  <Alert severity="error">Chưa mua mà đòi Rating</Alert>
+                )}
+              </Stack>
             </Stack>
-          </Stack>
-          <Stack  sx={{  padding : '50px 10px'}}>
-            <MyTypography id="review" variant="h5" color={mainColorText}>
-              Review
-            </MyTypography>
-            {/* {listRating && <ListReview data={listRating} />} */}
-          </Stack>
-        </Container>
-      </div>
+            <Stack justifyContent="space-between">
+              <Stack sx={{ padding: "50px 10px" }}>
+                <MyTypography id="review" variant="h5" color={mainColorText}>
+                  Review
+                </MyTypography>
+                {/* {listRating && <ListReview data={listRating} />} */}
+              </Stack>
+              <Stack >
+                <ContentTop value="Product Lien Quan" />
+                {listItem && <ListProductCommon  data={listItem} limit={4}/>}
+              </Stack>
+            </Stack>
+          </Container>
+        </div>
       )}
     </>
   );

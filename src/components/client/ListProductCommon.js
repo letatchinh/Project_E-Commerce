@@ -1,16 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { Stack } from "@mui/system";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { v4 } from "uuid";
-import SkeletonPruductUser from "./SkeletonPruductUser";
 import ErrorNoItem from "./ErrorNoItem";
-import Product from "./Product";
 import MyPagination from "./MyPagination";
 import ProductClient from "./ProductClient";
 export default function ListProductCommon({ limit, data }) {
-  const dispatch = useDispatch();
   const [start, setStart] = useState(0);
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
@@ -25,9 +21,11 @@ export default function ListProductCommon({ limit, data }) {
     setPage(value);
     const newStart = (value - 1) * limit;
     setStart(newStart);
+    console.log(data);
+    console.log("ok");
   };
   return (
-    <div>
+    <Stack spacing={4}>
       <Grid container spacing={3}>
         {list.length === 0 ? (
           <ErrorNoItem src="https://cdn.dribbble.com/users/2382015/screenshots/6065978/no_result_still_2x.gif?compress=1&resize=400x300" />
@@ -45,6 +43,6 @@ export default function ListProductCommon({ limit, data }) {
           <MyPagination count={count} page={page} onChange={handleChange} />
         </Stack>
       )}
-    </div>
+    </Stack>
   );
 }

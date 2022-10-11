@@ -28,10 +28,14 @@ const Footer = () => {
   const CustomTypoGraphy = styled(Typography)({
     color: "white",
   });
+  const statusThemme = useSelector((state) => state.colorCommon.status);
+
   return (
     <div
       style={{
-        background: "linear-gradient(rgb(238, 77, 45), rgb(255, 115, 55))",
+        background: statusThemme
+    ? "linear-gradient(rgb(238, 77, 45), rgb(255, 115, 55))"
+    : "#00255E",
         paddingBottom: "20px",
         position: "relative",
       }}

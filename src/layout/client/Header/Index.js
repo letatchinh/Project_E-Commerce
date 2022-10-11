@@ -25,7 +25,7 @@ import "../../../components/StyleComponent/Icons.css";
 import LogoDevIcon from "@mui/icons-material/LogoDev";
 import SwitchBackGround from "../../../components/client/SwitchBackGround";
 import AxiosUser from "../../../apis/client/AxiosUser";
-import { fetchCart } from "../../../redux/client/cart/Actions";
+import { fetchCart, fetchTotalBill } from "../../../redux/client/cart/Actions";
 import MyTypography from "../../../components/client/MyTypography";
 import MyButton from "../../../components/client/MyButton";
 import zIndex from "@mui/material/styles/zIndex";
@@ -38,10 +38,17 @@ export default function Index() {
       const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id;
       AxiosUser.get(`/api/carts/filterCarts/${idUser}`)
         .then(async (res) => {
-          const newAr = await res.data.map((e) => ({
-            ...e.product,
-            quanlity: 1,
-          }));
+          const newArrOk = await res.data.filter(e => e.product !== null)
+          const newArrFail = await res.data.filter(e => e.product === null)
+          newArrFail.map(e => AxiosUser.delete(`/api/carts/deleteById/${e._id}`))
+          const newAr = await  newArrOk.map((e) => 
+            ({
+              ...e.product,
+              quanlity: 1,
+              isChecked : false,
+            })
+            
+          );
           dispatch(fetchCart(newAr));
         })
         .catch((err) => console.log(err));

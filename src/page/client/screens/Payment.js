@@ -17,17 +17,23 @@ import { v4 } from "uuid";
 import axios from "axios";
 import OrderSuccess from "../../../components/client/OrderSuccess";
 import ItemDetailistOrderUser from "../../../components/client/ItemDetailistOrderUser";
-import { fetchAddListOrderRequest } from "../../../redux/login/Actions";
-import {getToday} from "../../../constant/FunctionCommom";
 import ErrorNoItem from '../../../components/client/ErrorNoItem'
 import { KEY_USER } from "../../../constant/LocalStored";
-import { useNavigate } from "react-router-dom";
-import PaymentApi from "../../../apis/PaymentApi";
+import { Link, useNavigate } from "react-router-dom";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import moment from "moment";
+import getToken from "../../../constant/getTokenUser";
+import { fetchAddOrderRequest } from "../../../redux/sagas/Mysaga";
 export default function Payment() {
+  const config = {
+    headers: { Authorization: `Bearer ${getToken()}` }
+  };
   const mainBackGround = useSelector(state => state.colorCommon.mainBackGround)
   const mainBackGround2 = useSelector(state => state.colorCommon.mainBackGround2)
   const mainColorText = useSelector(state => state.colorCommon.mainColorText)
+  const listCarts = useSelector(state => state.cart.listCarts)
   const users = JSON.parse(localStorage.getItem(KEY_USER))
+  const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id
   const navigate = useNavigate()
   useEffect(() => {
     if(users === null){
@@ -40,7 +46,7 @@ export default function Payment() {
     "Choose Payment Method",
     "Wait admin Check Order",
   ];
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(1);
   const [distance, setDistance] = useState(0);
   const user = useSelector((state) => state.user.loginSuccess);
   useEffect(() => {
@@ -64,15 +70,13 @@ export default function Payment() {
     setValue(event.target.value);
   };
   const [listChecked, setListChecked] = useState([]);
-  const listCheckedPayment = useSelector(
-    (state) => state.user.loginSuccess.listCarts
-  );
+  console.log(listChecked);
   useEffect(() => {
-    const newList = listCheckedPayment.filter(
-      (e) => e.isCheckedPayment === true
+    const newList = listCarts.filter(
+      (e) => e.isChecked
     );
     setListChecked(newList);
-  }, [listCheckedPayment]);
+  }, [listCarts]);
   useEffect(()=>{
     if(listChecked.length !== 0){
       setActiveStep(1)
@@ -96,31 +100,50 @@ export default function Payment() {
   };
   const totalPrice = useMemo(() => CalTotal(), [listChecked]);
   const handlePayment = async () => {
-    const today = getToday();
+    const now = moment()._d;
+    const filnalList = listChecked.map(e => ({
+      name : e.name,
+      qty : e.quanlity,
+      images : e.images,
+      price : e.price,
+      product : e._id
+    }))
     const newOrder = {
-      addressShip: user.address,
-      id: v4(),
-      listProductOrder: listChecked,
-      status: false,
-      taxShip: distance * 2000,
-      timeOrder: today,
-      totalBill: totalPrice + distance * 2000,
+      user : idUser,
+      orderItem :filnalList,
+      shippingAddress : {
+        address: "kkk",
+            city: "aa",
+            postalCode: "POX : 12233",
+            country: "aaa"
+      },
+      paymentMethod : value,
+      paymentResult:{
+        id : v4(),
+        status : value === "Paypal" ? true : false,
+        update_time : now,
+        email_address : users.email,
+
+      },
+      taxPrice : 10,
+      shippingPrice : distance * 2000,
+      totalPrice : totalPrice + distance * 2000,
+      isPaid : value === "Paypal" ? true : false,
+      paidAt : value === "Paypal" ? now : ""
     };
-    const newUser = {
-      ...user,
-      listOrder: [...user.listOrder, newOrder],
-      listCarts: [],
-    };
-    await dispatch(fetchAddListOrderRequest(newUser));
-   await listChecked.map(e => PaymentApi.add({idProduct : e.id,idUser : user.id}))
-    setActiveStep(2);
+    dispatch(fetchAddOrderRequest({newOrder,config}))
+    // AxiosUser.post("/api/orders",newOrder,config).then(res => setActiveStep(2)).catch(err => console.log(err))
   };
   return (
     <>
-        <div style={{ background: mainBackGround2, padding: "20px" }}>
-        {activeStep === 0  && <ErrorNoItem src='https://bizweb.dktcdn.net/100/351/215/themes/713955/assets/empty-cart.png?1617619216743'/>}
-          {activeStep === 1  && (
-            <Container sx={{ background: 'white', borderRadius: "10px" }}>
+        <div style={{ background: mainBackGround2, padding: "20px", position : 'relative' }}>
+        {listChecked.length === 0  &&  <Stack>
+          <Link style={{position : 'absolute' , top : '2rem' , left : '5rem'}} to='/cart'><Button startIcon={<ArrowBackIosIcon/>} >Back</Button></Link>
+        <ErrorNoItem src='https://bizweb.dktcdn.net/100/351/215/themes/713955/assets/empty-cart.png?1617619216743'/>
+        </Stack>}
+          {activeStep === 1 && listChecked.length !== 0  && (
+            <Container sx={{ background: 'white', borderRadius: "10px", position : 'relative' }}>
+            <Link style={{position : 'absolute' , top : '2rem' , left : '2rem'}} to='/cart'><Button startIcon={<ArrowBackIosIcon/>} >Back</Button></Link>
               <Stack
                 spacing={3}
                 borderBottom="2px solid #C4C4C4"
@@ -194,13 +217,13 @@ export default function Payment() {
                     >
                       <FormControlLabel
                         onChange={handleChange}
-                        value="visa"
+                        value="Paypal"
                         control={<Radio />}
                         label={
                           <img
                             style={{ width: "50px" }}
                             src="https://vietjet.asia/assets/uploads/2017/06/L%E1%BB%A3i-%C3%ADch-t%E1%BB%AB-vi%E1%BB%87c-s%E1%BB%AD-d%E1%BB%A5ng-visa-card.png"
-                            alt="visa"
+                            alt="Paypal"
                           />
                         }
                       />
@@ -218,7 +241,7 @@ export default function Payment() {
                           <img
                             style={{ width: "50px" }}
                             src="https://play-lh.googleusercontent.com/dQbjuW6Jrwzavx7UCwvGzA_sleZe3-Km1KISpMLGVf1Be5N6hN6-tdKxE5RDQvOiGRg"
-                            alt="visa"
+                            alt="Paypal"
                           />
                         }
                       />
@@ -236,7 +259,7 @@ export default function Payment() {
                 </Button>
               </Stack>
             </Container>) }
-          { activeStep === 2 && (
+          { activeStep === 2 &&listChecked.length !== 0 && (
             <Container sx={{ background: 'white', borderRadius: "10px"  , padding : '10px'}}>
               <OrderSuccess />
             </Container>

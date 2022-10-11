@@ -34,6 +34,7 @@ import CategoryTrending from "./page/client/screens/CategoryTrending";
 import CategoryCommon from "./components/client/CategoryCommon";
 import LoadingHomePage from "./components/client/LoadingHomePage";
 import CurrencyScreen from "./page/admin/screens/CurrencyScreen";
+import ListCart from "./page/client/screens/ListCart";
 const ComponentHomePage = React.lazy(() =>
   import("./page/client/screens/ComponentHomePage")
 );
@@ -70,6 +71,7 @@ function App() {
           />
 
           <Route path="/payment" element={<Payment />} />
+          <Route path="/cart" element={<ListCart />} />
           <Route path="/flash-sale" element={<CategoryFlashSale />} />
           <Route path="/new-product" element={<CategoryNew />} />
           <Route path="/trending-product" element={<CategoryTrending />} />

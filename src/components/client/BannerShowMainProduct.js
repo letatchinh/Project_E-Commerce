@@ -1,13 +1,14 @@
 import { Button, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
+import { Link } from "react-router-dom";
 import "../StyleComponent/Banner.css";
 import CategoryBanner from "./CategoryBanner";
 import CategoryBannerMobile from "./CategoryBannerMobile";
 export default function BannerShowMainProduct() {
   return (
     <div className="boxBanner">
-    <img className="imgHeader" src="https://www.glimpsefromtheglobe.com/wp-content/uploads/2016/12/1200px-Zara_Almere_-_Heren.jpg" alt="banner"/>
+    <img className="imgHeader" src='/images/BannerTop.jpeg' alt="banner"/>
       <div className="fillBanner">
         <CategoryBanner />
         <CategoryBannerMobile />
@@ -45,13 +46,14 @@ export default function BannerShowMainProduct() {
           >
             Sale Off 30%
           </Typography>
+          <Link to='/shirt'>
           <Button
             sx={{
               color: "white",
               borderColor: "white",
               background: "#00000090",
-              width: "30%",
-              padding: "10px 0",
+              width: "100%",
+              padding: "10px 100px",
               marginTop : '20px',
               animation : `AppearCategory3 2s ease `
             }}
@@ -59,6 +61,7 @@ export default function BannerShowMainProduct() {
           >
             Buy Now
           </Button>
+           </Link>
         </Stack>
       </div>
     </div>

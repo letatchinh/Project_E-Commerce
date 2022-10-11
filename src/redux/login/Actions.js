@@ -182,12 +182,7 @@ export const featchDecreaseItemRequest = (item) => {
         })()
     }
 }
-export const calTotalBill = (cart) => {
-    return {
-        type : TYPES.CAL_TOLTAL_BILL,
-        payload : cart
-    }
-}
+
 export const fecthDecreaseItemCart = (user) => {
     return {
         type : TYPES.DECREASE_ITEM_CART ,
