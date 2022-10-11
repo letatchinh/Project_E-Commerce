@@ -8,13 +8,11 @@ import {
   decreaseQuanlity,
   fetchCart,
   fetchDeleteCartRequest,
-  fetchTotalBill,
   increaseQuanlity,
 } from "../../redux/client/cart/Actions";
 import { useDispatch, useSelector } from "react-redux";
 export default function ItemListCart({ item }) {
   const listCarts = useSelector((state) => state.cart.listCarts);
-  const totalBill = useSelector((state) => state.cart.totalBill);
   const dispatch = useDispatch();
   const { name, images, price, quanlity, isChecked } = item;
   const [checked, setChecked] = useState(isChecked);
@@ -27,7 +25,6 @@ export default function ItemListCart({ item }) {
       return e;
     });
     await dispatch(fetchCart(newListCart));
-    dispatch(fetchTotalBill());
   };
   const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id;
 
@@ -61,7 +58,6 @@ export default function ItemListCart({ item }) {
            await dispatch(
               fetchDeleteCartRequest({ user: idUser, product: item._id })
             );
-            dispatch(fetchTotalBill());
           }}
         >
           <DeleteOutlineIcon color="secondary" />
@@ -76,7 +72,6 @@ export default function ItemListCart({ item }) {
         <Button
           onClick={() => {
             dispatch(decreaseQuanlity(item));
-            dispatch(fetchTotalBill());
           }}
           variant="outlined"
           sx={{ minWidth: 0, borderRadius: 0 }}
@@ -97,7 +92,6 @@ export default function ItemListCart({ item }) {
         <Button
           onClick={() => {
             dispatch(increaseQuanlity(item));
-            dispatch(fetchTotalBill());
           }}
           variant="outlined"
           sx={{ minWidth: 0, borderRadius: 0 }}

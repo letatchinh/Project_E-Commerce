@@ -68,6 +68,20 @@ CartRoutes.post(
       }
     })
   )
+  CartRoutes.get(
+    "/deleteMany/:id",
+    asyncHandler(async (req, res) => {
+  const Cart = await Carts.remove(({user : req.params.id,product : {$in : req.body}} ))
+    // Cart.forEach(e => res.send(e))
+      if (Cart) {
+        // await Cart.remove();
+        res.json(Cart);
+      } else {
+        res.status(404);
+        throw new Error("Cart Not Found");
+      }
+    })
+  )
   CartRoutes.delete(
     "/deleteById/:id",
     asyncHandler(async (req, res) => {

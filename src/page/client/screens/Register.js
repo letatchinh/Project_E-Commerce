@@ -13,7 +13,7 @@ import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-
+import brcypt from 'bcryptjs'
 export default function Register() {
   const navigate = useNavigate()
   const schema = yup.object().shape({
@@ -43,18 +43,11 @@ export default function Register() {
         const newUser = {
             // username : data.username,
             name:data.name,
-            password : data.password,
+            password : brcypt.hashSync(data.password,10),
             email : data.email,
-            // phone : data.phone,
-            // listCarts : [],
-            // listOrder : [],
-            // address : newAddress,
-            // id : v4()
+        
         }
-      //   const flag = await axios.get(`${URL_BASE}users?username=${data.username}`)
-      //   if(flag.data.length === 0)
-      //  { 
-        //  dispatch(fetchRegisterRequest(newUser))
+
         axios.post(`/api/users/`,newUser).then(res => {
           (toast('Resgister Success!', {
             position: "top-center",
@@ -76,13 +69,7 @@ draggable: true,
 progress: undefined,
           })
         })
-      //   alert("dkty rhanh cong")
-       
-      // }
-      // else{
-      
-      //   alert("dky that bai")
-      // }
+
       console.log(newUser);
     };
   return (

@@ -14,6 +14,12 @@ export const fetchCancelOrderRequest = (user) => {
     payload: user,
   };
 };
+export const fetchAddOrderRequest = (action) => {
+  return {
+    type: "ADD_ORDER_REQUEST",
+    payload: action,
+  };
+}
 export const fetchListCheckedRequest = (action) => {
   return {
     type : "FETCH_LIST_CHECKED_REQUEST",
@@ -89,9 +95,31 @@ export function* fetchFilterPrice(action) {
 export function* fetchListCheckedSaga(action){
 
 }
+export function* fetchAddOrder(action){
+  try {
+   const {status , data} = yield call(() => AxiosUser.post("/api/orders",action.payload.newOrder,action.payload.config))
+   if(status === STATUS_CODE.CREATED){
+    yield put({ type: "ADD_ORDER_SUCCESS", payload: data })
+   }
+  } catch (error) {
+    console.log(error)
+  }
+
+}
+export function* fetchAddOrderSuccessAndDeleteCart(action){
+  const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id;
+
+  try {
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
 function* mySaga() {
   yield takeLatest("FETCH_ADD_CART", fetchAddToCart);
   yield takeLatest("FETCH_LIST_CHECKED_REQUEST", fetchListCheckedSaga);
+  yield takeLatest("ADD_ORDER_REQUEST", fetchAddOrder);
+  yield takeLatest("ADD_ORDER_SUCCESS", fetchAddOrderSuccessAndDeleteCart);
   yield takeEvery("FETCH_CART_SUCCESS", fetchCartSuccess);
   yield takeEvery("REMOVE_LIST_ORDER_REQUEST", fetchCancelOrder);
   yield takeEvery("FETCH_FILTER_PRICE", fetchFilterPrice);

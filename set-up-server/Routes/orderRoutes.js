@@ -16,6 +16,7 @@ orderRouter.post(
       paymentMethod,
       itemsPrice,
       taxPrice,
+      isPaid,
       shippingPrice,
       totalPrice,
     } = req.body;
@@ -31,6 +32,7 @@ orderRouter.post(
         paymentMethod,
         itemsPrice,
         taxPrice,
+        isPaid,
         shippingPrice,
         totalPrice,
       });
@@ -44,8 +46,8 @@ orderRouter.post(
 //ADMIN GET ALL ORDERS
 orderRouter.get(
   "/all",
-  protect,
-  admin,
+  // protect,
+  // admin,
   asyncHandler(async (req, res) => {
     const orders = await Order.find({})
       .sort({ _id: -1 })

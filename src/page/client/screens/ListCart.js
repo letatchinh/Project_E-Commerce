@@ -1,15 +1,20 @@
 import { Button, Checkbox, FormControlLabel, Step, StepLabel, Stepper, TextField, Typography } from '@mui/material'
-import { Container, padding, Stack } from '@mui/system'
+import { Container, Stack } from '@mui/system'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import AxiosUser from '../../../apis/client/AxiosUser'
+import { useDispatch, useSelector } from 'react-redux'
 import ItemListCart from '../../../components/client/ItemListCart'
 import PlaceIcon from '@mui/icons-material/Place';
 import { v4 } from 'uuid'
+import { fetchTotalBill } from '../../../redux/client/cart/Actions'
+import { Link } from 'react-router-dom'
 export default function ListCart() {
     const background2 = useSelector(state => state.colorCommon.mainBackGround2)
     const backgroundWhite = useSelector(state => state.colorCommon.mainBackGround)
     const listCarts = useSelector(state => state.cart.listCarts)
+    const dispatch = useDispatch()
+    useEffect(() => {
+      dispatch(fetchTotalBill())
+    },[listCarts])
     const totalBill = useSelector(state => state.cart.totalBill)
     const steps = [
       "Add to Cart",
@@ -66,7 +71,7 @@ export default function ListCart() {
         <Typography fontSize='14px' color='#757575'>Total</Typography>
             <Typography color='#f57224' fontSize='1.3rem'>{totalBill} VND</Typography>
         </Stack>
-        <Button color='warning' variant='contained'>Confirm Order</Button>
+        <Link to='/payment'><Button sx={{width : '100%'}} color='warning' variant='contained'>Confirm Order</Button></Link>
         </Stack>
         </Stack>
     </Container>
