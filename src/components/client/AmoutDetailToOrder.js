@@ -6,7 +6,7 @@ import MyTypography from './MyTypography'
 export default function AmoutDetailToOrder() {
   return (
     <Stack spacing={1}>
-                <MyTypography fontSize='1rem'>Chosse Amout :</MyTypography>
+                {/* <MyTypography fontSize='1rem'>Chosse Amout :</MyTypography> */}
 
         <Stack direction='row' alignItems='center'   width='130px' borderRadius='30px'>
         <Button variant='outlined' sx={{minWidth : 0,borderRadius :'30px 0 0 30px'}}>-</Button>

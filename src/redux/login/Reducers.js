@@ -79,13 +79,13 @@ const userReducer = (state = initvalue, action) => {
         }),
         loginSuccess: action.payload,
       };
-    case TYPES.CAL_TOLTAL_BILL:
-      return {
-        ...state,
-        totalBill: action.payload.reduce(
-          (sum, arr) => sum + arr.price * arr.quanlity , 0
-        ),
-      };
+    // case TYPES.CAL_TOLTAL_BILL:
+    //   return {
+    //     ...state,
+    //     totalBill: action.payload.reduce(
+    //       (sum, arr) => sum + arr.price * arr.quanlity , 0
+    //     ),
+    //   };
     case TYPES.CHANGE_USERNAME:
       return {
         ...state,

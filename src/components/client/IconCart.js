@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { useDispatch, useSelector } from 'react-redux';
 import { KEY_USER } from '../../constant/LocalStored';
-import { calTotalBill, fetchLogginSuccessRequest } from '../../redux/login/Actions';
+import { fetchLogginSuccessRequest } from '../../redux/login/Actions';
 import '../StyleComponent/Icons.css'
 import Cart from './Cart';
 export default function IconCart() {
@@ -17,9 +17,7 @@ export default function IconCart() {
   useEffect(() => {
     fetch();
   }, [fetch]);
-  useEffect(() => {
-    dispatch(calTotalBill(listCarts))
-  },[listCarts])
+
     const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {

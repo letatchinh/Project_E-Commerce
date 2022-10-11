@@ -1,11 +1,12 @@
 import * as TYPES from "./Types";
 const initvalue = {
- listCarts : []
+ listCarts : [],
+ totalBill :0,
+
 };
 const cartReducers = (state = initvalue, action) => {
   switch (action.type) {
     case TYPES.FETCH_CART:
-      console.log(action.payload);
         return {
             ...state,
             listCarts : action.payload
@@ -15,6 +16,13 @@ const cartReducers = (state = initvalue, action) => {
             ...state,
             listCarts : [...state.listCarts,action.payload]
         }
+    case TYPES.CAL_TOTAL_BILL:
+      const arrChecked = state.listCarts.filter(e => e.isChecked)
+     const newTotal = arrChecked.reduce((sum,arr) => sum + (arr.price * arr.quanlity) ,0)
+      return {
+        ...state,
+        totalBill : newTotal
+      }
     case TYPES.DELETE_CART:
       const {product} = action.payload
       const newArr = state.listCarts.filter(e => e._id !== product)

@@ -19,7 +19,9 @@ CartRoutes.get(
   "/filterCarts/:id",
   asyncHandler(async (req, res) => {
     const carts = await Carts.find({ user: req.params.id  }).populate('product').sort({ _id: -1 });
+    
     res.json(carts);
+    res.send(carts)
   })
 );
 // ADD CART
@@ -56,6 +58,21 @@ CartRoutes.post(
         product,
       } = req.body;
       const Cart = await Carts.findOne({user : user , product : product});
+
+      if (Cart) {
+        await Cart.remove();
+        res.json({ message: "Cart deleted" });
+      } else {
+        res.status(404);
+        throw new Error("Cart Not Found");
+      }
+    })
+  )
+  CartRoutes.delete(
+    "/deleteById/:id",
+    asyncHandler(async (req, res) => {
+      const Cart = await Carts.findById({_id : req.params.id});
+
       if (Cart) {
         await Cart.remove();
         res.json({ message: "Cart deleted" });

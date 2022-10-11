@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import ItemCart from "./ItemCart";
 function Cart() {
   const listCarts = useSelector(state => state.cart.listCarts)
-  console.log(listCarts);
   return (
     <List
       sx={{
@@ -41,7 +40,7 @@ function Cart() {
       </Stack>
       <Link
         style={{ pointerEvents: listCarts && listCarts.length === 0 ? "none" : "auto" }}
-        to="/payment"
+        to="/cart"
       >
         <Button
           disabled={listCarts && listCarts.length === 0}
