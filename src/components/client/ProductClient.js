@@ -95,7 +95,32 @@ export default function ProductClient({ item }) {
         >
           {name}
         </Typography>
-        <PriceSell discount={discount} price={price} isSell={isSell} />
+        {/* <PriceSell discount={discount} price={price} isSell={isSell} /> */}
+        <Stack direction='row' justifyContent='space-between'>
+
+        <Typography color='rgb(238,77,45)'>{price} VND</Typography>
+        <Button
+          onClick={(e) => {
+            e.preventDefault()
+            dispatch(
+            fetchAddToCartRequestSaga({
+        product: _id,
+        user: idUser,
+      })
+    )
+          }}
+          variant="outlined"
+          sx={{
+            
+            // background: "rgba(255,87,34,0.1)",
+            // borderColor: "#ee4d2d",
+            // color: "#ee4d2d",
+          }}
+        >
+          <AddShoppingCartIcon className="hoverIconAddCart" />
+        </Button>
+        </Stack>
+
       </Link>
       <CardContent sx={{ padding: "5px" }}>
         <StyledRating value={parseInt(rating)} readOnly={true} size="small" />
@@ -133,40 +158,7 @@ export default function ProductClient({ item }) {
           />
         ))}
       </Stack>
-      <Stack
-        className="ButtonHoverAddAndBut"
-        direction="row"
-        justifyContent="space-between"
-        sx={{
-          position: "absolute",
-          width: "100%",
-          height: "30px",
-          bottom: "0",
-          opacity: 0,
-        }}
-      >
-        <Button
-          className="hoverAddCart"
-          onClick={() => dispatch(
-            fetchAddToCartRequestSaga({
-        product: _id,
-        user: idUser,
-      })
-    )}
-          variant="outlined"
-          sx={{
-            width: "100%",
-            background: "rgba(255,87,34,0.1)",
-            borderColor: "#ee4d2d",
-            color: "#ee4d2d",
-          }}
-        >
-          <AddShoppingCartIcon className="hoverIconAddCart" />
-        </Button>
-        <Button variant="outlined" sx={{ width: "40%" }}>
-          <ChatIcon />
-        </Button>
-      </Stack>
+    
     </Box>
   );
 }
