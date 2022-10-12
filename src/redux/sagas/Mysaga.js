@@ -14,6 +14,12 @@ export const fetchCancelOrderRequest = (user) => {
     payload: user,
   };
 };
+export const fetchCartRequest = () => {
+  return {
+    type : "FETCH_CART_REQUEST",
+    payload : ''
+  }
+}
 export const fetchAddOrderRequest = (action) => {
   return {
     type: "ADD_ORDER_REQUEST",
@@ -108,15 +114,48 @@ export function* fetchAddOrder(action){
 }
 export function* fetchAddOrderSuccessAndDeleteCart(action){
   const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id;
-
+  const listProduct = [];
+  action.payload.orderItem.map(e => {
+    listProduct.push(e.product)
+  })
   try {
     
+    const {status} = yield call(() => AxiosUser.post(`/api/carts/deleteMany/${idUser}`,listProduct))
+    if(status === STATUS_CODE.SUCCESS){
+      ToastSuccess("THANH CONG")
+     yield put({type :"FETCH_CART_REQUEST"})
+    }
   } catch (error) {
     console.log(error)
   }
 }
+export function* fetchCartSaga(){
+  try {
+    if (localStorage.getItem(KEY_USER)) {
+      const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id;
+  const {status,data} =  yield call(() =>AxiosUser.get(`/api/carts/filterCarts/${idUser}`)) 
+        if(status === STATUS_CODE.SUCCESS){
+          const newArrOk =  data.filter(e => e.product !== null)
+          const newArrFail =  data.filter(e => e.product === null)
+          newArrFail.map(e => AxiosUser.delete(`/api/carts/deleteById/${e._id}`))
+          const newAr =   newArrOk.map((e) => 
+            ({
+              ...e.product,
+              quanlity: 1,
+              isChecked : false,
+            })
+            
+          );
+         yield put(fetchCart(newAr));
+        }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 function* mySaga() {
   yield takeLatest("FETCH_ADD_CART", fetchAddToCart);
+  yield takeLatest("FETCH_CART_REQUEST", fetchCartSaga);
   yield takeLatest("FETCH_LIST_CHECKED_REQUEST", fetchListCheckedSaga);
   yield takeLatest("ADD_ORDER_REQUEST", fetchAddOrder);
   yield takeLatest("ADD_ORDER_SUCCESS", fetchAddOrderSuccessAndDeleteCart);

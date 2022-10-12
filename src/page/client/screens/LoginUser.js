@@ -5,11 +5,8 @@ import Typography from "@mui/material/Typography";
 import "@fontsource/roboto/300.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  changeText,
   fectchLogin,
-  fecthUserRequest,
   fetchCheckLogin,
-  fetchLogginSuccessRequest,
   fetchLoginRequest,
   fetchRegisterRequest,
 } from "../../../redux/login/Actions";
@@ -28,9 +25,7 @@ import { useForm } from "react-hook-form";
 export default function LoginUser() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   
-  const [display, setDisplay] = useState(false);
   const [reRender, setReRender] = useState(false);
-  const users = useSelector((state) => state.user.textLogin);
   const loginSuccess = useSelector((state) => state.user.loginSuccess);
   const statusLogin = useSelector((state) => state.user.statusLogin);
   const dispatch = useDispatch();

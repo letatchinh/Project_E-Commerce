@@ -22,37 +22,17 @@ import { KEY_USER } from "../../../constant/LocalStored";
 import { useForm } from "react-hook-form";
 import IconCart from "../../../components/client/IconCart";
 import "../../../components/StyleComponent/Icons.css";
-import LogoDevIcon from "@mui/icons-material/LogoDev";
-import SwitchBackGround from "../../../components/client/SwitchBackGround";
 import AxiosUser from "../../../apis/client/AxiosUser";
-import { fetchCart, fetchTotalBill } from "../../../redux/client/cart/Actions";
+import { fetchCart } from "../../../redux/client/cart/Actions";
 import MyTypography from "../../../components/client/MyTypography";
-import MyButton from "../../../components/client/MyButton";
-import zIndex from "@mui/material/styles/zIndex";
+
 import '../../../components/StyleComponent/Header.css'
+import { fetchCartRequest } from "../../../redux/sagas/Mysaga";
 export default function Index() {
-  const [status, setStatus] = useState(true);
+  
   const dispatch = useDispatch();
   useEffect(() => {
-    if (localStorage.getItem(KEY_USER)) {
-      const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id;
-      AxiosUser.get(`/api/carts/filterCarts/${idUser}`)
-        .then(async (res) => {
-          const newArrOk = await res.data.filter(e => e.product !== null)
-          const newArrFail = await res.data.filter(e => e.product === null)
-          newArrFail.map(e => AxiosUser.delete(`/api/carts/deleteById/${e._id}`))
-          const newAr = await  newArrOk.map((e) => 
-            ({
-              ...e.product,
-              quanlity: 1,
-              isChecked : false,
-            })
-            
-          );
-          dispatch(fetchCart(newAr));
-        })
-        .catch((err) => console.log(err));
-    }
+    dispatch(fetchCartRequest())
   }, [localStorage.getItem(KEY_USER)]);
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data) => {
@@ -74,7 +54,7 @@ export default function Index() {
     if (localStorage.getItem(KEY_USER)) {
       dispatch(fecthLogginSuccess(JSON.parse(localStorage.getItem(KEY_USER))));
       dispatch({ type: IS_STATUS_LOGIN, dispatch: "" });
-      console.log("Ok");
+      
     }
   }, [localStorage.getItem(KEY_USER)]);
   const handleClose = () => {

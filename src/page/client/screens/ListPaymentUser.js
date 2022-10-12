@@ -10,40 +10,30 @@ import { useSelector } from "react-redux";
 import { v4 } from "uuid";
 import { KEY_USER } from "../../../constant/LocalStored";
 import { useNavigate } from "react-router-dom";
+import AxiosUser from "../../../apis/client/AxiosUser";
 export default function ListPaymentUser() {
-  const users = JSON.parse(localStorage.getItem(KEY_USER))
-  const navigate = useNavigate()
+  const users = JSON.parse(localStorage.getItem(KEY_USER));
+  const navigate = useNavigate();
   useEffect(() => {
-    if(users === null){
-      navigate('/login')
+    if (users === null) {
+      navigate("/login");
     }
-  },[users])
-  const limit = 2;
+  }, [users]);
   const [list, setlist] = useState([]);
+  const [count, setCount] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [currentItems, setCurrentItems] = useState([]);
-  const [pageCount, setPageCount] = useState(0);
-  const [start, setStart] = useState(0);
   const [page, setPage] = useState(1);
-  const user = useSelector((state) => state.user.loginSuccess);
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`${URL_BASE}listPayment?idUser=${user.id}`)
-      .then((res) => {
-        setlist(res.data)
-        setCurrentItems(res.data.slice(start, start + limit));
-        setPageCount(Math.ceil(res.data.length / limit));
-      })
-      .catch((err) => console.log(err))
-      .finally(() => setLoading(false));
-  }, [user]);
-  useEffect(() => {
-    setCurrentItems(list.slice(start, start + limit));
+    AxiosUser.get(
+      `/api/orders/getAllOrderUser/${users._id}?page=${page}`
+    ).then((res) => {
+      setlist(res.data.ProductUser);
+      setCount(res.data.pages)
+    });
   }, [page]);
+
   const handleChange = (event, value) => {
     setPage(value);
-    setStart((value - 1) * limit);
   };
   return (
     <>
@@ -52,15 +42,14 @@ export default function ListPaymentUser() {
         <Stack
           justifyContent="space-between"
           spacing={3}
-        
           sx={{ padding: "10px" }}
         >
-          {currentItems?.map((e) => (
-            <ItemListPaymentUser key={v4()} data={e.idProduct} />
+          {list?.map((e) => (
+            <ItemListPaymentUser key={v4()} data={e} />
           ))}
         </Stack>
         <Stack alignItems="center" spacing={2}>
-          <Pagination count={pageCount} page={page} onChange={handleChange} />
+          <Pagination count={count} page={page} onChange={handleChange} />
         </Stack>
       </Stack>
     </>

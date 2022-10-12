@@ -1,27 +1,32 @@
 import React, { useEffect, useState } from 'react'
-import { Card, CardActionArea, CardContent, CardMedia, Stack, Typography } from '@mui/material'
+import { Button, Card, CardActionArea, CardContent, CardMedia, Stack, Typography } from '@mui/material'
 import axios from 'axios'
 import { URL_BASE } from '../../constant/UrlConstant'
 import PriceSell from './PriceSell'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import '../StyleComponent/ItemListPayment.css'
 export default function ItemListPaymentUser({data}) {
-  const [item,setItem] = useState({})
-  const [loading,setLoading] = useState(false)
   const mainColorText = useSelector(state => state.colorCommon.mainColorText)
-
-  useEffect(() => {
-    setLoading(true)
-    axios.get(`${URL_BASE}listProduct?id=${data}`).then(res => setItem(res.data[0])).catch(err => console.log(err)).finally(() => setLoading(false))
-  },[])
-  const {image,name,price,isSell,discount} = item
-
+const {images,name , price,_id}  = data
+const handleBuyAgain = () => {
+  console.log("ok");
+}
   return (
-    <Stack direction='row' spacing={3} borderBottom='1px solid #CACACA' padding='10px'>
-    <img style={{width : '100px',height : '100px',objectFit : 'cover'}} src={image} alt='22'/>
-    <Stack>
+    <Link to={`/products/${_id}`}>
+    <Stack className='itemListPayment' direction='row' spacing={3} borderBottom='1px solid #CACACA' padding='10px'>
+    
+    <img style={{width : '100px',height : '100px',objectFit : 'cover'}} src={`/images/${images[0]}`} alt='22'/>
+   
+    <Stack alignItems='center'>
         <Typography variant='body1' fontWeight='bold' color={mainColorText}>{name}</Typography>
+        <Button onClick={handleBuyAgain} variant='outlined'>Buy Again</Button>
     </Stack>
-    <Typography sx={{marginLeft : 'auto!important'}} alignSelf='center' variant='h6'><PriceSell isSell={isSell} price={price} discount={discount}/></Typography>
+    <Typography sx={{marginLeft : 'auto!important'}} alignSelf='center' variant='h6'>
+    {/* <PriceSell isSell={isSell} price={price} discount={discount}/> */}
+    <Typography color='rgb(238, 77, 45)'>{price} VND</Typography>
+    </Typography>
 </Stack>
+ </Link>
   )
 }

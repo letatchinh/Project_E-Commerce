@@ -25,8 +25,8 @@ export const fetchLoginRequest=(data) =>{
         (async () => {
             try {
                 const res = await AxiosUser.post('/api/users/loginUser',data)
-                localStorage.setItem(KEY_USER,JSON.stringify({...res.data,listCarts : []}));
-                dispatch(fecthLogginSuccess({...res.data,listCarts : []}))
+                localStorage.setItem(KEY_USER,JSON.stringify(res.data));
+                dispatch(fecthLogginSuccess(res.data))
                 ToastSuccess("Login Success")
                 return res.data
             } catch (error) {

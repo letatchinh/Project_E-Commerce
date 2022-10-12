@@ -7,22 +7,15 @@ import { Button } from "@mui/material";
 import ItemDetailistOrderUser from "./ItemDetailistOrderUser";
 import { v4 } from "uuid";
 import TotalBill from "./TotalBill";
-import { fetchCancelOrderRequest } from "../../redux/sagas/Mysaga";
 import Dialo from "./Dialo";
-export default function DetailListOrderUser({ id,click }) {
-  const dispatch = useDispatch()
-  const [item, setItem] = useState({});
-  const listOrder = useSelector((state) => state.user.loginSuccess.listOrder);
-  const user = useSelector((state) => state.user.loginSuccess);
-  useEffect(() => {
-    const newItem = listOrder.filter((e) => e.id === id);
-    setItem(newItem[0]);
-  }, []);
+import AxiosUser from "../../apis/client/AxiosUser";
+import ToastSuccess from "./ToastSuccess";
+import ToastError from "./ToastError";
+export default function DetailListOrderUser({ id,click ,data}) {
+  console.log(data);
+  const {_id,isDelivered,orderItem , shippingPrice ,totalPrice} = data
   const handleCancelBill = async() => {
-    const newListorDer = listOrder.filter(e => e.id !== item.id)
-    const newUser = {...user,listOrder : newListorDer}
-   await dispatch(fetchCancelOrderRequest(newUser))
-    click()
+     AxiosUser.delete(`/api/orders/deleteById/${_id}`).then(res => {ToastSuccess("Delete Success");click()}).catch(err => ToastError("Delete Failed"))
   }
   return (
     <Stack>
@@ -37,27 +30,27 @@ export default function DetailListOrderUser({ id,click }) {
       <Button onClick={click} variant="outlined">
         Back
       </Button>
-        <TextItemListOrder title="Mã Đơn hàng" value={item.id} />
+        <TextItemListOrder title="Mã Đơn hàng" value={_id} />
         <TextItemListOrder
           title="Tình Trạng"
-          value={item.status ? "Đang giao" : "Đang đợi phê duyệt"}
+          value={isDelivered ? "Đang giao" : "Đang đợi phê duyệt"}
         />
       </Stack>
       <ContainerScoll>
         <Stack>
-          {item.listProductOrder &&
-            item.listProductOrder.map((e) => (
+          {orderItem &&
+            orderItem.map((e) => (
               <ItemDetailistOrderUser key={v4()} value={e} />
             ))}
         </Stack>
       </ContainerScoll>
       <Stack direction="row" alignItems='center'>
-      {!item.status &&  <Dialo click={handleCancelBill}/>}
+      {!isDelivered &&  <Dialo click={handleCancelBill}/>}
      
         <Stack marginLeft='auto' width="200px">
           <Stack>
-            <TotalBill title="Tax Ship" value={item.taxShip} />
-            <TotalBill title="Total Bill" value={item.totalBill} />
+            <TotalBill title="Tax Ship" value={shippingPrice} />
+            <TotalBill title="Total Bill" value={totalPrice} />
           </Stack>
         </Stack>
       </Stack>

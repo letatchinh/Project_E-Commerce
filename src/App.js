@@ -1,9 +1,6 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import ListProducts from "./page/client/screens/ListProducts";
 import Register from "./page/client/screens/Register";
-import { useDispatch, useSelector } from "react-redux";
-import { fecthProductRequest } from "./redux/shopping/Shopping-actions";
 import DetailProduct from "./page/client/screens/DetailProduct";
 import ProfileUser from "./page/client/screens/ProfileUser";
 import InfoUser from "./page/client/screens/InfoUser";
