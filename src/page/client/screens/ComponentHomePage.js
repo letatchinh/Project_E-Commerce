@@ -21,8 +21,8 @@ export default function ComponentHomePage() {
     const inputSearch = useSelector((state) => state.shop.setSearchKeyword);
   return (
     <>
-          <div style={{background : mainBackGround}}>
-          <BannerShowMainProduct />
+<div style={{background : mainBackGround}}>
+<BannerShowMainProduct />
    <Container>
    <Slider />
    </Container>

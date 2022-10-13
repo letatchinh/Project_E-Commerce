@@ -1,6 +1,5 @@
 import { Stack } from "@mui/system";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import ContainerScoll from "./ContainerScoll";
 import TextItemListOrder from "./TextItemListOrder";
 import { Button } from "@mui/material";

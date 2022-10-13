@@ -22,8 +22,6 @@ import { KEY_USER } from "../../../constant/LocalStored";
 import { useForm } from "react-hook-form";
 import IconCart from "../../../components/client/IconCart";
 import "../../../components/StyleComponent/Icons.css";
-import AxiosUser from "../../../apis/client/AxiosUser";
-import { fetchCart } from "../../../redux/client/cart/Actions";
 import MyTypography from "../../../components/client/MyTypography";
 
 import '../../../components/StyleComponent/Header.css'
@@ -42,7 +40,6 @@ export default function Index() {
   const statusLogin = useSelector((state) => state.user.statusLogin);
   const loginSuccess = useSelector((state) => state.user.loginSuccess);
   const statusThemme = useSelector((state) => state.colorCommon.status);
-
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
@@ -101,8 +98,9 @@ export default function Index() {
        </Button>
        </Link>
           </Stack>
-            <Button
-              sx={{ textTransform: "capitalize" }}
+           <Stack direction='row'  alignItems='center'>
+              <Button 
+              sx={{ textTransform: "capitalize" , display : statusLogin ? "flex" : "none" , gap : '8px' }}
               id="demo-positioned-button"
               aria-controls={open ? "demo-positioned-menu" : undefined}
               aria-haspopup="true"
@@ -110,13 +108,44 @@ export default function Index() {
               onClick={handleClick}
             >
               <AccountCircleOutlinedIcon
+              
                 className="IconsWhite"
                 fontSize="medium"
               />
-              <MyTypography fontSize="12px" color="white">
+               <MyTypography fontSize="12px" color="white">
                 {loginSuccess.name}
               </MyTypography>
-            </Button>
+               </Button>
+              
+           </Stack>
+              <Stack  direction='row' spacing={2} display={window.location.href === ( "http://localhost:3000/login" || "http://localhost:3000/register") ? "none" : 'flex' && !statusLogin ? "block" : 'none'  } >
+              <Link to='/login'>
+              <Button
+            sx={{
+              color: "white",
+              borderColor: "white",
+              background: "#00000090",
+            }}
+            variant="outlined"
+          >
+            Login
+          </Button>
+              </Link>
+              <Link to='/register'>
+              <Button
+            sx={{
+              color: "white",
+              borderColor: "white",
+              background: "#00000090",
+            }}
+            variant="outlined"
+          >
+            Sign Up
+          </Button>
+              </Link>
+              </Stack>
+              
+           
             <Menu
               id="demo-positioned-menu"
               aria-labelledby="demo-positioned-button"
@@ -168,9 +197,6 @@ export default function Index() {
                 }}
                 to="/"
               >
-                {/* <img style={{width : '80px' }} src="https://logos-world.net/wp-content/uploads/2020/09/Gap-Logo.png" alt="" /> */}
-                {/* <img style={{width : '80px'}} src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Gap_logo.svg/2048px-Gap_logo.svg.png" alt="" /> */}
-                {/* <LogoDevIcon className="IconsWhite IconLarge" /> */}
                 <Typography sx={{textShadow : !statusThemme ? "0 0 10px #f3f3f3" : "none"}} className="myLogo" fontSize='3rem' color='white'>UT</Typography>
                 
               </Link>

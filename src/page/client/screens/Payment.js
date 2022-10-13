@@ -259,7 +259,7 @@ export default function Payment() {
                 </Button>
               </Stack>
             </Container>) }
-          { activeStep === 2 &&listChecked.length !== 0 && (
+          { activeStep === 2  && (
             <Container sx={{ background: 'white', borderRadius: "10px"  , padding : '10px'}}>
               <OrderSuccess />
             </Container>

@@ -3,7 +3,6 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import "../StyleComponent/Product.css";
-import PriceSell from "./PriceSell";
 import { useDispatch, useSelector } from "react-redux";
 import StyledRating from "./StyledRating";
 import { Link } from "react-router-dom";
@@ -11,11 +10,8 @@ import { Box, Stack } from "@mui/system";
 import { Avatar, Button } from "@mui/material";
 import { v4 } from "uuid";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import ChatIcon from "@mui/icons-material/Chat";
 import { KEY_USER } from "../../constant/LocalStored";
 import { fetchAddToCartRequestSaga } from "../../redux/sagas/Mysaga";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export default function ProductClient({ item }) {
   const dispatch = useDispatch();

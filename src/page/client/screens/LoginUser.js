@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, TextField } from "@mui/material";
+import { Button, Checkbox, FormControl, FormControlLabel, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, TextField } from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import "@fontsource/roboto/300.css";
@@ -15,16 +15,18 @@ import { Link, useNavigate } from "react-router-dom";
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
-import FacebookIcon from "@mui/icons-material/Facebook";
+import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import axios from "axios";
 import { URL_BASE } from "../../../constant/UrlConstant";
 import { v4 } from "uuid";
 import { KEY_USER } from "../../../constant/LocalStored";
 import { useForm } from "react-hook-form";
+import HideShowPassword from "../../../components/client/HideShowPassword";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export default function LoginUser() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  
+  const [showPassword,setShowPassword] = useState(false)
   const [reRender, setReRender] = useState(false);
   const loginSuccess = useSelector((state) => state.user.loginSuccess);
   const statusLogin = useSelector((state) => state.user.statusLogin);
@@ -36,7 +38,6 @@ export default function LoginUser() {
     if(localStorage.getItem(KEY_USER)){
       navigate("/")
     }
-  
   },[localStorage.getItem(KEY_USER)])
   useEffect(() => {
     function start() {
@@ -55,13 +56,6 @@ export default function LoginUser() {
     }
   }, [reRender]);
   const navigate = useNavigate();
-  // const clickLogin = async (e) => {
-  //   e.preventDefault();
-  //   await dispatch(fetchCheckLogin(users));
-  //   dispatch(fectchLogin(users));
-  //   setDisplay(true);
-  //   setReRender(!reRender);
-  // };
   const responseFacebook = async (response) => {
     const newUser = {
       username: response.id,
@@ -115,49 +109,34 @@ export default function LoginUser() {
     setReRender(!reRender);
   };
   return (
-    <Container sx={{ width: "30%" , padding : '50px 0'}}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div style={{background : '#F8F9FD', padding : '100px 0'}}>
+    <Container sx={{ width: "60%" }}>
+       <Paper elevation={3} sx={{  display : 'flex'}}>
+       <form style={{width : '50%', padding : '50px'}} onSubmit={handleSubmit(onSubmit)}>
         <Stack alignItems={"center"} spacing={2}>
-          <Typography variant="h3" gutterBottom>
-            Login
+          <Stack direction='row' justifyContent='space-between' alignItems='center' width='100%'>
+          <Typography variant="h6" color='#888' >
+            LOGIN
           </Typography>
-          <TextField
+          <Stack direction='row' spacing={1}>
+            <FacebookOutlinedIcon color='primary' sx={{cursor : 'pointer' ,fontSize : '30px'}}/>
+            <img style={{width : '28px' , height : '28px' , marginTop : '1px' ,cursor : 'pointer'}} src="https://storage.googleapis.com/support-kms-prod/ZAl1gIwyUsvfwxoW9ns47iJFioHXODBbIkrK" alt="google"/>
+          </Stack>
+          </Stack>
+          <TextField size="small" 
             {...register("email")}
             fullWidth
             label="Email"
             variant="outlined"
           />
-          <TextField
-            {...register("password")}
-            fullWidth
-            label="Password"
-            variant="outlined"
-          />
-          {/* <div style={{ display: display ? " block" : "none" }}>
-            <h3
-              style={{ color: "red", display: !statusLogin ? "block" : "none" }}
-            >
-              Login Failed !
-            </h3>
-            <h3
-              style={{
-                color: "green",
-                display: statusLogin ? "block" : "none",
-              }}
-            >
-              Login SusscessFul !
-            </h3>
-          </div> */}
-
-          <Button fullWidth type="submit" variant="contained">
+        <HideShowPassword  {...register("password")}/>
+          <Button sx={{backgroundImage: "linear-gradient(45deg, #E26560, #E36183)" ,borderRadius : '50px'}} fullWidth type="submit" variant="contained">
             Login
           </Button>
-          <div style={{ width: "80%", boxShadow: "0 0 2px 1px #C4C4C4" }}></div>
-          <Link to="/register">
-            <Button fullWidth color="success" variant="contained">
-              Register
-            </Button>
-          </Link>
+        <Stack direction='row' justifyContent='space-between' alignItems='center' width='100%'>
+        <FormControlLabel sx={{margin : 0}} control={<Checkbox defaultChecked />} label="Remember Me" />
+        <Typography variant="body2" color='#888'>Forgot password</Typography>
+        </Stack>
           {/* <FacebookLogin
             appId="3267114616941933"
             fields="name,email,picture"
@@ -173,6 +152,14 @@ export default function LoginUser() {
           /> */}
         </Stack>
       </form>
+      <Stack spacing={2} color='white' justifyContent='center' alignItems='center' style={{width : '50%',backgroundImage: "linear-gradient(45deg, #E26560, #E36183)"}}>
+            <Typography variant="h5"  fontWeight='bold'>Welcome to login</Typography>
+            <Typography fontWeight='300'>Don't have an account</Typography>
+           <Link to='/register'> <Button sx={{color : 'white' , borderColor : 'white' , borderRadius : '40px'}} variant="outlined">Sign Up</Button></Link>
+      </Stack>
+       </Paper>
+      
     </Container>
+    </div>
   );
 }
