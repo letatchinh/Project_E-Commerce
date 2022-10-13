@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from '@mui/material/Box';
 import CircularProgress, {
   circularProgressClasses,
@@ -42,9 +42,11 @@ function FacebookCircularProgress(props) {
 
 export default function LoadingHomePageFull() {
     const [off,setOff] = useState(false)
+   useEffect(() => {
     setTimeout(() => {
-        setOff(true)
-    }, 300);
+      setOff(true)
+  }, 300);
+   },[])
   return (
     <Box sx={{ display : !off ?  "flex" : 'none' ,height : '100vh', alignItems : 'center' , justifyContent : 'center',position : 'absolute',background : 'white' , inset: 0 , zIndex : 10000000}}>
       <FacebookCircularProgress />

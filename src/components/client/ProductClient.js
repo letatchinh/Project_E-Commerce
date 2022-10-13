@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
@@ -12,38 +12,50 @@ import { v4 } from "uuid";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { KEY_USER } from "../../constant/LocalStored";
 import { fetchAddToCartRequestSaga } from "../../redux/sagas/Mysaga";
+import AxiosUser from "../../apis/client/AxiosUser";
 
 export default function ProductClient({ item }) {
+ 
   const dispatch = useDispatch();
+  const [isFetch,setIsFetch] = useState(false)
+
+
   const {
     name,
     images,
     price,
-    isSell,
-    rating,
-    reviews,
-    discount,
-    countInStock,
-    category,
-    numReviews,
     _id,
   } = item;
+  const [review,setReview] = useState({numReview : 0,count : 0})
   const mainColorText = useSelector((state) => state.colorCommon.mainColorText);
   const mainTextShadow = useSelector((state) => state.colorCommon.mainTextShadow);
   const idUser = localStorage.getItem(KEY_USER) && JSON.parse(localStorage.getItem(KEY_USER))._id;
   const [active, setActive] = useState(0);
-
-     
-
+  const myRef = useRef()
+  const fetch = useCallback(() => {
+    AxiosUser.get(`/api/reviews/SumReviewByIdProduct/${_id}`).then(res => setReview({...review,numReview :res.data.avgReview,count : res.data.totalReview})).catch(err => console.log(err))
+  },[isFetch])
+  useEffect(() => {
+    isFetch && fetch()
+  },[fetch])
+  useEffect(() => {
+    if (!myRef?.current) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsFetch(true)
+      }
+    });
+    observer.observe(myRef.current);
+  }, [myRef]);
   return (
-    <Box
-      className="boxMain"
+    <Box ref={myRef}
       sx={{
+        boxShadow: "0 0 6px 2px #e5e3e3",
         display: "flex",
         flexDirection: "column",
         position: "relative",
         margin: "5px 0",
-        padding: "5px",
+        padding: "10px",
       }}
     >
       <div
@@ -57,11 +69,11 @@ export default function ProductClient({ item }) {
           top: "0",
           zIndex: 1,
           borderBottomLeftRadius: "5px",
-          display: isSell === "true" ? "block" : "none",
+          display: "block",
         }}
       >
         <Typography color="white" fontSize="14px" textAlign="center">
-          -{discount}%
+          -20%
         </Typography>
       </div>
       <Link to={`/products/${_id}`}>
@@ -79,7 +91,7 @@ export default function ProductClient({ item }) {
         <Typography
           className="cardContentHover"
           sx={{
-            padding: "10px 5px 0",
+            padding: "10px 0",
             height: "56px",
             fontSize: "calc(0.3vw + 10px)",
             textShadow : mainTextShadow
@@ -91,10 +103,8 @@ export default function ProductClient({ item }) {
         >
           {name}
         </Typography>
-        {/* <PriceSell discount={discount} price={price} isSell={isSell} /> */}
         <Stack direction='row' justifyContent='space-between'>
-
-        <Typography color='rgb(238,77,45)'>{price} VND</Typography>
+        <Typography color='rgb(238,77,45)'>{price} $</Typography>
         <Button
           onClick={(e) => {
             e.preventDefault()
@@ -106,27 +116,21 @@ export default function ProductClient({ item }) {
     )
           }}
           variant="outlined"
-          sx={{
-            
-            // background: "rgba(255,87,34,0.1)",
-            // borderColor: "#ee4d2d",
-            // color: "#ee4d2d",
-          }}
         >
           <AddShoppingCartIcon className="hoverIconAddCart" />
         </Button>
         </Stack>
 
       </Link>
-      <CardContent sx={{ padding: "5px" }}>
-        <StyledRating value={parseInt(rating)} readOnly={true} size="small" />
+      <CardContent sx={{ padding: "5px 0" }}>
+        <StyledRating value={parseFloat(review.numReview)} precision={.5} readOnly={true} size="small" />
         <Typography
           gutterBottom
           variant="body2"
           component="span"
           color={mainColorText}
         >
-          ({reviews.length})
+          ({review.count})
         </Typography>
       </CardContent>
       <Stack

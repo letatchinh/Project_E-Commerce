@@ -8,19 +8,14 @@ import {
   Typography,
 } from "@mui/material";
 import { Container, Stack } from "@mui/system";
-import React, { useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAddToCartRequest } from "../../../redux/login/Actions";
 import SendIcon from "@mui/icons-material/Send";
 import { useForm } from "react-hook-form";
-import ListReview from "../../../components/client/ListReview";
-import { fetchAddRatingProductRequest } from "../../../redux/shopping/Shopping-actions";
 import PriceSell from "../../../components/client/PriceSell";
 import axios from "axios";
-import { URL_BASE } from "../../../constant/UrlConstant";
 import { useParams } from "react-router-dom";
-import { getToday } from "../../../constant/FunctionCommom";
 import StyledRating from "../../../components/client/StyledRating";
 import { styled } from "@mui/material/styles";
 import * as yup from "yup";
@@ -36,7 +31,11 @@ import { fetchAddToCartRequestSaga } from "../../../redux/sagas/Mysaga";
 import ContentTop from "../../../components/client/ContentTop";
 import ListProductCommon from "../../../components/client/ListProductCommon";
 import AxiosUser from "../../../apis/client/AxiosUser";
+import ListReview from '../../../components/client/ListReview.js'
+import ToastSuccess from "../../../components/client/ToastSuccess";
+import ErrorNoItem from "../../../components/client/ErrorNoItem";
 export default function DetailProduct() {
+  let params = useParams();
   const StyledTextField = styled(TextField)({
     "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
       borderColor: "#1976d2!important",
@@ -62,12 +61,25 @@ export default function DetailProduct() {
   } = useForm({
     resolver: yupResolver(schema),
   });
+  const user =  JSON.parse(localStorage.getItem(KEY_USER)) || "";
   const [itemm, setItem] = useState({});
+  const { name, images, price, isSell,  _id, discount } = itemm;
   const [listItem, setListItem] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isPayment,setIsPayment] = useState(false)
+  const [review,setReview] = useState({numReview : 0,count : 0})
   const [active, setActive] = useState(0);
-  let params = useParams();
-  const username = useSelector((state) => state.user.loginSuccess);
+  const [count,setCount] = useState(0)
+  const [errorNoItem,setErrorNoItem] = useState(false)
+  useEffect(() => {
+    setLoading(true)
+    axios
+      .get(`/api/products/${params.productId}`)
+      .then((res) =>  setItem(res.data)
+      ).catch(err => setErrorNoItem(true))
+      .finally(() => setLoading(false));
+      
+  }, [params.productId]);
   const mainColorText = useSelector((state) => state.colorCommon.mainColorText);
   const mainBackGround2 = useSelector(
     (state) => state.colorCommon.mainBackGround2
@@ -75,65 +87,34 @@ export default function DetailProduct() {
   const mainBackGround = useSelector(
     (state) => state.colorCommon.mainBackGround
   );
-  const { name, images, price, isSell, numReviews, id, _id, discount } = itemm;
-  const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id;
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`/api/products/${params.productId}`)
-      .then((res) =>  setItem(res.data)
-      )
-      .finally(() => setLoading(false));
-  }, [params.productId]);
+
+
 useEffect(() => {
    AxiosUser.get(`/api/products/search?category=${itemm.category}`).then(res => setListItem(res.data))
+   AxiosUser.get(`/api/orders/checkPayment/${user._id}?product=${_id}`).then(res => setIsPayment(res.data.isPayment)).catch(err => console.log(err))
+   _id && AxiosUser.get(`/api/reviews/SumReviewByIdProduct/${_id}`).then(res => setReview({...review,numReview :res.data.avgReview,count : res.data.totalReview})).catch(err => console.log(err))
 },[itemm])
-  // useEffect(() => {
-  //   axios
-  //   .get(
-  //     `${URL_BASE}listPayment?idUser=${username.id}&idProduct=${params.productId}`
-  //   )
-  //   .then((res) => {
-  //     if (res.data.length !== 0) {
-  //       setIsPayment(true);
-  //     }
-  //   })
-  //   .catch((err) => console.log(err));
-  // },[username])
   const [value, setValue] = useState(null);
-  const [isPayment, setIsPayment] = useState(false);
   const dispatch = useDispatch();
   const onSubmit = (data) => {
-    const today = getToday();
-    const sum = itemm.listRating.reduce((sum, arr) => sum + arr.rating, value);
-    const newRating = (sum / (itemm.listRating.length + 1)).toFixed();
-    dispatch(
-      fetchAddRatingProductRequest(
-        {
-          ...itemm,
-          listRating: [
-            ...itemm.listRating,
-            {
-              ...data,
-              rating: value,
-              time: today,
-              username: username.name,
-              id: itemm.listRating.length + 1,
-            },
-          ],
-          rating: newRating,
-        },
-        id
-      )
-    );
-    reset();
+    const newComment = {name : user.name,
+    comment :data.comment,
+  rating : value,
+user : user._id,
+product : _id}
+    AxiosUser.post("/api/reviews/add",newComment).then(res => {
+      ToastSuccess("Tks For your Comment")
+      setCount(count+1)
+      reset()
+    })
   };
   const onHoverChangeActive = (index) => {
     setActive(index);
   };
   return (
     <>
-      <Category />
+    {
+      errorNoItem ? <div style={{padding : '5rem'}}><ErrorNoItem /></div>: <div><Category />
       {loading ? (
         <Stack>
           <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
@@ -214,14 +195,14 @@ useEffect(() => {
                     </MyTypography>
                     <Stack direction="row">
                       <StyledRating
-                        value={parseInt(numReviews)}
+                        value={parseFloat(review.numReview)}
                         readOnly={true}
                       />
 
                       <Link href="#review">
                         {" "}
                         <MyTypography variant="body2" component="span">
-                          {/* ({listRating && listRating.length}) */}
+                          ({review.count})
                         </MyTypography>
                       </Link>
                     </Stack>
@@ -245,7 +226,7 @@ useEffect(() => {
                       dispatch(
                         fetchAddToCartRequestSaga({
                           product: _id,
-                          user: idUser,
+                          user: user._id,
                         })
                       )
                     }
@@ -319,7 +300,7 @@ useEffect(() => {
                 <MyTypography id="review" variant="h5" color={mainColorText}>
                   Review
                 </MyTypography>
-                {/* {listRating && <ListReview data={listRating} />} */}
+                <div id="review"><ListReview count={count}  _id={_id} /></div>
               </Stack>
               <Stack >
                 <ContentTop value="Product Lien Quan" />
@@ -328,7 +309,10 @@ useEffect(() => {
             </Stack>
           </Container>
         </div>
-      )}
+      )}</div>
+    }
+     
+     
     </>
   );
 }

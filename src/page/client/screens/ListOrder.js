@@ -76,6 +76,7 @@ export default function ListOrder() {
               <Pagination
                 onChange={handleChange}
                 count={count}
+                page={page}
                 variant="outlined"
                 shape="rounded"
               />

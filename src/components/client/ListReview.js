@@ -1,13 +1,27 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { v4 } from 'uuid';
+import AxiosUser from '../../apis/client/AxiosUser';
+import LoadingHomePage from './LoadingHomePage';
 import Review from './Review'
 
-export default function ListReview({data}) {
-   const dataReverse = data.sort(function(a, b){return b.id - a.id})
+export default function ListReview({_id,count}) {
+   
+   const [listReview,setListReview] = useState([])
+   const [loadingReview, setLoadingReview] = useState(false);
+   const fetchreview = useCallback(async() =>{
+      setLoadingReview(true)
+      const res = await AxiosUser.get(`/api/reviews/getReviewByIdProduct/${_id}`)
+      setListReview(res.data.reviews)
+      setLoadingReview(false)
+    },[count])
+    useEffect(() => {
+      _id && fetchreview()
+    },[fetchreview])
+    console.log(listReview);
    return (
      <>
-      {
-         dataReverse && dataReverse.map(e => <Review key={v4()} comment={e.comment} rating={e.rating} time={e.time} username={e.username}/>)
+      { loadingReview ? <LoadingHomePage/> : 
+         listReview.map(e => <Review key={v4()}  item={e}/>)
         }
      </>
   )

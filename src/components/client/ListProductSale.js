@@ -1,6 +1,6 @@
 import { Button, Stack } from "@mui/material";
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { URL_BASE } from "../../constant/UrlConstant";
 import ListProductCommon from "./ListProductCommon";
 import LoadingListProduct from "./LoadingListProduct";
@@ -14,19 +14,22 @@ export default function ListProductSale() {
   const [isAppear, setIsAppear] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isFetch,setIsFetch] = useState(false)
+  const fetch = useCallback(async() => {
+    setLoading(true)
+    axios.get(`api/products/search?category=`).then(res => setData(res.data)).catch(err => console.log(err))
+    setLoading(false)
+  },[isFetch])
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`api/products/search?category=`)
-      .then((res) => setData(res.data))
-      .catch((err) => console.log(err))
-      .finally(() => setLoading(false));
-  }, []);
+     isFetch && fetch()
+  },[fetch])
+
   useEffect(() => {
     if (!componentRef?.current) return;
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         setIsAppear(true);
+        setIsFetch(true)
       }
     });
     observer.observe(componentRef.current);
@@ -35,7 +38,7 @@ export default function ListProductSale() {
     (state) => state.colorCommon.mainBackGround
   );
   return (
-    <Stack
+    <Stack spacing={1}
       className={isAppear ? "appear" : ""}
       ref={componentRef}
       sx={{ background: mainBackGround, padding: "10px" }}

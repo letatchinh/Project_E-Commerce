@@ -55,7 +55,7 @@ export default function IconCart() {
       'aria-labelledby': 'basic-button',
     }}
     anchorOrigin={{
-          vertical: 'top',
+          vertical: 'bottom',
           horizontal: 'right',
         }}
         transformOrigin={{

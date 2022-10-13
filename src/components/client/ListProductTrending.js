@@ -1,6 +1,6 @@
 import { Button, Stack } from '@mui/material'
 import axios from 'axios'
-import React, {  useEffect, useRef, useState } from 'react'
+import React, {  useCallback, useEffect, useRef, useState } from 'react'
 import ListProductCommon from './ListProductCommon'
 import LoadingListProduct from './LoadingListProduct'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -10,18 +10,23 @@ import { Link } from 'react-router-dom'
 export default function ListProductTrending() {
   const componentRef = useRef();
   const [isAppear, setIsAppear] = useState(false);
-  
     const [data,setData] = useState([])
     const [loading,setLoading] = useState(false)
+    const [isFetch,setIsFetch] = useState(false)
+    const fetch = useCallback(async() => {
+      setLoading(true)
+      axios.get(`api/products/search?category=`).then(res => setData(res.data)).catch(err => console.log(err))
+      setLoading(false)
+    },[isFetch])
     useEffect(() => {
-        setLoading(true)
-        axios.get(`api/products/search?category=`).then(res => setData(res.data)).catch(err => console.log(err)).finally(() => setLoading(false))
-    },[])
+       isFetch &&  fetch()
+    },[fetch])
     useEffect(() => {
       if (!componentRef?.current) return;
       const observer = new IntersectionObserver(([entry]) => {
         if (entry.isIntersecting) {
           setIsAppear(true);
+          setIsFetch(true)
         }
       });
       observer.observe(componentRef.current);
@@ -30,7 +35,7 @@ export default function ListProductTrending() {
 
   return (
 
-     <Stack className={isAppear ? "appear" : ""}
+     <Stack  spacing={1} className={isAppear ? "appear" : ""}
      ref={componentRef} sx={{background : mainBackGround, padding : '10px'}}>
        <Stack direction='row' alignItems='center' justifyContent={{md : 'center' , xs : 'flex-start'}} spacing={2} position='relative'>
        <img style={{width  : '30px' ,height : '30px'}} src="https://bizweb.dktcdn.net/100/438/408/themes/878697/assets/fire-icon-new.png?1664943619853" alt="flashsale"/>

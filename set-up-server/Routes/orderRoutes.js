@@ -164,6 +164,28 @@ orderRouter.get(
     res.json({ProductUser,page,pages : Math.ceil(count / pageSize) });
   })
 );
+// CHeck Is User paymented This Product
+orderRouter.get(
+  "/checkPayment/:id",
+  asyncHandler(async (req, res) => {
+    const name = req.query.product || ""
+    const Orders = await Order.find({user : req.params.id })
+    let ProductOrder = [];
+    let listProductOrder = []
+    Orders.forEach(e => e.orderItem.forEach(f => ProductOrder.push(f)))
+    ProductOrder.forEach(e => listProductOrder.push(e.product))
+    const contains = listProductOrder.some(elem =>{
+      return JSON.stringify(name) === JSON.stringify(elem);
+    });
+      if(contains){
+        res.json({isPayment : true})
+      }
+      else{
+        res.json({isPayment : false})
+      }
+      
+  })
+);
 // DELETE ORDER BY ID
 orderRouter.delete(
   "/deleteById/:id",

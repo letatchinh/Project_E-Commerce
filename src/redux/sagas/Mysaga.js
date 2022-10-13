@@ -20,6 +20,12 @@ export const fetchCartRequest = () => {
     payload : ''
   }
 }
+// export const fetchListReviewRequest = (action) => {
+//   return{
+//     type : "FETCH_REVIEW_REQUEST",
+//     payload : action
+//   }
+// }
 export const fetchAddOrderRequest = (action) => {
   return {
     type: "ADD_ORDER_REQUEST",
@@ -153,10 +159,25 @@ export function* fetchCartSaga(){
     console.log(error);
   }
 }
+// export function* fetchListReviewSaga(action){
+//   const user =  JSON.parse(localStorage.getItem(KEY_USER)) || "";
+
+//   try {
+//     const {data,status} = yield call(() => AxiosUser.get(`/api/review/getReviewByIdProduct/${action.payload}`))
+//     if(status === STATUS_CODE.SUCCESS){
+
+//     }
+
+//   } catch (error) {
+//       ToastError(error)
+//   }
+// }
+
 function* mySaga() {
   yield takeLatest("FETCH_ADD_CART", fetchAddToCart);
   yield takeLatest("FETCH_CART_REQUEST", fetchCartSaga);
   yield takeLatest("FETCH_LIST_CHECKED_REQUEST", fetchListCheckedSaga);
+  // yield takeLatest("FETCH_REVIEW_REQUEST", fetchListReviewSaga);
   yield takeLatest("ADD_ORDER_REQUEST", fetchAddOrder);
   yield takeLatest("ADD_ORDER_SUCCESS", fetchAddOrderSuccessAndDeleteCart);
   yield takeEvery("FETCH_CART_SUCCESS", fetchCartSuccess);

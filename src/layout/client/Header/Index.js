@@ -12,7 +12,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fectchLogout, fecthLogginSuccess } from "../../../redux/login/Actions";
 import { IS_STATUS_LOGIN } from "../../../redux/login/Types";
@@ -26,8 +26,10 @@ import MyTypography from "../../../components/client/MyTypography";
 
 import '../../../components/StyleComponent/Header.css'
 import { fetchCartRequest } from "../../../redux/sagas/Mysaga";
+
 export default function Index() {
-  
+const location = useLocation();
+ const path_lo_out=["/login" , "/register"]
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchCartRequest())
@@ -118,13 +120,13 @@ export default function Index() {
                </Button>
               
            </Stack>
-              <Stack  direction='row' spacing={2} display={window.location.href === ( "http://localhost:3000/login" || "http://localhost:3000/register") ? "none" : 'flex' && !statusLogin ? "block" : 'none'  } >
+              <Stack  direction='row' spacing={2} display={path_lo_out.includes(location.pathname) ? "none" : 'flex' && !statusLogin ? "block" : 'none'  } >
               <Link to='/login'>
               <Button
             sx={{
               color: "white",
               borderColor: "white",
-              background: "#00000090",
+              background: "transparent",
             }}
             variant="outlined"
           >
@@ -136,7 +138,7 @@ export default function Index() {
             sx={{
               color: "white",
               borderColor: "white",
-              background: "#00000090",
+              background: "transparent",
             }}
             variant="outlined"
           >

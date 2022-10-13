@@ -9,6 +9,8 @@ import orders from "./data/Order.js";
 import ordersUser from "./data/Orderuser.js";
 import listCartss from "./data/listCarts.js";
 import Carts from "./Models/ListCartModel.js";
+import Review from "./Models/ReviewModel.js";
+import reviews from "./data/review.js";
 const ImportData = express.Router();
 
 ImportData.post(
@@ -52,6 +54,14 @@ ImportData.post(
     await Carts.remove({});
     const importCarts = await Carts.insertMany(listCartss);
     res.send({ importCarts });
+  })
+);
+ImportData.post(
+  "/listReview",
+  asyncHandler(async (req, res) => {
+    await Review.remove({});
+    const importReview = await Review.insertMany(reviews);
+    res.send({ importReview });
   })
 );
 export default ImportData;
