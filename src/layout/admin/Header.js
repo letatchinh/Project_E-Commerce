@@ -82,7 +82,9 @@ const Header = (props) => {
           <li className="nav-item btn-notice">
             <Link className="nav-link btn-icon" to="/admin/orders">
               <i className="fas fa-bell"></i>
-              <span className="btn-notice-number">{orders.length}</span>
+              <span className="btn-notice-number">
+                {orders && orders.length}
+              </span>
             </Link>
           </li>
           <li className="nav-item">

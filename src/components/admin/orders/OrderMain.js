@@ -1,22 +1,61 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { listOrders } from "../../../redux/admin/Actions/OrderActions";
+import { Link, useParams } from "react-router-dom";
+import {
+  listOrders,
+  listOrdersFiterName,
+  listOrdersPaidS,
+} from "../../../redux/admin/Actions/OrderActions";
 import Message from "../LoadingError/Error";
 // import Loading from "../LoadingError/Loading";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
 import Orders from "./Orders";
 const OrderMain = () => {
   const orderList = useSelector((state) => state.orderList);
-  const { loading, error, orders } = orderList;
+  const { loading, error, orders, page, pages } = orderList;
 
+  const orderListFiterName = useSelector((state) => state.orderListFiterName);
+  const { loadings, errors, ordersFilter, pageFiter, pagesFiter } =
+    orderListFiterName;
+
+  const orderListPaidS = useSelector((state) => state.orderListPaidS);
+  const { ordersPaidS } = orderListPaidS;
+  console.log(ordersPaidS);
+  // console.log(orderListFiterName, "sda");
+  const [keyword, setKeyword] = useState();
+  const [name, setName] = useState();
   const dispatch = useDispatch();
+  const params = useParams();
+  const pagenumber = params.pagenumber;
+  const pageFiterNumber = params.pageFiterNumber;
+  const [paid, setPaid] = useState(false);
+
   const fetch = useCallback(async () => {
-    await dispatch(listOrders());
-  }, [dispatch]);
+    await dispatch(listOrders(keyword, pagenumber));
+    await dispatch(listOrdersFiterName(name, pageFiterNumber));
+    // await dispatch(listOrdersPaidS());
+    // setPaid(false);
+  }, [dispatch, keyword, pagenumber, name, pageFiterNumber]);
   useEffect(() => {
     fetch();
     // setarrProduct(arrProduct);
   }, [fetch]);
+  const submitHandler = (e) => {
+    e.preventDefault();
+    setPaid(false);
+    if (name.trim()) {
+      navigator(`/admin/orders/search/${name}`);
+    } else {
+      navigator("/admin/orders");
+    }
+  };
+  const HandlerPaiD = (e) => {
+    e.preventDefault();
+    setPaid(true);
+    navigator(`/admin/orders/search/${e.target.value}`);
+    dispatch(listOrdersPaidS());
+  };
+
   return (
     <section className="content-main">
       <div className="content-header">
@@ -26,18 +65,22 @@ const OrderMain = () => {
       <div className="card mb-4 shadow-sm">
         <header className="card-header bg-white">
           <div className="row gx-3 py-3">
-            <div className="col-lg-4 col-md-6 me-auto">
+            <form
+              onSubmit={submitHandler}
+              className="col-lg-4 col-md-6 me-auto"
+            >
               <input
                 type="text"
                 placeholder="Search..."
                 className="form-control p-2"
+                onChange={(e) => setName(e.target.value)}
               />
-            </div>
+            </form>
 
             <div className="col-lg-2 col-6 col-md-3">
-              <select className="form-select">
+              <select className="form-select" onClick={HandlerPaiD}>
                 <option>Status</option>
-                <option>Active</option>
+                <option value="paidS">Active</option>
                 <option>Disabled</option>
                 <option>Show all</option>
               </select>
@@ -52,15 +95,103 @@ const OrderMain = () => {
           </div>
         </header>
         <div className="card-body">
-          <div className="table-responsive">
-            {loading ? (
-              <LoadingDashboard />
-            ) : error ? (
-              <Message variant="alert-danger">{error}</Message>
-            ) : (
-              <Orders orders={orders} />
-            )}
-          </div>
+          {!name && (
+            <div className="table-responsive">
+              {loading ? (
+                <LoadingDashboard />
+              ) : error ? (
+                <Message variant="alert-danger">{error}</Message>
+              ) : (
+                <Orders orders={orders} />
+              )}
+              {pages > 1 && (
+                <nav className="float-end mt-4" aria-label="Page navigation">
+                  <ul className="pagination">
+                    {page === 1 ? (
+                      <li disabled className="page-item disabled">
+                        <Link
+                          className="page-link"
+                          to={`/admin/orders/page/${page && page - 1}`}
+                        >
+                          Previous
+                        </Link>
+                      </li>
+                    ) : (
+                      <li disabled className="page-item">
+                        <Link
+                          className="page-link"
+                          to={`/admin/orders/page/${page && page - 1}`}
+                        >
+                          Previous
+                        </Link>
+                      </li>
+                    )}
+
+                    {[...Array(pages).keys()].map((x) => (
+                      <li
+                        className={`page-item ${
+                          x + 1 === page ? "active" : ""
+                        }`}
+                        key={x + 1}
+                      >
+                        <Link
+                          className="page-link"
+                          to={
+                            keyword
+                              ? `/admin/orders/search/${keyword}/page/${x + 1}`
+                              : `/admin/orders/page/${x + 1}`
+                          }
+                        >
+                          {x + 1}
+                        </Link>
+                      </li>
+                    ))}
+                    {page === pages ? (
+                      <li disabled className="page-item disabled">
+                        <Link
+                          className="page-link"
+                          to={`/admin/orders/page/${page && page - 1}`}
+                        >
+                          Next
+                        </Link>
+                      </li>
+                    ) : (
+                      <li disabled className="page-item">
+                        <Link
+                          className="page-link"
+                          to={`/admin/orders/page/${page && page + 1}`}
+                        >
+                          Next
+                        </Link>
+                      </li>
+                    )}
+                  </ul>
+                </nav>
+              )}
+            </div>
+          )}
+          {name && (
+            <div className="table-responsive">
+              {loading ? (
+                <LoadingDashboard />
+              ) : errors ? (
+                <Message variant="alert-danger">{errors}</Message>
+              ) : (
+                <Orders orders={ordersFilter} />
+              )}
+            </div>
+          )}
+          {/* {!name && paid && (
+            <div className="table-responsive">
+              {loading ? (
+                <LoadingDashboard />
+              ) : errors ? (
+                <Message variant="alert-danger">{errors}</Message>
+              ) : (
+                <Orders orders={ordersPaidS} />
+              )}
+            </div>
+          )} */}
         </div>
       </div>
     </section>

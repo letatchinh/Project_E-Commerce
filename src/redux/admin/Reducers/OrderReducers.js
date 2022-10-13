@@ -5,12 +5,15 @@ import {
   ORDER_DETAILS_FAIL,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
+  ORDER_LISTFILTERNAME_FAIL,
+  ORDER_LISTFILTERNAME_REQUEST,
+  ORDER_LISTFILTERNAME_SUCCESS,
   ORDER_LIST_FAIL,
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
 } from "../Constants/OrderContants";
 
-//ALL PRODUCTS
+//ALL ORDERS
 export const orderListReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
     case ORDER_LIST_REQUEST:
@@ -19,10 +22,51 @@ export const orderListReducer = (state = { orders: [] }, action) => {
       return {
         ...state,
         loading: false,
-        orders: action.payload,
+        pages: action.payload.pages,
+        page: action.payload.page,
+        orders: action.payload.orders,
       };
     case ORDER_LIST_FAIL:
       return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+//ALL ORDERS
+export const orderListPaidSReducer = (state = { ordersPaidS: [] }, action) => {
+  switch (action.type) {
+    case ORDER_LIST_REQUEST:
+      return { ...state, loading: true };
+    case ORDER_LIST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        ordersPaidS: action.payload.ordersPaidS,
+      };
+    case ORDER_LIST_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+//ALL ORDER FILTER NAME USER
+export const orderListFiterNameReducer = (
+  state = { ordersFilter: [] },
+  action
+) => {
+  switch (action.type) {
+    case ORDER_LISTFILTERNAME_REQUEST:
+      return { ...state, loadings: true };
+    case ORDER_LISTFILTERNAME_SUCCESS:
+      return {
+        ...state,
+        loadings: false,
+        pagesFiter: action.payload.pagesFiter,
+        pageFiter: action.payload.pageFiter,
+        ordersFilter: action.payload.ordersFilter,
+      };
+    case ORDER_LISTFILTERNAME_FAIL:
+      return { ...state, loadings: false, errors: action.payload };
     default:
       return state;
   }

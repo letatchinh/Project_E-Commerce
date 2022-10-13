@@ -127,6 +127,11 @@ function App() {
             exact
           />
           <Route
+            path="/admin/products/search/:keyword/page/:pagenumber"
+            element={<ProductScreen />}
+            exact
+          />
+          <Route
             path="/admin/products/page/:pagenumber/:sortPrice"
             element={<ProductScreen />}
             exact
@@ -136,11 +141,7 @@ function App() {
             element={<ProductScreen />}
             exact
           />
-          <Route
-            path="/admin/products/search/:keyword/page/:pagenumber"
-            element={<ProductScreen />}
-            exact
-          />
+
           <Route
             path="/admin/products/page/:pagenumber"
             element={<ProductScreen />}
@@ -154,6 +155,31 @@ function App() {
           <Route path="/admin/category" element={<CategoriesScreen />} />
           <Route path="/admin/currency" element={<CurrencyScreen />} />
           <Route path="/admin/orders" element={<OrderScreen />} />
+          <Route
+            path="/admin/orders/search/:paymentMethod"
+            element={<OrderScreen />}
+            exact
+          />
+          <Route
+            path="/admin/orders/search/:paymentMethod/page/:pagenumber"
+            element={<OrderScreen />}
+            exact
+          />
+          <Route
+            path="/admin/orders/search/:name"
+            element={<OrderScreen />}
+            exact
+          />
+          <Route
+            path="/admin/orders/search/:name/page/:pageFiterNumber"
+            element={<OrderScreen />}
+            exact
+          />
+          <Route
+            path="/admin/orders/page/:pagenumber"
+            element={<OrderScreen />}
+          />
+          <Route path="/admin/orders/search/paidS" element={<OrderScreen />} />
           <Route path="/admin/order/:id" element={<OrderDetailScreen />} />
           <Route path="/admin/users" element={<UsersScreen />} />
           <Route

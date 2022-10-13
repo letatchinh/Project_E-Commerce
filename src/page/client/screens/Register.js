@@ -1,21 +1,37 @@
-import { Alert, Button, InputLabel, MenuItem, Select, TextField } from '@mui/material';
-import { Stack } from '@mui/system';
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux';
-import { fetchRegisterRequest } from '../../../redux/login/Actions';
-import { CAM_LE , HAI_CHAU , HOA_VANG ,THANH_KHE ,NGU_HANH_SON ,SON_TRA , LIEN_CHIEU,QUAN } from "../../../constant/Key";
-import { v4 } from 'uuid';
-import axios from 'axios';
-import { URL_BASE } from '../../../constant/UrlConstant';
+import {
+  Alert,
+  Button,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
+import { Stack } from "@mui/system";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { fetchRegisterRequest } from "../../../redux/login/Actions";
+import {
+  CAM_LE,
+  HAI_CHAU,
+  HOA_VANG,
+  THANH_KHE,
+  NGU_HANH_SON,
+  SON_TRA,
+  LIEN_CHIEU,
+  QUAN,
+} from "../../../constant/Key";
+import { v4 } from "uuid";
+import axios from "axios";
+import { URL_BASE } from "../../../constant/UrlConstant";
 import * as regex from "../../../constant/YupGlobal.js";
 import * as yup from "yup";
-import { yupResolver } from '@hookform/resolvers/yup';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import brcypt from 'bcryptjs'
+import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import brcypt from "bcryptjs";
 export default function Register() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const schema = yup.object().shape({
     name: yup.string().required("Required").min(2).max(20),
     // username: yup.string().required("Required").min(2).max(20),
@@ -33,75 +49,88 @@ export default function Register() {
   const [addressSelect, setAddressSelect] = useState("");
   const [SubDistrict, setSubDistrict] = useState("");
 
-    const { register, handleSubmit,setValue,  formState: { errors } } = useForm({
-      resolver: yupResolver(schema),
-    });
-    const dispatch = useDispatch()
-    const onSubmit = async(data) => {
-      // const newAddress =
-      // data.numberHouse + "," + data.phuong + "," + data.quan + ",Đà nẵng";
-        const newUser = {
-            // username : data.username,
-            name:data.name,
-            password : brcypt.hashSync(data.password,10),
-            email : data.email,
-        
-        }
-
-        axios.post(`/api/users/`,newUser).then(res => {
-          (toast('Resgister Success!', {
-            position: "top-center",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            draggable: true,
-            progress: undefined,
-            }))()
-            navigate("/login")
-        }).catch(error => {
-          toast.warn(error.response.data.message,{
-            position: "top-center",
-autoClose: 2000,
-hideProgressBar: false,
-closeOnClick: true,
-pauseOnHover: true,
-draggable: true,
-progress: undefined,
-          })
-        })
-
-      console.log(newUser);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  const dispatch = useDispatch();
+  const onSubmit = async (data) => {
+    // const newAddress =
+    // data.numberHouse + "," + data.phuong + "," + data.quan + ",Đà nẵng";
+    const newUser = {
+      // username : data.username,
+      name: data.name,
+      password: brcypt.hashSync(data.password, 10),
+      email: data.email,
     };
+
+    axios
+      .post(`/api/users/`, newUser)
+      .then((res) => {
+        toast("Resgister Success!", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          draggable: true,
+          progress: undefined,
+        })();
+        navigate("/login");
+      })
+      .catch((error) => {
+        toast.warn(error.response.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      });
+
+    console.log(newUser);
+  };
   return (
-    <form onSubmit={handleSubmit(onSubmit)} style={{padding : '50px 0'}}>
-    <Stack spacing={3} sx={{width : "30%" , margin : "0 auto"}}>
-    {/* <TextField  {...register("username",{ required: true })} label="UserName" variant="outlined" />
+    <form onSubmit={handleSubmit(onSubmit)} style={{ padding: "50px 0" }}>
+      <Stack spacing={3} sx={{ width: "30%", margin: "0 auto" }}>
+        {/* <TextField  {...register("username",{ required: true })} label="UserName" variant="outlined" />
     {errors.username && (
             <Alert severity="error">{errors.username?.message}</Alert>
           )} */}
-          <TextField  {...register("name")} label="Name" variant="outlined" />
-    {errors.name && (
-            <Alert severity="error">{errors.name?.message}</Alert>
-          )}
-   
-   
-    {/* <TextField  {...register("phone",{ required: true })}  label="Phone" variant="outlined" />
+        <TextField {...register("name")} label="Name" variant="outlined" />
+        {errors.name && <Alert severity="error">{errors.name?.message}</Alert>}
+
+        {/* <TextField  {...register("phone",{ required: true })}  label="Phone" variant="outlined" />
     {errors.phone && (
             <Alert severity="error">{errors.phone?.message}</Alert>
           )} */}
-    <TextField  {...register("email",{ required: true })}  label="Email" variant="outlined" />
-    {errors.email && (
-            <Alert severity="error">{errors.email?.message}</Alert>
-          )}
-          <TextField  {...register("password",{ required: true })} type='password' label="PassWord" variant="outlined" />
-    {errors.password && (
-            <Alert severity="error">{errors.password?.message}</Alert>
-          )}
-    {/* <InputLabel id="demo-simple-select-label">
+        <TextField
+          {...register("email", { required: true })}
+          label="Email"
+          variant="outlined"
+        />
+        {errors.email && (
+          <Alert severity="error">{errors.email?.message}</Alert>
+        )}
+        <TextField
+          {...register("password", { required: true })}
+          type="password"
+          label="PassWord"
+          variant="outlined"
+        />
+        {errors.password && (
+          <Alert severity="error">{errors.password?.message}</Alert>
+        )}
+        {/* <InputLabel id="demo-simple-select-label">
             Vui lòng chọn đúng địa chỉ , nếu không bạn sẽ mất quyền lợi
           </InputLabel> */}
-         
-          {/* <InputLabel id="demo-simple-select-label">Quận Huyện</InputLabel>
+
+        {/* <InputLabel id="demo-simple-select-label">Quận Huyện</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -207,9 +236,10 @@ progress: undefined,
            {errors.numberHouse && (
             <Alert severity="error">{errors.numberHouse?.message}</Alert>
           )} */}
-    <Button type='submit' variant="contained">Register</Button>
-    </Stack>
-
-  </form>
-  )
+        <Button type="submit" variant="contained">
+          Register
+        </Button>
+      </Stack>
+    </form>
+  );
 }

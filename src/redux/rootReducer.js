@@ -1,6 +1,8 @@
 import {
   orderDeliveredReducer,
   orderDetailsReducer,
+  orderListFiterNameReducer,
+  orderListPaidSReducer,
   orderListReducer,
 } from "./admin/Reducers/OrderReducers";
 import {
@@ -42,6 +44,8 @@ const rootReducer = combineReducers({
   orderDetail: orderDetailsReducer,
   orderDelivered: orderDeliveredReducer,
   productsListAll: productListAllReducer,
+  orderListFiterName: orderListFiterNameReducer,
+  orderListPaidS: orderListPaidSReducer,
 });
 
 export default rootReducer;
