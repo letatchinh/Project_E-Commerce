@@ -12,6 +12,7 @@ import ListProductSale from "../../../components/client/ListProductSale";
 import ListProductNew from "../../../components/client/ListProductNew";
 import ListProductTrending from "../../../components/client/ListProductTrending";
 import BannerShowMainProduct from "../../../components/client/BannerShowMainProduct";
+import ListProductForYou from "../../../components/client/ListProductForYou";
 
 
 export default function ComponentHomePage() {
@@ -20,8 +21,8 @@ export default function ComponentHomePage() {
     const inputSearch = useSelector((state) => state.shop.setSearchKeyword);
   return (
     <>
-          <div style={{background : mainBackGround}}>
-          <BannerShowMainProduct />
+<div style={{background : mainBackGround}}>
+<BannerShowMainProduct />
    <Container>
    <Slider />
    </Container>
@@ -34,12 +35,13 @@ export default function ComponentHomePage() {
     <ListProductSale />
    <ListProductNew />
     <ListProductTrending />
+    <ListProductForYou />
       <Stack id='search' padding='20px' justifyContent='space-around' direction='row' sx={{background : mainBackGround}}>
       { inputSearch &&  <SideBarFilter />}
         <Stack style={{width : '90%'}}>
         {inputSearch && <SortBar  />}
       <Stack>
-        <ListProducts/>
+        <ListProductForYou />
       </Stack>
         </Stack>
       </Stack> 

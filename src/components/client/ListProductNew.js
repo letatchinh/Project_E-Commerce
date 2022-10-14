@@ -1,6 +1,6 @@
 import { Button, Stack } from '@mui/material'
 import axios from 'axios'
-import React, {  useEffect, useRef, useState } from 'react'
+import React, {  useCallback, useEffect, useRef, useState } from 'react'
 import ListProductCommon from './ListProductCommon'
 import LoadingListProduct from './LoadingListProduct'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -13,23 +13,29 @@ export default function ListProductNew() {
   const [isAppear, setIsAppear] = useState(false);
     const [data,setData] = useState([])
     const [loading,setLoading] = useState(false)
+    const [isFetch,setIsFetch] = useState(false)
+    const fetch = useCallback(async() => {
+      setLoading(true)
+      axios.get(`api/products/search?category=`).then(res => setData(res.data)).catch(err => console.log(err))
+      setLoading(false)
+    },[isFetch])
     useEffect(() => {
-        setLoading(true)
-        axios.get(`api/products/search?category=`).then(res => setData(res.data)).catch(err => console.log(err)).finally(() => setLoading(false))
-    },[])
+       isFetch &&  fetch()
+    },[fetch])
     const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
     useEffect(() => {
       if (!componentRef?.current) return;
       const observer = new IntersectionObserver(([entry]) => {
         if (entry.isIntersecting) {
           setIsAppear(true);
+          setIsFetch(true)
         }
       });
       observer.observe(componentRef.current);
     }, [componentRef]);
   return (
 
-     <Stack  className={isAppear ? "appear" : ""}
+     <Stack  spacing={1}  className={isAppear ? "appear" : ""}
      ref={componentRef} sx={{background : mainBackGround, padding : '10px'}}>
        <Stack direction='row' alignItems='center' justifyContent={{md : 'center' , xs : 'flex-start'}} spacing={2} position='relative'>
        <img style={{width  : '60px' ,height : '30px'}} src="https://upload.wikimedia.org/wikipedia/commons/9/95/New_logo.svg" alt="flashsale"/>

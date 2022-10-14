@@ -303,4 +303,5 @@ productRoute.get(
     res.json(products);
   })
 );
+
 export default productRoute;

@@ -1,6 +1,7 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
 import { boolean, number } from "yup";
+import Product from "../Models/ProductModel.js";
 import { admin, protect } from "./../MiddelWare/AuthMiddleware.js";
 import Order from "./../Models/OrderModel.js";
 
@@ -182,6 +183,91 @@ orderRouter.put(
     } else {
       res.status(404);
       throw new Error("Order Not Found");
+    }
+  })
+);
+// GET ORDER WITH ID USER
+orderRouter.get(
+  "/getOrderUser/:id",
+  asyncHandler(async (req, res) => {
+    const pageSize = 3;
+    const page = Number(req.query.pageNumber) || 1;
+    const count = await Order.countDocuments({ user: req.params.id });
+    const Orders = await Order.find({ user: req.params.id })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
+      .sort({ _id: -1 });
+    res.json({ Orders, page, pages: Math.ceil(count / pageSize) });
+  })
+);
+// GET ALL ORDER USER BY ID
+orderRouter.get(
+  "/getAllOrderUser/:id",
+  asyncHandler(async (req, res) => {
+    const Orders = await Order.find({ user: req.params.id }).sort({ _id: -1 });
+    let ProductOrder = [];
+    let listProductOrder = [];
+    const pageSize = 2;
+    const page = Number(req.query.page) || 1;
+    await Orders.forEach((e) =>
+      e.orderItem.forEach((f) => ProductOrder.push(f))
+    );
+    await ProductOrder.forEach((e) => listProductOrder.push(e.product));
+    const count = await Product.countDocuments({
+      _id: { $in: listProductOrder },
+    });
+    const ProductUser = await Product.find({ _id: { $in: listProductOrder } })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
+    res.json({ ProductUser, page, pages: Math.ceil(count / pageSize) });
+  })
+);
+// CHeck Is User paymented This Product
+orderRouter.get(
+  "/checkPayment/:id",
+  asyncHandler(async (req, res) => {
+    const name = req.query.product || "";
+    const Orders = await Order.find({ user: req.params.id });
+    let ProductOrder = [];
+    let listProductOrder = [];
+    Orders.forEach((e) => e.orderItem.forEach((f) => ProductOrder.push(f)));
+    ProductOrder.forEach((e) => listProductOrder.push(e.product));
+    const contains = listProductOrder.some((elem) => {
+      return JSON.stringify(name) === JSON.stringify(elem);
+    });
+    if (contains) {
+      res.json({ isPayment: true });
+    } else {
+      res.json({ isPayment: false });
+    }
+  })
+);
+// DELETE ORDER BY ID
+orderRouter.delete(
+  "/deleteById/:id",
+  asyncHandler(async (req, res) => {
+    const order = await Order.findById({ _id: req.params.id });
+
+    if (order) {
+      await order.remove();
+      res.json({ message: "order deleted" });
+    } else {
+      res.status(404);
+      throw new Error("order Not Found");
+    }
+  })
+);
+// DELETE ALL ORDER
+orderRouter.post(
+  "/deleteAll",
+  asyncHandler(async (req, res) => {
+    const order = await Order.deleteMany({});
+
+    if (order) {
+      res.json({ message: "order deleted" });
+    } else {
+      res.status(404);
+      throw new Error("order Not Found");
     }
   })
 );

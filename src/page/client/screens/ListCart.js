@@ -32,11 +32,11 @@ export default function ListCart() {
                     </Step>
                   ))}
                 </Stepper>
-        <Stack direction='row' spacing={1} >
-        <Stack width='70%' spacing={1} sx={{background : backgroundWhite, padding:'10px',borderRadius:'20px'}}>
+        <Stack direction={{md : 'row' , sm : 'column'}} spacing={1} >
+        <Stack width={{md : '70%' , sm : '100%'}} spacing={1} sx={{background : backgroundWhite, padding:'10px',borderRadius:'20px'}}>
         <Stack width = '100%' direction='row' alignItems='center' >
      <div style={{flex : 1 , height : '2px' , background : 'gray', width : '100%'}}></div>
-     <Typography sx={{border : "2px solid gray" , padding : '2px' , borderRadius : '10px'}} color='black' fontSize='1.5rem'>My Cart</Typography>
+     <Typography sx={{border : "2px solid gray" , padding : '7px' , borderRadius : '10px'}} color='black' fontSize='1.5rem'>My Cart</Typography>
      <div style={{flex : 1 , height : '2px' , background : 'gray', width : '100%'}}></div>
    </Stack> 
    <FormControlLabel control={<Checkbox  />} label="Check All" />
@@ -44,15 +44,15 @@ export default function ListCart() {
            
           
         </Stack>
-        <Stack spacing={3} sx={{background : backgroundWhite, padding:'10px',borderRadius:'20px'}}>
-        <Stack spacing={1} borderBottom='1px solid #999' padding='10px 0'>
-          <Typography color='#9e9e9e' fontSize='14px'>Address</Typography>
+        <Stack textAlign={{md : 'left', sm : 'center'}} spacing={3} sx={{background : backgroundWhite, padding:'10px',borderRadius:'20px'}}>
+        <Stack  spacing={1} borderBottom='1px solid #999' padding='10px 0'>
+          <Typography  textAlign={{md : 'left', sm : 'center'}} color='#9e9e9e' fontSize='14px'>Address</Typography>
           <Stack direction='row' sx={{color : '#9e9e9e'}} alignItems='center' spacing={1} >
           <PlaceIcon/>
           <Typography color='black' fontSize='13px' fontWeight='medium'>224 tran hung dao thi xa quang tri</Typography>
            </Stack>
         </Stack>
-        <Stack spacing={1}>
+        <Stack spacing={1} >
           <Typography fontSize='1.2rem'>Infomation Order</Typography>
           <Stack direction='row' justifyContent='space-between'>
             <Typography fontSize='14px' color='#757575'>Total Price</Typography>
@@ -71,7 +71,7 @@ export default function ListCart() {
         <Typography fontSize='14px' color='#757575'>Total</Typography>
             <Typography color='#f57224' fontSize='1.3rem'>{totalBill} VND</Typography>
         </Stack>
-        <Link to='/payment'><Button sx={{width : '100%'}} color='warning' variant='contained'>Confirm Order</Button></Link>
+        <Link to='/payment'><Button  sx={{width : {md :'100%' , sm :'50%'}}} color='warning' variant='contained'>Confirm Order</Button></Link>
         </Stack>
         </Stack>
     </Container>

@@ -23,9 +23,9 @@ export default function ItemFilter() {
           <Typography variant='body1' fontWeight='bold'>Price</Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <CheckboxSideBar filter={() => dispatch(fetchFilterPriceRequest(FILTER_MORE_200))}  label="Product (200k+)"/>
-        <CheckboxSideBar filter={() => dispatch(fetchFilterPriceRequest(FILTER_MORE_100))} label="Product (100k+)"/>
-        <CheckboxSideBar  filter={() => dispatch(fetchFilterPriceRequest(FILTER_LOW_50))} label="Product (50k-)"/>
+        <CheckboxSideBar filter={() => dispatch(fetchFilterPriceRequest(FILTER_MORE_200))}  label="Product (>20$)"/>
+        <CheckboxSideBar filter={() => dispatch(fetchFilterPriceRequest(FILTER_MORE_100))} label="Product (>10$)"/>
+        <CheckboxSideBar  filter={() => dispatch(fetchFilterPriceRequest(FILTER_LOW_50))} label="Product (<5$)"/>
         </AccordionDetails>
       </Accordion>
       <Accordion>

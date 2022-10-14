@@ -86,26 +86,6 @@ const userReducer = (state = initvalue, action) => {
     //       (sum, arr) => sum + arr.price * arr.quanlity , 0
     //     ),
     //   };
-    case TYPES.CHANGE_USERNAME:
-      return {
-        ...state,
-        textLogin: { ...state.textLogin, username: action.payload },
-      };
-    case TYPES.CHANGE_PASSWORD:
-      return {
-        ...state,
-        textLogin: { ...state.textLogin, password: action.payload },
-      };
-    case TYPES.CHECK_LOGIN:
-      const accLogin = state.user.filter(
-        (e) =>
-          e.username === action.payload.username &&
-          e.password === action.payload.password
-      );
-      return {
-        ...state,
-        statusLogin: accLogin.length > 0,
-      };
     case TYPES.LOGIN:
   
         return {

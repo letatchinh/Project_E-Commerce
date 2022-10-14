@@ -23,7 +23,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import moment from "moment";
 import getToken from "../../../constant/getTokenUser";
-import { fetchAddOrderRequest } from "../../../redux/sagas/Mysaga";
+import { fetchAddOrderRequest, fetchCartRequest } from "../../../redux/sagas/Mysaga";
 export default function Payment() {
   const config = {
     headers: { Authorization: `Bearer ${getToken()}` }
@@ -70,7 +70,6 @@ export default function Payment() {
     setValue(event.target.value);
   };
   const [listChecked, setListChecked] = useState([]);
-  console.log(listChecked);
   useEffect(() => {
     const newList = listCarts.filter(
       (e) => e.isChecked
@@ -131,15 +130,16 @@ export default function Payment() {
       isPaid : value === "Paypal" ? true : false,
       paidAt : value === "Paypal" ? now : ""
     };
-    dispatch(fetchAddOrderRequest({newOrder,config}))
-    // AxiosUser.post("/api/orders",newOrder,config).then(res => setActiveStep(2)).catch(err => console.log(err))
+ await dispatch(fetchAddOrderRequest({newOrder,config}))
+  // dispatch(fetchCartRequest())
+  setActiveStep(2)
   };
   return (
     <>
         <div style={{ background: mainBackGround2, padding: "20px", position : 'relative' }}>
         {listChecked.length === 0  &&  <Stack>
           <Link style={{position : 'absolute' , top : '2rem' , left : '5rem'}} to='/cart'><Button startIcon={<ArrowBackIosIcon/>} >Back</Button></Link>
-        <ErrorNoItem src='https://bizweb.dktcdn.net/100/351/215/themes/713955/assets/empty-cart.png?1617619216743'/>
+        {/* <ErrorNoItem src='https://bizweb.dktcdn.net/100/351/215/themes/713955/assets/empty-cart.png?1617619216743'/> */}
         </Stack>}
           {activeStep === 1 && listChecked.length !== 0  && (
             <Container sx={{ background: 'white', borderRadius: "10px", position : 'relative' }}>
@@ -259,7 +259,7 @@ export default function Payment() {
                 </Button>
               </Stack>
             </Container>) }
-          { activeStep === 2 &&listChecked.length !== 0 && (
+          { activeStep === 2  && (
             <Container sx={{ background: 'white', borderRadius: "10px"  , padding : '10px'}}>
               <OrderSuccess />
             </Container>

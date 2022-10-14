@@ -11,6 +11,8 @@ import listCartss from "./data/listCarts.js";
 import Carts from "./Models/ListCartModel.js";
 import Voucher from "./Models/VocherModel.js";
 import vouches from "./data/Voucher.js";
+import Review from "./Models/ReviewModel.js";
+import reviews from "./data/review.js";
 const ImportData = express.Router();
 
 ImportData.post(
@@ -63,6 +65,14 @@ ImportData.post(
     await Voucher.remove({});
     const importVoucher = await Voucher.insertMany(vouches);
     res.send({ importVoucher });
+  })
+);
+ImportData.post(
+  "/listReview",
+  asyncHandler(async (req, res) => {
+    await Review.remove({});
+    const importReview = await Review.insertMany(reviews);
+    res.send({ importReview });
   })
 );
 export default ImportData;

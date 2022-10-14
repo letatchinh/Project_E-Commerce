@@ -33,11 +33,6 @@ export default function ItemCart({ value }) {
             </IconButton>
           }
         >
-          {/* <Checkbox
-        checked={value.isCheckedPayment}
-        onChange={handleChange}
-        inputProps={{ "aria-label": "controlled" }}
-      /> */}
           <Avatar
             sx={{ width: "70px", height: "70px", borderRadius: 0 }}
             alt="Remy Sharp"
@@ -47,32 +42,8 @@ export default function ItemCart({ value }) {
             <Typography variant="body1" fontWeight="500">
               {value.name}
             </Typography>
-
-            {/* <Stack direction="row" alignItems="center">
-              <Button
-                sx={{ padding: 0, minWidth: "40px" }}
-                onClick={() => dispatch(decreaseQuanlity(value))}
-                variant="outlined"
-              >
-                -
-              </Button>
-              <span style={{ margin: "0 10px" }}>{value.quanlity}</span>
-              <Button
-                sx={{ padding: 0, minWidth: "40px" }}
-                onClick={() => dispatch(increaseQuanlity(value))}
-                variant="outlined"
-              >
-                +
-              </Button>
-            </Stack> */}
           </Stack>
           <div>
-            {/* <PriceSell
-              isSell={value.isSell}
-              price={value.price}
-              discount={value.discount}
-              fontSize="16px"
-            /> */}
             <Typography color='#f57224'>{value.price}</Typography>
           </div>
         </ListItem>

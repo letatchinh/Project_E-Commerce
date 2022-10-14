@@ -9,6 +9,7 @@ import { errorHandler, notFound } from "./MiddelWare/Errors.js";
 import userRouter from "./Routes/UserRoutes.js";
 import orderRouter from "./Routes/orderRoutes.js";
 import CartRoutes from "./Routes/CartRoutes.js";
+import ReviewRoutes from "./Routes/ReviewRoutes.js";
 
 dotenv.config();
 connnectDatabase();
@@ -37,6 +38,7 @@ app.use("/api/products", productRoute);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/carts", CartRoutes);
+app.use("/api/reviews", ReviewRoutes);
 
 //ERROR HANDLER
 app.use(notFound);

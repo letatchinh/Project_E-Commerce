@@ -12,7 +12,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fectchLogout, fecthLogginSuccess } from "../../../redux/login/Actions";
 import { IS_STATUS_LOGIN } from "../../../redux/login/Types";
@@ -22,37 +22,17 @@ import { KEY_USER } from "../../../constant/LocalStored";
 import { useForm } from "react-hook-form";
 import IconCart from "../../../components/client/IconCart";
 import "../../../components/StyleComponent/Icons.css";
-import LogoDevIcon from "@mui/icons-material/LogoDev";
-import SwitchBackGround from "../../../components/client/SwitchBackGround";
-import AxiosUser from "../../../apis/client/AxiosUser";
-import { fetchCart, fetchTotalBill } from "../../../redux/client/cart/Actions";
 import MyTypography from "../../../components/client/MyTypography";
-import MyButton from "../../../components/client/MyButton";
-import zIndex from "@mui/material/styles/zIndex";
+
 import '../../../components/StyleComponent/Header.css'
+import { fetchCartRequest } from "../../../redux/sagas/Mysaga";
+
 export default function Index() {
-  const [status, setStatus] = useState(true);
+const location = useLocation();
+ const path_lo_out=["/login" , "/register"]
   const dispatch = useDispatch();
   useEffect(() => {
-    if (localStorage.getItem(KEY_USER)) {
-      const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id;
-      AxiosUser.get(`/api/carts/filterCarts/${idUser}`)
-        .then(async (res) => {
-          const newArrOk = await res.data.filter(e => e.product !== null)
-          const newArrFail = await res.data.filter(e => e.product === null)
-          newArrFail.map(e => AxiosUser.delete(`/api/carts/deleteById/${e._id}`))
-          const newAr = await  newArrOk.map((e) => 
-            ({
-              ...e.product,
-              quanlity: 1,
-              isChecked : false,
-            })
-            
-          );
-          dispatch(fetchCart(newAr));
-        })
-        .catch((err) => console.log(err));
-    }
+    dispatch(fetchCartRequest())
   }, [localStorage.getItem(KEY_USER)]);
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data) => {
@@ -62,7 +42,6 @@ export default function Index() {
   const statusLogin = useSelector((state) => state.user.statusLogin);
   const loginSuccess = useSelector((state) => state.user.loginSuccess);
   const statusThemme = useSelector((state) => state.colorCommon.status);
-
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
@@ -74,7 +53,7 @@ export default function Index() {
     if (localStorage.getItem(KEY_USER)) {
       dispatch(fecthLogginSuccess(JSON.parse(localStorage.getItem(KEY_USER))));
       dispatch({ type: IS_STATUS_LOGIN, dispatch: "" });
-      console.log("Ok");
+      
     }
   }, [localStorage.getItem(KEY_USER)]);
   const handleClose = () => {
@@ -121,8 +100,9 @@ export default function Index() {
        </Button>
        </Link>
           </Stack>
-            <Button
-              sx={{ textTransform: "capitalize" }}
+           <Stack direction='row'  alignItems='center'>
+              <Button 
+              sx={{ textTransform: "capitalize" , display : statusLogin ? "flex" : "none" , gap : '8px' }}
               id="demo-positioned-button"
               aria-controls={open ? "demo-positioned-menu" : undefined}
               aria-haspopup="true"
@@ -130,13 +110,44 @@ export default function Index() {
               onClick={handleClick}
             >
               <AccountCircleOutlinedIcon
+              
                 className="IconsWhite"
                 fontSize="medium"
               />
-              <MyTypography fontSize="12px" color="white">
+               <MyTypography fontSize="12px" color="white">
                 {loginSuccess.name}
               </MyTypography>
-            </Button>
+               </Button>
+              
+           </Stack>
+              <Stack  direction='row' spacing={2} display={path_lo_out.includes(location.pathname) ? "none" : 'flex' && !statusLogin ? "block" : 'none'  } >
+              <Link to='/login'>
+              <Button
+            sx={{
+              color: "white",
+              borderColor: "white",
+              background: "transparent",
+            }}
+            variant="outlined"
+          >
+            Login
+          </Button>
+              </Link>
+              <Link to='/register'>
+              <Button
+            sx={{
+              color: "white",
+              borderColor: "white",
+              background: "transparent",
+            }}
+            variant="outlined"
+          >
+            Sign Up
+          </Button>
+              </Link>
+              </Stack>
+              
+           
             <Menu
               id="demo-positioned-menu"
               aria-labelledby="demo-positioned-button"
@@ -188,9 +199,6 @@ export default function Index() {
                 }}
                 to="/"
               >
-                {/* <img style={{width : '80px' }} src="https://logos-world.net/wp-content/uploads/2020/09/Gap-Logo.png" alt="" /> */}
-                {/* <img style={{width : '80px'}} src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Gap_logo.svg/2048px-Gap_logo.svg.png" alt="" /> */}
-                {/* <LogoDevIcon className="IconsWhite IconLarge" /> */}
                 <Typography sx={{textShadow : !statusThemme ? "0 0 10px #f3f3f3" : "none"}} className="myLogo" fontSize='3rem' color='white'>UT</Typography>
                 
               </Link>
