@@ -180,6 +180,20 @@ function App() {
           <Route path="/admin/order/:id" element={<OrderDetailScreen />} />
           <Route path="/admin/users" element={<UsersScreen />} />
           <Route
+            path="/admin/users/search/:keyword"
+            element={<UsersScreen />}
+            exact
+          />
+          <Route
+            path="/admin/users/search/:keyword/page/:pagenumber"
+            element={<UsersScreen />}
+            exact
+          />
+          <Route
+            path="/admin/users/page/:pagenumber"
+            element={<UsersScreen />}
+          />
+          <Route
             path="/admin/product/:id/edit"
             element={<ProductEditScreen />}
           />

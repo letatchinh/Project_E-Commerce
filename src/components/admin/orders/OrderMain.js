@@ -83,9 +83,9 @@ const OrderMain = () => {
                 className="form-select"
                 onChange={(e) => setPaid(e.target.value)}
               >
-                <option value="">Show all status</option>
-                <option value="true">Active</option>
-                <option value="false">Disabled</option>
+                <option value="">Show all Paid</option>
+                <option value="true">Paided</option>
+                <option value="false">Unpaid</option>
               </select>
             </div>
           </div>

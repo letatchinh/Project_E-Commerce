@@ -53,35 +53,40 @@ export const logout = () => (dispatch) => {
 };
 
 //ALL USER
-export const listUser = () => async (dispatch, getState) => {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
-  try {
-    await dispatch({ type: USER_LIST_REQUEST });
+export const listUser =
+  (keyword = "", pageNumber = "") =>
+  async (dispatch, getState) => {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+    try {
+      await dispatch({ type: USER_LIST_REQUEST });
 
-    // let { userLogin: userInfo } = getState();
+      // let { userLogin: userInfo } = getState();
 
-    const config = {
-      headers: {
-        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
-        Authorization: `Bearer ${token}`,
-      },
-    };
+      const config = {
+        headers: {
+          // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
+          Authorization: `Bearer ${token}`,
+        },
+      };
 
-    const { data } = await axios.get(`/api/users`, config);
+      const { data } = await axios.get(
+        `/api/users/all?name=${keyword}&&pageNumber=${pageNumber}`,
+        config
+      );
 
-    dispatch({ type: USER_LIST_SUCCESS, payload: data });
-  } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    if (message === "Not authorized, token failed") {
-      dispatch(logout());
+      dispatch({ type: USER_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === "Not authorized, token failed") {
+        dispatch(logout());
+      }
+      dispatch({
+        type: USER_LIST_FAIL,
+        payload: message,
+      });
     }
-    dispatch({
-      type: USER_LIST_FAIL,
-      payload: message,
-    });
-  }
-};
+  };

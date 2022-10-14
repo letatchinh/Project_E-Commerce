@@ -1196,3 +1196,9 @@ a {
 .w-pc-28 {
   width: 20%;
 }
+
+.block-ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
