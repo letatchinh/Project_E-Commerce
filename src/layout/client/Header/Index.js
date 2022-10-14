@@ -29,6 +29,15 @@ import { fetchCartRequest } from "../../../redux/sagas/Mysaga";
 
 export default function Index() {
 const location = useLocation();
+const statusLogin = useSelector((state) => state.user.statusLogin);
+const loginSuccess = useSelector((state) => state.user.loginSuccess);
+const statusThemme = useSelector((state) => state.colorCommon.status);
+const [anchorEl, setAnchorEl] = useState(null);
+const open = Boolean(anchorEl);
+const navigate = useNavigate();
+const handleClick = (event) => {
+  setAnchorEl(event.currentTarget);
+};
  const path_lo_out=["/login" , "/register"]
   const dispatch = useDispatch();
   useEffect(() => {
@@ -39,16 +48,6 @@ const location = useLocation();
     dispatch(setSearch(data.searchKeyword));
     navigate("/");
   };
-  const statusLogin = useSelector((state) => state.user.statusLogin);
-  const loginSuccess = useSelector((state) => state.user.loginSuccess);
-  const statusThemme = useSelector((state) => state.colorCommon.status);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const navigate = useNavigate();
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
   useEffect(() => {
     if (localStorage.getItem(KEY_USER)) {
       dispatch(fecthLogginSuccess(JSON.parse(localStorage.getItem(KEY_USER))));
@@ -68,7 +67,7 @@ const location = useLocation();
     background: statusThemme
     ? "linear-gradient(rgb(238, 77, 45), rgb(255, 115, 55))"
     : "#00255E" ,
-    padding: "5px"
+    padding: "25px 5px 5px 5px"
   }
   const styHeadNotHomePage = {
     background: "transparent",

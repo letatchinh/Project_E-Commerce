@@ -1,4 +1,4 @@
-import { Alert, Button, InputLabel, MenuItem, Paper, Select, TextField, Typography } from '@mui/material';
+import {  Button,   Paper,  TextField, Typography } from '@mui/material';
 import { Container, Stack } from '@mui/system';
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -7,11 +7,9 @@ import { fetchLoginRequest, fetchRegisterRequest } from '../../../redux/login/Ac
 import { CAM_LE , HAI_CHAU , HOA_VANG ,THANH_KHE ,NGU_HANH_SON ,SON_TRA , LIEN_CHIEU,QUAN } from "../../../constant/Key";
 import { v4 } from 'uuid';
 import axios from 'axios';
-import { URL_BASE } from '../../../constant/UrlConstant';
 import * as regex from "../../../constant/YupGlobal.js";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
 import brcypt from 'bcryptjs'
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
@@ -21,8 +19,6 @@ import { KEY_USER } from '../../../constant/LocalStored';
 import HideShowPassword from '../../../components/client/HideShowPassword';
 
 export default function Register() {
-  const statusLogin = useSelector((state) => state.user.statusLogin);
-
   const navigate = useNavigate()
   const schema = yup.object().shape({
     name: yup.string().required("Required").min(2).max(20),
@@ -49,13 +45,11 @@ export default function Register() {
       // const newAddress =
       // data.numberHouse + "," + data.phuong + "," + data.quan + ",Đà nẵng";
         const newUser = {
-            // username : data.username,
             name:data.name,
             password : brcypt.hashSync(data.password,10),
             email : data.email,
         
         }
-
         axios.post(`/api/users/`,newUser).then(res => {
           ToastSuccess('Resgister Success!')
             dispatch(fetchLoginRequest({email :res.data.email,password :data.password}))
@@ -68,9 +62,9 @@ export default function Register() {
   return (
     <>
       <div style={{background : '#F8F9FD'}}>
-    <Container sx={{ width: "60%" , padding : '50px 0'}}>
-       <Paper elevation={3} sx={{  display : 'flex'}}>
-       <form style={{width : '50%', padding : '50px'}} onSubmit={handleSubmit(onSubmit)}>
+      <Container sx={{ width: {md : "60%" , xs : '100%'} ,padding : '100px 0'}} >
+       <Paper elevation={3} sx={{  display : 'flex' ,flexDirection : {md : 'row' , xs : 'column'}}}>
+       <form style={{flex : 1, padding : '50px'}} onSubmit={handleSubmit(onSubmit)}>
         <Stack alignItems={"center"} spacing={2}>
           <Stack direction='row' justifyContent='space-between' alignItems='center' width='100%'>
           <Typography variant="h6" color='#888' >
@@ -86,14 +80,20 @@ export default function Register() {
             fullWidth
             label="Name"
             variant="outlined"
+            error={errors.name !== undefined}
+            helperText={errors.name && errors?.name.message}
           />
           <TextField size="small" 
             {...register("email")}
             fullWidth
             label="Email"
             variant="outlined"
+            autoComplete="username"
+            error={errors.email !== undefined}
+            helperText={errors.email && errors?.email.message}
           />
-          <HideShowPassword  {...register("password")}/>
+          <HideShowPassword error={errors.password !== undefined}
+           message={errors.password && errors.password.message}    {...register("password")}/>
           <Button sx={{backgroundImage: "linear-gradient(45deg, #E26560, #E36183)" ,borderRadius : '50px'}} fullWidth type="submit" variant="contained">
             Register
           </Button>
@@ -113,7 +113,7 @@ export default function Register() {
           /> */}
         </Stack>
       </form>
-      <Stack spacing={2} color='white' justifyContent='center' alignItems='center' style={{width : '50%',backgroundImage: "linear-gradient(45deg, #E26560, #E36183)"}}>
+      <Stack spacing={2} color='white' justifyContent='center' alignItems='center' sx={{width : {md : '50%', sm : '100%'},backgroundImage: "linear-gradient(45deg, #E26560, #E36183)" , padding : '20px 0'}}>
             <Typography variant="h5"  fontWeight='bold'>Welcome to Sign Up</Typography>
             <Typography fontWeight='300'>You have an account</Typography>
            <Link to='/login'> <Button sx={{color : 'white' , borderColor : 'white' , borderRadius : '40px'}} variant="outlined">Login</Button></Link>

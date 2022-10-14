@@ -41,7 +41,7 @@ export default function ListProductSale() {
     <Stack spacing={1}
       className={isAppear ? "appear" : ""}
       ref={componentRef}
-      sx={{ background: mainBackGround, padding: "10px" }}
+      sx={{ background: mainBackGround, padding: "10px" , borderRadius : '30px' }}
     >
       <Stack
         direction="row"

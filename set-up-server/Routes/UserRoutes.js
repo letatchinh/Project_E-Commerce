@@ -50,6 +50,7 @@ userRouter.post(
     }
   })
 );
+
 //REGISTER
 userRouter.post(
   "/",
@@ -83,7 +84,41 @@ userRouter.post(
     }
   })
 );
+// LOGIN WITH FB AND GG
+userRouter.post(
+  "/check",
+  asyncHandler(async (req, res) => {
+    const { name, email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (user) {
+      res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        token: generateToken(user._id),
+        createdAt: user.createdAt,
+      });
+    }
+    else{
+     const newUser = await User.create({
+        name,
+        email,
+        password,
+      });
+      res.status(201).json({
+        _id: newUser.id,
+        name: newUser.name,
+        email: newUser.email,
+        isAdmin: false,
+        token: generateToken(newUser._id),
+        createdAt: newUser.createdAt,
+      });
+      
+    }
 
+  })
+);
 // PROFILE
 
 

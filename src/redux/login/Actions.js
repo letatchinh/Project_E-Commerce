@@ -36,6 +36,7 @@ export const fetchLoginRequest=(data) =>{
         })()
     }
 }
+
 export const fectchLogin = (user) => {
     return {
         type : TYPES.LOGIN , 

@@ -36,7 +36,7 @@ export default function ListProductNew() {
   return (
 
      <Stack  spacing={1}  className={isAppear ? "appear" : ""}
-     ref={componentRef} sx={{background : mainBackGround, padding : '10px'}}>
+     ref={componentRef} sx={{background : mainBackGround, padding : '10px', borderRadius : '30px'}}>
        <Stack direction='row' alignItems='center' justifyContent={{md : 'center' , xs : 'flex-start'}} spacing={2} position='relative'>
        <img style={{width  : '60px' ,height : '30px'}} src="https://upload.wikimedia.org/wikipedia/commons/9/95/New_logo.svg" alt="flashsale"/>
        <Link style={{position : 'absolute', right : 0}} to='new-product'>

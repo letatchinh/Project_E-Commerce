@@ -10,7 +10,6 @@ import Dialo from "./Dialo";
 import AxiosUser from "../../apis/client/AxiosUser";
 import ToastSuccess from "./ToastSuccess";
 import ToastError from "./ToastError";
-import { Link } from "react-router-dom";
 export default function DetailListOrderUser({ click ,data}) {
   const {_id,isDelivered,orderItem , shippingPrice ,totalPrice} = data
   const handleCancelBill = async() => {

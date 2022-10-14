@@ -1,35 +1,33 @@
-import React, { useEffect, useState } from "react";
-import { Button, Checkbox, FormControl, FormControlLabel, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, TextField } from "@mui/material";
+import React, { useEffect } from "react";
+import { Button, Checkbox,  FormControlLabel,  Paper, TextField } from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import "@fontsource/roboto/300.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
-  fectchLogin,
-  fetchCheckLogin,
   fetchLoginRequest,
-  fetchRegisterRequest,
 } from "../../../redux/login/Actions";
-import * as TYPES from "../../../redux/login/Types";
 import { Link, useNavigate } from "react-router-dom";
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
 import { gapi } from "gapi-script";
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
-import axios from "axios";
-import { URL_BASE } from "../../../constant/UrlConstant";
-import { v4 } from "uuid";
+import FacebookIcon from '@mui/icons-material/Facebook';
 import { KEY_USER } from "../../../constant/LocalStored";
 import { useForm } from "react-hook-form";
 import HideShowPassword from "../../../components/client/HideShowPassword";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { fetchLoginWithGoogleAndFbRequest } from "../../../redux/sagas/Mysaga";
 
 export default function LoginUser() {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const [showPassword,setShowPassword] = useState(false)
-  const [reRender, setReRender] = useState(false);
-  const loginSuccess = useSelector((state) => state.user.loginSuccess);
-  const statusLogin = useSelector((state) => state.user.statusLogin);
+  const schema = yup.object().shape({
+    password: yup.string().required("Required").min(2).max(20),
+    email: yup.string().required("Required").email(),
+  });
+  const { register, handleSubmit,  formState: { errors } } = useForm({
+    resolver: yupResolver(schema),
+  });
   const dispatch = useDispatch();
   const onSubmit = data => {
     dispatch(fetchLoginRequest(data))
@@ -49,70 +47,28 @@ export default function LoginUser() {
     }
     gapi.load("client:auth2", start);
   }, []);
-  useEffect(() => {
-    if (statusLogin) {
-      navigate("/");
-      localStorage.setItem(KEY_USER, JSON.stringify(loginSuccess));
-    }
-  }, [reRender]);
   const navigate = useNavigate();
   const responseFacebook = async (response) => {
     const newUser = {
-      username: response.id,
       password: response.id,
-      listCarts: [],
-      listOrder: [],
       email: response.email,
-      phone: "",
-      address: "",
-      id: v4(),
+      name : response.name
     };
-    const flag = await axios.get(`${URL_BASE}users?username=${response.id}`);
-    if (flag.data.length === 0) {
-      loginWithRegister(newUser);
-    } else {
-      loginWithoutRegister(newUser);
-    }
+    dispatch(fetchLoginWithGoogleAndFbRequest(newUser))
   };
   const responseGoogle = async (response) => {
     const newUser = {
-      username: response.profileObj.email,
-      password: response.profileObj.googleId,
       email: response.profileObj.email,
-      listCarts: [],
-      listOrder: [],
-      phone: "",
-      name:
-        response.profileObj.givenName + " " + response.profileObj.familyName,
-      address: "",
-      id: v4(),
+      password: response.profileObj.googleId,
+      name:response.profileObj.givenName + " " + response.profileObj.familyName,
     };
-    const flag = await axios.get(
-      `${URL_BASE}users?username=${response.profileObj.email}`
-    );
-    if (flag.data.length === 0) {
-      loginWithRegister(newUser);
-    } else {
-      loginWithoutRegister(newUser);
-    }
-  };
-
-  const loginWithRegister = async (data) => {
-    await dispatch(fetchRegisterRequest(data));
-    dispatch(fetchCheckLogin(data));
-    dispatch(fectchLogin(data));
-    setReRender(!reRender);
-  };
-  const loginWithoutRegister = (data) => {
-    dispatch(fetchCheckLogin(data));
-    dispatch(fectchLogin(data));
-    setReRender(!reRender);
+    dispatch(fetchLoginWithGoogleAndFbRequest(newUser))
   };
   return (
     <div style={{background : '#F8F9FD', padding : '100px 0'}}>
-    <Container sx={{ width: "60%" }}>
-       <Paper elevation={3} sx={{  display : 'flex'}}>
-       <form style={{width : '50%', padding : '50px'}} onSubmit={handleSubmit(onSubmit)}>
+    <Container sx={{ width: {md : "60%" , xs : '100%'} }}>
+       <Paper elevation={3} sx={{  display : 'flex' , flexDirection : {md : 'row' , xs : 'column'}}}>
+       <form style={{flex : 1, padding : '50px'}} onSubmit={handleSubmit(onSubmit)}>
         <Stack alignItems={"center"} spacing={2}>
           <Stack direction='row' justifyContent='space-between' alignItems='center' width='100%'>
           <Typography variant="h6" color='#888' >
@@ -128,8 +84,10 @@ export default function LoginUser() {
             fullWidth
             label="Email"
             variant="outlined"
+            error={errors.email !== undefined}
+            helperText={errors.email && errors?.email.message}
           />
-        <HideShowPassword  {...register("password")}/>
+        <HideShowPassword error={errors.password !== undefined}  message={errors.password && errors.password.message}  {...register("password")}/>
           <Button sx={{backgroundImage: "linear-gradient(45deg, #E26560, #E36183)" ,borderRadius : '50px'}} fullWidth type="submit" variant="contained">
             Login
           </Button>
@@ -137,22 +95,23 @@ export default function LoginUser() {
         <FormControlLabel sx={{margin : 0}} control={<Checkbox defaultChecked />} label="Remember Me" />
         <Typography variant="body2" color='#888'>Forgot password</Typography>
         </Stack>
-          {/* <FacebookLogin
+           <FacebookLogin
             appId="3267114616941933"
             fields="name,email,picture"
             callback={responseFacebook}
             icon={<FacebookIcon />}
           />
+          <Typography>Or</Typography>
           <GoogleLogin
             clientId="102456725904-0gb4rrpp4337idg21co7gar7a72mk5ll.apps.googleusercontent.com"
             buttonText="Login With Google"
             onSuccess={responseGoogle}
             onFailure={responseGoogle}
             cookiePolicy={"single_host_origin"}
-          /> */}
+          /> 
         </Stack>
       </form>
-      <Stack spacing={2} color='white' justifyContent='center' alignItems='center' style={{width : '50%',backgroundImage: "linear-gradient(45deg, #E26560, #E36183)"}}>
+      <Stack padding= '20px 0' spacing={2} color='white' justifyContent='center' alignItems='center' sx={{width : {md : '50%', sm : '100%'},backgroundImage: "linear-gradient(45deg, #E26560, #E36183)"}}>
             <Typography variant="h5"  fontWeight='bold'>Welcome to login</Typography>
             <Typography fontWeight='300'>Don't have an account</Typography>
            <Link to='/register'> <Button sx={{color : 'white' , borderColor : 'white' , borderRadius : '40px'}} variant="outlined">Sign Up</Button></Link>
