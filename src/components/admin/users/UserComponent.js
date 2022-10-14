@@ -28,12 +28,12 @@ const UserComponent = () => {
       navigator("/admin/users");
     }
   };
+
   return (
     <section className="content-main">
       <div className="content-header">
         <h2 className="content-title">Customer</h2>
       </div>
-
       <div className="card mb-4">
         <header className="card-header">
           <div className="row gx-3">

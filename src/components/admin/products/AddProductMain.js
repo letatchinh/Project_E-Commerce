@@ -8,26 +8,50 @@ import { PRODUCT_CREATE_RESET } from "../../../redux/admin/Constants/ProductCont
 import Message from "../LoadingError/Error";
 // import Loading from "../LoadingError/Loading";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
+import { TextareaAutosize, TextField } from "@mui/material";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { NewReleasesOutlined } from "@mui/icons-material";
+
+//Use Hook form with material and yup
+const validationSchema = yup.object().shape({
+  name: yup.string().required("Required"),
+  price: yup.number().required("Required"),
+  countInStock: yup.number().required("Required"),
+  description: yup
+    .string()
+    .required("Required")
+    .min(10, "Must be more 10 character"),
+});
+
 const AddProductMain = () => {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
+  // const [name, setName] = useState("");
+  // const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
-  const [countInStock, setCountInStock] = useState(0);
-  const [description, setDescription] = useState("");
+  // const [countInStock, setCountInStock] = useState(0);
+  // const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
   const dispatch = useDispatch();
   const productCreate = useSelector((state) => state.productCreate);
   const { loading, error, product } = productCreate;
   // console.log(product);
+
+  //inittiali
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
+
   const fetch = useCallback(async () => {
     if (product) {
       toast.success("Product Added");
       dispatch({ type: PRODUCT_CREATE_RESET });
-      setName("");
-      setDescription("");
-      setCountInStock(0);
       setCategory("");
-      setPrice(0);
       setImages([]);
     }
   }, [product, dispatch]);
@@ -42,18 +66,24 @@ const AddProductMain = () => {
     setImages(newFiles);
   };
 
-  // console.log(images);
-  const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(
-      createProduct(name, price, description, countInStock, images, category)
+  const submitHandler = async (data) => {
+    await dispatch(
+      createProduct(
+        data.name,
+        data.price,
+        data.description,
+        data.countInStock,
+        images,
+        category
+      )
     );
+    reset();
   };
   return (
     <>
       <ToastContainer />
       <section className="content-main" style={{ maxWidth: "1200px" }}>
-        <form onSubmit={submitHandler}>
+        <form onSubmit={handleSubmit(submitHandler)}>
           <div className="pcShow">
             <div
               className="content-header"
@@ -103,57 +133,48 @@ const AddProductMain = () => {
                   {error && <Message variant="alert-danger">{error}</Message>}
                   {loading && <LoadingDashboard />}
                   <div className="mb-4">
-                    <label htmlFor="product_title" className="form-label">
-                      Product title
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Type here"
-                      className="form-control"
-                      id="product_title"
-                      required
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
+                    <TextField
+                      variant="outlined"
+                      label="Name"
+                      {...register("name")}
+                      error={errors?.name !== undefined}
+                      helperText={errors.name && errors.name.message}
+                      fullWidth
                     />
                   </div>
                   <div className="mb-4">
-                    <label htmlFor="product_price" className="form-label">
-                      Price
-                    </label>
-                    <input
-                      type="number"
-                      placeholder="Type here"
-                      className="form-control"
-                      id="product_price"
-                      required
-                      value={price}
-                      onChange={(e) => setPrice(e.target.value)}
+                    <TextField
+                      variant="outlined"
+                      label="Price"
+                      {...register("price")}
+                      error={errors?.price !== undefined}
+                      helperText={errors.price && errors.price.message}
+                      fullWidth
                     />
                   </div>
                   <div className="mb-4">
-                    <label htmlFor="product_price" className="form-label">
-                      Count In Stock
-                    </label>
-                    <input
-                      type="number"
-                      placeholder="Type here"
-                      className="form-control"
-                      id="product_price"
-                      required
-                      value={countInStock}
-                      onChange={(e) => setCountInStock(e.target.value)}
+                    <TextField
+                      variant="outlined"
+                      label="CountInStock"
+                      {...register("countInStock")}
+                      error={errors?.countInStock !== undefined}
+                      helperText={
+                        errors.countInStock && errors.countInStock.message
+                      }
+                      fullWidth
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="form-label">Description</label>
-                    <textarea
-                      placeholder="Type here"
-                      className="form-control"
-                      rows="7"
-                      required
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                    ></textarea>
+                    <TextareaAutosize
+                      aria-label="minimum height"
+                      minRows={3}
+                      placeholder="Minimum 3 rows"
+                      style={{ width: 400 }}
+                      {...register("description")}
+                    />
+                    <p className="alert-danger">
+                      {errors.description && errors.description.message}
+                    </p>
                   </div>
                   <div className="mb-4">
                     <label className="form-label form-label-cate">
@@ -189,9 +210,9 @@ const AddProductMain = () => {
                       }}
                     >
                       {images &&
-                        images.map((item) => (
+                        images.map((item, i) => (
                           <img
-                            key={item.length}
+                            key={i++}
                             src={`/images/${item}`}
                             alt={item}
                             style={{
