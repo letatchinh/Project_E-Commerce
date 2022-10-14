@@ -5,15 +5,24 @@ import { useDispatch, useSelector } from 'react-redux'
 import ItemListCart from '../../../components/client/ItemListCart'
 import PlaceIcon from '@mui/icons-material/Place';
 import { v4 } from 'uuid'
-import { fetchTotalBill } from '../../../redux/client/cart/Actions'
+import { checkedAllProductRequest, fetchTotalBill } from '../../../redux/client/cart/Actions'
 import { Link } from 'react-router-dom'
+import '../../../components/StyleComponent/ListCart.css'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 export default function ListCart() {
     const background2 = useSelector(state => state.colorCommon.mainBackGround2)
     const backgroundWhite = useSelector(state => state.colorCommon.mainBackGround)
-    const listCarts = useSelector(state => state.cart.listCarts)
+    const listCarts = useSelector(state => state.cart.allListCart)
+    const [isCheck,setIsCheck] = useState(false)
+    const [checkedAll, setCheckedAll] = useState(false);
+    const handleChange = (event) => {
+      setCheckedAll(event.target.checked);
+      dispatch(checkedAllProductRequest(event.target.checked))
+    };
     const dispatch = useDispatch()
     useEffect(() => {
       dispatch(fetchTotalBill())
+     setIsCheck(listCarts.some(e => e.isChecked))
     },[listCarts])
     const totalBill = useSelector(state => state.cart.totalBill)
     const steps = [
@@ -39,7 +48,7 @@ export default function ListCart() {
      <Typography sx={{border : "2px solid gray" , padding : '7px' , borderRadius : '10px'}} color='black' fontSize='1.5rem'>My Cart</Typography>
      <div style={{flex : 1 , height : '2px' , background : 'gray', width : '100%'}}></div>
    </Stack> 
-   <FormControlLabel control={<Checkbox  />} label="Check All" />
+   <FormControlLabel control={<Checkbox checked={checkedAll} onChange={handleChange}  />} label={!checkedAll ? "Check All" : "Un Check All"} />
                     {listCarts && listCarts.map(e =>  <ItemListCart key={v4()} item={e}/>)}
            
           
@@ -71,7 +80,7 @@ export default function ListCart() {
         <Typography fontSize='14px' color='#757575'>Total</Typography>
             <Typography color='#f57224' fontSize='1.3rem'>{totalBill} VND</Typography>
         </Stack>
-        <Link to='/payment'><Button  sx={{width : {md :'100%' , sm :'50%'}}} color='warning' variant='contained'>Confirm Order</Button></Link>
+        <Link to='/payment'><Button endIcon={<ArrowForwardIcon className='surFaceArrow'/>}  disabled={!isCheck} sx={{width : {md :'100%' , sm :'50%'}}} color='warning' variant='contained'>Confirm Order</Button></Link>
         </Stack>
         </Stack>
     </Container>

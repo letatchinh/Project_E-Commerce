@@ -18,10 +18,11 @@ try {
 CartRoutes.get(
   "/filterCarts/:id",
   asyncHandler(async (req, res) => {
-    const carts = await Carts.find({ user: req.params.id  }).populate('product').sort({ _id: -1 });
-    
-    res.json(carts);
-    res.send(carts)
+    const pageSize = 5;
+    const carts = await Carts.find({ user: req.params.id  }).populate('product').sort({ _id: -1 }).limit(pageSize).skip(0);
+    const count = await Carts.countDocuments({user : req.params.id})
+    const allCarts = await Carts.find({ user: req.params.id  }).populate('product').sort({ _id: -1 })
+    res.json({carts,count,allCarts});
   })
 );
 // ADD CART

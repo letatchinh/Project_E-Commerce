@@ -90,12 +90,12 @@ const location = useLocation();
           <Stack direction="row" padding="5px 20px" alignItems="center" justifyContent='space-between'>
           <Stack direction='row' spacing={1}>
           <Link to=''>
-       <Button sx={{textTransform : 'capitalize',color : 'white'}}>
+       <Button  sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'}}}>
        About us
        </Button>
         </Link>
        <Link to=''>
-       <Button sx={{textTransform : 'capitalize',color : 'white'}}>
+       <Button sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'}}}>
        Contact
        </Button>
        </Link>

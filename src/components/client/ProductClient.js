@@ -13,6 +13,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { KEY_USER } from "../../constant/LocalStored";
 import { fetchAddToCartRequestSaga } from "../../redux/sagas/Mysaga";
 import AxiosUser from "../../apis/client/AxiosUser";
+import TypographyThreeDot from "./TypographyThreeDot";
 
 export default function ProductClient({ item }) {
  
@@ -88,21 +89,21 @@ export default function ProductClient({ item }) {
         </div>
       </Link>
       <Link to={`/products/${_id}`}>
-        <Typography
+        {/* <Typography
           className="cardContentHover"
           sx={{
             padding: "10px 0",
-            height: "56px",
             fontSize: "calc(0.3vw + 10px)",
             textShadow : mainTextShadow
           }}
-          gutterBottom
+          
           variant="body2"
           fontWeight="400"
           color={mainColorText}
         >
           {name}
-        </Typography>
+        </Typography> */}
+        <div style={{padding : '5px 0'}}><TypographyThreeDot className='cardContentHover'>{name}</TypographyThreeDot></div>
         <Stack direction='row' justifyContent='space-between'>
         <Typography color='rgb(238,77,45)'>{price} $</Typography>
         <Button

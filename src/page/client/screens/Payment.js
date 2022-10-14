@@ -31,7 +31,7 @@ export default function Payment() {
   const mainBackGround = useSelector(state => state.colorCommon.mainBackGround)
   const mainBackGround2 = useSelector(state => state.colorCommon.mainBackGround2)
   const mainColorText = useSelector(state => state.colorCommon.mainColorText)
-  const listCarts = useSelector(state => state.cart.listCarts)
+  const listCarts = useSelector(state => state.cart.allListCart)
   const users = JSON.parse(localStorage.getItem(KEY_USER))
   const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id
   const navigate = useNavigate()

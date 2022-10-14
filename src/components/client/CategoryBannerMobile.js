@@ -6,6 +6,7 @@ import ItemFilter from "./ItemFilter";
 import ListIcon from "@mui/icons-material/List";
 import { listCategory } from "../../constant/Key";
 import { v4 } from "uuid";
+import { Link } from "react-router-dom";
 export default function CategoryBannerMobile() {
   const [state, setState] = useState({
     left: false,
@@ -24,12 +25,15 @@ export default function CategoryBannerMobile() {
         listCategory.map((e,i) =>  <ItemCategoryBanner key={v4()} delay={i*0.5} value={e.name} linkTo={`/${e.name}`} />
 )
       }
+      <ItemCategoryBanner delay={3.5} value="About us" linkTo={'/'}/>
+      <ItemCategoryBanner delay={4} value="Contact" linkTo={'/'}/>
+      
       </Stack>
     </Box>
   );
   return (
-    <Stack sx={{display : {md : 'none' , xs : 'flex'}}} direction="row" justifyContent="flex-end">
-      <Button style={{ zIndex: 10000 }} onClick={toggleDrawer("left", true)}>
+    <Stack sx={{display : {md : 'none' , xs : 'flex'} , position : 'absolute' , top : 0, left : 0}} direction="row" justifyContent="flex-end">
+      <Button style={{ zIndex: 1000 }} onClick={toggleDrawer("left", true)}>
         <div
           style={{
             border: "1px solid white",
