@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React from "react";
 import {
   Avatar,
-  Button,
   IconButton,
   ListItem,
   Typography,
@@ -11,9 +10,9 @@ import { Stack } from "@mui/system";
 import { v4 } from "uuid";
 import { useDispatch } from "react-redux";
 import "@fontsource/roboto/500.css";
-import PriceSell from "./PriceSell";
 import { KEY_USER } from "../../constant/LocalStored";
-import {  decreaseQuanlity, fetchDeleteCartRequest, increaseQuanlity } from "../../redux/client/cart/Actions";
+import {  fetchDeleteCartRequest} from "../../redux/client/cart/Actions";
+import TypographyThreeDot from "./TypographyThreeDot";
 export default function ItemCart({ value }) {
   const dispatch = useDispatch();
   const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id;
@@ -38,13 +37,13 @@ export default function ItemCart({ value }) {
             alt="Remy Sharp"
             src={`/images/${value.images && value.images[0]}`}
           />
-          <Stack margin="0 10px">
-            <Typography variant="body1" fontWeight="500">
+          <Stack margin="0 10px" width='60%'  overflow='hidden'>
+           <TypographyThreeDot>
               {value.name}
-            </Typography>
+              </TypographyThreeDot>
           </Stack>
           <div>
-            <Typography color='#f57224'>{value.price}</Typography>
+            <Typography color='#f57224'>{value.price} $</Typography>
           </div>
         </ListItem>
       }

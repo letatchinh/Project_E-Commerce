@@ -81,7 +81,7 @@ export function* fetchAddToCart(action) {
  const {status,data} = response
   if(status === STATUS_CODE.CREATED){
     yield put({ type: "FETCH_CART_SUCCESS", payload: data })
-    yield ToastSuccess("Add Success!")
+    yield ToastSuccess("Add Cart Success!")
   }
   } catch (error) {
     ToastError(error.response.data.message)
@@ -93,8 +93,9 @@ export function* fetchCartSuccess(){
        const res = yield call(() => AxiosUser.get(`/api/carts/filterCarts/${idUser}`))
        const {status,data} = res
        if(status === STATUS_CODE.SUCCESS){
-        const newAr = yield data.map(e => ({...e.product,quanlity : 1,isChecked : false}))
-       yield put(fetchCart(newAr))
+        const allCarts = yield data.allCarts.map(e => ({...e.product,quanlity : 1,isChecked : false}))
+        const carts = yield data.carts.map(e => ({...e.product}))
+       yield put(fetchCart({cart : carts ,allCarts : allCarts ,  count :data.count }))
        }
      } catch (error) {
       ToastError(error.response.data.message)
@@ -141,8 +142,8 @@ export function* fetchCartSaga(){
       const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id;
   const {status,data} =  yield call(() =>AxiosUser.get(`/api/carts/filterCarts/${idUser}`)) 
         if(status === STATUS_CODE.SUCCESS){
-          const newArrOk =  data.filter(e => e.product !== null)
-          const newArrFail =  data.filter(e => e.product === null)
+          const newArrOk =  data.allCarts.filter(e => e.product !== null)
+          const newArrFail =  data.allCarts.filter(e => e.product === null)
           newArrFail.map(e => AxiosUser.delete(`/api/carts/deleteById/${e._id}`))
           const newAr =   newArrOk.map((e) => 
             ({
@@ -150,9 +151,14 @@ export function* fetchCartSaga(){
               quanlity: 1,
               isChecked : false,
             })
-            
+          )
+            const listCartHome =  data.carts.map((e) => 
+            ({
+              ...e.product,
+             
+            })
           );
-         yield put(fetchCart(newAr));
+         yield put(fetchCart({cart : listCartHome,count : data.count ,allCarts: newAr}));
         }
     }
   } catch (error) {

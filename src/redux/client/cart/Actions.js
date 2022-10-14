@@ -2,6 +2,7 @@ import AxiosUser from "../../../apis/client/AxiosUser";
 import ToastError from "../../../components/client/ToastError";
 import ToastSuccess from "../../../components/client/ToastSuccess";
 import { KEY_USER } from "../../../constant/LocalStored";
+import { fetchCartRequest } from "../../sagas/Mysaga";
 import {
   ADD_CART,
   CAL_TOTAL_BILL,
@@ -9,6 +10,8 @@ import {
   DELETE_CART,
   FETCH_CART,
   INCREASE_QUANLITY,
+  CHECKED_ALL_PRODUCT,
+  FETCH_CART_NEW
 } from "./Types";
 const idUser =
   localStorage.getItem(KEY_USER) &&
@@ -17,6 +20,12 @@ const idUser =
 export const fetchCart = (data) => {
   return {
     type: FETCH_CART,
+    payload: data,
+  };
+};
+export const fetchCartNew = (data) => {
+  return {
+    type: FETCH_CART_NEW,
     payload: data,
   };
 };
@@ -38,26 +47,27 @@ export const decreaseQuanlity = (data) => {
     payload: data,
   };
 };
-export const deleteCart = (data) => {
-  return {
-    type: DELETE_CART,
-    payload: data,
-  };
-};
 export const addCart = (data) => {
   return {
     type: ADD_CART,
     payload: data,
   };
 };
+export const checkedAllProductRequest = (action) => {
+  return {
+    type : CHECKED_ALL_PRODUCT,
+    payload : action
+  }
+}
+
 export const fetchDeleteCartRequest = (data) => {
   return (dispatch) => {
     (async () => {
       try {
         await AxiosUser.post("/api/carts/delete", data)
-          .then((res) => {
+          .then(async(res) => {
             ToastSuccess("Delete Success!");
-            dispatch(deleteCart(data));
+            dispatch(fetchCartRequest())
           })
           .catch((err) => ToastError(err.response.data.message));
       } catch (error) {

@@ -21,7 +21,7 @@ export default function CategoryCommon({type,valueOfContentTop}) {
    <Category />
    <Stack width = '100%' direction='row' alignItems='center' >
      <div style={{flex : 1 , height : '2px' , background : 'gray', width : '100%'}}></div>
-     <Typography sx={{border : "2px solid gray" , padding : '2px' , borderRadius : '10px'}} color='#fcaf17' fontSize='1.5rem'>{valueOfContentTop}</Typography>
+     <Typography sx={{border : "2px solid gray" , padding : '5px' , borderRadius : '10px'}} color='#fcaf17' fontSize='1.5rem'>{valueOfContentTop}</Typography>
      <div style={{flex : 1 , height : '2px' , background : 'gray', width : '100%'}}></div>
    </Stack>
   

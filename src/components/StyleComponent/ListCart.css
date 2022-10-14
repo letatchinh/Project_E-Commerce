@@ -1,0 +1,15 @@
+.surFaceArrow{
+    animation:  surFaceArrow 3s infinite;
+}
+@keyframes surFaceArrow {
+    0%{
+        opacity: 0;
+    }
+    25%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+        transform: translateX(25px);
+    }
+}

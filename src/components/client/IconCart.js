@@ -8,7 +8,7 @@ import '../StyleComponent/Icons.css'
 import Cart from './Cart';
 export default function IconCart() {
     const dispatch = useDispatch();
-  const listCarts = useSelector(state => state.cart.listCarts)
+    const countCart = useSelector(state => state.cart.count)
     const fetch = useCallback(async() => {
     if (localStorage.getItem(KEY_USER)) {
     await  dispatch(fetchLogginSuccessRequest());
@@ -37,7 +37,7 @@ export default function IconCart() {
   >
      <Badge
               sx={{ position: "relative" }}
-              badgeContent={listCarts.length}
+              badgeContent={countCart}
               className='badgeCustom'
             >
               <ShoppingBagOutlinedIcon className='IconsWhite'
@@ -63,7 +63,7 @@ export default function IconCart() {
           horizontal: 'right',
         }}
   >
-    <Cart />
+    <Cart handleClose={handleClose}/>
   </Menu>
 </div>
   )
