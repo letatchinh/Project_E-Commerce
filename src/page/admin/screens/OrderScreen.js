@@ -6,9 +6,10 @@ const OrderScreen = () => {
   const params = useParams();
   const keyword = params.keyword;
   const name = params.name;
+  const isPaid = params.isPaid;
   return (
     <>
-      <OrderMain keyword={keyword} name={name} />
+      <OrderMain keyword={keyword} name={name} isPaid={isPaid} />
     </>
   );
 };

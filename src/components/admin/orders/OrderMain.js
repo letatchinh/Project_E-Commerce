@@ -19,8 +19,8 @@ const OrderMain = () => {
     orderListFiterName;
 
   const orderListPaidS = useSelector((state) => state.orderListPaidS);
-  const { ordersPaidS } = orderListPaidS;
-  console.log(ordersPaidS);
+  const { loadingPaid, errorPaid, ordersPaidS } = orderListPaidS;
+  // console.log(ordsssersPaidS);
   // console.log(orderListFiterName, "sda");
   const [keyword, setKeyword] = useState();
   const [name, setName] = useState();
@@ -28,21 +28,20 @@ const OrderMain = () => {
   const params = useParams();
   const pagenumber = params.pagenumber;
   const pageFiterNumber = params.pageFiterNumber;
-  const [paid, setPaid] = useState(false);
+  const [paid, setPaid] = useState();
 
   const fetch = useCallback(async () => {
     await dispatch(listOrders(keyword, pagenumber));
     await dispatch(listOrdersFiterName(name, pageFiterNumber));
-    // await dispatch(listOrdersPaidS());
+    await dispatch(listOrdersPaidS(paid));
     // setPaid(false);
-  }, [dispatch, keyword, pagenumber, name, pageFiterNumber]);
+  }, [dispatch, keyword, pagenumber, name, pageFiterNumber, paid]);
   useEffect(() => {
     fetch();
     // setarrProduct(arrProduct);
   }, [fetch]);
   const submitHandler = (e) => {
     e.preventDefault();
-    setPaid(false);
     if (name.trim()) {
       navigator(`/admin/orders/search/${name}`);
     } else {
@@ -50,10 +49,12 @@ const OrderMain = () => {
     }
   };
   const HandlerPaiD = (e) => {
-    e.preventDefault();
-    setPaid(true);
-    navigator(`/admin/orders/search/${e.target.value}`);
-    dispatch(listOrdersPaidS());
+    if (paid) {
+      setPaid(e.target.value);
+      navigator(`/admin/orders/search/${e.target.value}`);
+    } else {
+      navigator("/admin/orders");
+    }
   };
 
   return (
@@ -77,25 +78,20 @@ const OrderMain = () => {
               />
             </form>
 
-            <div className="col-lg-2 col-6 col-md-3">
-              <select className="form-select" onClick={HandlerPaiD}>
-                <option>Status</option>
-                <option value="paidS">Active</option>
-                <option>Disabled</option>
-                <option>Show all</option>
-              </select>
-            </div>
-            <div className="col-lg-2 col-6 col-md-3">
-              <select className="form-select">
-                <option>Show 20</option>
-                <option>Show 30</option>
-                <option>Show 40</option>
+            <div className="col-lg-2 col-6 col-md-3 w-pc-28">
+              <select
+                className="form-select"
+                onChange={(e) => setPaid(e.target.value)}
+              >
+                <option value="">Show all status</option>
+                <option value="true">Active</option>
+                <option value="false">Disabled</option>
               </select>
             </div>
           </div>
         </header>
         <div className="card-body">
-          {!name && (
+          {!paid && !name && (
             <div className="table-responsive">
               {loading ? (
                 <LoadingDashboard />
@@ -170,9 +166,9 @@ const OrderMain = () => {
               )}
             </div>
           )}
-          {name && (
+          {!paid && name && (
             <div className="table-responsive">
-              {loading ? (
+              {loadings ? (
                 <LoadingDashboard />
               ) : errors ? (
                 <Message variant="alert-danger">{errors}</Message>
@@ -181,7 +177,7 @@ const OrderMain = () => {
               )}
             </div>
           )}
-          {/* {!name && paid && (
+          {paid && (
             <div className="table-responsive">
               {loading ? (
                 <LoadingDashboard />
@@ -191,7 +187,7 @@ const OrderMain = () => {
                 <Orders orders={ordersPaidS} />
               )}
             </div>
-          )} */}
+          )}
         </div>
       </div>
     </section>

@@ -1,6 +1,6 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
-import { boolean } from "yup";
+import { boolean, number } from "yup";
 import { admin, protect } from "./../MiddelWare/AuthMiddleware.js";
 import Order from "./../Models/OrderModel.js";
 
@@ -50,10 +50,18 @@ orderRouter.get(
   protect,
   admin,
   asyncHandler(async (req, res) => {
+    const keyword = req.query.isPaid
+      ? {
+          isPaid: {
+            $regex: req.query.isPaid,
+            $options: "i",
+          },
+        }
+      : {};
     const pageSize = 4;
     const page = Number(req.query.pageNumber) || 1;
-    const count = await Order.countDocuments({});
-    const orders = await Order.find({})
+    const count = await Order.countDocuments({ ...keyword });
+    const orders = await Order.find({ ...keyword })
       .limit(pageSize)
       .skip(pageSize * (page - 1))
       .sort({ _id: -1 })
@@ -67,9 +75,13 @@ orderRouter.get(
   "/allPaidS",
   protect,
   admin,
+
   asyncHandler(async (req, res) => {
-    const ordersPaidS = await Order.find({ isPaid: true }).populate("user");
+    const ordersPaidS = await Order.find({ isPaid: req.query.isPaid }).populate(
+      "user"
+    );
     // const orders = orders1.filter((e) => e.user.name.includes(req.query.name));
+
     res.json({ ordersPaidS });
   })
 );

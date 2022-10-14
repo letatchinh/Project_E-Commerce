@@ -1,4 +1,5 @@
 import axios from "axios";
+import { boolean, number } from "yup";
 import {
   ORDER_DELIVERED_FAIL,
   ORDER_DELIVERED_REQUEST,
@@ -9,6 +10,9 @@ import {
   ORDER_LISTFILTERNAME_FAIL,
   ORDER_LISTFILTERNAME_REQUEST,
   ORDER_LISTFILTERNAME_SUCCESS,
+  ORDER_LISTFILTERPAID_FAIL,
+  ORDER_LISTFILTERPAID_REQUEST,
+  ORDER_LISTFILTERPAID_SUCCESS,
   ORDER_LIST_FAIL,
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
@@ -55,38 +59,43 @@ export const listOrders =
   };
 
 //ALL ORDER WITH PAID SUCCESS
-export const listOrdersPaidS = () => async (dispatch) => {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
-  try {
-    await dispatch({ type: ORDER_LIST_REQUEST });
+export const listOrdersPaidS =
+  (isPaid = "") =>
+  async (dispatch) => {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+    try {
+      await dispatch({ type: ORDER_LISTFILTERPAID_REQUEST });
 
-    // let { userLogin: userInfo } = getState();
+      // let { userLogin: userInfo } = getState();
 
-    const config = {
-      headers: {
-        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
-        Authorization: `Bearer ${token}`,
-      },
-    };
+      const config = {
+        headers: {
+          // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
+          Authorization: `Bearer ${token}`,
+        },
+      };
 
-    const { data } = await axios.get(`/api/orders/allPaidS`, config);
+      const { data } = await axios.get(
+        `/api/orders/allPaidS?isPaid=${isPaid}`,
+        config
+      );
 
-    dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
-  } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    if (message === "Not authorized, token failed") {
-      dispatch(logout());
+      dispatch({ type: ORDER_LISTFILTERPAID_SUCCESS, payload: data });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === "Not authorized, token failed") {
+        dispatch(logout());
+      }
+      dispatch({
+        type: ORDER_LISTFILTERPAID_FAIL,
+        payload: message,
+      });
     }
-    dispatch({
-      type: ORDER_LIST_FAIL,
-      payload: message,
-    });
-  }
-};
+  };
 
 //ALL ORDER FITER NAME OF USER
 export const listOrdersFiterName =

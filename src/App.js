@@ -179,7 +179,7 @@ function App() {
             path="/admin/orders/page/:pagenumber"
             element={<OrderScreen />}
           />
-          <Route path="/admin/orders/search/paidS" element={<OrderScreen />} />
+          <Route path="/admin/orders/search/:paid" element={<OrderScreen />} />
           <Route path="/admin/order/:id" element={<OrderDetailScreen />} />
           <Route path="/admin/users" element={<UsersScreen />} />
           <Route

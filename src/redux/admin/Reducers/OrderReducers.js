@@ -8,6 +8,9 @@ import {
   ORDER_LISTFILTERNAME_FAIL,
   ORDER_LISTFILTERNAME_REQUEST,
   ORDER_LISTFILTERNAME_SUCCESS,
+  ORDER_LISTFILTERPAID_FAIL,
+  ORDER_LISTFILTERPAID_REQUEST,
+  ORDER_LISTFILTERPAID_SUCCESS,
   ORDER_LIST_FAIL,
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
@@ -35,16 +38,16 @@ export const orderListReducer = (state = { orders: [] }, action) => {
 //ALL ORDERS
 export const orderListPaidSReducer = (state = { ordersPaidS: [] }, action) => {
   switch (action.type) {
-    case ORDER_LIST_REQUEST:
-      return { ...state, loading: true };
-    case ORDER_LIST_SUCCESS:
+    case ORDER_LISTFILTERPAID_REQUEST:
+      return { ...state, loadingPaid: true };
+    case ORDER_LISTFILTERPAID_SUCCESS:
       return {
         ...state,
-        loading: false,
+        loadingPaid: false,
         ordersPaidS: action.payload.ordersPaidS,
       };
-    case ORDER_LIST_FAIL:
-      return { ...state, loading: false, error: action.payload };
+    case ORDER_LISTFILTERPAID_FAIL:
+      return { ...state, loadingPaid: false, errorPaid: action.payload };
     default:
       return state;
   }

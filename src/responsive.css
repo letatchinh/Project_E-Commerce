@@ -197,4 +197,8 @@
   .form-select {
     width: 80%;
   }
+
+  .w-pc-28 {
+    width: unset;
+  }
 }
