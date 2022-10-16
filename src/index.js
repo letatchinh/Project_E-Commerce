@@ -7,15 +7,19 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { StyledEngineProvider } from '@mui/material/styles';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const queryClient = new QueryClient()
 root.render(
     <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
     <StyledEngineProvider injectFirst>
       <BrowserRouter>
         <App />
       </BrowserRouter>
       </StyledEngineProvider>
+      </QueryClientProvider>
     </Provider>
 );
 

@@ -10,7 +10,6 @@ const cartReducers = (state = initvalue, action) => {
   switch (action.type) {
     
     case TYPES.FETCH_CART:
-      console.log(action.payload);
         return {
             ...state,
             listCarts : action.payload.cart,

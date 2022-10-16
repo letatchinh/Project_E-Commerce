@@ -1,5 +1,5 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
+import { FormControl, FormHelperText, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 import React, { forwardRef, useState } from 'react'
 
  const HideShowPassword =({...props},ref)  => {
@@ -11,7 +11,9 @@ import React, { forwardRef, useState } from 'react'
       id="outlined-adornment-password"
       type={showPassword ? 'text' : 'password'}
      {...props}
-     ref={ref}
+     inputRef={ref}
+     
+     autoComplete="current-password"
       endAdornment={
         <InputAdornment position="end">
           <IconButton
@@ -25,6 +27,9 @@ import React, { forwardRef, useState } from 'react'
       }
       label="Password"
     />
+    <FormHelperText error id="accountId-error">
+     {props.error && props.message}
+    </FormHelperText>
   </FormControl>
   )
 }

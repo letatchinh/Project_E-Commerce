@@ -33,6 +33,8 @@ import LoadingHomePage from "./components/client/LoadingHomePage";
 import CurrencyScreen from "./page/admin/screens/CurrencyScreen";
 import ListCart from "./page/client/screens/ListCart";
 import { ContactUs } from "./components/admin/users/contactEmail/ContactUs";
+import Search from "./components/client/Search";
+import ForgotPassword from "./page/client/screens/ForgotPassword";
 const ComponentHomePage = React.lazy(() =>
   import("./page/client/screens/ComponentHomePage")
 );
@@ -50,10 +52,10 @@ function App() {
               </React.Suspense>
             }
           />
-          {/* <Route path="/search" element={<Search />} /> */}
-          {/* <Route path="/new" element={<CreateProduct />} /> */}
+          <Route path="/search" element={<Search />} />
           <Route path="/login" element={<LoginUser />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgotPassword" element={<ForgotPassword />} />
           <Route path="/products/:productId" element={<DetailProduct />} />
           <Route
             path="/profile_Info"
@@ -73,36 +75,42 @@ function App() {
           <Route path="/flash-sale" element={<CategoryFlashSale />} />
           <Route path="/new-product" element={<CategoryNew />} />
           <Route path="/trending-product" element={<CategoryTrending />} />
-          <Route
-            path="/shirt"
-            element={<CategoryCommon valueOfContentTop="Shirt" type="shirt" />}
-          />
-          <Route
-            path="/coat"
-            element={<CategoryCommon valueOfContentTop="Coat" type="coat" />}
-          />
-          <Route
-            path="/trousers"
-            element={
-              <CategoryCommon valueOfContentTop="Trousers" type="trousers" />
-            }
-          />
-          <Route
-            path="/dress"
-            element={<CategoryCommon valueOfContentTop="Dress" type="dress" />}
-          />
-          <Route
-            path="/bikini"
-            element={
-              <CategoryCommon valueOfContentTop="Bikini" type="bikini" />
-            }
-          />
-          <Route
-            path="/shorts"
-            element={
-              <CategoryCommon valueOfContentTop="Shorts" type="shorts" />
-            }
-          />
+          <Route path="/product">
+            <Route
+              path="shirt"
+              element={
+                <CategoryCommon valueOfContentTop="Shirt" type="shirt" />
+              }
+            />
+            <Route
+              path="coat"
+              element={<CategoryCommon valueOfContentTop="Coat" type="coat" />}
+            />
+            <Route
+              path="trousers"
+              element={
+                <CategoryCommon valueOfContentTop="Trousers" type="trousers" />
+              }
+            />
+            <Route
+              path="dress"
+              element={
+                <CategoryCommon valueOfContentTop="Dress" type="dress" />
+              }
+            />
+            <Route
+              path="bikini"
+              element={
+                <CategoryCommon valueOfContentTop="Bikini" type="bikini" />
+              }
+            />
+            <Route
+              path="shorts"
+              element={
+                <CategoryCommon valueOfContentTop="Shorts" type="shorts" />
+              }
+            />
+          </Route>
           <Route path="/*" element={<NotFound />} />
         </Route>
 

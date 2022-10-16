@@ -22,14 +22,12 @@ import cartReducers from "./client/cart/Reducers";
 import MyColorCommonReducer from "./Common/Color";
 import filterProductReducer from "./filterProduct/Reducers";
 import userReducer from "./login/Reducers";
-import shopReducer from "./shopping/Shopping-reducers";
 
 const { combineReducers } = require("redux");
 
 const rootReducer = combineReducers({
   //user
   colorCommon: MyColorCommonReducer,
-  shop: shopReducer,
   user: userReducer,
   filterProduct: filterProductReducer,
   cart: cartReducers,

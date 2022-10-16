@@ -1,9 +1,10 @@
 import AxiosUser from "./AxiosUser"
 
-const userApis = {
-    async post(user){
-        const res = await AxiosUser.post(`/api/users/`,user)
-        return res.data
+export const fetchCheckUser = async(action) => {
+    try {
+        const res = await AxiosUser.put("/api/users/resetPassword",{email : action})
+        return res
+    } catch (error) {
+        console.log(error);
     }
 }
-export default userApis

@@ -9,19 +9,7 @@ const productRoute = express.Router();
 productRoute.get(
   "/",
   asyncHandler(async (req, res) => {
-    // const pageSize = 12;
-    // const page = Number(req.query.pageNumber) || 1;
-    // const keyword = req.query.keyword
-    //   ? { name: { $regex: req.query.keyword, $options: "i" } }
-    //   : {};
-    // const count = await Product.countDocuments({ ...keyword });
-    // const products = await Product.find({ ...keyword })
-    //   .limit(pageSize)
-    //   .skip(pageSize * (page - 1))
-    //   .sort({ _id: -1 });
-    // res.json({ products, page, pages: Math.ceil(count / pageSize) });
-    // const products = await Product.find({});
-    // res.json(products);
+  
     const products = await Product.find({}).sort({ _id: -1 });
     const length = products.length;
     res.json(length);
@@ -31,6 +19,7 @@ productRoute.get(
 productRoute.get(
   "/search",
   asyncHandler(async (req, res) => {
+    const pageSize = 16;
     const name = req.query.name || "";
     const nameFilter = name ? { name: { $regex: name, $options: "i" } } : {};
 
@@ -38,12 +27,24 @@ productRoute.get(
     const categoryFilter = category
       ? { category: { $regex: category, $options: "i" } }
       : {};
-
-    const products = await Product.find({
+    // const keySort = String(req.query.key) || ""
+    const sortPrice = Number(req.query.sortPrice)
+    const sortRating = Number(req.query.sortRating)
+    const rangeFilterGte = Number(req.query.rangeFilterGte) || null
+    const rangeFilterLte = Number(req.query.rangeFilterLte)  || null
+    const page = Number(req.query.page) || 1;
+    const count = await Product.countDocuments({
       ...nameFilter,
       ...categoryFilter,
     });
-    res.send(products);
+    const products = await Product.find({
+      ...nameFilter,
+      ...categoryFilter,
+      $or : (rangeFilterGte || rangeFilterLte) ? [{price : { $gte : rangeFilterGte}},{price : { $lte : rangeFilterLte}}] : [{price : {$gte : 0}}]
+    }).limit(pageSize)
+    .skip(pageSize * (page - 1))
+    .sort((sortPrice || sortRating) ? {price : sortPrice,rating : sortRating} : {_id: -1});
+    res.send({products,page,pages: Math.ceil(count / pageSize)});
   })
 );
 
@@ -283,24 +284,22 @@ productRoute.put(
 );
 
 productRoute.get(
-  "/allllll",
+  "/sortCreatedAt/sort",
   asyncHandler(async (req, res) => {
-    // const pageSize = 12;
-    // const page = Number(req.query.pageNumber) || 1;
-    // const keyword = req.query.keyword
-    //   ? { name: { $regex: req.query.keyword, $options: "i" } }
-    //   : {};
-    // const count = await Product.countDocuments({ ...keyword });
-    // const products = await Product.find({ ...keyword })
-    //   .limit(pageSize)
-    //   .skip(pageSize * (page - 1))
-    //   .sort({ _id: -1 });
-    // res.json({ products, page, pages: Math.ceil(count / pageSize) });
-    // const products = await Product.find({});
-    // res.json(products);
-    const products = await Product.find({}).sort({ _id: -1 });
-    // const length = products.length
-    res.json(products);
+try {
+  const pageSize = Number(req.query.limit) || 4;
+  const stream = Number(req.query.stream) || -1;
+  const page = Number(req.query.page) || 1;
+  const count = await Product.countDocuments({});
+  const products = await Product.find({})
+  .limit(pageSize)
+  .skip(pageSize * (page - 1))
+  .sort({ createdAt: stream });
+  res.json({products,pages: Math.ceil(count / pageSize),page});
+} catch (error) {
+  res.status(404)
+  throw new Error("product not found")
+}
   })
 );
 

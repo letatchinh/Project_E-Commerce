@@ -7,7 +7,8 @@ import '../StyleComponent/SideBarFilter.css'
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFilterPriceRequest } from '../../redux/sagas/Mysaga';
-import {FILTER_LOW_50, FILTER_MORE_100, FILTER_MORE_200} from '../../redux/filterProduct/Types'
+import {FILTER_LOW_50, FILTER_MORE_100, FILTER_MORE_200, SET_SORT_PRICE_LESS_5, SET_SORT_PRICE_MORE_10, SET_SORT_PRICE_MORE_50} from '../../redux/filterProduct/Types'
+import { setFilter } from '../../redux/filterProduct/Actions';
 export default function ItemFilter() {
     const dispatch = useDispatch()
     const mainColorText = useSelector(state => state.colorCommon.mainColorText)
@@ -23,9 +24,10 @@ export default function ItemFilter() {
           <Typography variant='body1' fontWeight='bold'>Price</Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <CheckboxSideBar filter={() => dispatch(fetchFilterPriceRequest(FILTER_MORE_200))}  label="Product (>20$)"/>
-        <CheckboxSideBar filter={() => dispatch(fetchFilterPriceRequest(FILTER_MORE_100))} label="Product (>10$)"/>
-        <CheckboxSideBar  filter={() => dispatch(fetchFilterPriceRequest(FILTER_LOW_50))} label="Product (<5$)"/>
+        <CheckboxSideBar filter={() => dispatch(setFilter({type : SET_SORT_PRICE_LESS_5,filter : 5}))} unFilter={() => dispatch(setFilter({type : SET_SORT_PRICE_LESS_5,filter : null}))}  label="Product (<5$)"/>
+        <CheckboxSideBar filter={() => dispatch(setFilter({type : SET_SORT_PRICE_MORE_10,filter : 10}))} unFilter={() => dispatch(setFilter({type : SET_SORT_PRICE_MORE_10,filter : null}))}  label="Product (>10$)"/>
+        <CheckboxSideBar filter={() => dispatch(setFilter({type : SET_SORT_PRICE_MORE_50,filter : 50}))} unFilter={() => dispatch(setFilter({type : SET_SORT_PRICE_MORE_50,filter : null}))}  label="Product (>50$)"/>
+       
         </AccordionDetails>
       </Accordion>
       <Accordion>

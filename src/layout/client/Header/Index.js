@@ -12,12 +12,11 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fectchLogout, fecthLogginSuccess } from "../../../redux/login/Actions";
 import { IS_STATUS_LOGIN } from "../../../redux/login/Types";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { setSearch } from "../../../redux/shopping/Shopping-actions";
 import { KEY_USER } from "../../../constant/LocalStored";
 import { useForm } from "react-hook-form";
 import IconCart from "../../../components/client/IconCart";
@@ -26,34 +25,44 @@ import MyTypography from "../../../components/client/MyTypography";
 
 import '../../../components/StyleComponent/Header.css'
 import { fetchCartRequest } from "../../../redux/sagas/Mysaga";
+import { setCategorySearch, setKeywordSearch } from "../../../redux/filterProduct/Actions";
+import ToastError from "../../../components/client/ToastError";
 
 export default function Index() {
 const location = useLocation();
+const statusLogin = useSelector((state) => state.user.statusLogin);
+const loginSuccess = useSelector((state) => state.user.loginSuccess);
+const statusThemme = useSelector((state) => state.colorCommon.status);
+let [searchParams, setSearchParams] = useSearchParams()
+const [anchorEl, setAnchorEl] = useState(null);
+const {pathname} = location
+const open = Boolean(anchorEl);
+const navigate = useNavigate();
+const handleClick = (event) => {
+  setAnchorEl(event.currentTarget);
+};
  const path_lo_out=["/login" , "/register"]
+ const isCategory = "/product/"
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchCartRequest())
+    
   }, [localStorage.getItem(KEY_USER)]);
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data) => {
-    dispatch(setSearch(data.searchKeyword));
-    navigate("/");
-  };
-  const statusLogin = useSelector((state) => state.user.statusLogin);
-  const loginSuccess = useSelector((state) => state.user.loginSuccess);
-  const statusThemme = useSelector((state) => state.colorCommon.status);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const navigate = useNavigate();
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    if(data.searchKeyword.trim() === " ") {
+      ToastError("Please write product you want")
+    }
+   else{
+    dispatch(setKeywordSearch(data.searchKeyword.trim()));
 
+    navigate("/search");
+   }
+  };
   useEffect(() => {
     if (localStorage.getItem(KEY_USER)) {
       dispatch(fecthLogginSuccess(JSON.parse(localStorage.getItem(KEY_USER))));
       dispatch({ type: IS_STATUS_LOGIN, dispatch: "" });
-      
     }
   }, [localStorage.getItem(KEY_USER)]);
   const handleClose = () => {
@@ -68,7 +77,7 @@ const location = useLocation();
     background: statusThemme
     ? "linear-gradient(rgb(238, 77, 45), rgb(255, 115, 55))"
     : "#00255E" ,
-    padding: "5px"
+    padding: "25px 5px 5px 5px"
   }
   const styHeadNotHomePage = {
     background: "transparent",
@@ -84,7 +93,7 @@ const location = useLocation();
     <>
       <div
         id="top"
-        style={ window.location.href !== "http://localhost:3000/" ? styHeadHomePage : styHeadNotHomePage }
+        style={ !isHomePage ? styHeadHomePage : styHeadNotHomePage }
       >
         <Container sx={{ flexGrow: 1 }}>
           <Stack direction="row" padding="5px 20px" alignItems="center" justifyContent='space-between'>
@@ -194,7 +203,9 @@ const location = useLocation();
             <Grid item xs={2}>
               <Link
                 onClick={() => {
-                  dispatch(setSearch(""));
+                  dispatch(setKeywordSearch(""));
+                  dispatch(setCategorySearch(null))
+                  setSearchParams({'name' : ""})
                   reset();
                 }}
                 to="/"
@@ -216,15 +227,16 @@ const location = useLocation();
                     : "flex",
                   alignItems: "center",
                   width: "82%",
-                  background: isHomePage ? "rgba(255,255,255,0.2)" : "white",
+                  // background: isHomePage ? "rgba(255,255,255,0.2)" : "white",
                   borderRadius: "25px",
                 }}
               >
                 <InputBase
-                  {...register("searchKeyword")}
-                  sx={{ ml: 1, flex: 1 , color : 'black' }}
-                  placeholder="Search"
+                  {...register("searchKeyword",{ required: true })}
+                  sx={{ ml: 1, flex: 1}}
+                  placeholder={(location.pathname.includes(isCategory)) ? `Search in ${location.pathname.slice(9)}` : "Search"}
                   inputProps={{ "aria-label": "search" }}
+                  error
                 />
                 <IconButton
                   type="submit"

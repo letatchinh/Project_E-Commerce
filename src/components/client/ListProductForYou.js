@@ -16,7 +16,7 @@ export default function ListProductForYou() {
     const [isFetch,setIsFetch] = useState(false)
     const fetch = useCallback(async() => {
       setLoading(true)
-      axios.get(`api/products/search?category=`).then(res => setData(res.data)).catch(err => console.log(err))
+      axios.get(`api/products/search?category=`).then(res => setData(res.data.products)).catch(err => console.log(err))
       setLoading(false)
     },[isFetch])
     useEffect(() => {
@@ -53,7 +53,7 @@ export default function ListProductForYou() {
   return (
 
      <Stack  spacing={1} className={isAppear ? "appear" : ""}
-     ref={componentRef} sx={{background : mainBackGround, padding : '10px'}}>
+     ref={componentRef} sx={{background : mainBackGround, padding : '10px', borderRadius : '30px'}}>
        <Stack direction='row' alignItems='center' justifyContent={{md : 'center' , xs : 'flex-start'}} spacing={2} position='relative'>
        <img style={{width  : '30px' ,height : '30px'}} src="https://bizweb.dktcdn.net/100/438/408/themes/878697/assets/fire-icon-new.png?1664943619853" alt="flashsale"/>
        <MyTypography fontSize='1.5rem'>For You</MyTypography>

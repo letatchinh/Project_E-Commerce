@@ -22,7 +22,7 @@ export default function Category() {
       >
         {listCategory.map((e) => (
           <Grid key={v4()} item>
-          <Link to={`/${e.name}`}>
+          <Link to={`/product/${e.name}`}>
           <ItemCategory  value={e.name} image={e.image} />
           </Link>
           </Grid>
