@@ -67,7 +67,7 @@ export default function Register() {
       email: data.email,
     };
     axios
-      .post(`/api/users/,newUser`)
+      .post(`/api/users/`, newUser)
       .then((res) => {
         ToastSuccess("Resgister Success!");
         dispatch(
