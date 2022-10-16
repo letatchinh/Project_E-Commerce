@@ -1,4 +1,4 @@
-import { FILTER_LIST, RECEIVE_LIST, SORT_PRICE_HIGH_TO_LOW, SORT_PRICE_LOW_TO_HIGH, SORT_RATING_HIGH_TO_LOW, SORT_RATING_LOW_TO_HIGH } from "./Types"
+import {  RECEIVE_LIST, SET_CATEGORY_SEARCH, SET_SEARCH_KEYWORD, SET_SORT_PRICE, SET_SORT_RATING, SORT_PRICE_HIGH_TO_LOW, SORT_PRICE_LOW_TO_HIGH, SORT_RATING_HIGH_TO_LOW, SORT_RATING_LOW_TO_HIGH } from "./Types"
 
 export const fetchReceiveListShow = (data) => {
     return {
@@ -28,5 +28,35 @@ export const sortRatingLowtoHigh = () => {
     return {
         type : SORT_RATING_LOW_TO_HIGH,
         payload : ''
+    }
+}
+export const setKeywordSearch = (action) => {
+    return {
+        type : SET_SEARCH_KEYWORD,
+        payload : action
+    }
+}
+export const setCategorySearch = (action) => {
+    return {
+        type : SET_CATEGORY_SEARCH,
+        payload : action
+    }
+}
+export const setSortPrice = (action) => {
+    return {
+        type : SET_SORT_PRICE,
+        payload : action
+    }
+}
+export const setSortRating = (action) => {
+    return {
+        type : SET_SORT_RATING,
+        payload : action
+    }
+}
+export const setFilter = (action) => {
+    return {
+        type : action.type,
+        payload : action.filter
     }
 }

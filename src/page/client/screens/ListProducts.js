@@ -20,7 +20,6 @@ export default function ListProducts() {
   const [count, setCount] = useState(0);
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
-  const listProduct = useSelector((state) => state.shop.listProduct);
   const inputSearch = useSelector((state) => state.shop.setSearchKeyword);
   const listReducer = useSelector((state) => state.filterProduct.listShow);
   const listMainReducer = useSelector((state) => state.filterProduct.listMain);
@@ -42,24 +41,6 @@ const fetchSearch = useCallback(async () => {
 useEffect(() => {
   fetchSearch();
 }, [fetchSearch]);
-
-// const fetchNoSearch = useCallback(async () => {
-//   if(!inputSearch){
-//     setLoading(true)
-//     await axios
-//     .get(`${URL_BASE}listProduct?_page=${page}&_limit=${limit}`)
-//     .then((res) => {
-//       setCount(Math.ceil(listProduct.length / limit));
-//       setList(res.data)
-//       })
-//       .catch((err) => console.log(err))
-//       .finally(() => setLoading(false));
-//   }
-// }, [listProduct,inputSearch,page]);
-// useEffect(() => {
-//   fetchNoSearch();
-// }, [fetchNoSearch]);
-
 useEffect(() => {
   if(listReducer.length !== 0){
     setList(listReducer.slice(start, start + limit))

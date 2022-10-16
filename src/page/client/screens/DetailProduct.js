@@ -90,7 +90,7 @@ export default function DetailProduct() {
 
 
 useEffect(() => {
-   AxiosUser.get(`/api/products/search?category=${itemm.category}`).then(res => setListItem(res.data))
+   AxiosUser.get(`/api/products/search?category=${itemm.category}`).then(res => setListItem(res.data.products))
    AxiosUser.get(`/api/orders/checkPayment/${user._id}?product=${_id}`).then(res => setIsPayment(res.data.isPayment)).catch(err => console.log(err))
    _id && AxiosUser.get(`/api/reviews/SumReviewByIdProduct/${_id}`).then(res => setReview({...review,numReview :res.data.avgReview,count : res.data.totalReview})).catch(err => console.log(err))
 },[itemm])

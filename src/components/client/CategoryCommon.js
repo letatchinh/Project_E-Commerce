@@ -2,8 +2,11 @@ import { Typography } from '@mui/material'
 import { Stack } from '@mui/system'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useSearchParams } from 'react-router-dom'
+import AxiosUser from '../../apis/client/AxiosUser'
 import Category from '../../layout/client/Category'
+import { setCategorySearch } from '../../redux/filterProduct/Actions'
 import ListProductCommon from './ListProductCommon'
 import LoadingHomePage from './LoadingHomePage'
 import SideBarFilter from './SideBarFilter'
@@ -11,9 +14,11 @@ import SortBar from './SortBar'
 export default function CategoryCommon({type,valueOfContentTop}) {
   const [data,setData] = useState([])
   const [loading,setLoading] = useState(false)
+  const dispatch = useDispatch()
   useEffect(() => {
       setLoading(true)
-      axios.get(`api/products/search?category=${type}`).then(res => setData(res.data)).catch(err => console.log(err)).finally(() => setLoading(false))
+      AxiosUser.get(`/api/products/search?category=${type}`).then(res => setData(res.data.products)).catch(err => console.log(err)).finally(() => setLoading(false))
+      dispatch(setCategorySearch(type))
   },[type])
   const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
   return (

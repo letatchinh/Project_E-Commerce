@@ -12,6 +12,7 @@ const userReducer = (state = initvalue, action) => {
       return {
         ...state,
         loginSuccess: action.payload,
+        statusLogin: true,
       };
     case TYPES.LOGIN:
   

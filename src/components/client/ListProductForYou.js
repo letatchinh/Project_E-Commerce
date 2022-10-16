@@ -16,7 +16,7 @@ export default function ListProductForYou() {
     const [isFetch,setIsFetch] = useState(false)
     const fetch = useCallback(async() => {
       setLoading(true)
-      axios.get(`api/products/search?category=`).then(res => setData(res.data)).catch(err => console.log(err))
+      axios.get(`api/products/search?category=`).then(res => setData(res.data.products)).catch(err => console.log(err))
       setLoading(false)
     },[isFetch])
     useEffect(() => {

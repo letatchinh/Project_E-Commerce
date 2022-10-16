@@ -3,7 +3,7 @@ import { Button, Checkbox,  FormControlLabel,  Paper, TextField } from "@mui/mat
 import { Container, Stack } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import "@fontsource/roboto/300.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   fetchLoginRequest,
 } from "../../../redux/login/Actions";
@@ -19,7 +19,7 @@ import HideShowPassword from "../../../components/client/HideShowPassword";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { fetchLoginWithGoogleAndFbRequest } from "../../../redux/sagas/Mysaga";
-
+import '../../../components/StyleComponent/MyLink.css'
 export default function LoginUser() {
   const schema = yup.object().shape({
     password: yup.string().required("Required").min(2).max(20),
@@ -29,14 +29,16 @@ export default function LoginUser() {
     resolver: yupResolver(schema),
   });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const statusLogin = useSelector(state => state.user.statusLogin)
   const onSubmit = data => {
     dispatch(fetchLoginRequest(data))
   };
   useEffect(() => {
-    if(localStorage.getItem(KEY_USER)){
+    if(statusLogin){
       navigate("/")
     }
-  },[localStorage.getItem(KEY_USER)])
+  },[statusLogin])
   useEffect(() => {
     function start() {
       gapi.client.init({
@@ -47,7 +49,7 @@ export default function LoginUser() {
     }
     gapi.load("client:auth2", start);
   }, []);
-  const navigate = useNavigate();
+  
   const responseFacebook = async (response) => {
     const newUser = {
       password: response.id,
@@ -93,7 +95,9 @@ export default function LoginUser() {
           </Button>
         <Stack direction='row' justifyContent='space-between' alignItems='center' width='100%'>
         <FormControlLabel sx={{margin : 0}} control={<Checkbox defaultChecked />} label="Remember Me" />
-        <Typography variant="body2" color='#888'>Forgot password</Typography>
+        <Link to='/forgotPassword'>
+        <Typography className="Mylink" variant="body2" color='#888'>Forgot password</Typography>
+        </Link>
         </Stack>
            <FacebookLogin
             appId="3267114616941933"

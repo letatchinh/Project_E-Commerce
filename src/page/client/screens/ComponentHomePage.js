@@ -3,7 +3,6 @@ import { Stack } from "@mui/system";
 import React ,{ lazy } from "react";
 import { useSelector } from "react-redux";
 import SideBarFilter from "../../../components/client/SideBarFilter";
-import ListProducts from "./ListProducts";
 import Slider from '../../../layout/client/Slider'
 import Category from '../../../layout/client/Category'
 import SortBar from '../../../components/client/SortBar'
@@ -18,8 +17,8 @@ import ListProductForYou from "../../../components/client/ListProductForYou";
 export default function ComponentHomePage() {
     const mainBackGround2 = useSelector((state) => state.colorCommon.mainBackGround2);
     const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
-    const inputSearch = useSelector((state) => state.shop.setSearchKeyword);
-  return (
+    const keywordSearch = useSelector((state) => state.filterProduct.keyword);
+    return (
     <>
 <div style={{background : mainBackGround}}>
 <BannerShowMainProduct />
@@ -37,9 +36,9 @@ export default function ComponentHomePage() {
     <ListProductTrending />
     <ListProductForYou />
       <Stack id='search' padding='20px' justifyContent='space-around' direction='row' sx={{background : mainBackGround}}>
-      { inputSearch &&  <SideBarFilter />}
+      { keywordSearch &&  <SideBarFilter />}
         <Stack style={{width : '90%'}}>
-        {inputSearch && <SortBar  />}
+        {keywordSearch && <SortBar  />}
       <Stack>
         <ListProductForYou />
       </Stack>

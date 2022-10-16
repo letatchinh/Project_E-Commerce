@@ -2,7 +2,7 @@ import { FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/mate
 import { Stack } from '@mui/system'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { sortHighToLow, sortLowToHigh, sortRatingHighToLow, sortRatingLowtoHigh } from '../../redux/filterProduct/Actions'
+import { setSortPrice, setSortRating, sortHighToLow, sortLowToHigh, sortRatingHighToLow, sortRatingLowtoHigh } from '../../redux/filterProduct/Actions'
 import '../StyleComponent/SideBarFilter.css'
 
 export default function SortBar() {
@@ -13,10 +13,10 @@ export default function SortBar() {
     setPrice(event.target.value);
     setRating('');
     if(event.target.value){
-      dispatch(sortHighToLow())
+      dispatch(setSortPrice(-1))
     }
     else{
-      dispatch(sortLowToHigh())
+      dispatch(setSortPrice(1))
     }
   };
   const [rating, setRating] = useState('');
@@ -24,10 +24,10 @@ export default function SortBar() {
     setRating(event.target.value);
     setPrice('');
     if(event.target.value){
-      dispatch(sortRatingHighToLow())
+      dispatch(setSortRating(-1))
     }
     else{
-      dispatch(sortRatingLowtoHigh())
+      dispatch(setSortRating(1))
     }
   };
   return (

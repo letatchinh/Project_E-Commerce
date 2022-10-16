@@ -138,10 +138,8 @@ userRouter.post(
 //UPDATE PROFILE
 userRouter.put(
   "/profile",
-  protect,
   asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id);
-
     if (user) {
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
@@ -162,6 +160,34 @@ userRouter.put(
       throw new Error("User not found");
     }
   })
+);
+// RESET PASSWORD
+userRouter.put(
+  "/resetPassword",
+  asyncHandler(async (req, res) => {
+    const {email , password} = req.body
+    const user = await User.findOne({email});
+    if (user) {
+        if(password){
+          user.password = password;
+        }
+        const updateUser = await user.save();
+        res.json({
+          _id: updateUser._id,
+          name: updateUser.name,
+          email: updateUser.email,
+          isAdmin: updateUser.isAdmin,
+          createdAt: updateUser.createdAt,
+          token: generateToken(updateUser._id),
+        });
+      }
+      else{
+        res.status(404);
+      throw new Error("User not found");
+      }
+     
+    } 
+  )
 );
 userRouter.get("/getId/:id",
 asyncHandler(async (req, res) => {

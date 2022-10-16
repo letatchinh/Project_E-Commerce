@@ -22,7 +22,7 @@ export default function CategoryBannerMobile() {
     >
       <Stack>
       {
-        listCategory.map((e,i) =>  <ItemCategoryBanner key={v4()} delay={i*0.5} value={e.name} linkTo={`/${e.name}`} />
+        listCategory.map((e,i) =>  <ItemCategoryBanner key={v4()} delay={i*0.5} value={e.name} linkTo={`/product/${e.name}`} />
 )
       }
       <ItemCategoryBanner delay={3.5} value="About us" linkTo={'/'}/>
