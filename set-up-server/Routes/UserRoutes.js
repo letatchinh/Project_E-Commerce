@@ -99,9 +99,8 @@ userRouter.post(
         token: generateToken(user._id),
         createdAt: user.createdAt,
       });
-    }
-    else{
-     const newUser = await User.create({
+    } else {
+      const newUser = await User.create({
         name,
         email,
         password,
@@ -114,9 +113,7 @@ userRouter.post(
         token: generateToken(newUser._id),
         createdAt: newUser.createdAt,
       });
-      
     }
-
   })
 );
 // PROFILE
@@ -164,34 +161,33 @@ userRouter.put(
 userRouter.put(
   "/resetPassword",
   asyncHandler(async (req, res) => {
-    const {email , password} = req.body
-    const user = await User.findOne({email});
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
     if (user) {
-        if(password){
-          user.password = password;
-        }
-        const updateUser = await user.save();
-        res.json({
-          _id: updateUser._id,
-          name: updateUser.name,
-          email: updateUser.email,
-          isAdmin: updateUser.isAdmin,
-          createdAt: updateUser.createdAt,
-          token: generateToken(updateUser._id),
-        });
+      if (password) {
+        user.password = password;
       }
-      else{
-        res.status(404);
+      const updateUser = await user.save();
+      res.json({
+        _id: updateUser._id,
+        name: updateUser.name,
+        email: updateUser.email,
+        isAdmin: updateUser.isAdmin,
+        createdAt: updateUser.createdAt,
+        token: generateToken(updateUser._id),
+      });
+    } else {
+      res.status(404);
       throw new Error("User not found");
-      }
-     
-    } 
-  )
+    }
+  })
 );
-userRouter.get("/getId/:id",
-asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id);
-
+userRouter.get(
+  "/getId/:id",
+  asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+  })
+);
 //get id user
 
 //ORDER IS PAID
