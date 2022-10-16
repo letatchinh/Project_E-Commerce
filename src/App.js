@@ -32,6 +32,7 @@ import CategoryCommon from "./components/client/CategoryCommon";
 import LoadingHomePage from "./components/client/LoadingHomePage";
 import CurrencyScreen from "./page/admin/screens/CurrencyScreen";
 import ListCart from "./page/client/screens/ListCart";
+import { ContactUs } from "./components/admin/users/contactEmail/ContactUs";
 const ComponentHomePage = React.lazy(() =>
   import("./page/client/screens/ComponentHomePage")
 );
@@ -179,6 +180,8 @@ function App() {
           <Route path="/admin/orders/search/:paid" element={<OrderScreen />} />
           <Route path="/admin/order/:id" element={<OrderDetailScreen />} />
           <Route path="/admin/users" element={<UsersScreen />} />
+          <Route path="/admin/users/:id/disabled" element={<UsersScreen />} />
+          <Route path="/admin/users/:id/sendMail" element={<ContactUs />} />
           <Route
             path="/admin/users/search/:keyword"
             element={<UsersScreen />}

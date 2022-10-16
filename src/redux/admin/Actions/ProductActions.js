@@ -19,15 +19,15 @@ import {
   PRODUCT_UPDATE_REQUEST,
   PRODUCT_UPDATE_SUCCESS,
 } from "../Constants/ProductContants";
+import { ADMIN_TOKEN } from "../Constants/token";
 import { logout } from "./UserActions";
 
 //ALL PRODUCT WITH PAGENITION
 export const listProducts =
   (keyword = "", pageNumber = "", sortPrice = "", keywordCategory = "") =>
   async (dispatch, getState) => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
     try {
+      const token = ADMIN_TOKEN;
       await dispatch({ type: PRODUCT_LIST_REQUEST });
 
       // let { userLogin: userInfo } = getState();
@@ -63,7 +63,7 @@ export const listProducts =
 //ALL PRODUCT WITH PAGENITION
 // export const listProductsSortHight = () => async (dispatch) => {
 //   const token =
-//     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+//     ADMIN_TOKEN;
 //   try {
 //     await dispatch({ type: PRODUCT_LIST_REQUEST });
 
@@ -96,8 +96,7 @@ export const listProducts =
 
 //ALL PRODUCT NO PAGENATION
 export const listAllProducts = () => async (dispatch, getState) => {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+  const token = ADMIN_TOKEN;
   try {
     await dispatch({ type: PRODUCT_LISTALL_REQUEST });
 
@@ -130,8 +129,7 @@ export const listAllProducts = () => async (dispatch, getState) => {
 
 //CURRENCY VND
 export const currencyVND = () => async (dispatch) => {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+  const token = ADMIN_TOKEN;
   try {
     await dispatch({ type: PRODUCT_LISTALL_REQUEST });
 
@@ -165,8 +163,7 @@ export const currencyVND = () => async (dispatch) => {
 
 //CURRENCY USD
 export const currencyUSD = () => async (dispatch) => {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+  const token = ADMIN_TOKEN;
   try {
     await dispatch({ type: PRODUCT_LISTALL_REQUEST });
 
@@ -200,8 +197,7 @@ export const currencyUSD = () => async (dispatch) => {
 
 //DELETE PRODUCT
 export const deleteProduct = (id) => async (dispatch, getState) => {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+  const token = ADMIN_TOKEN;
   try {
     await dispatch({ type: PRODUCT_DELETE_REQUEST });
 
@@ -236,8 +232,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
 export const createProduct =
   (name, price, description, countInStock, images, category) =>
   async (dispatch, getState) => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+    const token = ADMIN_TOKEN;
     try {
       await dispatch({ type: PRODUCT_CREATE_REQUEST });
 
@@ -296,8 +291,7 @@ export const editProduct = (id) => async (dispatch) => {
 
 //UPDATE PRODUCT
 export const updateProduct = (product) => async (dispatch, getState) => {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+  const token = ADMIN_TOKEN;
   try {
     await dispatch({ type: PRODUCT_UPDATE_REQUEST });
 

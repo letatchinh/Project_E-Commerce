@@ -20,6 +20,19 @@ const userSchema = mongoose.Schema(
       require: true,
       default: false,
     },
+    avatar: {
+      type: String,
+      require: true,
+    },
+    address: {
+      type: String,
+      require: true,
+    },
+    active: {
+      type: Boolean,
+      require: true,
+      default: true,
+    },
   },
   {
     timestamps: true,

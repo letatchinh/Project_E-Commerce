@@ -17,14 +17,15 @@ import {
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
 } from "../Constants/OrderContants";
+import { ADMIN_TOKEN } from "../Constants/token";
 import { logout } from "./UserActions";
 
 //ALL ORDER
 export const listOrders =
   (keyword = "", pageNumber = "") =>
   async (dispatch, getState) => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+    const token = ADMIN_TOKEN;
+
     try {
       await dispatch({ type: ORDER_LIST_REQUEST });
 
@@ -62,8 +63,7 @@ export const listOrders =
 export const listOrdersPaidS =
   (isPaid = "") =>
   async (dispatch) => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+    const token = ADMIN_TOKEN;
     try {
       await dispatch({ type: ORDER_LISTFILTERPAID_REQUEST });
 
@@ -101,8 +101,7 @@ export const listOrdersPaidS =
 export const listOrdersFiterName =
   (name = "", pageFiterNumber = "") =>
   async (dispatch, getState) => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+    const token = ADMIN_TOKEN;
     try {
       await dispatch({ type: ORDER_LISTFILTERNAME_REQUEST });
 
@@ -138,8 +137,7 @@ export const listOrdersFiterName =
 
 //ORDER DETAILS
 export const getOrderDetails = (id) => async (dispatch) => {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+  const token = ADMIN_TOKEN;
   try {
     await dispatch({ type: ORDER_DETAILS_REQUEST });
 
@@ -172,8 +170,7 @@ export const getOrderDetails = (id) => async (dispatch) => {
 
 //ORDER DELIVERED
 export const deliverOrder = (order) => async (dispatch) => {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+  const token = ADMIN_TOKEN;
   try {
     await dispatch({ type: ORDER_DELIVERED_REQUEST });
 

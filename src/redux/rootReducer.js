@@ -14,6 +14,7 @@ import {
   productUpdateReducer,
 } from "./admin/Reducers/ProductReducers";
 import {
+  userDisabledReducer,
   userListReducer,
   userLoginReducer,
 } from "./admin/Reducers/userReducers";
@@ -46,6 +47,7 @@ const rootReducer = combineReducers({
   productsListAll: productListAllReducer,
   orderListFiterName: orderListFiterNameReducer,
   orderListPaidS: orderListPaidSReducer,
+  userDisabled: userDisabledReducer,
 });
 
 export default rootReducer;

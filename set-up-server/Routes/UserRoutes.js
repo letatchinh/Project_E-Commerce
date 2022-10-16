@@ -126,25 +126,25 @@ userRouter.put(
     }
   })
 );
-userRouter.get(
-  "/getId/:id",
+
+//get id user
+
+//ORDER IS PAID
+userRouter.put(
+  "/:id/disabled",
   asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
-
     if (user) {
-      user.name = req.body.name || user.name;
-      user.email = req.body.email || user.email;
-      if (req.body.password) {
-        user.password = req.body.password;
-      }
-      // const updateUser = await user.save();
-      res.json(user);
+      user.active = false;
+      const updateUser = await user.save();
+      res.json(updateUser);
     } else {
       res.status(404);
-      throw new Error("User not found");
+      throw new Error("User Not Found");
     }
   })
 );
+
 userRouter.put(
   "/profileUser/:id",
   asyncHandler(async (req, res) => {

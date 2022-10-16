@@ -1,4 +1,7 @@
 import {
+  USER_DISABLED_FAIL,
+  USER_DISABLED_REQUEST,
+  USER_DISABLED_SUCCESS,
   USER_LIST_FAIL,
   USER_LIST_REQUEST,
   USER_LIST_RESET,
@@ -9,6 +12,7 @@ import {
   USER_LOGOUT,
 } from "../Constants/UserContants";
 import axios from "axios";
+import { ADMIN_TOKEN } from "../Constants/token";
 
 //LOGIN
 export const login = (email, password) => async (dispatch) => {
@@ -56,8 +60,7 @@ export const logout = () => (dispatch) => {
 export const listUser =
   (keyword = "", pageNumber = "") =>
   async (dispatch, getState) => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2ZhNjY5ODZhZmEyZTI5NjRkMWM1MiIsImlhdCI6MTY2NTExNjU5OCwiZXhwIjoxNjY3NzA4NTk4fQ.rRJQouHDC2vssf648fOu86oPZ5eUcEJINu5myj4m5cA";
+    const token = ADMIN_TOKEN;
     try {
       await dispatch({ type: USER_LIST_REQUEST });
 
@@ -90,3 +93,38 @@ export const listUser =
       });
     }
   };
+
+//USER DELIVERED
+export const userDisabledaction = (user) => async (dispatch) => {
+  const token = ADMIN_TOKEN;
+  try {
+    await dispatch({ type: USER_DISABLED_REQUEST });
+
+    // let { userLogin: userInfo } = getState();
+
+    const config = {
+      headers: {
+        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios
+      .put(`/api/users/${user._id}/disabled`, config)
+      .then((res) =>
+        dispatch({ type: USER_DISABLED_SUCCESS, payload: res.updateUser })
+      );
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: USER_DISABLED_FAIL,
+      payload: message,
+    });
+  }
+};
