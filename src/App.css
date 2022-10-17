@@ -1248,8 +1248,24 @@ a {
   transition: background-color ease-in-out 0.3s
 }
 
+.open-active {
+  color: #746a6a;
+  padding: 5px 10px;
+  display: block;
+  border: 1px solid #746a6a;
+  border-radius: 2px;
+  background-color: #fff;
+  transition: background-color ease-in-out 0.3s;
+  margin-bottom: 10px;
+}
+
 .icon-mail:hover {
   background-color: #746a6a;
+
+}
+
+.open-active:hover {
+  background-color: #4fa607;
 
 }
 

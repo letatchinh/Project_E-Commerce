@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   listOrdersPaidS,
   listUser,
+  userActiveaction,
   userDisabled,
   userDisabledaction,
 } from "../../../redux/admin/Actions/UserActions.js";
@@ -26,6 +27,9 @@ const UserComponent = () => {
   const userDisabled = useSelector((state) => state.userDisabled);
   const { updateUser } = userDisabled;
 
+  const userOpenActive = useSelector((state) => state.userOpenActive);
+  const { updateActiveUser } = userOpenActive;
+
   const userActive = useSelector((state) => state.userActive);
   const { loadingActive, errorActive, userListActive } = userActive;
 
@@ -33,8 +37,9 @@ const UserComponent = () => {
   const fetch = useCallback(async () => {
     await dispatch(listUser(keyword, pagenumber));
     await dispatch(userDisabledaction(updateUser));
+    await dispatch(userActiveaction(updateActiveUser));
     await dispatch(listOrdersPaidS(actives));
-  }, [dispatch, keyword, pagenumber, updateUser, actives]);
+  }, [dispatch, keyword, pagenumber, updateUser, actives, updateActiveUser]);
   useEffect(() => {
     fetch();
   }, [fetch]);

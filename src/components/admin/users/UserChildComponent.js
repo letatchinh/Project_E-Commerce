@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   listUser,
+  userActiveaction,
   userDisabledaction,
 } from "../../../redux/admin/Actions/UserActions.js";
 // import Loading from "../LoadingError/Loading.js";
@@ -17,18 +18,30 @@ const UserChildComponent = (props) => {
 
   const userDisabled = useSelector((state) => state.userDisabled);
   const { loadings, updateUser } = userDisabled;
+
+  const userOpenActive = useSelector((state) => state.userOpenActive);
+  const { updateActiveUser } = userOpenActive;
+
   const fetch = useCallback(() => {
     if (updateUser) {
       dispatch(userDisabledaction(updateUser));
     }
-  }, [dispatch, updateUser]);
+    if (updateActiveUser) {
+      dispatch(userActiveaction(updateActiveUser));
+    }
+  }, [dispatch, updateUser, updateActiveUser]);
   useEffect(() => {
     fetch();
   }, [fetch]);
   const handleDisalbed = (updateUser) => {
     toast("Disable success");
     dispatch(userDisabledaction(updateUser));
-    navigator("/admin/users/");
+    navigator(-1);
+  };
+  const handleActive = (updateActiveUser) => {
+    toast("Active success");
+    dispatch(userActiveaction(updateActiveUser));
+    navigator(-1);
   };
   return (
     <>
@@ -216,13 +229,22 @@ const UserChildComponent = (props) => {
                   {user.active ? (
                     <></>
                   ) : (
-                    <Link
-                      to={`/admin/users/${user._id}/sendMail`}
-                      className="icon-mail"
-                    >
-                      <i className="fa fa-envelope"></i>
-                      <span>Send Mail</span>
-                    </Link>
+                    <>
+                      <Link
+                        to={`/admin/users/${user._id}/active`}
+                        onClick={() => handleActive(user)}
+                        className="open-active"
+                      >
+                        <span>Active</span>
+                      </Link>
+                      <Link
+                        to={`/admin/users/${user._id}/sendMail`}
+                        className="icon-mail"
+                      >
+                        <i className="fa fa-envelope"></i>
+                        <span>Send Mail</span>
+                      </Link>
+                    </>
                   )}
                 </div>
               </div>

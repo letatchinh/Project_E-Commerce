@@ -1,4 +1,7 @@
 import {
+  USER_ACTIVE_FAIL,
+  USER_ACTIVE_REQUEST,
+  USER_ACTIVE_SUCCESS,
   USER_DISABLED_FAIL,
   USER_DISABLED_REQUEST,
   USER_DISABLED_SUCCESS,
@@ -87,6 +90,29 @@ export const userDisabledReducer = (state = { updateUser: {} }, action) => {
       };
     case USER_DISABLED_FAIL:
       return { ...state, loadings: false, errors: action.payload };
+
+    default:
+      return state;
+  }
+};
+
+//USER ACTIVE
+export const userOpenActiveReducer = (
+  state = { updateActiveUser: {} },
+  action
+) => {
+  switch (action.type) {
+    case USER_ACTIVE_REQUEST:
+      return { ...state, loadingsActive: true };
+    case USER_ACTIVE_SUCCESS:
+      // console.log(action.payload);
+      return {
+        ...state,
+        loadingsActive: false,
+        updateActiveUser: action.payload,
+      };
+    case USER_ACTIVE_FAIL:
+      return { ...state, loadingsActive: false, errorsActive: action.payload };
 
     default:
       return state;

@@ -114,10 +114,10 @@ function App() {
               }
             />
           </Route>
-          <Route path="/products" element={<Products />}/>
+          <Route path="/products" element={<Products />} />
           <Route path="/*" element={<NotFound />} />
         </Route>
-        <Route path="/about" element={<AboutUs/>}/>
+        <Route path="/about" element={<AboutUs />} />
         {/* User */}
 
         {/* Admin */}
@@ -197,6 +197,7 @@ function App() {
             element={<UsersScreen />}
           />
           <Route path="/admin/users/:id/disabled" element={<UsersScreen />} />
+          <Route path="/admin/users/:id/active" element={<UsersScreen />} />
           <Route path="/admin/users/:id/sendMail" element={<ContactUs />} />
           <Route
             path="/admin/users/search/:keyword"

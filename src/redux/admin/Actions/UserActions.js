@@ -1,4 +1,7 @@
 import {
+  USER_ACTIVE_FAIL,
+  USER_ACTIVE_REQUEST,
+  USER_ACTIVE_SUCCESS,
   USER_DISABLED_FAIL,
   USER_DISABLED_REQUEST,
   USER_DISABLED_SUCCESS,
@@ -100,7 +103,7 @@ export const listUser =
     }
   };
 
-//USER DELIVERED
+//USER DISABLED
 export const userDisabledaction = (user) => async (dispatch) => {
   const token = ADMIN_TOKEN;
   try {
@@ -130,6 +133,41 @@ export const userDisabledaction = (user) => async (dispatch) => {
     }
     dispatch({
       type: USER_DISABLED_FAIL,
+      payload: message,
+    });
+  }
+};
+
+//USER ACTIVE
+export const userActiveaction = (user) => async (dispatch) => {
+  const token = ADMIN_TOKEN;
+  try {
+    await dispatch({ type: USER_ACTIVE_REQUEST });
+
+    // let { userLogin: userInfo } = getState();
+
+    const config = {
+      headers: {
+        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios
+      .put(`/api/users/${user._id}/active`, config)
+      .then((res) =>
+        dispatch({ type: USER_ACTIVE_SUCCESS, payload: res.updateActiveUser })
+      );
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: USER_ACTIVE_FAIL,
       payload: message,
     });
   }

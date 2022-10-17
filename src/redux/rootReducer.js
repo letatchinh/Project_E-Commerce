@@ -18,6 +18,7 @@ import {
   userDisabledReducer,
   userListReducer,
   userLoginReducer,
+  userOpenActiveReducer,
   userSendMailReducer,
 } from "./admin/Reducers/userReducers";
 import cartReducers from "./client/cart/Reducers";
@@ -50,6 +51,7 @@ const rootReducer = combineReducers({
   userDisabled: userDisabledReducer,
   userActive: userActiveSReducer,
   userSendMail: userSendMailReducer,
+  userOpenActive: userOpenActiveReducer,
 });
 
 export default rootReducer;
