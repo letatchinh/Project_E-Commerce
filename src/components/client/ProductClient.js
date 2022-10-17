@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import "../StyleComponent/Product.css";
 import { useDispatch, useSelector } from "react-redux";
 import StyledRating from "./StyledRating";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Box, Stack } from "@mui/system";
 import { Avatar, Button } from "@mui/material";
 import { v4 } from "uuid";
@@ -18,6 +18,7 @@ import TypographyThreeDot from "./TypographyThreeDot";
 export default function ProductClient({ item }) {
  
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const [isFetch,setIsFetch] = useState(false)
 
 
@@ -109,12 +110,17 @@ export default function ProductClient({ item }) {
         <Button
           onClick={(e) => {
             e.preventDefault()
-            dispatch(
+            if(localStorage.getItem(KEY_USER)){
+              dispatch(
             fetchAddToCartRequestSaga({
         product: _id,
         user: idUser,
       })
     )
+            }
+            else{
+              navigate("/login")
+            }
           }}
           variant="outlined"
         >

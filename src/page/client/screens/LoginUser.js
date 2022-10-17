@@ -20,6 +20,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { fetchLoginWithGoogleAndFbRequest } from "../../../redux/sagas/Mysaga";
 import '../../../components/StyleComponent/MyLink.css'
+import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 export default function LoginUser() {
   const schema = yup.object().shape({
     password: yup.string().required("Required").min(2).max(20),
@@ -72,6 +73,10 @@ export default function LoginUser() {
        <Paper elevation={3} sx={{  display : 'flex' , flexDirection : {md : 'row' , xs : 'column'}}}>
        <form style={{flex : 1, padding : '50px'}} onSubmit={handleSubmit(onSubmit)}>
         <Stack alignItems={"center"} spacing={2}>
+        <Typography sx={{ backgroundImage: 'linear-gradient(to right , orange, red)',
+    backgroundClip: 'text',
+    color: 'transparent',
+    width: 'fit-content',}}><CardGiftcardIcon sx={{color : 'orange'}}/>Sign in to get more offers</Typography>
           <Stack direction='row' justifyContent='space-between' alignItems='center' width='100%'>
           <Typography variant="h6" color='#888' >
             LOGIN

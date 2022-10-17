@@ -15,7 +15,6 @@ import SideBarFilter from "./SideBarFilter";
 import SortBar from "./SortBar";
 export default function CategoryCommon({ type, valueOfContentTop }) {
   const keywordSearch = useSelector((state) => state.filterProduct.keyword);
-  // const type = useSelector((state) => state.filterProduct.type);
   const sortPrice = useSelector((state) => state.filterProduct.sortPrice);
   const sortRating = useSelector((state) => state.filterProduct.sortRating);
   const low5 = useSelector((state) => state.filterProduct.low5);

@@ -36,6 +36,7 @@ import { ContactUs } from "./components/admin/users/contactEmail/ContactUs";
 import Search from "./components/client/Search";
 import ForgotPassword from "./page/client/screens/ForgotPassword";
 import AboutUs from "./page/client/AboutUs";
+import Products from "./page/client/screens/Products";
 const ComponentHomePage = React.lazy(() =>
   import("./page/client/screens/ComponentHomePage")
 );
@@ -76,6 +77,7 @@ function App() {
           <Route path="/flash-sale" element={<CategoryFlashSale />} />
           <Route path="/new-product" element={<CategoryNew />} />
           <Route path="/trending-product" element={<CategoryTrending />} />
+
           <Route path="/product">
             <Route
               path="shirt"
@@ -112,6 +114,7 @@ function App() {
               }
             />
           </Route>
+          <Route path="/products" element={<Products />}/>
           <Route path="/*" element={<NotFound />} />
         </Route>
         <Route path="/about" element={<AboutUs/>}/>

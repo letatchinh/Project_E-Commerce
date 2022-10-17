@@ -5,7 +5,7 @@ import { v4 } from "uuid";
 import ErrorNoItem from "./ErrorNoItem";
 import MyPagination from "./MyPagination";
 import ProductClient from "./ProductClient";
-export default function ListProductCommon({ limit, data }) {
+export default function ListProductCommon({ limit, data ,loading }) {
   const [start, setStart] = useState(0);
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
@@ -20,13 +20,11 @@ export default function ListProductCommon({ limit, data }) {
     setPage(value);
     const newStart = (value - 1) * limit;
     setStart(newStart);
-    console.log(data);
-    console.log("ok");
   };
   return (
     <Stack spacing={4}>
       <Grid container spacing={3}>
-        {list.length === 0 ? (
+        {loading && list.length === 0 ? (
           <ErrorNoItem src="https://cdn.dribbble.com/users/2382015/screenshots/6065978/no_result_still_2x.gif?compress=1&resize=400x300" />
         ) : (
           list &&

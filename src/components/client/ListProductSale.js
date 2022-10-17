@@ -17,13 +17,13 @@ export default function ListProductSale() {
   const [isFetch,setIsFetch] = useState(false)
   const fetch = useCallback(async() => {
     setLoading(true)
-    axios.get(`api/products/search?category=`).then(res => setData(res.data.products)).catch(err => console.log(err))
+   await axios.get(`api/products/search?category=`).then(res => setData(res.data.products)).catch(err => console.log(err))
     setLoading(false)
   },[isFetch])
+  
   useEffect(() => {
      isFetch && fetch()
   },[fetch])
-
   useEffect(() => {
     if (!componentRef?.current) return;
     const observer = new IntersectionObserver(([entry]) => {
@@ -63,7 +63,7 @@ export default function ListProductSale() {
       {loading ? (
         <LoadingListProduct limit={4} />
       ) : (
-        <ListProductCommon data={data} limit={4} />
+        <ListProductCommon loading={loading} data={data} limit={4} />
       )}
     </Stack>
   );

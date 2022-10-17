@@ -22,7 +22,6 @@ import "../../components/StyleComponent/Product.css";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
-import MyTypography from "../../components/client/MyTypography";
 import BlockIconFooter from "../../components/client/BlockIconFooter";
 const Footer = () => {
   const CustomTypoGraphy = styled(Typography)({
@@ -89,7 +88,7 @@ const Footer = () => {
                 </Paper>
               </Stack>
               <Stack direction="row" spacing={2}>
-                <IconFooter icon={<FacebookIcon sx={{ color: "white" }} />} />
+                <IconFooter  icon={<FacebookIcon sx={{ color: "white" }} />} />
                 <IconFooter icon={<InstagramIcon sx={{ color: "white" }} />} />
                 <IconFooter icon={<YouTubeIcon sx={{ color: "white" }} />} />
                 <IconFooter icon={<PinterestIcon sx={{ color: "white" }} />} />

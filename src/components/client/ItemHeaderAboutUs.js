@@ -1,7 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styled, { keyframes } from 'styled-components'
 import '../StyleComponent/Header.css'
-export default function ItemHeaderAboutUs({value,active,delay}) {
+export default function ItemHeaderAboutUs({value,active,delay,link}) {
   const distance = delay * 100
   const pulse = keyframes`
   from {
@@ -16,9 +17,9 @@ const Bar = styled.div`
   text-align: center;
   cursor: pointer;
   animation: ${pulse} 0.8s ease ;
-  box-shadow: 0 0 5px 0px #a7a7ff;
+  
 `
   return (
-    <Bar className={`headerAboutUs  ${active ? "activeHeaderAboutUs" : ""}`} >{value}</Bar>
+    <Link style={{boxShadow: '0 0 5px 0px #a7a7ff'}} className={`headerAboutUs  ${active ? "activeHeaderAboutUs" : ""}`} to={`/${link}`}><Bar  >{value}</Bar></Link>
   )
 }

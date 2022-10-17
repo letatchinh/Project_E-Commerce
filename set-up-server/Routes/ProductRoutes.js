@@ -302,5 +302,20 @@ try {
 }
   })
 );
+// GET RANDOM PRODUCT
+productRoute.get(
+  "/getRandomProduct/random",
+  asyncHandler(async (req, res) => {
+try {
+  const count =await Product.countDocuments()
+  let random = Math.floor(Math.random() * count)
+  const products = await Product.findOne().skip(random)
+  res.json(products)
+} catch (error) {
+  res.status(404)
+  throw new Error("product not found")
+}
+  })
+);
 
 export default productRoute;
