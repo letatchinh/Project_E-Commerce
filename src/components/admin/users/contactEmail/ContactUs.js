@@ -73,7 +73,7 @@ export const ContactUs = () => {
               className="content-header"
               style={{ justifyContent: "inherit" }}
             >
-              <a class="btn btn-dark text-white" href="/admin/users/">
+              <a className="btn btn-dark text-white" href="/admin/users/">
                 Go to users
               </a>
               <h2
