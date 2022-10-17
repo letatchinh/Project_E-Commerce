@@ -38,6 +38,8 @@ const Header = (props) => {
       className="main-header navbar"
       style={{ background: isColor ? "#000" : "#fff" }}
     >
+      <div className="col-search"></div>
+
       <div className="col-nav">
         <button
           className="btn btn-icon btn-mobile me-auto"
