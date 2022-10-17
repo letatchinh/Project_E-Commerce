@@ -37,6 +37,7 @@ const Footer = () => {
     ? "linear-gradient(rgb(238, 77, 45), rgb(255, 115, 55))"
     : "#00255E",
         paddingBottom: "20px",
+        paddingTop : "20px",
         position: "relative",
       }}
     >

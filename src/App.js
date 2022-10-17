@@ -35,6 +35,7 @@ import ListCart from "./page/client/screens/ListCart";
 import { ContactUs } from "./components/admin/users/contactEmail/ContactUs";
 import Search from "./components/client/Search";
 import ForgotPassword from "./page/client/screens/ForgotPassword";
+import AboutUs from "./page/client/AboutUs";
 const ComponentHomePage = React.lazy(() =>
   import("./page/client/screens/ComponentHomePage")
 );
@@ -113,7 +114,7 @@ function App() {
           </Route>
           <Route path="/*" element={<NotFound />} />
         </Route>
-
+        <Route path="/about" element={<AboutUs/>}/>
         {/* User */}
 
         {/* Admin */}

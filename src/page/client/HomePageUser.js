@@ -5,8 +5,7 @@ import Header from "../../layout/client/Header/Index";
 import "react-toastify/dist/ReactToastify.css";
 import SwitchBackGround from "../../components/client/SwitchBackGround";
 import LoadingHomePageFull from "../../components/client/LoadingHomePageFull";
-import Search from "../../components/client/Search";
-const Footer = React.lazy(() => import("../../layout/client/Footer"));
+import Footer from "../../layout/client/Footer";
 export default function HomePageUser() {
 
   return (
