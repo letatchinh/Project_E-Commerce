@@ -9,10 +9,13 @@ import { checkedAllProductRequest, fetchTotalBill } from '../../../redux/client/
 import { Link } from 'react-router-dom'
 import '../../../components/StyleComponent/ListCart.css'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { KEY_USER } from '../../../constant/LocalStored'
+import ErrorNoItem from '../../../components/client/ErrorNoItem'
 export default function ListCart() {
     const background2 = useSelector(state => state.colorCommon.mainBackGround2)
     const backgroundWhite = useSelector(state => state.colorCommon.mainBackGround)
     const listCarts = useSelector(state => state.cart.allListCart)
+    const user = JSON.parse(localStorage.getItem(KEY_USER)) || ""
     const [isCheck,setIsCheck] = useState(false)
     const [checkedAll, setCheckedAll] = useState(false);
     const handleChange = (event) => {
@@ -49,7 +52,7 @@ export default function ListCart() {
      <div style={{flex : 1 , height : '2px' , background : 'gray', width : '100%'}}></div>
    </Stack> 
    <FormControlLabel control={<Checkbox checked={checkedAll} onChange={handleChange}  />} label={!checkedAll ? "Check All" : "Un Check All"} />
-                    {listCarts && listCarts.map(e =>  <ItemListCart key={v4()} item={e}/>)}
+                    {listCarts && listCarts.length === 0 ? <div style={{margin : '0 auto'}}><ErrorNoItem /></div>: listCarts.map(e =>  <ItemListCart key={v4()} item={e}/>)}
            
           
         </Stack>
@@ -58,7 +61,7 @@ export default function ListCart() {
           <Typography  textAlign={{md : 'left', sm : 'center'}} color='#9e9e9e' fontSize='14px'>Address</Typography>
           <Stack direction='row' sx={{color : '#9e9e9e'}} alignItems='center' spacing={1} >
           <PlaceIcon/>
-          <Typography color='black' fontSize='13px' fontWeight='medium'>224 tran hung dao thi xa quang tri</Typography>
+          <Typography color='black' fontSize='13px' fontWeight='medium'>{user.address || ""}</Typography>
            </Stack>
         </Stack>
         <Stack spacing={1} >

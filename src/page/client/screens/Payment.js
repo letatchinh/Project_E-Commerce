@@ -111,7 +111,7 @@ export default function Payment() {
       user : idUser,
       orderItem :filnalList,
       shippingAddress : {
-        address: "kkk",
+        address: users.address || "",
             city: "aa",
             postalCode: "POX : 12233",
             country: "aaa"
@@ -137,9 +137,9 @@ export default function Payment() {
   return (
     <>
         <div style={{ background: mainBackGround2, padding: "20px", position : 'relative' }}>
-        {listChecked.length === 0  &&  <Stack>
+        {listChecked.length === 0 && activeStep !== 2  &&  <Stack>
           <Link style={{position : 'absolute' , top : '2rem' , left : '5rem'}} to='/cart'><Button startIcon={<ArrowBackIosIcon/>} >Back</Button></Link>
-        {/* <ErrorNoItem src='https://bizweb.dktcdn.net/100/351/215/themes/713955/assets/empty-cart.png?1617619216743'/> */}
+        <ErrorNoItem src='https://bizweb.dktcdn.net/100/351/215/themes/713955/assets/empty-cart.png?1617619216743'/>
         </Stack>}
           {activeStep === 1 && listChecked.length !== 0  && (
             <Container sx={{ background: 'white', borderRadius: "10px", position : 'relative' }}>

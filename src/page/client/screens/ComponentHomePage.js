@@ -1,12 +1,11 @@
 import { Container } from "@mui/material";
 import { Stack } from "@mui/system";
-import React ,{ lazy } from "react";
+import React  from "react";
 import { useSelector } from "react-redux";
 import SideBarFilter from "../../../components/client/SideBarFilter";
 import Slider from '../../../layout/client/Slider'
 import Category from '../../../layout/client/Category'
 import SortBar from '../../../components/client/SortBar'
-import ListProductCommon from "../../../components/client/ListProductCommon";
 import ListProductSale from "../../../components/client/ListProductSale";
 import ListProductNew from "../../../components/client/ListProductNew";
 import ListProductTrending from "../../../components/client/ListProductTrending";
@@ -39,9 +38,6 @@ export default function ComponentHomePage() {
       { keywordSearch &&  <SideBarFilter />}
         <Stack style={{width : '90%'}}>
         {keywordSearch && <SortBar  />}
-      <Stack>
-        <ListProductForYou />
-      </Stack>
         </Stack>
       </Stack> 
      </Stack>

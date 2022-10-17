@@ -11,7 +11,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useForm } from "react-hook-form";
 import "@fontsource/roboto/700.css";
 import DoneIcon from "@mui/icons-material/Done";
-import { fecthLogginSuccess, fetchEditUserRequest } from "../../../redux/login/Actions";
+import { fecthLogginSuccess } from "../../../redux/login/Actions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import * as regex from "../../../constant/YupGlobal.js";
@@ -64,28 +64,16 @@ export default function InfoUser() {
     resolver: yupResolver(schema),
   });
   const onSubmit = async (data) => {
-    const user = {...userLogin,email : data.email,name : data.name}
+    const newAddress =
+    data.numberHouse + "," + data.phuong + "," + data.quan + ",Đà nẵng";
+    const user = {...userLogin,email : data.email,name : data.name,address : newAddress}
         setLoading(true);
   await AxiosUser.put(`/api/users/profileUser/${userLogin._id}`,user).then(res => {
     localStorage.setItem(KEY_USER,JSON.stringify({...res.data,listCarts : []}))
     dispatch(fecthLogginSuccess({...res.data,listCarts : []}))
     ToastSuccess("Update Success")
     setStatus(!status);
-  }).catch(err => console.log(err)).finally(() =>  setLoading(false))
-    // const newAddress =
-    //   data.numberHouse + "," + data.phuong + "," + data.quan + ",Đà nẵng";
-    // const userEdit = {
-    //   ...user,
-    //   name: data.name,
-    //   email: data.email,
-    //   phone: data.phone,
-    //   address: newAddress,
-    // };
-    // console.log(data);
-    // await dispatch(fetchEditUserRequest(userEdit));
-    // setStatus(!status);
-    // reset();
-    // setLoading(false);
+  }).catch(err => console.log(err)).finally(() =>  setLoading(false))  
   };
   return (
     <>
@@ -116,16 +104,8 @@ export default function InfoUser() {
           {errors.email && (
             <Alert severity="error">{errors.email?.message}</Alert>
           )}
-          {/* <TextField
-            defaultValue={user.phone}
-            fullWidth
-            {...register("phone")}
-            label="Phone"
-            variant="outlined"
-          />{" "} */}
-          {/* {errors.phone && (
-            <Alert severity="error">{errors.phone?.message}</Alert>
-          )}
+          
+    
           <InputLabel id="demo-simple-select-label">
             Vui lòng chọn đúng địa chỉ , nếu không bạn sẽ mất quyền lợi
           </InputLabel>
@@ -227,7 +207,7 @@ export default function InfoUser() {
           />{" "}
           {errors.numberHouse && (
             <Alert severity="error">{errors.numberHouse?.message}</Alert>
-          )} */}
+          )}
           <Stack
             sx={{ marginLeft: "auto!important" }}
             direction="row"

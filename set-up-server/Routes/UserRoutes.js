@@ -19,6 +19,8 @@ userRouter.post(
         _id: user._id,
         name: user.name,
         email: user.email,
+        address: user.address,
+        avatar: user.avatar,
         isAdmin: user.isAdmin,
         token: generateToken(user._id),
         createdAt: user.createdAt,
@@ -45,6 +47,8 @@ userRouter.post(
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
+        address : user.address,
+        avatar:user.avatar,
         token: generateToken(user._id),
         createdAt: user.createdAt,
       });
@@ -79,6 +83,8 @@ userRouter.post(
         _id: user.id,
         name: user.name,
         email: user.email,
+        address: user.address,
+        avatar: user.avatar,
         isAdmin: user.idAdmin,
         token: generateToken(user._id),
       });
@@ -99,6 +105,8 @@ userRouter.post(
         _id: user._id,
         name: user.name,
         email: user.email,
+        address : user.address || "",
+        avatar : user.avatar || "",
         isAdmin: user.isAdmin,
         token: generateToken(user._id),
         createdAt: user.createdAt,
@@ -113,6 +121,8 @@ userRouter.post(
         _id: newUser.id,
         name: newUser.name,
         email: newUser.email,
+        address : user.address || "",
+        avatar : user.avatar || "",
         isAdmin: false,
         token: generateToken(newUser._id),
         createdAt: newUser.createdAt,
@@ -150,6 +160,8 @@ userRouter.put(
         _id: updateUser._id,
         name: updateUser.name,
         email: updateUser.email,
+        address: updateUser.address,
+        avatar: updateUser.avatar,
         isAdmin: updateUser.isAdmin,
         createdAt: updateUser.createdAt,
         token: generateToken(updateUser._id),
@@ -177,6 +189,8 @@ userRouter.put(
         name: updateUser.name,
         email: updateUser.email,
         isAdmin: updateUser.isAdmin,
+        address: updateUser.address,
+        avatar: updateUser.avatar,
         createdAt: updateUser.createdAt,
         token: generateToken(updateUser._id),
       });
@@ -190,6 +204,7 @@ userRouter.get(
   "/getId/:id",
   asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
+    res.json(user)
   })
 );
 //get id user
@@ -217,6 +232,8 @@ userRouter.put(
     if (user) {
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
+      user.address = req.body.address || user.address;
+      user.avatar = req.body.avatar || user.avatar;
       if (req.body.password) {
         user.password = req.body.password;
       }
@@ -225,6 +242,8 @@ userRouter.put(
         _id: updateUser._id,
         name: updateUser.name,
         email: updateUser.email,
+        address: updateUser.address,
+        avatar: updateUser.avatar,
         isAdmin: updateUser.isAdmin,
         createdAt: updateUser.createdAt,
         token: generateToken(updateUser._id),
