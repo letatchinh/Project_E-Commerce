@@ -29,14 +29,12 @@ export default function Search() {
     setMore(arrMore[0])
     setLow(Math.max(low5))
   },[more10,more50,low5])
-  console.log(more);
   let [searchParams, setSearchParams] = useSearchParams()
   const [page, setPage] = useState(1);
   const { data, error, isLoading } = useQuery(
     [keywordSearch,type,page,sortPrice,sortRating,low,more],
     fetchSearch
   )
-  console.log(more);
 useEffect(() => {
   let objectSearch = {name : keywordSearch , page : page}
   if(type){
