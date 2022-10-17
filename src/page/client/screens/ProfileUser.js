@@ -13,8 +13,9 @@ import { Link, useNavigate } from "react-router-dom";
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import { KEY_USER } from "../../../constant/LocalStored";
 import { useSelector } from "react-redux";
+import AvatarProfileUser from "../../../components/client/AvatarProfileUser";
 export default function ProfileUser({children}) {
-  const users = JSON.parse(localStorage.getItem(KEY_USER))
+  const users = JSON.parse(localStorage.getItem(KEY_USER)) || ""
   const mainBackGround2 = useSelector((state) => state.colorCommon.mainBackGround2);
   const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
   const mainColorText = useSelector(state => state.colorCommon.mainColorText)
@@ -35,11 +36,7 @@ export default function ProfileUser({children}) {
       <Container sx={{ background: mainBackGround, borderRadius: "20px" }}>
         <Stack direction={{sm : 'row' , xs : 'column'}}>
           <Stack direction={{sm : 'column' , xs : 'row'}} width="30%" borderRight="1px solid #F0F2F5">
-            <Avatar
-              sx={{ height: "170px", width: "170px" }}
-              alt="Remy Sharp"
-              src="https://laz-img-sg.alicdn.com/p/06df75c72185d9d20a426d932b7326a2.jpg"
-            />
+            <AvatarProfileUser />
             <MenuList>
               <Link to='/profile_Info'> 
               <MenuItem onClick={() => handleCLickList(1)} sx={{background : (active === 1) ? "#a5d5ff8a" : 'none' , borderRadius : '10px'}}>

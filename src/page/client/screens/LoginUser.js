@@ -37,7 +37,7 @@ export default function LoginUser() {
   };
   useEffect(() => {
     if(statusLogin){
-      navigate("/")
+      navigate(-1)
     }
   },[statusLogin])
   useEffect(() => {
