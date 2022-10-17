@@ -35,6 +35,10 @@ userRouter.post(
   asyncHandler(async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+    if(!user.active){
+      res.status(401);
+      throw new Error("User Has Been Disable Please Contact Us ");
+    }else
     if (user && (await user.matchPassword(password))) {
       res.json({
         _id: user._id,
