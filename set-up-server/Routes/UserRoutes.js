@@ -245,7 +245,7 @@ userRouter.get(
           },
         }
       : {};
-    const pageSize = 4;
+    const pageSize = 7;
     const page = Number(req.query.pageNumber) || 1;
     const count = await User.countDocuments({ ...keyword });
     const users = await User.find({ ...keyword })
@@ -255,11 +255,38 @@ userRouter.get(
   })
 );
 
+//ADMIN GET ALL ORDERS
+userRouter.get(
+  "/allActive",
+  protect,
+  admin,
+  asyncHandler(async (req, res) => {
+    const userListActive = await User.find({ active: req.query.active });
+    // const orders = orders1.filter((e) => e.user.name.includes(req.query.name));
+
+    res.json({ userListActive });
+  })
+);
+
 userRouter.get(
   "/users",
   asyncHandler(async (req, res) => {
     const users = await User.find({});
     res.json(users);
+  })
+);
+
+//GET SINGLE USER SEND MAIL
+userRouter.get(
+  "/:id/sendMail",
+  asyncHandler(async (req, res) => {
+    const userMail = await User.findById(req.params.id);
+    if (userMail) {
+      res.json(userMail);
+    } else {
+      res.status(404);
+      throw new Error("User Not Found");
+    }
   })
 );
 export default userRouter;

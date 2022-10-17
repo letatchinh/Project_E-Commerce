@@ -14,9 +14,11 @@ import {
   productUpdateReducer,
 } from "./admin/Reducers/ProductReducers";
 import {
+  userActiveSReducer,
   userDisabledReducer,
   userListReducer,
   userLoginReducer,
+  userSendMailReducer,
 } from "./admin/Reducers/userReducers";
 import cartReducers from "./client/cart/Reducers";
 import MyColorCommonReducer from "./Common/Color";
@@ -46,6 +48,8 @@ const rootReducer = combineReducers({
   orderListFiterName: orderListFiterNameReducer,
   orderListPaidS: orderListPaidSReducer,
   userDisabled: userDisabledReducer,
+  userActive: userActiveSReducer,
+  userSendMail: userSendMailReducer,
 });
 
 export default rootReducer;

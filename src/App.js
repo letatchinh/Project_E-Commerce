@@ -188,6 +188,10 @@ function App() {
           <Route path="/admin/orders/search/:paid" element={<OrderScreen />} />
           <Route path="/admin/order/:id" element={<OrderDetailScreen />} />
           <Route path="/admin/users" element={<UsersScreen />} />
+          <Route
+            path="/admin/orders/search/:active"
+            element={<UsersScreen />}
+          />
           <Route path="/admin/users/:id/disabled" element={<UsersScreen />} />
           <Route path="/admin/users/:id/sendMail" element={<ContactUs />} />
           <Route

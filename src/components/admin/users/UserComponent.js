@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
+  listOrdersPaidS,
   listUser,
   userDisabled,
   userDisabledaction,
@@ -24,12 +25,19 @@ const UserComponent = () => {
 
   const userDisabled = useSelector((state) => state.userDisabled);
   const { updateUser } = userDisabled;
+
+  const userActive = useSelector((state) => state.userActive);
+  const { loadingActive, errorActive, userListActive } = userActive;
+
+  const [actives, setActives] = useState();
+  const fetch = useCallback(async () => {
+    await dispatch(listUser(keyword, pagenumber));
+    await dispatch(userDisabledaction(updateUser));
+    await dispatch(listOrdersPaidS(actives));
+  }, [dispatch, keyword, pagenumber, updateUser, actives]);
   useEffect(() => {
-    dispatch(listUser(keyword, pagenumber));
-    if (updateUser) {
-      dispatch(userDisabledaction(updateUser));
-    }
-  }, [dispatch, keyword, pagenumber, updateUser]);
+    fetch();
+  }, [fetch]);
   const submitHandler = (e) => {
     e.preventDefault();
     if (keyword.trim()) {
@@ -39,6 +47,7 @@ const UserComponent = () => {
     }
   };
 
+  // console.log(userListActive);
   return (
     <section className="content-main">
       <div className="content-header">
@@ -59,89 +68,104 @@ const UserComponent = () => {
               />
             </form>
             <div className="col-lg-2 col-6 col-md-3">
-              <select className="form-select">
-                <option>Status: all</option>
-                <option>Active only</option>
-                <option>Disabled</option>
+              <select
+                className="form-select"
+                onChange={(e) => setActives(e.target.value)}
+              >
+                <option value="">Status: all</option>
+                <option value="true">Active only</option>
+                <option value="false">Disabled</option>
               </select>
             </div>
           </div>
         </header>
 
         {/* Card */}
-        <div className="card-body">
-          {loading ? (
-            <LoadingDashboard />
-          ) : error ? (
-            <Message variant={"alert-danger"}>{error}</Message>
-          ) : (
-            <UserChildComponent users={users} />
-          )}
 
-          {/* nav */}
-          {pages > 1 && (
-            <nav className="float-end mt-4" aria-label="Page navigation">
-              <ul className="pagination">
-                {page === 1 ? (
-                  <li disabled className="page-item disabled">
-                    <Link
-                      className="page-link"
-                      to={`/admin/users/page/${page && page - 1}`}
-                    >
-                      Previous
-                    </Link>
-                  </li>
-                ) : (
-                  <li disabled className="page-item">
-                    <Link
-                      className="page-link"
-                      to={`/admin/users/page/${page && page - 1}`}
-                    >
-                      Previous
-                    </Link>
-                  </li>
-                )}
+        {!actives && (
+          <div className="card-body">
+            {loading ? (
+              <LoadingDashboard />
+            ) : error ? (
+              <Message variant={"alert-danger"}>{error}</Message>
+            ) : (
+              <UserChildComponent users={users} />
+            )}
 
-                {[...Array(pages).keys()].map((x) => (
-                  <li
-                    className={`page-item ${x + 1 === page ? "active" : ""}`}
-                    key={x + 1}
-                  >
-                    <Link
-                      className="page-link"
-                      to={
-                        keyword
-                          ? `/admin/users/search/${keyword}/page/${x + 1}`
-                          : `/admin/users/page/${x + 1}`
-                      }
+            {/* nav */}
+            {pages > 1 && (
+              <nav className="float-end mt-4" aria-label="Page navigation">
+                <ul className="pagination">
+                  {page === 1 ? (
+                    <li disabled className="page-item disabled">
+                      <Link
+                        className="page-link"
+                        to={`/admin/users/page/${page && page - 1}`}
+                      >
+                        Previous
+                      </Link>
+                    </li>
+                  ) : (
+                    <li disabled className="page-item">
+                      <Link
+                        className="page-link"
+                        to={`/admin/users/page/${page && page - 1}`}
+                      >
+                        Previous
+                      </Link>
+                    </li>
+                  )}
+
+                  {[...Array(pages).keys()].map((x) => (
+                    <li
+                      className={`page-item ${x + 1 === page ? "active" : ""}`}
+                      key={x + 1}
                     >
-                      {x + 1}
-                    </Link>
-                  </li>
-                ))}
-                {page === pages ? (
-                  <li disabled className="page-item disabled">
-                    <Link
-                      className="page-link"
-                      to={`/admin/users/page/${page && page - 1}`}
-                    >
-                      Next
-                    </Link>
-                  </li>
-                ) : (
-                  <li disabled className="page-item">
-                    <Link
-                      className="page-link"
-                      to={`/admin/users/page/${page && page + 1}`}
-                    >
-                      Next
-                    </Link>
-                  </li>
-                )}
-              </ul>
-            </nav>
-          )}
-        </div>
+                      <Link
+                        className="page-link"
+                        to={
+                          keyword
+                            ? `/admin/users/search/${keyword}/page/${x + 1}`
+                            : `/admin/users/page/${x + 1}`
+                        }
+                      >
+                        {x + 1}
+                      </Link>
+                    </li>
+                  ))}
+                  {page === pages ? (
+                    <li disabled className="page-item disabled">
+                      <Link
+                        className="page-link"
+                        to={`/admin/users/page/${page && page - 1}`}
+                      >
+                        Next
+                      </Link>
+                    </li>
+                  ) : (
+                    <li disabled className="page-item">
+                      <Link
+                        className="page-link"
+                        to={`/admin/users/page/${page && page + 1}`}
+                      >
+                        Next
+                      </Link>
+                    </li>
+                  )}
+                </ul>
+              </nav>
+            )}
+          </div>
+        )}
+        {actives && (
+          <div className="card-body">
+            {loadingActive ? (
+              <LoadingDashboard />
+            ) : (
+              <UserChildComponent users={userListActive} actives={actives} />
+            )}
+          </div>
+        )}
       </div>
     </section>
   );

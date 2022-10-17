@@ -23,6 +23,7 @@ const userSchema = mongoose.Schema(
     avatar: {
       type: String,
       require: true,
+      default: "favicon.png",
     },
     address: {
       type: String,

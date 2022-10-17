@@ -1260,3 +1260,7 @@ a:hover .fa-envelope {
 a:hover span {
   color: #fff
 }
+
+.icon-mail span {
+  margin-left: 10px;
+}

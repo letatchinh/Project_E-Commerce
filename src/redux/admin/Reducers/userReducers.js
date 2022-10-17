@@ -2,6 +2,12 @@ import {
   USER_DISABLED_FAIL,
   USER_DISABLED_REQUEST,
   USER_DISABLED_SUCCESS,
+  USER_EDIT_FAIL,
+  USER_EDIT_REQUEST,
+  USER_EDIT_SUCCESS,
+  USER_FILTERACTIVE_FAIL,
+  USER_FILTERACTIVE_REQUEST,
+  USER_FILTERACTIVE_SUCCESS,
   USER_LIST_FAIL,
   USER_LIST_REQUEST,
   USER_LIST_RESET,
@@ -82,6 +88,47 @@ export const userDisabledReducer = (state = { updateUser: {} }, action) => {
     case USER_DISABLED_FAIL:
       return { ...state, loadings: false, errors: action.payload };
 
+    default:
+      return state;
+  }
+};
+
+//ALL ORDERS FILTER ACTIVE
+export const userActiveSReducer = (state = { userListActive: [] }, action) => {
+  switch (action.type) {
+    case USER_FILTERACTIVE_REQUEST:
+      return { ...state, loadingActive: true };
+    case USER_FILTERACTIVE_SUCCESS:
+      return {
+        ...state,
+        loadingActive: false,
+        errorActive: false,
+        userListActive: action.payload.userListActive,
+      };
+    case USER_FILTERACTIVE_FAIL:
+      return { ...state, loadingActive: false, errorActive: action.payload };
+    default:
+      return state;
+  }
+};
+
+//USER SINGLE
+export const userSendMailReducer = (state = { userMail: {} }, action) => {
+  switch (action.type) {
+    case USER_EDIT_REQUEST:
+      return { ...state, loadingEditMail: true };
+    case USER_EDIT_SUCCESS:
+      return {
+        ...state,
+        loadingEditMail: false,
+        userMail: action.payload,
+      };
+    case USER_EDIT_FAIL:
+      return {
+        ...state,
+        loadingEditMail: false,
+        errorEditMail: action.payload,
+      };
     default:
       return state;
   }

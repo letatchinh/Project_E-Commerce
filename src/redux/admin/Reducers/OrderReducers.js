@@ -35,7 +35,7 @@ export const orderListReducer = (state = { orders: [] }, action) => {
       return state;
   }
 };
-//ALL ORDERS
+//ALL ORDERS FILTER PAID
 export const orderListPaidSReducer = (state = { ordersPaidS: [] }, action) => {
   switch (action.type) {
     case ORDER_LISTFILTERPAID_REQUEST:

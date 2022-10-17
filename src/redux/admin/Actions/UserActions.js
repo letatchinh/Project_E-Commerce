@@ -2,6 +2,12 @@ import {
   USER_DISABLED_FAIL,
   USER_DISABLED_REQUEST,
   USER_DISABLED_SUCCESS,
+  USER_EDIT_FAIL,
+  USER_EDIT_REQUEST,
+  USER_EDIT_SUCCESS,
+  USER_FILTERACTIVE_FAIL,
+  USER_FILTERACTIVE_REQUEST,
+  USER_FILTERACTIVE_SUCCESS,
   USER_LIST_FAIL,
   USER_LIST_REQUEST,
   USER_LIST_RESET,
@@ -124,6 +130,65 @@ export const userDisabledaction = (user) => async (dispatch) => {
     }
     dispatch({
       type: USER_DISABLED_FAIL,
+      payload: message,
+    });
+  }
+};
+
+//ALL ORDER WITH PAID SUCCESS
+export const listOrdersPaidS =
+  (active = "") =>
+  async (dispatch) => {
+    const token = ADMIN_TOKEN;
+    try {
+      await dispatch({ type: USER_FILTERACTIVE_REQUEST });
+
+      // let { userLogin: userInfo } = getState();
+
+      const config = {
+        headers: {
+          // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await axios.get(
+        `/api/users/allActive?active=${active}`,
+        config
+      );
+
+      dispatch({ type: USER_FILTERACTIVE_SUCCESS, payload: data });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === "Not authorized, token failed") {
+        dispatch(logout());
+      }
+      dispatch({
+        type: USER_FILTERACTIVE_FAIL,
+        payload: message,
+      });
+    }
+  };
+
+//EDIT PRODUCT
+export const editUser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_EDIT_REQUEST });
+    const { data } = await axios.get(`/api/users/${id}/sendMail`);
+    dispatch({ type: USER_EDIT_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: USER_EDIT_FAIL,
       payload: message,
     });
   }
