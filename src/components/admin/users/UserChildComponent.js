@@ -36,12 +36,12 @@ const UserChildComponent = (props) => {
   const handleDisalbed = (updateUser) => {
     toast("Disable success");
     dispatch(userDisabledaction(updateUser));
-    navigator(-1);
+    navigator("/admin/users");
   };
   const handleActive = (updateActiveUser) => {
     toast("Active success");
     dispatch(userActiveaction(updateActiveUser));
-    navigator(-1);
+    navigator("/admin/users");
   };
   return (
     <>
