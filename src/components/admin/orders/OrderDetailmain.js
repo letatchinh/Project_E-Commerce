@@ -71,7 +71,7 @@ const OrderDetailmain = (props) => {
                 </small>
               </div>
               <div className="col-lg-6 col-md-6 ms-auto d-flex justify-content-end align-items-center">
-                <select
+                {/* <select
                   className="form-select d-inline-block"
                   style={{ maxWidth: "200px" }}
                 >
@@ -79,7 +79,7 @@ const OrderDetailmain = (props) => {
                   <option>Awaiting payment</option>
                   <option>Confirmed</option>
                   <option>Delivered</option>
-                </select>
+                </select> */}
                 <CSVLink
                   // to="#"
                   data={str && str}
