@@ -61,11 +61,6 @@ const Header = (props) => {
     dispatch(logout());
   };
 
-  console.log(ordersNotice);
-  const handleNotice = () => {
-    // dispatch(orderNoticeAction(orderWatch));
-    // navigator("/admin/orders");
-  };
   return (
     <header
       className="main-header navbar"
@@ -100,7 +95,7 @@ const Header = (props) => {
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
             >
-              <div className="" onClick={handleNotice}>
+              <div className="">
                 <i className="fas fa-bell"></i>
                 <span className="btn-notice-number">{countNotice}</span>
               </div>

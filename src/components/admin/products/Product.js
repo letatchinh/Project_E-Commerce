@@ -33,7 +33,7 @@ const Product = (props) => {
             <div className="price mb-2">
               Count In Stocks: {product.countInStock}
             </div>
-            <div className="dicount mb-2">{product.discount}%</div>
+            <div className="dicount mb-2">-{product.discount}%</div>
             <div className="price mb-2">
               Quantity Sold: {product.quantitySold}
             </div>
