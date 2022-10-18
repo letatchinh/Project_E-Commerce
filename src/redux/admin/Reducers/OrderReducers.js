@@ -28,6 +28,7 @@ export const orderListReducer = (state = { orders: [] }, action) => {
         pages: action.payload.pages,
         page: action.payload.page,
         orders: action.payload.orders,
+        count: action.payload.count,
       };
     case ORDER_LIST_FAIL:
       return { ...state, loading: false, error: action.payload };

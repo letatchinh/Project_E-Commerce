@@ -24,22 +24,16 @@ const UserComponent = () => {
   const userList = useSelector((state) => state.userList);
   const { loading, error, users, page, pages } = userList;
 
-  const userDisabled = useSelector((state) => state.userDisabled);
-  const { updateUser } = userDisabled;
-
-  const userOpenActive = useSelector((state) => state.userOpenActive);
-  const { updateActiveUser } = userOpenActive;
-
   const userActive = useSelector((state) => state.userActive);
-  const { loadingActive, errorActive, userListActive } = userActive;
+  const { loadingActive, userListActive } = userActive;
 
   const [actives, setActives] = useState();
   const fetch = useCallback(async () => {
     await dispatch(listUser(keyword, pagenumber));
-    await dispatch(userDisabledaction(updateUser));
-    await dispatch(userActiveaction(updateActiveUser));
+    // await dispatch(userDisabledaction(updateUser));
+    // await dispatch(userActiveaction(updateActiveUser));
     await dispatch(listOrdersPaidS(actives));
-  }, [dispatch, keyword, pagenumber, updateUser, actives, updateActiveUser]);
+  }, [dispatch, keyword, pagenumber, actives]);
   useEffect(() => {
     fetch();
   }, [fetch]);

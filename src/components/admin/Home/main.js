@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { listAllProducts } from "../../../redux/admin/Actions/ProductActions";
 const Main = () => {
   const orderList = useSelector((state) => state.orderList);
-  const { loading, error, orders } = orderList;
+  const { loading, error, orders, count } = orderList;
 
   const productsListAll = useSelector((state) => state.productsListAll);
   const { productsAll } = productsListAll;
@@ -20,7 +20,6 @@ const Main = () => {
   useEffect(() => {
     fecth();
   }, [fecth]);
-  // console.log(productsAll);
   return (
     <>
       <section className="content-main">
@@ -28,7 +27,7 @@ const Main = () => {
           <h2 className="content-title">Dashboard</h2>
         </div>
         {/* Top total */}
-        <TopTotal orders={orders} products={productsAll} />
+        <TopTotal orders={orders} products={productsAll} count={count} />
 
         <div className="row">
           {/* STATICS */}

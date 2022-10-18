@@ -36,12 +36,12 @@ const UserChildComponent = (props) => {
   const handleDisalbed = (updateUser) => {
     toast("Disable success");
     dispatch(userDisabledaction(updateUser));
-    navigator("/admin/users");
+    navigator(-1);
   };
   const handleActive = (updateActiveUser) => {
     toast("Active success");
     dispatch(userActiveaction(updateActiveUser));
-    navigator("/admin/users");
+    navigator(-1);
   };
   return (
     <>
@@ -111,8 +111,6 @@ const UserChildComponent = (props) => {
                   </div>
                   {user.isAdmin ? (
                     <div></div>
-                  ) : loadings ? (
-                    <LoadingDashboard />
                   ) : (
                     <div
                       className={
@@ -132,13 +130,22 @@ const UserChildComponent = (props) => {
                   {user.active ? (
                     <></>
                   ) : (
-                    <Link
-                      to={`/admin/users/${user._id}/sendMail`}
-                      className="icon-mail"
-                    >
-                      <i className="fa fa-envelope"></i>
-                      <span>Send Mail</span>
-                    </Link>
+                    <>
+                      <Link
+                        to={`/admin/users/${user._id}/active`}
+                        onClick={() => handleActive(user)}
+                        className="open-active"
+                      >
+                        <span>Active</span>
+                      </Link>
+                      <Link
+                        to={`/admin/users/${user._id}/sendMail`}
+                        className="icon-mail"
+                      >
+                        <i className="fa fa-envelope"></i>
+                        <span>Send Mail</span>
+                      </Link>
+                    </>
                   )}
                 </div>
               </div>
@@ -208,8 +215,6 @@ const UserChildComponent = (props) => {
                   </div>
                   {user.isAdmin ? (
                     <div></div>
-                  ) : loadings ? (
-                    <LoadingDashboard />
                   ) : (
                     <div
                       className={

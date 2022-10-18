@@ -68,7 +68,7 @@ orderRouter.get(
       .sort({ _id: -1 })
       .populate("user", "id name email");
     // const orders = orders1.filter((e) => e.user.name.includes(req.query.name));
-    res.json({ orders, page, pages: Math.ceil(count / pageSize) });
+    res.json({ orders, page, pages: Math.ceil(count / pageSize), count });
   })
 );
 //ADMIN GET ALL ORDERS

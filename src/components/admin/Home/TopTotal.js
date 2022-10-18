@@ -4,8 +4,8 @@ import { listOrders } from "../../../redux/admin/Actions/OrderActions";
 import { listProducts } from "../../../redux/admin/Actions/ProductActions";
 
 const TopTotal = (props) => {
-  const { orders, products } = props;
-  // console.logsss(orders);
+  const { orders, products, count } = props;
+  console.log(orders);
   let totalSale = 0;
   if (orders) {
     orders.map((order) =>
@@ -45,7 +45,7 @@ const TopTotal = (props) => {
             </span>
             <div className="text">
               <h6 className="mb-1">Total Orders</h6>
-              {orders ? <span>{orders.length}</span> : <span>0</span>}
+              {count > 0 ? <span>{count}</span> : <span>0</span>}
             </div>
           </article>
         </div>
