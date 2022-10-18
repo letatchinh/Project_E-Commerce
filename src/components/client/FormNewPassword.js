@@ -38,7 +38,7 @@ export default function FormNewPassword({display,email}) {
       </Stack>
       </Stack>
       <HideShowPassword error={errors.password !== undefined}  message={errors.password && errors.password.message}  {...register("password")}/>
-      <HideShowPassword error={errors.confirmPassword !== undefined}  message={errors.confirmPassword && errors.confirmPassword.message}  {...register("confirmPassword")}/>
+      <HideShowPassword placeholder="Confirm Password" error={errors.confirmPassword !== undefined}  message={errors.confirmPassword && errors.confirmPassword.message}  {...register("confirmPassword")}/>
       {isSuccess ?  <Alert security='error'>Change Pass Success</Alert> :  <Button disabled={loading} sx={{backgroundImage: "linear-gradient(45deg, #E26560, #E36183)" ,borderRadius : '50px'}} fullWidth type="submit" variant="contained">
       {loading ? <LoadingCycleFullwitdh size="30px" /> : "Change"}
       </Button>}

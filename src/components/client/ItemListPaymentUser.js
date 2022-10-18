@@ -29,7 +29,7 @@ user: idUser,
     </Stack>
     <Typography sx={{marginLeft : 'auto!important'}} alignSelf='center' variant='h6'>
     {/* <PriceSell isSell={isSell} price={price} discount={discount}/> */}
-    <Typography color='rgb(238, 77, 45)'>{price} VND</Typography>
+    <Typography color='rgb(238, 77, 45)'>{price} $</Typography>
     </Typography>
 </Stack>
  </Link>

@@ -19,7 +19,7 @@ productRoute.get(
 productRoute.get(
   "/search",
   asyncHandler(async (req, res) => {
-    const pageSize = 16;
+    const pageSize = 12;
     const name = req.query.name || "";
     const nameFilter = name ? { name: { $regex: name, $options: "i" } } : {};
 
@@ -27,7 +27,6 @@ productRoute.get(
     const categoryFilter = category
       ? { category: { $regex: category, $options: "i" } }
       : {};
-    // const keySort = String(req.query.key) || ""
     const sortPrice = Number(req.query.sortPrice)
     const sortRating = Number(req.query.sortRating)
     const rangeFilterGte = Number(req.query.rangeFilterGte) || null
@@ -47,7 +46,15 @@ productRoute.get(
     res.send({products,page,pages: Math.ceil(count / pageSize)});
   })
 );
-
+// FILTER PRODUCT SALE
+productRoute.get(
+  "/filterSaleProduct",
+  asyncHandler (async (req,res) => {
+    const limit = req.query.limit || 4;
+    const products = Product.find({})
+    res.json({products})
+  })
+)
 //ADMIN GET ALL PRODUCT WITHOUT SEARCH AND PAGENATION
 
 productRoute.get(

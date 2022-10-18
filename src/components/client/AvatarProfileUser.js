@@ -20,6 +20,10 @@ export default function AvatarProfileUser() {
   const handleClickCloseFill = () => {
     setFill(false);
   };
+  const handleChangeAvatar = (e) => {
+      console.log(e.target.file);
+  }
+//   console.log(values);
   return (
     <div style={{ margin: "0 auto" }}>
       <div
@@ -48,7 +52,7 @@ export default function AvatarProfileUser() {
               : "scale(1)",
             zIndex: fill ? 101 : 1,
             transition: "1s ease",
-            borderRadius : fill ? 0 : '50%'
+            borderRadius: fill ? 0 : "50%",
           }}
           alt="Remy Sharp"
           src={`/images/${users.avatar}`}
@@ -71,7 +75,8 @@ export default function AvatarProfileUser() {
           horizontal: "left",
         }}
       >
-        <MenuItem sx={{gap : '5px'}}
+        <MenuItem
+          sx={{ gap: "5px" }}
           onClick={() => {
             handleClose();
             setFill(true);
@@ -79,9 +84,15 @@ export default function AvatarProfileUser() {
         >
           <ImageSearchIcon /> See Avatar
         </MenuItem>
-        <MenuItem sx={{gap : '5px'}} onClick={handleClose}>
-          <FilterIcon />
-          Edit Avatar
+        <MenuItem sx={{ gap: "5px" }} onClick={handleClose}>
+          <label
+            style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom : 0 , cursor : 'pointer' }}
+            htmlFor="files"
+          >
+            {" "}
+            <FilterIcon /> Edit Avatar
+          </label>
+          <input onChange={handleChangeAvatar} multiple type="file" id="files"  style={{ display: "block" }} />
         </MenuItem>
       </Menu>
     </div>

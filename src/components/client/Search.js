@@ -1,18 +1,17 @@
 import React, {  useEffect, useState } from "react";
 import {  useSelector } from "react-redux";
 import {  Stack } from "@mui/system";
-import { Grid,  Typography } from "@mui/material";
-import { v4 } from "uuid";
+import {   Typography } from "@mui/material";
 import SideBarFilter from "./SideBarFilter";
 import SortBar from "./SortBar";
 import LoadingHomePage from "./LoadingHomePage";
 import { useQuery } from "@tanstack/react-query";
 import { fetchSearch } from "../../apis/client/ProductApis";
-import ProductClient from "./ProductClient";
-import MyPagination from "./MyPagination";
 import MyTypography from "./MyTypography";
 import { useSearchParams } from "react-router-dom";
 import ErrorNoItem from "./ErrorNoItem";
+import ListProduct from "./ListProduct";
+
 export default function Search() {
   const keywordSearch = useSelector((state) => state.filterProduct.keyword);
   const type = useSelector((state) => state.filterProduct.type);
@@ -53,7 +52,7 @@ useEffect(() => {
     objectSearch.more = more
   }
   setSearchParams(objectSearch) 
-},[searchParams.get('name'),type,sortPrice,sortRating,low,more])
+},[searchParams.get('name'),type,sortPrice,sortRating,low,more,page])
   const handleChange = (event, value) => {
     setPage(value);
   };
@@ -68,11 +67,14 @@ useEffect(() => {
     spacing={1}
     padding="30px 50px"
     sx={{ background: mainBackGround}}
+    position='relative'
   >
     {(data && data.products.length !== 0) ? <MyTypography sx={{textAlign : 'left'}}>Result find for key : {keywordSearch}</MyTypography>
     : <MyTypography fontSize='1.5rem'>No result for find</MyTypography>}
     <Stack direction="row" width='100%'>
-      <SideBarFilter />
+     <Stack position={{md : 'relative',sm : 'absolute' , xs : 'absolute'}} top={0}>
+     <SideBarFilter />
+     </Stack>
       <Stack width='100%'>
         <Stack
           direction="row"
@@ -80,9 +82,8 @@ useEffect(() => {
           alignItems="center"
         >
           <Typography
-            fontSize="1.2rem"
             color="#7a7a9d"
-            sx={{ textShadow: "0 0 1px gray" }}
+            sx={{ textShadow: "0 0 1px gray", fontSize : 'calc(0.5vw + 0.8rem)', display : {md : 'block' , sm : 'none' , xs : 'none'} }}
           >
             {data && data.products?.length} Products
           </Typography>
@@ -90,23 +91,8 @@ useEffect(() => {
         </Stack>
         {
            (isLoading) ? <LoadingHomePage height="5rem" /> 
-           : (data.products.length !== 0) ? <Stack>
-          <Grid container spacing={3} width='100%'>
-            {data.products &&
-              data.products.map((e) => (
-                <Grid className="abc" key={v4()} xs={6} md={3} item>
-                  <ProductClient item={e} />
-                </Grid>
-              ))}
-          </Grid>
-          <Stack alignItems="center" spacing={2} sx={{ marginTop: "20px" }}>
-            <MyPagination
-              count={data.pages}
-              page={page}
-              onChange={handleChange}
-            />
-          </Stack>
-        </Stack>
+           : (data.products.length !== 0) ? 
+        <ListProduct data={data.products} page={page} pages={data.pages} handleChange={handleChange}/>
         : 
        
         <ErrorNoItem/>

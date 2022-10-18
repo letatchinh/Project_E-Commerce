@@ -208,11 +208,12 @@ export default function DetailProduct() {
                         <MyTypography variant="h6" color={mainColorText}>
                           Price
                         </MyTypography>
-                        <PriceSell
+                        {/* <PriceSell
                           discount={discount}
                           isSell={isSell}
                           price={price}
-                        />
+                        /> */}
+                        {price} $
                       </Stack>
                       <Stack
                         direction="row"

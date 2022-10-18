@@ -23,6 +23,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import moment from "moment";
 import getToken from "../../../constant/getTokenUser";
+import { PayPalButton } from 'react-paypal-button-v2'
 import { fetchAddOrderRequest, fetchCartRequest } from "../../../redux/sagas/Mysaga";
 export default function Payment() {
   const config = {
@@ -32,6 +33,8 @@ export default function Payment() {
   const mainBackGround2 = useSelector(state => state.colorCommon.mainBackGround2)
   const mainColorText = useSelector(state => state.colorCommon.mainColorText)
   const listCarts = useSelector(state => state.cart.allListCart)
+  const [paymentPaypalSuccess,setPaymentPaypalSuccess] = useState(false)
+  const [sdkReady,setSdkReady]=useState(false)
   const users = JSON.parse(localStorage.getItem(KEY_USER))
   const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id
   const navigate = useNavigate()
@@ -134,6 +137,33 @@ export default function Payment() {
   // dispatch(fetchCartRequest())
   setActiveStep(2)
   };
+  
+  useEffect(() => {
+    const addPaypalScript = async() => {
+      const {data : clientId} = await axios.get("/api/config/paypal").catch(err => console.log());
+      const script = document.createElement("script");
+       script.type = "text/javascript";
+      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
+      script.async = true;
+      script.onload = () => {
+        setSdkReady(true)
+      }
+      document.body.appendChild(script)
+    }
+if(value === ""){
+  if(!window.paypal){
+    addPaypalScript()
+  }
+  else{
+    setSdkReady(true)
+  }
+}
+  },[dispatch,value])
+  const successPaymentPaypal = (result) => {
+    if(result.status === "COMPLETED"){
+      handlePayment()
+    }
+  }
   return (
     <>
         <div style={{ background: mainBackGround2, padding: "20px", position : 'relative' }}>
@@ -173,9 +203,9 @@ export default function Payment() {
                   justifyContent="space-between"
                   direction="row"
                 >
-                  <Typography variant="h6">Phí Ship ( {distance}km)</Typography>
+                  <Typography variant="h6">Tax Ship ( {distance}km)</Typography>
                   <Typography variant="h6" fontWeight="bold">
-                    {distance * 2000} VND
+                    {distance * 0.8} $
                   </Typography>
                 </Stack>
                 <Stack
@@ -187,7 +217,7 @@ export default function Payment() {
                     Total
                   </Typography>
                   <Typography variant="h6" fontWeight="bold">
-                    {totalPrice + distance * 2000} VND
+                    {totalPrice + distance * 0.8} $
                   </Typography>
                 </Stack>
               </Stack>
@@ -247,9 +277,12 @@ export default function Payment() {
                       />
                     </RadioGroup>
                   </FormControl>
+                  {
+                    value === "Paypal" && <PayPalButton amount={totalPrice && totalPrice} onSuccess={successPaymentPaypal}/> 
+                  }
                 </Stack>
                 <Button
-                  disabled={value === ""}
+                  disabled={value !== "shipCod"}
                   variant="contained"
                   onClick={handlePayment}
                 >

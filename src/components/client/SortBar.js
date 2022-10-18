@@ -32,8 +32,8 @@ export default function SortBar() {
   };
   return (
    <Stack className='SortBar' spacing={5} direction='row' padding='10px' alignItems='center' >
-    <Typography color={mainColorText}>Sort Follow</Typography>
-    <FormControl sx={{width : '200px' , background : 'white'}}>
+    <Typography sx={{display : {md : 'block' , sm : 'none' , xs : 'none'} }} color={mainColorText}>Sort Follow</Typography>
+    <FormControl sx={{width : {md : '200px' , sm : '100px' , xs : '100px'}  , background : 'white'}}>
         <InputLabel id="demo-simple-select-label">Price</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -46,7 +46,7 @@ export default function SortBar() {
           <MenuItem value={false}>Low to High</MenuItem>
         </Select>
       </FormControl>
-    <FormControl sx={{width : '200px' , background : 'white'}}>
+    <FormControl sx={{width : {md : '200px' , sm : '100px' , xs : '100px'}  , background : 'white'}}>
         <InputLabel id="demo-simple-select-label">Rating</InputLabel>
         <Select
           labelId="demo-simple-select-label"

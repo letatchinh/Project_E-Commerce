@@ -98,6 +98,11 @@ const handleClick = (event) => {
         <Container sx={{ flexGrow: 1 }}>
           <Stack direction="row" padding="5px 20px" alignItems="center" justifyContent='space-between'>
           <Stack direction='row' spacing={1}>
+          <Link to='/'>
+       <Button  sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'}}}>
+       Home
+       </Button>
+        </Link>
           <Link to='/about'>
        <Button  sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'}}}>
        About us

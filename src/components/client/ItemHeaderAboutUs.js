@@ -20,6 +20,6 @@ const Bar = styled.div`
   
 `
   return (
-    <Link style={{boxShadow: '0 0 5px 0px #a7a7ff'}} className={`headerAboutUs  ${active ? "activeHeaderAboutUs" : ""}`} to={`/${link}`}><Bar  >{value}</Bar></Link>
+    <Link style={{boxShadow: active ? '0 0 5px 0px #a7a7ff' : "none"}} className={`headerAboutUs  ${active ? "activeHeaderAboutUs" : ""}`} to={`/${link}`}><Bar  >{value}</Bar></Link>
   )
 }

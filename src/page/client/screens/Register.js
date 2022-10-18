@@ -59,12 +59,12 @@ export default function Register() {
   });
   const dispatch = useDispatch();
   const onSubmit = async (data) => {
-    // const newAddress =
-    // data.numberHouse + "," + data.phuong + "," + data.quan + ",Đà nẵng";
     const newUser = {
       name: data.name,
       password: brcypt.hashSync(data.password, 10),
       email: data.email,
+      address : "",
+      avatar : ""
     };
     axios
       .post(`/api/users/`, newUser)
