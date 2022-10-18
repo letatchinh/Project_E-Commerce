@@ -11,6 +11,8 @@ import '../../../components/StyleComponent/ListCart.css'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { KEY_USER } from '../../../constant/LocalStored'
 import ErrorNoItem from '../../../components/client/ErrorNoItem'
+import FormChangeAddress from '../../../components/client/FormChangeAddress'
+import axios from 'axios'
 export default function ListCart() {
     const background2 = useSelector(state => state.colorCommon.mainBackGround2)
     const backgroundWhite = useSelector(state => state.colorCommon.mainBackGround)
@@ -34,6 +36,28 @@ export default function ListCart() {
       "Wait admin Check Order",
     ];
     const [activeStep, setActiveStep] = useState(0);
+    const [distance, setDistance] = useState(0);
+    useEffect(() => {
+      axios
+        .get(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${user.address}.json?access_token=pk.eyJ1IjoibGV0YXRjaGluaCIsImEiOiJjbDhjd2x1NTkwMzV0M3BvYmpweWJwZG9hIn0.crltMkQeuF92KSs1DRH2pQ`
+        )
+        .then((res) => {
+          console.log(res);
+          axios
+            .get(
+              `https://api.mapbox.com/directions/v5/mapbox/driving/108.24861,16.03083;${res.data.features[0].center[0]},${res.data.features[0].center[1]}?geometries=geojson&access_token=pk.eyJ1IjoibGV0YXRjaGluaCIsImEiOiJjbDhjd2x1NTkwMzV0M3BvYmpweWJwZG9hIn0.crltMkQeuF92KSs1DRH2pQ`
+            )
+            .then((res) =>
+              {
+                console.log(res);
+                setDistance((res.data.routes[0].distance / 900).toFixed(1) - 1)
+              }
+            );
+        })
+        .catch((err) => {});
+    }, [user]);
+   
   return (
     <div style={{background : background2 , padding : '2rem 0' }}>
     <Container  >
@@ -59,20 +83,23 @@ export default function ListCart() {
         <Stack textAlign={{md : 'left', sm : 'center'}} spacing={3} sx={{background : backgroundWhite, padding:'10px',borderRadius:'20px'}}>
         <Stack  spacing={1} borderBottom='1px solid #999' padding='10px 0'>
           <Typography  textAlign={{md : 'left', sm : 'center'}} color='#9e9e9e' fontSize='14px'>Address</Typography>
-          <Stack direction='row' sx={{color : '#9e9e9e'}} alignItems='center' spacing={1} >
+          {user.address === "" ?  <FormChangeAddress /> :  <Stack direction='row' sx={{color : '#9e9e9e'}} alignItems='center' spacing={1} >
           <PlaceIcon/>
           <Typography color='black' fontSize='13px' fontWeight='medium'>{user.address || ""}</Typography>
-           </Stack>
+          
+           </Stack>}
+         
+          
         </Stack>
         <Stack spacing={1} >
           <Typography fontSize='1.2rem'>Infomation Order</Typography>
           <Stack direction='row' justifyContent='space-between'>
             <Typography fontSize='14px' color='#757575'>Total Price</Typography>
-            <Typography>{totalBill}VND</Typography>
+            <Typography>{totalBill} $</Typography>
           </Stack>
           <Stack direction='row' justifyContent='space-between'>
           <Typography fontSize='14px' color='#757575'>Tax Price</Typography>
-            <Typography>10000 VND</Typography>
+            <Typography>{(distance * 0.8).toFixed(1)} $</Typography>
           </Stack>
         </Stack>
         <Stack direction='row' padding='20px 0' justifyContent='space-between'>
@@ -81,7 +108,7 @@ export default function ListCart() {
         </Stack>
         <Stack direction='row' justifyContent='space-between' alignItems='center'>
         <Typography fontSize='14px' color='#757575'>Total</Typography>
-            <Typography color='#f57224' fontSize='1.3rem'>{totalBill} VND</Typography>
+            <Typography color='#f57224' fontSize='1.3rem'>{totalBill} $</Typography>
         </Stack>
         <Link to='/payment'><Button endIcon={<ArrowForwardIcon className='surFaceArrow'/>}  disabled={!isCheck} sx={{width : {md :'100%' , sm :'50%'}}} color='warning' variant='contained'>Confirm Order</Button></Link>
         </Stack>

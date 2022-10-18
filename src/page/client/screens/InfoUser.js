@@ -46,9 +46,9 @@ export default function InfoUser() {
   const schema = yup.object().shape({
     name: yup.string().required("Required").min(2).max(20),
     // email: yup.string().required("Required").email(),
-    // quan: yup.string().required("Required"),
-    // phuong: yup.string().required("Required"),
-    // numberHouse: yup.string().required("Required"),
+    quan: yup.string().required("Required"),
+    phuong: yup.string().required("Required"),
+    numberHouse: yup.string().required("Required"),
     // phone: yup
     //   .string()
     //   .required("Required")
@@ -69,8 +69,8 @@ export default function InfoUser() {
     const user = {...userLogin,email : data.email,name : data.name,address : newAddress}
         setLoading(true);
   await AxiosUser.put(`/api/users/profileUser/${userLogin._id}`,user).then(res => {
-    localStorage.setItem(KEY_USER,JSON.stringify({...res.data,listCarts : []}))
-    dispatch(fecthLogginSuccess({...res.data,listCarts : []}))
+    localStorage.setItem(KEY_USER,JSON.stringify(res.data))
+    dispatch(fecthLogginSuccess(res.data))
     ToastSuccess("Update Success")
     setStatus(!status);
   }).catch(err => console.log(err)).finally(() =>  setLoading(false))  

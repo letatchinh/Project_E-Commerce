@@ -79,15 +79,15 @@ export default function ProductClient({ item }) {
         </Typography>
       </div>
       <Link to={`/products/${_id}`}>
-        <div className="cardHover">
+        <Stack className="cardHover" sx={{ height: { md: "350px",sm : '400px', xs: "200px" }, objectFit: "cover" }}>
           <CardMedia
             className="imgProduct"
-            sx={{ height: { md: "300px", xs: "200px" }, objectFit: "cover" }}
+            sx={{ width : '100%' , height : '100%', objectFit: "cover" }}
             component="img"
             alt="green iguana"
             src={`/images/${images[active]}`}
           />
-        </div>
+        </Stack>
       </Link>
       <Link to={`/products/${_id}`}>
         {/* <Typography

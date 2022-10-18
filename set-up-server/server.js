@@ -41,7 +41,9 @@ app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/carts", CartRoutes);
 app.use("/api/reviews", ReviewRoutes);
-
+app.get("/api/config/paypal",(req,res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID);
+})
 //ERROR HANDLER
 app.use(notFound);
 app.use(errorHandler);

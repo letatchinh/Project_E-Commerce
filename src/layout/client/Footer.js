@@ -80,7 +80,7 @@ const Footer = () => {
                   />
                   <Divider sx={{ height: 28 }} orientation="vertical" />
                   <IconButton
-                    sx={{ color: "white", p: "10px" }}
+                    sx={{ color: "#1976D2", p: "10px" }}
                     aria-label="directions"
                   >
                     <SendIcon />
@@ -95,7 +95,8 @@ const Footer = () => {
               </Stack>
             </Stack>
           </Grid>
-          <Grid item md={2} xs={6}>
+          <Grid sx={{display : 'flex' , flexDirection : 'column',alignItems : 'flex-end'}} item md={2} xs={4}>
+            <Stack>
             <CustomTypoGraphy>About us</CustomTypoGraphy>
             <Stack>
               <CustomTypoGraphy className="cardContentHover" fontSize="14px">
@@ -110,6 +111,7 @@ const Footer = () => {
               <CustomTypoGraphy className="cardContentHover" fontSize="14px">
                 News
               </CustomTypoGraphy>
+            </Stack>
             </Stack>
           </Grid>
           <Grid item md={4} xs={12}>

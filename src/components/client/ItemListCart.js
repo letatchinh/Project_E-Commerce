@@ -53,17 +53,9 @@ export default function ItemListCart({ item }) {
       </Stack>
       <Stack alignItems="center" width="20%">
         <Typography color="#f57224" fontSize="18px" sx={{wordBreak : 'nowrap'}}>
-          {price} VND
+          {price} $
         </Typography>
-        <Button
-          onClick={async() => {
-           await dispatch(
-              fetchDeleteCartRequest({ user: idUser, product: item._id })
-            );
-          }}
-        >
-          <DeleteOutlineIcon color="secondary" />
-        </Button>
+        
       </Stack>
       <Stack
         direction="row"
@@ -93,6 +85,15 @@ export default function ItemListCart({ item }) {
           sx={{ minWidth: 0, borderRadius: 0 }}
         >
           +
+        </Button>
+        <Button
+          onClick={async() => {
+           await dispatch(
+              fetchDeleteCartRequest({ user: idUser, product: item._id })
+            );
+          }}
+        >
+          <DeleteOutlineIcon color="secondary" />
         </Button>
       </Stack>
     </Stack>

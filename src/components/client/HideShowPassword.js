@@ -6,7 +6,7 @@ import React, { forwardRef, useState } from 'react'
     const [showPassword,setShowPassword] = useState(false)
   return (
     <FormControl fullWidth  variant="outlined">
-    <InputLabel sx={{top : '-6px' }} htmlFor="outlined-adornment-password">Password</InputLabel>
+    <InputLabel sx={{top : '-6px' }} htmlFor="outlined-adornment-password">{props.placeholder || "Password"}</InputLabel>
     <OutlinedInput size="small"
       id="outlined-adornment-password"
       type={showPassword ? 'text' : 'password'}
