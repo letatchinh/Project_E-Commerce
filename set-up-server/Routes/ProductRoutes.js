@@ -49,12 +49,13 @@ productRoute.get(
 // FILTER PRODUCT SALE
 productRoute.get(
   "/filterSaleProduct",
-  asyncHandler (async (req,res) => {
+  asyncHandler(async (req,res) => {
     const limit = req.query.limit || 4;
-    const products = Product.find({})
+    const products = await Product.find({discount :{ $gt : 10}})
     res.json({products})
   })
-)
+);
+
 //ADMIN GET ALL PRODUCT WITHOUT SEARCH AND PAGENATION
 
 productRoute.get(
