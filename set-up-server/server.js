@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
 import connnectDatabase from "./config/MongoDB.js";
 import ImportData from "./DataImport.js";
@@ -10,12 +11,13 @@ import userRouter from "./Routes/UserRoutes.js";
 import orderRouter from "./Routes/orderRoutes.js";
 import CartRoutes from "./Routes/CartRoutes.js";
 import ReviewRoutes from "./Routes/ReviewRoutes.js";
+// import socket from "socket.io";
 
 dotenv.config();
 connnectDatabase();
 const app = express();
 app.use(express.json());
-
+app.use(cors());
 // // LOAD PRODUCT FROM SERVER
 // app.get("/api/products", (req, res) => {
 //   res.json(products);
@@ -51,3 +53,14 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 1000;
 
 app.listen(PORT, console.log(`server run in port ${PORT}`));
+
+// const server = app.listen(PORT, console.log(`server run in port ${PORT}`));
+
+// const io = socket(server, {
+//   cors: {
+//     origin: "http://localhost:3000/",
+//     credentials: true,
+//   },
+// });
+// global.onlineUsers = new Map();
+// io.on("connection",(socket)=>)
