@@ -37,6 +37,7 @@ import Search from "./components/client/Search";
 import ForgotPassword from "./page/client/screens/ForgotPassword";
 import AboutUs from "./page/client/AboutUs";
 import Products from "./page/client/screens/Products";
+import ProductSellerScreen from "./page/admin/screens/ProductSellerScreen";
 const ComponentHomePage = React.lazy(() =>
   import("./page/client/screens/ComponentHomePage")
 );
@@ -164,6 +165,11 @@ function App() {
 
           <Route path="/admin/category" element={<CategoriesScreen />} />
           <Route path="/admin/currency" element={<CurrencyScreen />} />
+          <Route path="/admin/seller" element={<ProductSellerScreen />} />
+          <Route
+            path="/admin/seller/page/:pagenumber"
+            element={<ProductSellerScreen />}
+          />
           <Route path="/admin/orders" element={<OrderScreen />} />
           <Route
             path="/admin/orders/search/:paymentMethod"

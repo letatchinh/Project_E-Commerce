@@ -13,6 +13,7 @@ import {
   productEditReducer,
   productListAllReducer,
   productListReducer,
+  productListSellerReducer,
   productUpdateReducer,
 } from "./admin/Reducers/ProductReducers";
 import {
@@ -56,6 +57,7 @@ const rootReducer = combineReducers({
   userOpenActive: userOpenActiveReducer,
   orderNotice: orderNoticeReducer,
   orderListNopagination: orderListNopaginationReducer,
+  productListSellersa: productListSellerReducer,
 });
 
 export default rootReducer;

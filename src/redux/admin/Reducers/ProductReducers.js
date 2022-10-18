@@ -12,6 +12,9 @@ import {
   PRODUCT_LISTALL_FAIL,
   PRODUCT_LISTALL_REQUEST,
   PRODUCT_LISTALL_SUCCESS,
+  PRODUCT_LISTSELLER_FAIL,
+  PRODUCT_LISTSELLER_REQUEST,
+  PRODUCT_LISTSELLER_SUCCESS,
   PRODUCT_LIST_FAIL,
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
@@ -36,6 +39,29 @@ export const productListReducer = (state = { products: [] }, action) => {
       };
     case PRODUCT_LIST_FAIL:
       return { ...state, loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+//ALL PRODUCTS SELLER WITH PAGINATION
+export const productListSellerReducer = (
+  state = { productSellerss: [] },
+  action
+) => {
+  switch (action.type) {
+    case PRODUCT_LISTSELLER_REQUEST:
+      return { ...state, loadingSeller: true, productSellerss: [] };
+    case PRODUCT_LISTSELLER_SUCCESS:
+      console.log(action.payload);
+      return {
+        ...state,
+        loadingSeller: false,
+        pages: action.payload.pages,
+        page: action.payload.page,
+        productSellerss: action.payload,
+      };
+    case PRODUCT_LISTSELLER_FAIL:
+      return { ...state, loadingSeller: false, errorSeller: action.payload };
     default:
       return state;
   }

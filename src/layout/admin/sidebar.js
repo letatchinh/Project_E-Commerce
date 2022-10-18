@@ -96,7 +96,7 @@ const Sidebar = (props) => {
               <li className="menu-item">
                 <NavLink
                   activeclassname="active"
-                  className="menu-link disabled"
+                  className="menu-link"
                   to="/admin/seller"
                 >
                   <i className="icon fa-solid fa-store"></i>
