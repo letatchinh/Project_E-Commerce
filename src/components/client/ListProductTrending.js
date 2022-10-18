@@ -7,17 +7,19 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useSelector } from "react-redux";
 import MyTypography from './MyTypography'
 import { Link } from 'react-router-dom'
+import ListProduct from './ListProduct'
 export default function ListProductTrending() {
   const componentRef = useRef();
   const [isAppear, setIsAppear] = useState(false);
     const [data,setData] = useState([])
+    const [page,setPage] = useState(1)
     const [loading,setLoading] = useState(false)
     const [isFetch,setIsFetch] = useState(false)
     const fetch = useCallback(async() => {
       setLoading(true)
-      axios.get(`api/products/search?category=`).then(res => setData(res.data.products)).catch(err => console.log(err))
+      axios.get(`api/products/filterHotProduct?page=${page}`).then(res => setData(res.data)).catch(err => console.log(err))
       setLoading(false)
-    },[isFetch])
+    },[isFetch,page])
     useEffect(() => {
        isFetch &&  fetch()
     },[fetch])
@@ -32,20 +34,23 @@ export default function ListProductTrending() {
       observer.observe(componentRef.current);
     }, [componentRef]);
     const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
-
+    const handleChange = (event, value) => {
+      setPage(value);
+    };
   return (
 
      <Stack  spacing={1} className={isAppear ? "appear" : ""}
      ref={componentRef} sx={{background : mainBackGround, padding : '10px', borderRadius : '30px'}}>
        <Stack direction='row' alignItems='center' justifyContent={{md : 'center' , xs : 'flex-start'}} spacing={2} position='relative'>
        <img style={{width  : '30px' ,height : '30px'}} src="https://bizweb.dktcdn.net/100/438/408/themes/878697/assets/fire-icon-new.png?1664943619853" alt="flashsale"/>
-       <MyTypography fontSize='1.5rem'>Trending</MyTypography>
-       <Link style={{position : 'absolute', right : 0}} to='trending-product'>
+       <MyTypography fontSize='1.5rem'>Hot</MyTypography>
+       {/* <Link style={{position : 'absolute', right : 0}} to='trending-product'>
          <Button   endIcon={<ChevronRightIcon/>}>See More</Button>
-       </Link>
+       </Link> */}
        </Stack>
        {
-        loading ?  <LoadingListProduct limit={4}/> :  <ListProductCommon data={data} limit={4} />
+        loading ?  <LoadingListProduct limit={4}/> :  
+        <ListProduct data={data.products} page={data.page} handleChange={handleChange} pages={data.pages}/>
        }
      </Stack>
   )

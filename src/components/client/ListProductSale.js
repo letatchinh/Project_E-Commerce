@@ -1,26 +1,28 @@
 import { Button, Stack } from "@mui/material";
 import axios from "axios";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { URL_BASE } from "../../constant/UrlConstant";
-import ListProductCommon from "./ListProductCommon";
 import LoadingListProduct from "./LoadingListProduct";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useSelector } from "react-redux";
 import CountdownTimer from "./CountdownTimer";
 import { Link } from "react-router-dom";
 import "../StyleComponent/ListProduct.css";
+import ListProduct from './ListProduct'
 export default function ListProductSale() {
   const componentRef = useRef();
   const [isAppear, setIsAppear] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isFetch,setIsFetch] = useState(false)
+  const [page,setPage] = useState(1)
   const fetch = useCallback(async() => {
     setLoading(true)
-   await axios.get(`api/products/search?category=`).then(res => setData(res.data.products)).catch(err => console.log(err))
+   await axios.get(`api/products/filterSaleProduct?page=${page}`).then(res => setData(res.data)).catch(err => console.log(err))
     setLoading(false)
-  },[isFetch])
-  
+  },[isFetch,page])
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
   useEffect(() => {
      isFetch && fetch()
   },[fetch])
@@ -63,7 +65,7 @@ export default function ListProductSale() {
       {loading ? (
         <LoadingListProduct limit={4} />
       ) : (
-        <ListProductCommon loading={loading} data={data} limit={4} />
+        <ListProduct data={data.products} page={data.page} handleChange={handleChange} pages={data.pages}/>
       )}
     </Stack>
   );

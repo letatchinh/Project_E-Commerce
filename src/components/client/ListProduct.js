@@ -16,10 +16,9 @@ const theme = createTheme({
     },
   });
 export default function ListProduct({data,pages,page,handleChange}) {
-    
   return (
    <ThemeProvider theme={theme}>
-        <Stack>
+        <Stack width='100%'>
           <Grid container spacing={1} width='100%'>
             {data &&
               data.map((e) => (

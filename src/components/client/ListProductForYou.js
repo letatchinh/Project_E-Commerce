@@ -1,12 +1,10 @@
-import { Button, Stack } from '@mui/material'
+import { Stack } from '@mui/material'
 import axios from 'axios'
 import React, {  useCallback, useEffect, useRef, useState } from 'react'
 import ListProductCommon from './ListProductCommon'
 import LoadingListProduct from './LoadingListProduct'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useSelector } from "react-redux";
 import MyTypography from './MyTypography'
-import { Link } from 'react-router-dom'
 export default function ListProductForYou() {
   const componentRef = useRef();
   const [isAppear, setIsAppear] = useState(false);
@@ -16,7 +14,7 @@ export default function ListProductForYou() {
     const [isFetch,setIsFetch] = useState(false)
     const fetch = useCallback(async() => {
       setLoading(true)
-      axios.get(`api/products/search?category=`).then(res => setData(res.data.products)).catch(err => console.log(err))
+      axios.get(`api/products/search?category=&limit=8`).then(res => setData(res.data.products)).catch(err => console.log(err))
       setLoading(false)
     },[isFetch])
     useEffect(() => {
@@ -48,8 +46,6 @@ export default function ListProductForYou() {
       }
       setDataRandom(listRamdom)
     },[data])
-// const random = Math.floor(Math.random() * data.length);
-// console.log(random, data[random])
   return (
 
      <Stack  spacing={1} className={isAppear ? "appear" : ""}
@@ -57,12 +53,12 @@ export default function ListProductForYou() {
        <Stack direction='row' alignItems='center' justifyContent={{md : 'center' , xs : 'flex-start'}} spacing={2} position='relative'>
        <img style={{width  : '30px' ,height : '30px'}} src="https://bizweb.dktcdn.net/100/438/408/themes/878697/assets/fire-icon-new.png?1664943619853" alt="flashsale"/>
        <MyTypography fontSize='1.5rem'>For You</MyTypography>
-       <Link style={{position : 'absolute', right : 0}} to='trending-product'>
+       {/* <Link style={{position : 'absolute', right : 0}} to='trending-product'>
          <Button   endIcon={<ChevronRightIcon/>}>See More</Button>
-       </Link>
+       </Link> */}
        </Stack>
        {
-        loading ?  <LoadingListProduct limit={8}/> :  <ListProductCommon data={dataRandom} limit={8} />
+        loading ?  <LoadingListProduct limit={8}/> :  <ListProductCommon data={dataRandom} limit={4} />
        }
      </Stack>
   )

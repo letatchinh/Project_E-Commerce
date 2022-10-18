@@ -1,5 +1,4 @@
 import { Button, Stack } from '@mui/material'
-import axios from 'axios'
 import React, {  useCallback, useEffect, useRef, useState } from 'react'
 import ListProductCommon from './ListProductCommon'
 import LoadingListProduct from './LoadingListProduct'
@@ -8,21 +7,31 @@ import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom'
 import "../StyleComponent/ListProduct.css";
 
+import AxiosUser from '../../apis/client/AxiosUser'
+import ListProduct from './ListProduct';
+
 export default function ListProductNew() {
   const componentRef = useRef();
   const [isAppear, setIsAppear] = useState(false);
     const [data,setData] = useState([])
     const [loading,setLoading] = useState(false)
     const [isFetch,setIsFetch] = useState(false)
+    const [page,setPage] = useState(1)
+    const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
+
+    const limit = 1;
     const fetch = useCallback(async() => {
       setLoading(true)
-      axios.get(`api/products/search?category=`).then(res => setData(res.data.products)).catch(err => console.log(err))
+       AxiosUser.get(`api/products/filterNewProduct?page=${page}&limit=${limit}`).then(res => setData(res.data)).catch(err => console.log(err))
       setLoading(false)
-    },[isFetch])
+    },[isFetch,page])
+    // const {data,isLoading } = useQuery([page,limit], fetchListSale , {enabled : !isFetch})
     useEffect(() => {
        isFetch &&  fetch()
     },[fetch])
-    const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
+    const handleChange = (event, value) => {
+      setPage(value);
+    };
     useEffect(() => {
       if (!componentRef?.current) return;
       const observer = new IntersectionObserver(([entry]) => {
@@ -44,7 +53,8 @@ export default function ListProductNew() {
          </Link>
        </Stack>
        {
-        loading ?  <LoadingListProduct limit={4}/> :  <ListProductCommon data={data} limit={4} />
+        loading ?  <LoadingListProduct limit={4}/> : <ListProduct data={data.products} page={page} handleChange={handleChange} pages={data.pages}/>
+
        }
      </Stack>
   )

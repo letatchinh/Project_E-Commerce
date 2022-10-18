@@ -3,6 +3,6 @@ import CategoryCommon from '../../../components/client/CategoryCommon'
 
 export default function Products() {
   return (
-    <CategoryCommon />
+    <CategoryCommon limit={16}/>
   )
 }
