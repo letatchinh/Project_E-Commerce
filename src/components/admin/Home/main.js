@@ -5,6 +5,7 @@ import LatestOrder from "./LatestOrder";
 import TopTotal from "./TopTotal";
 import { useDispatch, useSelector } from "react-redux";
 import { listAllProducts } from "../../../redux/admin/Actions/ProductActions";
+import { orderListNoticeAction } from "../../../redux/admin/Actions/OrderActions";
 const Main = () => {
   const orderList = useSelector((state) => state.orderList);
   const { loading, error, orders, count } = orderList;
@@ -12,9 +13,15 @@ const Main = () => {
   const productsListAll = useSelector((state) => state.productsListAll);
   const { productsAll } = productsListAll;
 
+  const orderListNopagination = useSelector(
+    (state) => state.orderListNopagination
+  );
+  const { ordersNotice } = orderListNopagination;
+
   const dispatch = useDispatch();
   const fecth = useCallback(async () => {
     await dispatch(listAllProducts());
+    await dispatch(orderListNoticeAction());
   }, [dispatch]);
 
   useEffect(() => {
@@ -27,7 +34,7 @@ const Main = () => {
           <h2 className="content-title">Dashboard</h2>
         </div>
         {/* Top total */}
-        <TopTotal orders={orders} products={productsAll} count={count} />
+        <TopTotal orders={ordersNotice} products={productsAll} count={count} />
 
         <div className="row">
           {/* STATICS */}
