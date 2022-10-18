@@ -64,7 +64,7 @@ export default function DetailProduct() {
   });
   const user = JSON.parse(localStorage.getItem(KEY_USER)) || "";
   const [itemm, setItem] = useState({});
-  const { name, images, price, isSell, _id, discount } = itemm;
+  const { name, images, price,  _id, discount } = itemm;
   const [listItem, setListItem] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isPayment, setIsPayment] = useState(false);
@@ -208,12 +208,10 @@ export default function DetailProduct() {
                         <MyTypography variant="h6" color={mainColorText}>
                           Price
                         </MyTypography>
-                        {/* <PriceSell
+                        <PriceSell
                           discount={discount}
-                          isSell={isSell}
                           price={price}
-                        /> */}
-                        {price} $
+                        />
                       </Stack>
                       <Stack
                         direction="row"

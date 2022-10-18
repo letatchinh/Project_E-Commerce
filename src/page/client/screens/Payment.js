@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Container, Stack } from "@mui/system";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect,  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 } from "uuid";
 import axios from "axios";
@@ -24,16 +24,17 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import moment from "moment";
 import getToken from "../../../constant/getTokenUser";
 import { PayPalButton } from 'react-paypal-button-v2'
-import { fetchAddOrderRequest, fetchCartRequest } from "../../../redux/sagas/Mysaga";
+import { fetchAddOrderRequest} from "../../../redux/sagas/Mysaga";
 export default function Payment() {
   const config = {
     headers: { Authorization: `Bearer ${getToken()}` }
   };
+  const totalBill = useSelector(state => state.cart.totalBill)
+
   const mainBackGround = useSelector(state => state.colorCommon.mainBackGround)
   const mainBackGround2 = useSelector(state => state.colorCommon.mainBackGround2)
   const mainColorText = useSelector(state => state.colorCommon.mainColorText)
   const listCarts = useSelector(state => state.cart.allListCart)
-  const [paymentPaypalSuccess,setPaymentPaypalSuccess] = useState(false)
   const [sdkReady,setSdkReady]=useState(false)
   const users = JSON.parse(localStorage.getItem(KEY_USER))
   const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id
@@ -50,24 +51,7 @@ export default function Payment() {
     "Wait admin Check Order",
   ];
   const [activeStep, setActiveStep] = useState(1);
-  const [distance, setDistance] = useState(0);
-  const user = useSelector((state) => state.user.loginSuccess);
-  useEffect(() => {
-    axios
-      .get(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${user.address}.json?access_token=pk.eyJ1IjoibGV0YXRjaGluaCIsImEiOiJjbDhjd2x1NTkwMzV0M3BvYmpweWJwZG9hIn0.crltMkQeuF92KSs1DRH2pQ`
-      )
-      .then((res) => {
-        axios
-          .get(
-            `https://api.mapbox.com/directions/v5/mapbox/driving/108.24861,16.03083;${res.data.features[0].center[0]},${res.data.features[0].center[1]}?geometries=geojson&access_token=pk.eyJ1IjoibGV0YXRjaGluaCIsImEiOiJjbDhjd2x1NTkwMzV0M3BvYmpweWJwZG9hIn0.crltMkQeuF92KSs1DRH2pQ`
-          )
-          .then((res) =>
-            setDistance((res.data.routes[0].distance / 1000).toFixed(1))
-          );
-      })
-      .catch((err) => {});
-  }, [user]);
+  const taxShip = useSelector(state => state.cart.taxShip)
   const [value, setValue] = useState("");
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -84,30 +68,13 @@ export default function Payment() {
       setActiveStep(1)
     }
   },[listChecked])
-
-  const CalTotal = () => {
-    const total = listChecked.reduce((sum, arr) => {
-      if (arr.isSell) {
-        return (
-          sum +
-          (parseInt(arr.price) -
-            (parseInt(arr.price) * parseInt(arr.discount)) / 100) *
-            arr.quanlity
-        );
-      } else {
-        return sum + parseInt(arr.price) * arr.quanlity;
-      }
-    }, 0);
-    return total;
-  };
-  const totalPrice = useMemo(() => CalTotal(), [listChecked]);
   const handlePayment = async () => {
     const now = moment()._d;
     const filnalList = listChecked.map(e => ({
       name : e.name,
       qty : e.quanlity,
       images : e.images,
-      price : e.price,
+      price : (e.discount > 0) ? (e.price - (e.price * e.discount) / 100) : e.price,
       product : e._id
     }))
     const newOrder = {
@@ -128,16 +95,16 @@ export default function Payment() {
 
       },
       taxPrice : 10,
-      shippingPrice : distance * 2000,
-      totalPrice : totalPrice + distance * 2000,
+      shippingPrice : taxShip,
+      totalPrice : totalBill + taxShip,
       isPaid : value === "Paypal" ? true : false,
       paidAt : value === "Paypal" ? now : ""
     };
+    console.log(newOrder);
  await dispatch(fetchAddOrderRequest({newOrder,config}))
-  // dispatch(fetchCartRequest())
   setActiveStep(2)
   };
-  
+
   useEffect(() => {
     const addPaypalScript = async() => {
       const {data : clientId} = await axios.get("/api/config/paypal").catch(err => console.log());
@@ -164,6 +131,7 @@ if(value === ""){
       handlePayment()
     }
   }
+
   return (
     <>
         <div style={{ background: mainBackGround2, padding: "20px", position : 'relative' }}>
@@ -203,9 +171,9 @@ if(value === ""){
                   justifyContent="space-between"
                   direction="row"
                 >
-                  <Typography variant="h6">Tax Ship ( {distance}km)</Typography>
+                  <Typography variant="h6">Tax Ship :</Typography>
                   <Typography variant="h6" fontWeight="bold">
-                    {distance * 0.8} $
+                  {taxShip} $
                   </Typography>
                 </Stack>
                 <Stack
@@ -217,7 +185,7 @@ if(value === ""){
                     Total
                   </Typography>
                   <Typography variant="h6" fontWeight="bold">
-                    {totalPrice + distance * 0.8} $
+                    {taxShip + totalBill} $
                   </Typography>
                 </Stack>
               </Stack>
@@ -278,7 +246,7 @@ if(value === ""){
                     </RadioGroup>
                   </FormControl>
                   {
-                    value === "Paypal" && <PayPalButton amount={totalPrice && totalPrice} onSuccess={successPaymentPaypal}/> 
+                    value === "Paypal" && <PayPalButton amount={totalBill && (totalBill + taxShip)} onSuccess={successPaymentPaypal}/> 
                   }
                 </Stack>
                 <Button
