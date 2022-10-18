@@ -16,12 +16,9 @@ import AxiosUser from "../../apis/client/AxiosUser";
 import TypographyThreeDot from "./TypographyThreeDot";
 
 export default function ProductClient({ item }) {
- 
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const [isFetch,setIsFetch] = useState(false)
-
-
   const {
     name,
     images,
@@ -71,11 +68,32 @@ export default function ProductClient({ item }) {
           top: "0",
           zIndex: 1,
           borderBottomLeftRadius: "5px",
-          display: "block",
+          display: item.discount > 0 ?"block" : "none",
         }}
       >
         <Typography color="white" fontSize="14px" textAlign="center">
-          -20%
+          -{item.discount}%
+        </Typography>
+      </div>
+      <div
+        className="imgProduct"
+        style={{
+          position: "absolute",
+          alignItems : 'center',
+          justifyContent : 'center',
+          width : 'max-content',
+          height: "20px",
+          padding : '0 5px',
+          background: "#00000099",
+          left: "0",
+          top: "0",
+          zIndex: 1,
+          borderBottomLeftRadius: "5px",
+          display: item.quantitySold > 0 ?"flex" : "none",
+        }}
+      >
+        <Typography color="white" fontSize="calc(0.3vw + 8px)" textAlign="center">
+          Selled {item.quantitySold}
         </Typography>
       </div>
       <Link to={`/products/${_id}`}>

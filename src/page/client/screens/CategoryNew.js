@@ -1,21 +1,19 @@
 import { Grid, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { v4 } from "uuid";
-import { fetchSortProductByDate } from "../../../apis/client/ProductApis";
+import { fetchListNew } from "../../../apis/client/ProductApis";
 import LoadingHomePage from "../../../components/client/LoadingHomePage";
 import MyPagination from "../../../components/client/MyPagination";
 import ProductClient from "../../../components/client/ProductClient";
-import SideBarFilter from "../../../components/client/SideBarFilter";
-import SortBar from "../../../components/client/SortBar";
 export default function CategoryNew() {
   const [page, setPage] = useState(1);
-  const { data, error, isLoading } = useQuery(
-    ["2", page],
-    fetchSortProductByDate
+  const limit = 4
+  const { data,  isLoading } = useQuery(
+    [page, limit],
+    fetchListNew
   );
   const handleChange = (event, value) => {
     setPage(value);
@@ -23,7 +21,6 @@ export default function CategoryNew() {
   const mainBackGround = useSelector(
     (state) => state.colorCommon.mainBackGround
   );
- 
   return (
     <Stack
     
@@ -38,7 +35,7 @@ export default function CategoryNew() {
         alt="flashsale"
       />
       <Stack direction="row" width='100%'>
-        <SideBarFilter />
+        {/* <SideBarFilter /> */}
         <Stack width='100%'>
           <Stack
             direction="row"
@@ -50,9 +47,9 @@ export default function CategoryNew() {
               color="#7a7a9d"
               sx={{ textShadow: "0 0 1px gray" }}
             >
-              {data?.length} Products
+              {data && data.count} Products
             </Typography>
-            <SortBar />
+            {/* <SortBar /> */}
           </Stack>
           {
              (isLoading) ? <LoadingHomePage height="5rem" /> : <Stack>

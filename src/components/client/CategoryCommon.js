@@ -14,7 +14,7 @@ import MyPagination from "./MyPagination";
 import ProductClient from "./ProductClient";
 import SideBarFilter from "./SideBarFilter";
 import SortBar from "./SortBar";
-export default function CategoryCommon({ type, valueOfContentTop }) {
+export default function CategoryCommon({ type, valueOfContentTop ,limit}) {
   const keywordSearch = useSelector((state) => state.filterProduct.keyword);
   const sortPrice = useSelector((state) => state.filterProduct.sortPrice);
   const sortRating = useSelector((state) => state.filterProduct.sortRating);
@@ -33,13 +33,11 @@ export default function CategoryCommon({ type, valueOfContentTop }) {
   }, [more10, more50, low5]);
   const dispatch = useDispatch();
   const query = useQuery(
-    [keywordSearch, type, page, sortPrice, sortRating, low, more],
+    [keywordSearch, type, page, sortPrice, sortRating, low, more,limit],
     fetchSearch
   );
   const { data, isLoading } = query
   useEffect(() => {
-    // setLoading(true)
-    // AxiosUser.get(`/api/products/search?category=${type}`).then(res => setData(res.data.products)).catch(err => console.log(err)).finally(() => setLoading(false))
     dispatch(setCategorySearch(type));
   }, [type]);
   const handleChange = (event, value) => {

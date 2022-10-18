@@ -29,7 +29,7 @@ export default function ListProductCommon({ limit, data ,loading }) {
         ) : (
           list &&
           list.map((e) => (
-            <Grid className="abc" key={v4()} sm={1}  md={3} item>
+            <Grid className="abc" key={v4()} sm={4}  md={3} xs={6} item>
               <ProductClient item={e} />
             </Grid>
           ))
