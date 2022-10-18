@@ -11,6 +11,11 @@ import {
   ORDER_LISTFILTERPAID_FAIL,
   ORDER_LISTFILTERPAID_REQUEST,
   ORDER_LISTFILTERPAID_SUCCESS,
+  ORDER_LISTNOPAGINATION_REQUEST,
+  ORDER_LISTNOPAGINATION_SUCCESS,
+  ORDER_LISTNOTICE_FAIL,
+  ORDER_LISTNOTICE_REQUEST,
+  ORDER_LISTNOTICE_SUCCESS,
   ORDER_LIST_FAIL,
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
@@ -113,6 +118,51 @@ export const orderDeliveredReducer = (state = { data: {} }, action) => {
       return { ...state, loading: false, error: action.payload };
     case ORDER_DELIVERED_RESET:
       return { ...state };
+    default:
+      return state;
+  }
+};
+
+//USER DISABLED
+export const orderNoticeReducer = (state = { orderWatch: {} }, action) => {
+  switch (action.type) {
+    case ORDER_LISTNOTICE_REQUEST:
+      return { ...state, loadingNotice: true };
+    case ORDER_LISTNOTICE_SUCCESS:
+      // console.log(action.payload);
+      return {
+        ...state,
+        loadingNotice: false,
+        orderWatch: action.payload,
+      };
+    case ORDER_LISTNOTICE_FAIL:
+      return { ...state, loadingNotice: false, errorNotice: action.payload };
+
+    default:
+      return state;
+  }
+};
+
+//ALL ORDER NO PAGINATION
+export const orderListNopaginationReducer = (
+  state = { ordersNotice: [] },
+  action
+) => {
+  switch (action.type) {
+    case ORDER_LISTNOPAGINATION_REQUEST:
+      return { ...state, loadingOrdersNotice: true };
+    case ORDER_LISTNOPAGINATION_SUCCESS:
+      return {
+        ...state,
+        loadingOrdersNotice: false,
+        ordersNotice: action.payload,
+      };
+    case ORDER_LISTFILTERNAME_FAIL:
+      return {
+        ...state,
+        loadingOrdersNotice: false,
+        errorOrdersNotice: action.payload,
+      };
     default:
       return state;
   }

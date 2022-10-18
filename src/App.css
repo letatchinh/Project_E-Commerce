@@ -1183,8 +1183,8 @@ a {
 
 .btn-notice-number {
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 17px;
+  top: 0px;
   width: 15px;
   height: 15px;
   background-color: red;
@@ -1279,4 +1279,8 @@ a:hover span {
 
 .icon-mail span {
   margin-left: 10px;
+}
+
+.fas.fa-bell {
+  font-size: 15px;
 }

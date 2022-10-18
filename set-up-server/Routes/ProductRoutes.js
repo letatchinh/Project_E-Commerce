@@ -9,7 +9,6 @@ const productRoute = express.Router();
 productRoute.get(
   "/",
   asyncHandler(async (req, res) => {
-  
     const products = await Product.find({}).sort({ _id: -1 });
     const length = products.length;
     res.json(length);
@@ -28,10 +27,10 @@ productRoute.get(
       ? { category: { $regex: category, $options: "i" } }
       : {};
     // const keySort = String(req.query.key) || ""
-    const sortPrice = Number(req.query.sortPrice)
-    const sortRating = Number(req.query.sortRating)
-    const rangeFilterGte = Number(req.query.rangeFilterGte) || null
-    const rangeFilterLte = Number(req.query.rangeFilterLte)  || null
+    const sortPrice = Number(req.query.sortPrice);
+    const sortRating = Number(req.query.sortRating);
+    const rangeFilterGte = Number(req.query.rangeFilterGte) || null;
+    const rangeFilterLte = Number(req.query.rangeFilterLte) || null;
     const page = Number(req.query.page) || 1;
     const count = await Product.countDocuments({
       ...nameFilter,
@@ -40,11 +39,22 @@ productRoute.get(
     const products = await Product.find({
       ...nameFilter,
       ...categoryFilter,
-      $or : (rangeFilterGte || rangeFilterLte) ? [{price : { $gte : rangeFilterGte}},{price : { $lte : rangeFilterLte}}] : [{price : {$gte : 0}}]
-    }).limit(pageSize)
-    .skip(pageSize * (page - 1))
-    .sort((sortPrice || sortRating) ? {price : sortPrice,rating : sortRating} : {_id: -1});
-    res.send({products,page,pages: Math.ceil(count / pageSize)});
+      $or:
+        rangeFilterGte || rangeFilterLte
+          ? [
+              { price: { $gte: rangeFilterGte } },
+              { price: { $lte: rangeFilterLte } },
+            ]
+          : [{ price: { $gte: 0 } }],
+    })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
+      .sort(
+        sortPrice || sortRating
+          ? { price: sortPrice, rating: sortRating }
+          : { _id: -1 }
+      );
+    res.send({ products, page, pages: Math.ceil(count / pageSize) });
   })
 );
 
@@ -286,35 +296,35 @@ productRoute.put(
 productRoute.get(
   "/sortCreatedAt/sort",
   asyncHandler(async (req, res) => {
-try {
-  const pageSize = Number(req.query.limit) || 4;
-  const stream = Number(req.query.stream) || -1;
-  const page = Number(req.query.page) || 1;
-  const count = await Product.countDocuments({});
-  const products = await Product.find({})
-  .limit(pageSize)
-  .skip(pageSize * (page - 1))
-  .sort({ createdAt: stream });
-  res.json({products,pages: Math.ceil(count / pageSize),page});
-} catch (error) {
-  res.status(404)
-  throw new Error("product not found")
-}
+    try {
+      const pageSize = Number(req.query.limit) || 4;
+      const stream = Number(req.query.stream) || -1;
+      const page = Number(req.query.page) || 1;
+      const count = await Product.countDocuments({});
+      const products = await Product.find({})
+        .limit(pageSize)
+        .skip(pageSize * (page - 1))
+        .sort({ createdAt: stream });
+      res.json({ products, pages: Math.ceil(count / pageSize), page });
+    } catch (error) {
+      res.status(404);
+      throw new Error("product not found");
+    }
   })
 );
 // GET RANDOM PRODUCT
 productRoute.get(
   "/getRandomProduct/random",
   asyncHandler(async (req, res) => {
-try {
-  const count =await Product.countDocuments()
-  let random = Math.floor(Math.random() * count)
-  const products = await Product.findOne().skip(random)
-  res.json(products)
-} catch (error) {
-  res.status(404)
-  throw new Error("product not found")
-}
+    try {
+      const count = await Product.countDocuments();
+      let random = Math.floor(Math.random() * count);
+      const products = await Product.findOne().skip(random);
+      res.json(products);
+    } catch (error) {
+      res.status(404);
+      throw new Error("product not found");
+    }
   })
 );
 

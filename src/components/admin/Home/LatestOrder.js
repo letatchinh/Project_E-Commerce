@@ -6,7 +6,7 @@ import Message from "../LoadingError/Error";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const LatestOrder = (props) => {
   const { error, loading, orders } = props;
-  console.log(orders);
+  // console.log(orders);
   return (
     <div className="card-body">
       <h3 className="card-title">New orders</h3>

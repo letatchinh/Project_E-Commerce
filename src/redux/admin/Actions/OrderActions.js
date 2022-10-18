@@ -13,6 +13,12 @@ import {
   ORDER_LISTFILTERPAID_FAIL,
   ORDER_LISTFILTERPAID_REQUEST,
   ORDER_LISTFILTERPAID_SUCCESS,
+  ORDER_LISTNOPAGINATION_FAIL,
+  ORDER_LISTNOPAGINATION_REQUEST,
+  ORDER_LISTNOPAGINATION_SUCCESS,
+  ORDER_LISTNOTICE_FAIL,
+  ORDER_LISTNOTICE_REQUEST,
+  ORDER_LISTNOTICE_SUCCESS,
   ORDER_LIST_FAIL,
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
@@ -198,6 +204,81 @@ export const deliverOrder = (order) => async (dispatch) => {
     }
     dispatch({
       type: ORDER_DELIVERED_FAIL,
+      payload: message,
+    });
+  }
+};
+
+//ORDER NOTICE
+export const orderNoticeAction = () => async (dispatch) => {
+  // const token = ADMIN_TOKEN;
+  try {
+    await dispatch({ type: ORDER_LISTNOTICE_REQUEST });
+
+    // let { userLogin: userInfo } = getState();
+
+    const config = {
+      headers: {
+        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
+        // Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios
+      .put(`/api/orders/all/watched`, config)
+      .then((res) =>
+        dispatch({ type: ORDER_LISTNOTICE_SUCCESS, payload: res.orderWatch })
+      );
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: ORDER_LISTNOTICE_FAIL,
+      payload: message,
+    });
+  }
+};
+
+//LIST ORDER NOTICE
+export const orderListNoticeAction = () => async (dispatch) => {
+  const token = ADMIN_TOKEN;
+  try {
+    await dispatch({ type: ORDER_LISTNOPAGINATION_REQUEST });
+
+    // let { userLogin: userInfo } = getState();
+
+    const config = {
+      headers: {
+        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
+        // Authorization: `Bearer ${token}`,
+        // "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios
+      .get(`/api/orders/allOrderNotice`, config)
+      .then((res) => {
+        dispatch({
+          type: ORDER_LISTNOPAGINATION_SUCCESS,
+          payload: res.data.ordersNotice,
+        });
+      });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: ORDER_LISTNOPAGINATION_FAIL,
       payload: message,
     });
   }

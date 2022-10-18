@@ -5,7 +5,7 @@ import { listProducts } from "../../../redux/admin/Actions/ProductActions";
 
 const TopTotal = (props) => {
   const { orders, products, count } = props;
-  console.log(orders);
+  // console.log(orders);
   let totalSale = 0;
   if (orders) {
     orders.map((order) =>

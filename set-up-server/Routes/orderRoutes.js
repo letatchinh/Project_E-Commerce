@@ -45,6 +45,17 @@ orderRouter.post(
   })
 );
 
+//ADMIN GET ALL ORDERS NO PAGINATION
+orderRouter.get(
+  "/allOrderNotice",
+  asyncHandler(async (req, res) => {
+    const ordersNotice = await Order.find({});
+
+    // const orders = orders1.filter((e) => e.user.name.includes(req.query.name));
+    res.json({ ordersNotice });
+  })
+);
+
 //ADMIN GET ALL ORDERS
 orderRouter.get(
   "/all",
@@ -71,6 +82,7 @@ orderRouter.get(
     res.json({ orders, page, pages: Math.ceil(count / pageSize), count });
   })
 );
+
 //ADMIN GET ALL ORDERS
 orderRouter.get(
   "/allPaidS",
@@ -271,4 +283,19 @@ orderRouter.post(
     }
   })
 );
+
+//NOTICE ORDERS
+orderRouter.put(
+  "/all/watched",
+  asyncHandler(async (req, res) => {
+    const orderWatch = await Order.updateMany({ watched: true });
+    if (orderWatch) {
+      res.json(orderWatch);
+    } else {
+      res.status(404);
+      throw new Error("Order Not Found");
+    }
+  })
+);
+
 export default orderRouter;

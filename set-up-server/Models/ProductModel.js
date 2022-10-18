@@ -36,6 +36,16 @@ const productSchema = mongoose.Schema(
       type: String,
       require: true,
     },
+    discount: {
+      type: Number,
+      require: true,
+      default: 0,
+    },
+    quantitySold: {
+      type: Number,
+      require: true,
+      default: 0,
+    },
   },
   {
     timestamps: true,

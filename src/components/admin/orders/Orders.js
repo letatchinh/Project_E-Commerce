@@ -22,7 +22,10 @@ const Orders = (props) => {
       <tbody>
         {orders &&
           orders.map((order) => (
-            <tr key={order._id}>
+            <tr
+              key={order._id}
+              style={{ background: order.watched ? "" : "#d4d5d7" }}
+            >
               <td>
                 <b>{order.user.name}</b>
               </td>

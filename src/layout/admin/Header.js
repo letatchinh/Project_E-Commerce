@@ -1,11 +1,31 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import { logout } from "../../redux/admin/Actions/UserActions";
-import { listOrders } from "../../redux/admin/Actions/OrderActions";
+import {
+  listOrders,
+  orderListNoticeAction,
+  orderNoticeAction,
+} from "../../redux/admin/Actions/OrderActions";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { Stack } from "@mui/material";
 
 const Header = (props) => {
   const dispatch = useDispatch();
+  const navigator = useNavigate();
+
+  //modal popup
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    dispatch(orderNoticeAction(orderWatch));
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const {
     handleClickMenu,
@@ -17,22 +37,35 @@ const Header = (props) => {
   } = props;
   const orderList = useSelector((state) => state.orderList);
   const { orders } = orderList;
+
+  const orderNotice = useSelector((state) => state.orderNotice);
+  const { orderWatch } = orderNotice;
+
+  const orderListNopagination = useSelector(
+    (state) => state.orderListNopagination
+  );
+  const { ordersNotice } = orderListNopagination;
+  const [countNotice, setCountNotice] = useState(0);
   const fetch = useCallback(async () => {
     await dispatch(listOrders());
-  }, [dispatch]);
+    await dispatch(orderListNoticeAction());
+    await setCountNotice(
+      ordersNotice.filter((e) => e.watched === false).length
+    );
+  }, [dispatch, JSON.stringify(ordersNotice), setCountNotice]);
   useEffect(() => {
     fetch();
-    // setarrProduct(arrProduct);
   }, [fetch]);
   const logoutHandler = (e) => {
     e.preventDefault();
     dispatch(logout());
-    // console.log(dispatch(logout));
   };
-  // handleDisplay = (e) => {
-  //   isClickMobile = false;
-  // };
 
+  console.log(ordersNotice);
+  const handleNotice = () => {
+    // dispatch(orderNoticeAction(orderWatch));
+    // navigator("/admin/orders");
+  };
   return (
     <header
       className="main-header navbar"
@@ -60,12 +93,51 @@ const Header = (props) => {
             </Link>
           </li>
           <li className="nav-item btn-notice">
-            <Link className="nav-link btn-icon" to="/admin/orders">
-              <i className="fas fa-bell"></i>
-              <span className="btn-notice-number">
-                {orders && orders.length}
-              </span>
-            </Link>
+            <Button
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+            >
+              <div className="" onClick={handleNotice}>
+                <i className="fas fa-bell"></i>
+                <span className="btn-notice-number">{countNotice}</span>
+              </div>
+            </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+            >
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Shipping Address</th>
+                    <th scope="col">Tax price</th>
+                    <th scope="col">Total Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ordersNotice &&
+                    ordersNotice
+                      .filter((e) => e.watched === false)
+                      .map((e) => (
+                        <tr key={e._id}>
+                          <th scope="row">{e.user}</th>
+                          <td>{e.shippingAddress.address}</td>
+                          <td>{e.taxPrice}</td>
+                          <td>{e.totalPrice}</td>
+                        </tr>
+                      ))}
+                </tbody>
+              </table>
+            </Menu>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="#">

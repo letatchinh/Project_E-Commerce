@@ -2,8 +2,10 @@ import {
   orderDeliveredReducer,
   orderDetailsReducer,
   orderListFiterNameReducer,
+  orderListNopaginationReducer,
   orderListPaidSReducer,
   orderListReducer,
+  orderNoticeReducer,
 } from "./admin/Reducers/OrderReducers";
 import {
   productCreateReducer,
@@ -52,6 +54,8 @@ const rootReducer = combineReducers({
   userActive: userActiveSReducer,
   userSendMail: userSendMailReducer,
   userOpenActive: userOpenActiveReducer,
+  orderNotice: orderNoticeReducer,
+  orderListNopagination: orderListNopaginationReducer,
 });
 
 export default rootReducer;
