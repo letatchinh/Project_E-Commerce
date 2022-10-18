@@ -35,6 +35,12 @@ export const fetchTotalBill = () => {
     payload: "",
   };
 };
+export const fetchTaxShip = (action) => {
+  return {
+    type: "FETCH_TAX_SHIP",
+    payload: action,
+  };
+};
 export const increaseQuanlity = (data) => {
   return {
     type: INCREASE_QUANLITY,

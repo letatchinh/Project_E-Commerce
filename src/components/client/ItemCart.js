@@ -13,6 +13,7 @@ import "@fontsource/roboto/500.css";
 import { KEY_USER } from "../../constant/LocalStored";
 import {  fetchDeleteCartRequest} from "../../redux/client/cart/Actions";
 import TypographyThreeDot from "./TypographyThreeDot";
+import PriceSell from './PriceSell'
 export default function ItemCart({ value }) {
   const dispatch = useDispatch();
   const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id;
@@ -43,7 +44,7 @@ export default function ItemCart({ value }) {
               </TypographyThreeDot>
           </Stack>
           <div>
-            <Typography color='#f57224'>{value.price} $</Typography>
+            <PriceSell fontSize="14px" fontSizeDiscount='10px' price={value.price} discount={value.discount}/>
           </div>
         </ListItem>
       }

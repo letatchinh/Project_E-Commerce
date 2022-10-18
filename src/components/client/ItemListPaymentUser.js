@@ -5,10 +5,11 @@ import { Link } from 'react-router-dom'
 import '../StyleComponent/ItemListPayment.css'
 import { fetchAddToCartRequestSaga } from '../../redux/sagas/Mysaga'
 import { KEY_USER } from '../../constant/LocalStored'
+import PriceSell from './PriceSell'
 export default function ItemListPaymentUser({data}) {
   const mainColorText = useSelector(state => state.colorCommon.mainColorText)
   const idUser = JSON.parse(localStorage.getItem(KEY_USER))
-const {images,name , price,_id}  = data
+const {images,name , price,_id,discount}  = data
 const dispatch = useDispatch()
 const handleBuyAgain = (e) => {
   e.preventDefault()
@@ -29,7 +30,8 @@ user: idUser,
     </Stack>
     <Typography sx={{marginLeft : 'auto!important'}} alignSelf='center' variant='h6'>
     {/* <PriceSell isSell={isSell} price={price} discount={discount}/> */}
-    <Typography color='rgb(238, 77, 45)'>{price} $</Typography>
+    {/* <Typography color='rgb(238, 77, 45)'>{price} $</Typography> */}
+    <PriceSell discount={discount} price={price}/>
     </Typography>
 </Stack>
  </Link>

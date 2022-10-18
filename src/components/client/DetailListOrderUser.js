@@ -28,10 +28,10 @@ export default function DetailListOrderUser({ click ,data}) {
     <Button onClick={click} variant="outlined">
       Back
     </Button>
-      <TextItemListOrder title="Mã Đơn hàng" value={_id} />
+      <TextItemListOrder title="Bill Id" value={_id} />
       <TextItemListOrder
         title="Tình Trạng"
-        value={isDelivered ? "Đang giao" : "Đang đợi phê duyệt"}
+        value={isDelivered ? "Shipping" : "Wait Admin Check"}
       />
     </Stack>
     <ContainerScoll>

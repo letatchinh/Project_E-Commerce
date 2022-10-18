@@ -14,9 +14,9 @@ export default function ItemListOrder({click,item}) {
     <Stack>
     <TextItemListOrder title='BillId' value={_id}/>
     <Typography color={mainColorText} variant='body2'>Create At : <Typography component='span'  variant='body1' color='primary'>{moment(createdAt).format("llll")}</Typography></Typography>
-    <TextItemListOrder title='Thành tiền ' value={totalPrice}/>
+    <TextItemListOrder title='Total Bill' value={`${totalPrice} $`}/>
     </Stack>
-    <Button onClick={click} sx={{textTransform :'capitalize'}} variant='outlined'>Xem Thêm</Button>
+    <Button onClick={click} sx={{textTransform :'capitalize'}} variant='outlined'>See more</Button>
     </Stack>
    
   )

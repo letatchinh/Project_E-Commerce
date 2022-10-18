@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import ItemListCart from '../../../components/client/ItemListCart'
 import PlaceIcon from '@mui/icons-material/Place';
 import { v4 } from 'uuid'
-import { checkedAllProductRequest, fetchTotalBill } from '../../../redux/client/cart/Actions'
+import { checkedAllProductRequest, fetchTaxShip, fetchTotalBill, fetchTotalFinalOrder } from '../../../redux/client/cart/Actions'
 import { Link } from 'react-router-dom'
 import '../../../components/StyleComponent/ListCart.css'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -17,6 +17,7 @@ export default function ListCart() {
     const background2 = useSelector(state => state.colorCommon.mainBackGround2)
     const backgroundWhite = useSelector(state => state.colorCommon.mainBackGround)
     const listCarts = useSelector(state => state.cart.allListCart)
+    const [distance, setDistance] = useState(0);
     const user = JSON.parse(localStorage.getItem(KEY_USER)) || ""
     const [isCheck,setIsCheck] = useState(false)
     const [checkedAll, setCheckedAll] = useState(false);
@@ -29,14 +30,18 @@ export default function ListCart() {
       dispatch(fetchTotalBill())
      setIsCheck(listCarts.some(e => e.isChecked))
     },[listCarts])
+    useEffect(() => {
+      dispatch(fetchTaxShip(parseFloat((distance * 0.8).toFixed(1))))
+    },[distance])
     const totalBill = useSelector(state => state.cart.totalBill)
+    const taxShip = useSelector(state => state.cart.taxShip)
     const steps = [
       "Add to Cart",
       "Choose Payment Method",
       "Wait admin Check Order",
     ];
     const [activeStep, setActiveStep] = useState(0);
-    const [distance, setDistance] = useState(0);
+ 
     useEffect(() => {
       axios
         .get(
@@ -50,14 +55,15 @@ export default function ListCart() {
             )
             .then((res) =>
               {
-                console.log(res);
+             
                 setDistance((res.data.routes[0].distance / 900).toFixed(1) - 1)
               }
             );
         })
         .catch((err) => {});
     }, [user]);
-   
+  //  const taxShip = parseFloat((distance * 0.8).toFixed(1))
+  console.log(taxShip);
   return (
     <div style={{background : background2 , padding : '2rem 0' }}>
     <Container  >
@@ -98,7 +104,7 @@ export default function ListCart() {
             <Typography>{totalBill} $</Typography>
           </Stack>
           <Stack direction='row' justifyContent='space-between'>
-          <Typography fontSize='14px' color='#757575'>Tax Price</Typography>
+          <Typography fontSize='14px' color='#757575'>Ship Price</Typography>
             <Typography>{(distance * 0.8).toFixed(1)} $</Typography>
           </Stack>
         </Stack>
@@ -108,7 +114,7 @@ export default function ListCart() {
         </Stack>
         <Stack direction='row' justifyContent='space-between' alignItems='center'>
         <Typography fontSize='14px' color='#757575'>Total</Typography>
-            <Typography color='#f57224' fontSize='1.3rem'>{totalBill} $</Typography>
+            <Typography color='#f57224' fontSize='1.3rem'>{(totalBill + taxShip)} $</Typography>
         </Stack>
         <Link to='/payment'><Button endIcon={<ArrowForwardIcon className='surFaceArrow'/>}  disabled={!isCheck} sx={{width : {md :'100%' , sm :'50%'}}} color='warning' variant='contained'>Confirm Order</Button></Link>
         </Stack>

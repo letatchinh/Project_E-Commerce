@@ -3,9 +3,10 @@ import React from 'react'
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import '../StyleComponent/ItemListPayment.css'
+import PriceSell from './PriceSell';
 
 export default function ItemDetailistOrderUser({value}) {
-  const {images,name,quanlity,price,_id} = value
+  const {images,name,qty,price,_id,discount} = value
   console.log(value);
   const mainColorText = useSelector(state => state.colorCommon.mainColorText)
   return (
@@ -14,11 +15,10 @@ export default function ItemDetailistOrderUser({value}) {
     <img style={{width : '120px',height : '120px',objectFit : 'cover'}} src={`/images/${images[0]}`} alt='22'/>
     <Stack>
         <Typography variant='body1' fontWeight='bold' color={mainColorText}>{name}</Typography>
-        <Typography variant='body1' color={mainColorText}>x{quanlity}</Typography>
+        <Typography variant='body1' color={mainColorText}>x{qty}</Typography>
     </Stack>
     <Typography sx={{marginLeft : 'auto!important'}} alignSelf='center' variant='h6'>
-    {/* <PriceSell isSell={isSell} price={price} discount={discount}/> */}
-    <Typography>{price}</Typography>
+    <PriceSell  price={price} discount={discount}/>
     </Typography>
 </Stack>
 </Link>

@@ -13,10 +13,11 @@ import {
 } from "../../redux/client/cart/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import TypographyThreeDot from "./TypographyThreeDot";
+import PriceSell from './PriceSell'
 export default function ItemListCart({ item }) {
   const listCarts = useSelector((state) => state.cart.allListCart);
   const dispatch = useDispatch();
-  const { name, images, price, quanlity, isChecked } = item;
+  const { name, images, price, quanlity, isChecked , discount } = item;
   const [checked, setChecked] = useState(isChecked);
   const handleChange = async (event) => {
     setChecked(event.target.checked);
@@ -52,10 +53,7 @@ export default function ItemListCart({ item }) {
         <div style={{width : '70%'}}><TypographyThreeDot>{name}</TypographyThreeDot></div>
       </Stack>
       <Stack alignItems="center" width="20%">
-        <Typography color="#f57224" fontSize="18px" sx={{wordBreak : 'nowrap'}}>
-          {price} $
-        </Typography>
-        
+        <PriceSell discount={discount} price={price}/>
       </Stack>
       <Stack
         direction="row"
