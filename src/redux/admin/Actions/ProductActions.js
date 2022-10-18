@@ -230,7 +230,16 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
 
 // CREATE PRODUCT
 export const createProduct =
-  (name, price, description, countInStock, images, category) =>
+  (
+    name,
+    price,
+    description,
+    countInStock,
+    images,
+    category,
+    discount,
+    quantitySold
+  ) =>
   async (dispatch, getState) => {
     const token = ADMIN_TOKEN;
     try {
@@ -248,7 +257,16 @@ export const createProduct =
 
       const { data } = await axios.post(
         `/api/products/`,
-        { name, price, description, countInStock, images, category },
+        {
+          name,
+          price,
+          description,
+          countInStock,
+          images,
+          category,
+          discount,
+          quantitySold,
+        },
         config
       );
 

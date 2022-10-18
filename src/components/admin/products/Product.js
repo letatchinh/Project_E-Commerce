@@ -30,6 +30,13 @@ const Product = (props) => {
                 : product.price + "VND"}
             </div>
             <div className="price mb-2">Category: {product.category}</div>
+            <div className="price mb-2">
+              Count In Stocks: {product.countInStock}
+            </div>
+            <div className="dicount mb-2">{product.discount}%</div>
+            <div className="price mb-2">
+              Quantity Sold: {product.quantitySold}
+            </div>
             <div className="row productImageSub">
               {product.images.map((e, i) => (
                 <img

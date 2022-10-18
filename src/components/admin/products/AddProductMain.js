@@ -17,6 +17,8 @@ import { NewReleasesOutlined } from "@mui/icons-material";
 const validationSchema = yup.object().shape({
   name: yup.string().required("Required"),
   price: yup.number().required("Required"),
+  discount: yup.number().required("Required"),
+  quantitySold: yup.number().required("Required"),
   countInStock: yup.number().required("Required"),
   description: yup
     .string()
@@ -73,7 +75,9 @@ const AddProductMain = () => {
         data.description,
         data.countInStock,
         images,
-        category
+        category,
+        data.discount,
+        data.quantitySold
       )
     );
     reset();
@@ -224,6 +228,28 @@ const AddProductMain = () => {
                           />
                         ))}
                     </div>
+                  </div>
+                  <div className="mb-4">
+                    <TextField
+                      variant="outlined"
+                      label="Discount"
+                      {...register("discount")}
+                      error={errors?.discount !== undefined}
+                      helperText={errors.discount && errors.discount.message}
+                      fullWidth
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <TextField
+                      variant="outlined"
+                      label="Quantity sold"
+                      {...register("quantitySold")}
+                      error={errors?.quantitySold !== undefined}
+                      helperText={
+                        errors.quantitySold && errors.quantitySold.message
+                      }
+                      fullWidth
+                    />
                   </div>
                 </div>
               </div>

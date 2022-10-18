@@ -42,7 +42,6 @@ const ComponentHomePage = React.lazy(() =>
 );
 
 function App() {
-  
   return (
     <>
       <Routes>
@@ -126,11 +125,11 @@ function App() {
         <Route path="/admin/login" element={<Login />} />
         <Route element={<HomePage />}>
           <Route element={<PrivateRouter />}>
-            <Route path="/admin/" element={<HomeScreen />} />
+            <Route path="/admin" element={<HomeScreen />} />
           </Route>
           <Route path="/admin/addproduct" element={<AddProducts />} />
 
-          <Route path="/admin/" element={<HomeScreen />} />
+          <Route path="/admin" element={<HomeScreen />} />
           <Route path="/admin/products" element={<ProductScreen />} />
           <Route
             path="/admin/products/search/:keyword"

@@ -1284,3 +1284,14 @@ a:hover span {
 .fas.fa-bell {
   font-size: 15px;
 }
+
+.dicount {
+  position: absolute;
+  color: #fff;
+  font-size: 12px;
+  top: -1px;
+  right: 0;
+  background: red;
+  padding: 0px 9px;
+  border-top-right-radius: 2px;
+}

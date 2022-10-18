@@ -36,7 +36,7 @@ const Sidebar = (props) => {
                 <NavLink
                   activeclassname="active"
                   className="menu-link"
-                  to="/admin"
+                  to="/admin/"
                   // exact={true}
                 >
                   <i className="icon fas fa-home"></i>
