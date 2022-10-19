@@ -167,7 +167,7 @@ function App() {
           <Route path="/admin/currency" element={<CurrencyScreen />} />
           <Route path="/admin/seller" element={<ProductSellerScreen />} />
           <Route
-            path="/admin/seller/page/:pagenumber"
+            path="/admin/seller/page/:pageNumber"
             element={<ProductSellerScreen />}
           />
           <Route path="/admin/orders" element={<OrderScreen />} />

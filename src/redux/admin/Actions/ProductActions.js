@@ -77,12 +77,12 @@ export const listProductSeller =
         headers: {
           // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
           // Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          // "Content-Type": "application/json",
         },
       };
 
       const { data } = await axios.get(
-        `/api/products/filterHotProduct?pageNumber=${pageNumber}`,
+        `/api/products/filterHotProduct?page=${pageNumber}`,
         config
       );
 

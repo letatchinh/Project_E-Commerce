@@ -11,21 +11,21 @@ import LoadingDashboard from "../LoadingError/LoadingDashboard";
 import Product from "../products/Product.js";
 const ProductSeller = () => {
   const params = useParams();
-  const pagenumber = params.pagenumber;
+  const pageNumber = params.pageNumber;
 
   const dispatch = useDispatch();
   const productListSellersa = useSelector((state) => state.productListSellersa);
-  const { productSellerss, loadingSeller, errorSeller, page, pages } =
+  const { products, loadingSeller, errorSeller, page, pages } =
     productListSellersa;
   //   const productDelete = useSelector((state) => state.productDelete);
   //   const { error: errorDelete, success: successDelete } = productDelete;
   const fetch = useCallback(async () => {
-    await dispatch(listProductSeller(pagenumber));
-  }, [dispatch, pagenumber]);
+    await dispatch(listProductSeller(pageNumber));
+  }, [dispatch, pageNumber]);
   useEffect(() => {
     fetch();
   }, [fetch]);
-  //   console.log(page, pages);
+  // console.log(products);
   return (
     <section className="content-main">
       <div className="content-header">
@@ -41,8 +41,8 @@ const ProductSeller = () => {
           ) : (
             <div className="row">
               {/* Products */}
-              {productSellerss.products &&
-                productSellerss.products.map((product) => (
+              {products &&
+                products.map((product) => (
                   <Product product={product} key={product._id} />
                 ))}
             </div>

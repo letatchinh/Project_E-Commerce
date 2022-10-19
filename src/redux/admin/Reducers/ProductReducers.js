@@ -44,21 +44,18 @@ export const productListReducer = (state = { products: [] }, action) => {
   }
 };
 //ALL PRODUCTS SELLER WITH PAGINATION
-export const productListSellerReducer = (
-  state = { productSellerss: [] },
-  action
-) => {
+export const productListSellerReducer = (state = { products: [] }, action) => {
   switch (action.type) {
     case PRODUCT_LISTSELLER_REQUEST:
-      return { ...state, loadingSeller: true, productSellerss: [] };
+      return { ...state, loadingSeller: true, products: [] };
     case PRODUCT_LISTSELLER_SUCCESS:
-      console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...state,
         loadingSeller: false,
         pages: action.payload.pages,
         page: action.payload.page,
-        productSellerss: action.payload,
+        products: action.payload.products,
       };
     case PRODUCT_LISTSELLER_FAIL:
       return { ...state, loadingSeller: false, errorSeller: action.payload };
