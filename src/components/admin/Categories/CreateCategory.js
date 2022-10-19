@@ -2,7 +2,7 @@ import React from "react";
 
 const CreateCategory = () => {
   return (
-    <div className="col-md-12 col-lg-4">
+    <div className="col-md-12 col-lg-4 mb-3">
       <form>
         <div className="mb-4">
           <label htmlFor="product_name" className="form-label">
