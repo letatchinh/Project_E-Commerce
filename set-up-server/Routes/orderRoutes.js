@@ -49,7 +49,7 @@ orderRouter.post(
 orderRouter.get(
   "/allOrderNotice",
   asyncHandler(async (req, res) => {
-    const ordersNotice = await Order.find({});
+    const ordersNotice = await Order.find({}).populate("user");
 
     // const orders = orders1.filter((e) => e.user.name.includes(req.query.name));
     res.json({ ordersNotice });

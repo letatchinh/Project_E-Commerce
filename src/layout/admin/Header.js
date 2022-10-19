@@ -60,7 +60,7 @@ const Header = (props) => {
     e.preventDefault();
     dispatch(logout());
   };
-
+  console.log(ordersNotice);
   return (
     <header
       className="main-header navbar"
@@ -112,8 +112,8 @@ const Header = (props) => {
               <table className="table">
                 <thead>
                   <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Shipping Address</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Tax price</th>
                     <th scope="col">Total Price</th>
                   </tr>
@@ -124,8 +124,8 @@ const Header = (props) => {
                       .filter((e) => e.watched === false)
                       .map((e) => (
                         <tr key={e._id}>
-                          <th scope="row">{e.user}</th>
-                          <td>{e.shippingAddress.address}</td>
+                          <th scope="row">{e.user.name}</th>
+                          <td>{e.user.email}</td>
                           <td>{e.taxPrice}</td>
                           <td>{e.totalPrice}</td>
                         </tr>

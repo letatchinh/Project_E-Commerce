@@ -12,7 +12,7 @@ const Sidebar = (props) => {
           style={{ background: isColor ? "#000" : "#fff" }}
         >
           <div className="aside-top">
-            <Link to="/admin" className="brand-wrap">
+            <Link to="/admin/" className="brand-wrap">
               <img
                 src="/images/logo.png"
                 style={{ height: "46" }}
