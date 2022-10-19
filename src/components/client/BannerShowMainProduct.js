@@ -46,7 +46,7 @@ export default function BannerShowMainProduct() {
           >
             Sale Off 30%
           </Typography>
-          <Link to='/shirt'>
+          <Link to='/product/shirt'>
           <Button
             sx={{
               color: "white",

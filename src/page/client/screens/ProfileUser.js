@@ -33,7 +33,7 @@ export default function ProfileUser({children}) {
   return (
    <>
    <div style={{ background: mainBackGround2, padding: "50px 0" }}>
-      <Container sx={{ background: mainBackGround, borderRadius: "20px" }}>
+      <Container sx={{ background: mainBackGround, borderRadius: "20px",padding : '20px 0' }}>
         <Stack direction={{sm : 'row' , xs : 'column'}}>
           <Stack direction={{sm : 'column' , xs : 'row'}} width="30%" borderRight="1px solid #F0F2F5">
             <AvatarProfileUser />

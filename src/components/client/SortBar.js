@@ -11,7 +11,6 @@ export default function SortBar() {
   const [price, setPrice] = useState('');
   const handleChangePrice = (event) => {
     setPrice(event.target.value);
-    setRating('');
     if(event.target.value){
       dispatch(setSortPrice(-1))
     }
@@ -22,7 +21,6 @@ export default function SortBar() {
   const [rating, setRating] = useState('');
   const handleChangeRating = (event) => {
     setRating(event.target.value);
-    setPrice('');
     if(event.target.value){
       dispatch(setSortRating(-1))
     }

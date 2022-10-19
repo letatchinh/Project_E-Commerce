@@ -27,8 +27,9 @@ import '../../../components/StyleComponent/Header.css'
 import { fetchCartRequest } from "../../../redux/sagas/Mysaga";
 import { setCategorySearch, setKeywordSearch } from "../../../redux/filterProduct/Actions";
 import ToastError from "../../../components/client/ToastError";
+import CategoryBannerMobile from "../../../components/client/CategoryBannerMobile";
 
-export default function Index() {
+export default function Index({aboutActive,contactActive}) {
 const location = useLocation();
 const statusLogin = useSelector((state) => state.user.statusLogin);
 const loginSuccess = useSelector((state) => state.user.loginSuccess);
@@ -77,7 +78,7 @@ const handleClick = (event) => {
     background: statusThemme
     ? "linear-gradient(rgb(238, 77, 45), rgb(255, 115, 55))"
     : "#00255E" ,
-    padding: "25px 5px 5px 5px"
+    padding: "0px 5px 5px 5px"
   }
   const styHeadNotHomePage = {
     background: "transparent",
@@ -95,21 +96,22 @@ const handleClick = (event) => {
         id="top"
         style={ !isHomePage ? styHeadHomePage : styHeadNotHomePage }
       >
+       <CategoryBannerMobile />
         <Container sx={{ flexGrow: 1 }}>
           <Stack direction="row" padding="5px 20px" alignItems="center" justifyContent='space-between'>
-          <Stack direction='row' spacing={1}>
+          <Stack direction='row' spacing={1} alignItems='center'>
           <Link to='/'>
        <Button  sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'}}}>
        Home
        </Button>
         </Link>
           <Link to='/about'>
-       <Button  sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'}}}>
+       <Button   sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'} , fontSize : aboutActive ? '1rem' : '0.875rem' , textShadow : aboutActive ? '0 0 20px white' : 'none'}}>
        About us
        </Button>
         </Link>
-       <Link to=''>
-       <Button sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'}}}>
+       <Link to='/contact'>
+       <Button sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'}, fontSize : contactActive ? '1rem' : '0.875rem' , textShadow : contactActive ? '0 0 20px white' : 'none'}}>
        Contact
        </Button>
        </Link>

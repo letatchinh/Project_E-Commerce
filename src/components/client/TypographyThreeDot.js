@@ -7,7 +7,7 @@ export default function TypographyThreeDot({children,className}) {
   const [disabled,setDisable] = useState(false)
   
   useEffect(() => {
-    if(children.length > 20){
+    if(children && children.length > 20){
       setDisable(true)
     }
   },[children])

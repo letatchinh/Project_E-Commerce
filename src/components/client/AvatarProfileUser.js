@@ -40,7 +40,8 @@ export default function AvatarProfileUser() {
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
-        onClick={!fill && handleClick}
+        onClick={handleClick}
+        disabled={fill}
       >
         <Avatar
           sx={{
@@ -92,7 +93,7 @@ export default function AvatarProfileUser() {
             {" "}
             <FilterIcon /> Edit Avatar
           </label>
-          <input onChange={handleChangeAvatar} multiple type="file" id="files"  style={{ display: "block" }} />
+          <input onChange={handleChangeAvatar} multiple type="file" id="files"  style={{ display: "none" }} />
         </MenuItem>
       </Menu>
     </div>

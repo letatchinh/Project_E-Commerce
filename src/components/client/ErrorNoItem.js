@@ -12,7 +12,7 @@ export default function ErrorNoItem({src,width}) {
       alt="error"
     />
    <Link to='/'>
-   <Button endIcon={<ShoppingCartIcon/>} variant='contained'>Go Home</Button>
+   <Button endIcon={<ShoppingCartIcon/>} variant='contained'>Go shopping</Button>
    </Link>
    </Stack>
   )

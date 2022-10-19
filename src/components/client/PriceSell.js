@@ -12,6 +12,7 @@ export default function PriceSell(props) {
           display: isSell ? "block" : "none",
           color: isSell ? "#ee4d2d" : "#C4C4C4",
           fontSize: fontSize ? fontSize : "20px",
+          fontWeight : 'bold',
           whiteSpace : 'nowrap'
         }}
       >
@@ -21,9 +22,10 @@ export default function PriceSell(props) {
         style={{
           textDecoration: isSell  ? "line-through" : "none",
           color: isSell  ? "#ee4d2d" : "rgb(238, 77, 45)",
+          fontWeight : 'bold',
           whiteSpace : 'nowrap',
           fontSize:
-            !isSell  ? (fontSize ? fontSize : "20px") :  (fontSizeDiscount ? fontSizeDiscount : "12px"),
+            !isSell  ? (fontSize ? fontSize : "20px") :  (fontSizeDiscount ? fontSizeDiscount : "14px"),
         }}
       >
         {price} $

@@ -96,13 +96,13 @@ export default function Payment() {
       },
       taxPrice : 10,
       shippingPrice : taxShip,
-      totalPrice : totalBill + taxShip,
+      totalPrice : parseFloat(totalBill) + taxShip,
       isPaid : value === "Paypal" ? true : false,
       paidAt : value === "Paypal" ? now : ""
     };
     console.log(newOrder);
  await dispatch(fetchAddOrderRequest({newOrder,config}))
-  setActiveStep(2)
+  
   };
 
   useEffect(() => {

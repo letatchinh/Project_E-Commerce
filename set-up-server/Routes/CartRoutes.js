@@ -36,7 +36,7 @@ CartRoutes.post(
     const carts = await Carts.findOne({ user: user , product : product });
     if(carts){
       res.status(404);
-        throw new Error("Product Is Exits In Your");
+        throw new Error("Product is exist in your cart");
     }
     else{
       const cart = new Carts({
@@ -59,7 +59,6 @@ CartRoutes.post(
         product,
       } = req.body;
       const Cart = await Carts.findOne({user : user , product : product});
-
       if (Cart) {
         await Cart.remove();
         res.json({ message: "Cart deleted" });
@@ -69,6 +68,19 @@ CartRoutes.post(
       }
     })
   )
+  // DETELE ALL CART
+CartRoutes.post(
+  "/deleteAll/:id",
+  asyncHandler(async (req, res) => {
+    const Cart = await Carts.remove({user : req.params.id});
+    if (Cart) {
+      res.json({ message: "All cart deleted", Cart });
+    } else {
+      res.status(404);
+      throw new Error("Cart Not Found");
+    }
+  })
+)
   CartRoutes.post(
     "/deleteMany/:id",
     asyncHandler(async (req, res) => {

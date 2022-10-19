@@ -4,8 +4,7 @@ const initvalue = {
   count: 0,
   totalBill: 0,
   allListCart: [],
-  totalFinalOrder : 0,
-  taxShip : 0
+  taxShip : 0,
 };
 const cartReducers = (state = initvalue, action) => {
   switch (action.type) {
@@ -30,8 +29,10 @@ const cartReducers = (state = initvalue, action) => {
     case TYPES.CAL_TOTAL_BILL:
       const arrChecked = state.allListCart.filter((e) => e.isChecked);
       const newTotal = arrChecked.reduce((sum, arr) => {
+        
         if(arr.discount > 0){
-         const Newprice = arr.price - (arr.price * arr.discount) / 100
+         const Newprice = (arr.price - (arr.price * arr.discount) / 100)
+        
          return sum + Newprice * arr.quanlity;
         }
         else{
@@ -41,14 +42,9 @@ const cartReducers = (state = initvalue, action) => {
       }, 0);
       return {
         ...state,
-        totalBill: newTotal,
+        totalBill: newTotal.toFixed(2),
       };
-    case "TOTAL_FINAL_ORDER":
-  
-      return {
-        ...state,
-        totalFinalOrder: action.payload,
-      };
+
     case "FETCH_TAX_SHIP":
   
       return {

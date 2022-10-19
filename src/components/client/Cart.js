@@ -1,14 +1,19 @@
 import { Button, List, Typography } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { v4 } from "uuid";
 import { Stack } from "@mui/system";
 import { Link } from "react-router-dom";
 import ItemCart from "./ItemCart";
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import { fetchDeleteAllCartRequest } from "../../redux/sagas/Mysaga";
 function Cart({handleClose}) {
   const listCarts = useSelector(state => state.cart.listCarts)
   const count = useSelector(state => state.cart.count)
+  const dispatch = useDispatch()
+  const handleDeleteAllCart = () => {
+    dispatch(fetchDeleteAllCartRequest())
+  }
   return (
     <List
       sx={{
@@ -19,11 +24,15 @@ function Cart({handleClose}) {
        
       }}
     >
+   
     <Typography textAlign='center' borderBottom='1px solid #999' variant="h6">My Cart<ShoppingBasketIcon/></Typography>
-    <Typography  color='#777' variant="body2">New products added</Typography>
+   <Stack display={listCarts && listCarts.length === 0 ? "none" : 'flex'} direction='row' justifyContent='space-between' alignItems='center' padding ='5px 0'>
+   <Typography  color='#777' variant="body2">New products added</Typography>
+    <Button onClick={handleDeleteAllCart} sx={{textTransform : 'capitalize'}} variant='outlined' size="small"  color='error'>Delete All</Button>
+   </Stack>
       <Stack sx={{maxHeight : '60vh',overflowY : 'scroll'}}>
       {
-       listCarts?.map((value,i) => <ItemCart  key={v4()}  value={value} />)
+       listCarts?.map((value,i) => <ItemCart  key={v4()} handleClose={handleClose}  value={value} />)
       }
       </Stack>
       {listCarts && listCarts.length === 0 && (

@@ -4,6 +4,7 @@ import ProductClient from './ProductClient'
 import { v4 } from "uuid";
 import MyPagination from './MyPagination';
 import { ThemeProvider } from '@mui/system';
+import ErrorNoItem from './ErrorNoItem';
 const theme = createTheme({
     breakpoints: {
       values: {
@@ -18,7 +19,7 @@ const theme = createTheme({
 export default function ListProduct({data,pages,page,handleChange}) {
   return (
    <ThemeProvider theme={theme}>
-        <Stack width='100%'>
+       {data ? data.length !== 0 ?  <Stack width='100%'>
           <Grid container spacing={1} width='100%'>
             {data &&
               data.map((e) => (
@@ -33,8 +34,9 @@ export default function ListProduct({data,pages,page,handleChange}) {
               page={page}
               onChange={handleChange}
             />
-          </Stack>
         </Stack>
+          </Stack>  : <div style={{margin : '0 auto'}}><ErrorNoItem /></div> :  <div style={{margin : '0 auto'}}><ErrorNoItem /></div> }
+          
    </ThemeProvider>
   )
 }

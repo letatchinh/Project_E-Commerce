@@ -7,7 +7,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
@@ -28,15 +28,15 @@ const Footer = () => {
     color: "white",
   });
   const statusThemme = useSelector((state) => state.colorCommon.status);
-
+  const [statusEmailFooter,setStatusEmailFooter] = useState(false)
   return (
     <div
       style={{
         background: statusThemme
-    ? "linear-gradient(rgb(238, 77, 45), rgb(255, 115, 55))"
-    : "#00255E",
+          ? "linear-gradient(rgb(238, 77, 45), rgb(255, 115, 55))"
+          : "#00255E",
         paddingBottom: "20px",
-        paddingTop : "20px",
+        paddingTop: "20px",
         position: "relative",
       }}
     >
@@ -54,17 +54,20 @@ const Footer = () => {
         <BackToTop />
       </div>
       <Container>
-        <Grid container spacing={2}>
-          <Grid item md={5} xs={6}>
+        <Grid container spacing={3} justifyContent="space-between">
+          <Grid item md={5} sm={6} xs={12}>
             <Stack spacing={3}>
               <CustomTypoGraphy fontWeight="400" fontSize="14px">
-                “Đặt sự hài lòng của khách hàng là ưu tiên số 1 trong mọi suy
-                nghĩ hành động của mình” là sứ mệnh, là triết lý, chiến lược..
-                luôn cùng Ut Fashion tiến bước
+                “Put customer satisfaction as the number 1 priority in every
+                thought think your actions" is the mission, philosophy,
+                strategy.. Always move forward with Ut Fashion
               </CustomTypoGraphy>
               <Stack spacing={1}>
-                <CustomTypoGraphy>ĐĂNG KÝ NHẬN THÔNG TIN</CustomTypoGraphy>
-                <Paper
+                <CustomTypoGraphy>Subscribe to our newsletter to receive news,
+Special offers and exclusive promotions</CustomTypoGraphy>
+{statusEmailFooter ? <Typography color='#00fff2'> Thank you for subscribing to receive information</Typography> 
+: 
+                 <Paper
                   variant="outlined"
                   component="form"
                   sx={{
@@ -82,36 +85,40 @@ const Footer = () => {
                   <IconButton
                     sx={{ color: "#1976D2", p: "10px" }}
                     aria-label="directions"
+                    onClick={() => setStatusEmailFooter(true)}
                   >
                     <SendIcon />
                   </IconButton>
                 </Paper>
+}
+              
+                
               </Stack>
               <Stack direction="row" spacing={2}>
-                <IconFooter  icon={<FacebookIcon sx={{ color: "white" }} />} />
-                <IconFooter icon={<InstagramIcon sx={{ color: "white" }} />} />
-                <IconFooter icon={<YouTubeIcon sx={{ color: "white" }} />} />
-                <IconFooter icon={<PinterestIcon sx={{ color: "white" }} />} />
+                <IconFooter href='https://www.facebook.com/chinh.le.3994885' icon={<FacebookIcon sx={{ color: "white" }} />} />
+                <IconFooter href="https://www.instagram.com/explore/tags/%C3%ADnstagram/top/?hl=vi" icon={<InstagramIcon sx={{ color: "white" }} />} />
+                <IconFooter href="https://www.youtube.com/channel/UCCiPAoJWH0pUFypZb7JZWXw" icon={<YouTubeIcon sx={{ color: "white" }} />} />
+                <IconFooter href="https://www.pinterest.com/" icon={<PinterestIcon sx={{ color: "white" }} />} />
               </Stack>
             </Stack>
           </Grid>
-          <Grid sx={{display : 'flex' , flexDirection : 'column',alignItems : 'flex-end'}} item md={2} xs={4}>
-            <Stack>
-            <CustomTypoGraphy>About us</CustomTypoGraphy>
-            <Stack>
-              <CustomTypoGraphy className="cardContentHover" fontSize="14px">
-                Intro
-              </CustomTypoGraphy>
-              <CustomTypoGraphy className="cardContentHover" fontSize="14px">
-                Contact
-              </CustomTypoGraphy>
-              <CustomTypoGraphy className="cardContentHover" fontSize="14px">
-                recruit
-              </CustomTypoGraphy>
-              <CustomTypoGraphy className="cardContentHover" fontSize="14px">
-                News
-              </CustomTypoGraphy>
-            </Stack>
+          <Grid item>
+            <Stack marginRight={{ md: 0, xs: "4rem" }}>
+              <CustomTypoGraphy>About us</CustomTypoGraphy>
+              <Stack>
+                <CustomTypoGraphy className="cardContentHover" fontSize="14px">
+                  Intro
+                </CustomTypoGraphy>
+                <CustomTypoGraphy className="cardContentHover" fontSize="14px">
+                  Contact
+                </CustomTypoGraphy>
+                <CustomTypoGraphy className="cardContentHover" fontSize="14px">
+                  recruit
+                </CustomTypoGraphy>
+                <CustomTypoGraphy className="cardContentHover" fontSize="14px">
+                  News
+                </CustomTypoGraphy>
+              </Stack>
             </Stack>
           </Grid>
           <Grid item md={4} xs={12}>
@@ -122,11 +129,11 @@ const Footer = () => {
                 </BlockIconFooter>
                 <Stack>
                   <CustomTypoGraphy fontWeight="400" fontSize="14px">
-                    Công ty cổ phần Thời trang Ut Fashion
+                    Ut Fashion Joint Stock Company
                   </CustomTypoGraphy>
                   <CustomTypoGraphy fontWeight="400" fontSize="14px">
-                    Địa chỉ: Đường An Định - Phường Việt Hòa - Thành phố Hải
-                    Dương - Hải Dương
+                    Address: 67 Nguyen Dinh Chieu , Khue My , Ngu Hanh Son , Da
+                    Nang city
                   </CustomTypoGraphy>
                 </Stack>
               </Stack>
@@ -136,13 +143,13 @@ const Footer = () => {
                 </BlockIconFooter>
                 <Stack>
                   <CustomTypoGraphy fontWeight="400" fontSize="14px">
-                    Liên hệ đặt hàng: 0905970965
+                    Contact to order: 0905970965
                   </CustomTypoGraphy>
                   <CustomTypoGraphy fontWeight="400" fontSize="14px">
-                    Thắc mắc đơn hàng: 0905970965
+                    Order inquiries: 0905970965
                   </CustomTypoGraphy>
                   <CustomTypoGraphy fontWeight="400" fontSize="14px">
-                    Góp ý khiếu nại: 1800 2086
+                    Comments and complaints: 1800 2086
                   </CustomTypoGraphy>
                 </Stack>
               </Stack>

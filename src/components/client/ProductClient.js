@@ -93,7 +93,7 @@ export default function ProductClient({ item }) {
         }}
       >
         <Typography color="white" fontSize="calc(0.3vw + 8px)" textAlign="center">
-          Selled {item.quantitySold}
+          Sold {item.quantitySold}
         </Typography>
       </div>
       <Link to={`/products/${_id}`}>
@@ -147,10 +147,9 @@ export default function ProductClient({ item }) {
         </Stack>
 
       </Link>
-      <CardContent sx={{ padding: "5px 0" }}>
+      <CardContent sx={{ padding: "5px 0" , display : 'flex' , alignItems : 'center' }}>
         <StyledRating value={parseFloat(review.numReview)} precision={.5} readOnly={true} size="small" />
         <Typography
-          gutterBottom
           variant="body2"
           component="span"
           color={mainColorText}

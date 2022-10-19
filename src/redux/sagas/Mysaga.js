@@ -27,6 +27,12 @@ export const fetchLoginWithGoogleAndFbRequest = (action) => {
     payload: action,
   };
 };
+export const fetchDeleteAllCartRequest = () => {
+  return {
+    type: "FETCH_DELETE_ALL_CART_REQUEST",
+    payload: "",
+  };
+};
 // export const fetchListReviewRequest = (action) => {
 //   return{
 //     type : "FETCH_REVIEW_REQUEST",
@@ -90,7 +96,7 @@ export function* fetchAddToCart(action) {
     const { status, data } = response;
     if (status === STATUS_CODE.CREATED) {
       yield put({ type: "FETCH_CART_SUCCESS", payload: data });
-      yield ToastSuccess("Add Cart Success!");
+      yield ToastSuccess("Added to Your Cart!");
     }
   } catch (error) {
     ToastError(error.response.data.message);
@@ -136,7 +142,7 @@ export function* fetchAddOrder(action) {
       yield put({ type: "ADD_ORDER_SUCCESS", payload: data });
     }
   } catch (error) {
-    console.log(error);
+    ToastError("Failed Order")
   }
 }
 export function* fetchAddOrderSuccessAndDeleteCart(action) {
@@ -150,7 +156,7 @@ export function* fetchAddOrderSuccessAndDeleteCart(action) {
       AxiosUser.post(`/api/carts/deleteMany/${idUser}`, listProduct)
     );
     if (status === STATUS_CODE.SUCCESS) {
-      ToastSuccess("THANH CONG");
+      ToastSuccess("Payment succeeded");
       yield put({ type: "FETCH_CART_REQUEST" });
     }
   } catch (error) {
@@ -221,10 +227,26 @@ export function* fetchLoginWithGgAndFb(action) {
     console.log(error);
   }
 }
+export function* fetchDeleteAllCart(){
+  try {
+    const user =  JSON.parse(localStorage.getItem(KEY_USER)) || "";
+    const res = yield call(() => AxiosUser.post(`/api/carts/deleteAll/${user._id}`))
+    if(res.status === STATUS_CODE.SUCCESS){
+      yield ToastSuccess("Delete All Cart Successed")
+      yield put({type : "FETCH_CART_REQUEST",payload : ""})
+    }
+    else{
+      ToastError("Delelte All Cart Failed")
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 function* mySaga() {
   yield takeLatest("FETCH_ADD_CART", fetchAddToCart);
   yield takeLatest("FETCH_CART_REQUEST", fetchCartSaga);
   yield takeLatest("FETCH_LIST_CHECKED_REQUEST", fetchListCheckedSaga);
+  yield takeLatest("FETCH_DELETE_ALL_CART_REQUEST", fetchDeleteAllCart);
   // yield takeLatest("FETCH_REVIEW_REQUEST", fetchListReviewSaga);
   yield takeLatest("ADD_ORDER_REQUEST", fetchAddOrder);
   yield takeLatest("FETCH_LOGIN_WITH_GG_AND_FB_REQUEST", fetchLoginWithGgAndFb);

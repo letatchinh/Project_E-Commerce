@@ -24,9 +24,8 @@ export const fetchSearch = async(action) => {
         const {queryKey} = action
         const res =   await AxiosUser.get(`/api/products/search?name=${queryKey[0]}&category=${queryKey[1] ? queryKey[1] : ""}&page=${queryKey[2]}&sortPrice=${queryKey[3]}&sortRating=${queryKey[4]}&rangeFilterGte=${queryKey[6]}&rangeFilterLte=${queryKey[5]}&limit=${queryKey[7]}`)
         return res.data
-      
     } catch (error) {
-        console.log(error);
+        return []
     }
 }
 export const fetchListSale = async(action) => {

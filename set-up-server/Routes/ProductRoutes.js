@@ -88,7 +88,7 @@ productRoute.get(
     const page = Number(req.query.page) || 1;
     const count =await Product.countDocuments({quantitySold : {$gte : 5}})
     const products = await Product.find({quantitySold : {$gte : 5}}).limit(limit).skip(limit * (page - 1)).sort({quantitySold : -1});
-    res.json({ products,page,pages : Math.ceil(count / limit),count});
+    res.json({ products , page , pages : Math.ceil(count / limit),count});
   })
 );
 
