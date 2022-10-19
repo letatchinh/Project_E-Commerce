@@ -118,7 +118,7 @@ export default function ListCart() {
     </form>
         <Stack direction='row' justifyContent='space-between' alignItems='center'>
         <Typography fontSize='14px' color='#757575'>Total</Typography>
-            <Typography color='#f57224' fontSize='1.3rem'>{(parseFloat(totalBill) + taxShip)} $</Typography>
+            <Typography color='#f57224' fontSize='1.3rem'>{(parseFloat(totalBill) + taxShip).toFixed(2)} $</Typography>
         </Stack>
         <Link className={!isCheck ? 'disableLink': " "} to='/payment'><Button endIcon={<ArrowForwardIcon className='surFaceArrow'/>}  disabled={!isCheck} sx={{width : '100%'}} color='warning' variant='contained'>Confirm Order</Button></Link>
         </Stack>

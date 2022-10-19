@@ -42,7 +42,7 @@ const cartReducers = (state = initvalue, action) => {
       }, 0);
       return {
         ...state,
-        totalBill: newTotal.toFixed(2),
+        totalBill: newTotal,
       };
 
     case "FETCH_TAX_SHIP":
