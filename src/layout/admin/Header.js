@@ -43,6 +43,9 @@ const Header = (props) => {
   const orderNotice = useSelector((state) => state.orderNotice);
   const { orderWatch } = orderNotice;
 
+  const orderDetails = useSelector((state) => state.orderDetail);
+  const { loading, error, order } = orderDetails;
+
   const orderListNopagination = useSelector(
     (state) => state.orderListNopagination
   );
@@ -62,7 +65,7 @@ const Header = (props) => {
     e.preventDefault();
     dispatch(logout());
   };
-  // console.log(countNotice);
+  console.log(ordersNotice);
   const [active, setActive] = useState(null);
   return (
     <header
