@@ -43,6 +43,7 @@ const UserChildComponent = (props) => {
     dispatch(userActiveaction(updateActiveUser));
     navigator(-1);
   };
+  console.log(users);
   return (
     <>
       <ToastContainer />
@@ -61,7 +62,9 @@ const UserChildComponent = (props) => {
                   {user.active ? (
                     <img
                       className="img-md img-avatar"
-                      src={`../../../images/${user.avatar}`}
+                      src={`../../../images/${
+                        user.avatar === "" ? "favicon.png" : user.avatar
+                      }`}
                       alt="User pic"
                     />
                   ) : (
@@ -165,7 +168,9 @@ const UserChildComponent = (props) => {
                   {user.active ? (
                     <img
                       className="img-md img-avatar"
-                      src={`../../../images/${user.avatar}`}
+                      src={`../../../images/${
+                        user.avatar === "" ? "favicon.png" : user.avatar
+                      }`}
                       alt="User pic"
                     />
                   ) : (

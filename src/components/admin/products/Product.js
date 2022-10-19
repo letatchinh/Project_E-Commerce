@@ -28,18 +28,21 @@ const Product = (props) => {
               <div className="price mb-2 price-box">
                 {product.price < 1000
                   ? "$" + product.price
-                  : product.price + "VND"}
+                  : product.price.toLocaleString() + "VND"}
               </div>
             )}
             {product.discount !== 0 && (
               <div className="price mb-2 price-box">
                 {product.price < 1000
                   ? "$" + product.price * ((100 - product.discount) / 100)
-                  : product.price * ((100 - product.discount) / 100) + "VND"}
+                  : (
+                      product.price *
+                      ((100 - product.discount) / 100)
+                    ).toLocaleString() + "VND"}
                 <sup className="price-old">
                   {product.price < 1000
                     ? "$" + product.price
-                    : product.price + "VND"}
+                    : product.price.toLocaleString() + "VND"}
                 </sup>
               </div>
             )}
