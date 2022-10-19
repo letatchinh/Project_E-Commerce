@@ -95,7 +95,7 @@ const EditProductMain = (props) => {
         <form onSubmit={submitHandler}>
           <div className="pcShow">
             <div className="content-header">
-              <Link to="/admin/products" className="btn btn-danger text-white">
+              <Link to={-1} className="btn btn-danger text-white">
                 Go to products
               </Link>
               <h2 className="content-title">Update Product</h2>

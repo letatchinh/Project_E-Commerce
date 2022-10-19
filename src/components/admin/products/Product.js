@@ -24,16 +24,33 @@ const Product = (props) => {
             <Link to="#" className="title text-truncate">
               {product.name}
             </Link>
-            <div className="price mb-2">
-              {product.price < 1000
-                ? "$" + product.price
-                : product.price + "VND"}
-            </div>
+            {product.discount === 0 && (
+              <div className="price mb-2 price-box">
+                {product.price < 1000
+                  ? "$" + product.price
+                  : product.price + "VND"}
+              </div>
+            )}
+            {product.discount !== 0 && (
+              <div className="price mb-2 price-box">
+                {product.price < 1000
+                  ? "$" + product.price * ((100 - product.discount) / 100)
+                  : product.price * ((100 - product.discount) / 100) + "VND"}
+                <sup className="price-old">
+                  {product.price < 1000
+                    ? "$" + product.price
+                    : product.price + "VND"}
+                </sup>
+              </div>
+            )}
             <div className="price mb-2">Category: {product.category}</div>
             <div className="price mb-2">
               Count In Stocks: {product.countInStock}
             </div>
-            <div className="dicount mb-2">-{product.discount}%</div>
+            {product.discount > 0 && (
+              <div className="dicount mb-2">-{product.discount}%</div>
+            )}
+
             <div className="price mb-2">
               Quantity Sold: {product.quantitySold}
             </div>

@@ -1295,3 +1295,16 @@ a:hover span {
   padding: 0px 9px;
   border-top-right-radius: 2px;
 }
+
+.price-box {
+  color: rgb(238, 77, 45);
+  margin-top: 5px;
+  white-space: nowrap;
+}
+
+.price-old {
+  margin-left: 2px;
+  font-size: 14px;
+  text-decoration: line-through;
+
+}
