@@ -1,22 +1,13 @@
 import { Typography } from '@mui/material'
 import { Stack } from '@mui/system'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import { useQuery} from '@tanstack/react-query'
+import React, {  useState } from 'react'
 import { useSelector } from 'react-redux'
-import AxiosUser from '../../../apis/client/AxiosUser'
-import { fetchListCategory, fetchListSale } from '../../../apis/client/ProductApis'
-import ContentTopCategory from '../../../components/client/ContentTopCategory'
+import {  fetchListSale } from '../../../apis/client/ProductApis'
 import CountdownTimer from '../../../components/client/CountdownTimer'
 import ListProduct from '../../../components/client/ListProduct'
-import ListProductCommon from '../../../components/client/ListProductCommon'
 import LoadingHomePage from '../../../components/client/LoadingHomePage'
-import MyTypography from '../../../components/client/MyTypography'
-import SideBarFilter from '../../../components/client/SideBarFilter'
-import SortBar from '../../../components/client/SortBar'
-import { URL_BASE } from '../../../constant/UrlConstant'
 export default function CategoryFlashSale() {
-  // const [data,setData] = useState([])
   const [page,setPage] = useState(1)
   const limit = 8;
   const {data,isLoading } = useQuery([page,limit], fetchListSale)

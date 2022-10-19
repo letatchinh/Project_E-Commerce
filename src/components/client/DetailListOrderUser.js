@@ -30,7 +30,7 @@ export default function DetailListOrderUser({ click ,data}) {
     </Button>
       <TextItemListOrder title="Bill Id" value={_id} />
       <TextItemListOrder
-        title="Tình Trạng"
+        title="Status"
         value={isDelivered ? "Shipping" : "Wait Admin Check"}
       />
     </Stack>

@@ -24,8 +24,8 @@ export default function ListProductCommon({ limit, data ,loading }) {
   return (
     <Stack spacing={4}>
       <Grid container spacing={3}>
-        {loading && list.length === 0 ? (
-          <ErrorNoItem src="https://cdn.dribbble.com/users/2382015/screenshots/6065978/no_result_still_2x.gif?compress=1&resize=400x300" />
+        {list.length === 0 ? (
+          <ErrorNoItem  />
         ) : (
           list &&
           list.map((e) => (

@@ -46,7 +46,6 @@ export default function CategoryCommon({ type, valueOfContentTop ,limit}) {
   const mainBackGround = useSelector(
     (state) => state.colorCommon.mainBackGround
   );
-  console.log(data);
   return (
     <Stack
       alignItems="center"
@@ -88,7 +87,6 @@ export default function CategoryCommon({ type, valueOfContentTop ,limit}) {
               color="#7a7a9d"
               sx={{ textShadow: "0 0 1px gray" }}
             >
-              {/* {data.products.length} Products */}
             </Typography>
             <SortBar />
           </Stack>

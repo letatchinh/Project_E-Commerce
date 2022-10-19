@@ -18,7 +18,7 @@ export default function ItemFilter() {
   return (
     <>
     <Stack padding='10px' justifyContent='center' direction='row' alignItems='center'> <FilterAltIcon color='primary'/><Typography variant='h6' fontWeight='bold' component='span' color={mainColorText}>Search Filter</Typography></Stack>
-          <Accordion>
+          <Accordion defaultExpanded>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -30,28 +30,8 @@ export default function ItemFilter() {
         <CheckboxSideBar isCheck={low5 === null}  filter={() => dispatch(setFilter({type : SET_SORT_PRICE_LESS_5,filter : 5}))} unFilter={() => dispatch(setFilter({type : SET_SORT_PRICE_LESS_5,filter : null}))}  label="Product (<5$)"/>
         <CheckboxSideBar isCheck={more10 === null} filter={() => dispatch(setFilter({type : SET_SORT_PRICE_MORE_10,filter : 10}))} unFilter={() => dispatch(setFilter({type : SET_SORT_PRICE_MORE_10,filter : null}))}  label="Product (>10$)"/>
         <CheckboxSideBar isCheck={more50 === null} filter={() => dispatch(setFilter({type : SET_SORT_PRICE_MORE_50,filter : 50}))} unFilter={() => dispatch(setFilter({type : SET_SORT_PRICE_MORE_50,filter : null}))}  label="Product (>50$)"/>
-       
         </AccordionDetails>
       </Accordion>
-      {/* <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-          <Typography variant='body1' fontWeight='bold'>Rating</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Highest
-          </Typography>
-        </AccordionDetails>
-        <AccordionDetails>
-          <Typography>
-            Lowest
-          </Typography>
-        </AccordionDetails>
-      </Accordion> */}
       </>
   )
 }

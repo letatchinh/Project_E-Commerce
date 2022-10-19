@@ -96,7 +96,7 @@ export default function Payment() {
       },
       taxPrice : 10,
       shippingPrice : taxShip,
-      totalPrice : totalBill + taxShip,
+      totalPrice : parseFloat((parseFloat(totalBill) + taxShip).toFixed(2)),
       isPaid : value === "Paypal" ? true : false,
       paidAt : value === "Paypal" ? now : ""
     };
@@ -131,7 +131,6 @@ if(value === ""){
       handlePayment()
     }
   }
-
   return (
     <>
         <div style={{ background: mainBackGround2, padding: "20px", position : 'relative' }}>
@@ -185,7 +184,7 @@ if(value === ""){
                     Total
                   </Typography>
                   <Typography variant="h6" fontWeight="bold">
-                    {taxShip + totalBill} $
+                    {(parseFloat(totalBill) + taxShip).toFixed(2)} $
                   </Typography>
                 </Stack>
               </Stack>
@@ -246,7 +245,7 @@ if(value === ""){
                     </RadioGroup>
                   </FormControl>
                   {
-                    value === "Paypal" && <PayPalButton amount={totalBill && (totalBill + taxShip)} onSuccess={successPaymentPaypal}/> 
+                    value === "Paypal" && <PayPalButton amount={totalBill && (parseFloat(totalBill) + taxShip)} onSuccess={successPaymentPaypal}/> 
                   }
                 </Stack>
                 <Button

@@ -6,10 +6,13 @@ import { Paper, Typography } from "@mui/material";
 import Footer from "../../layout/client/Footer";
 import PurposeAboutUs from "../../components/client/PurposeAboutUs";
 import PersonalityAboutUs from "../../components/client/PersonalityAboutUs";
+import Header from "../../layout/client/Header/Index";
+
 export default function AboutUs() {
   return (
     <Stack position="relative">
-      <HeaderAboutUs />
+      {/* <HeaderAboutUs /> */}
+      <Header aboutActive/>
       <div className="fillTopAboutUs">
       </div>
       <div className="InFillTopAboutUs">

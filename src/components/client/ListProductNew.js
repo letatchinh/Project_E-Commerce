@@ -9,11 +9,12 @@ import "../StyleComponent/ListProduct.css";
 
 import AxiosUser from '../../apis/client/AxiosUser'
 import ListProduct from './ListProduct';
+import ErrorNoItem from './ErrorNoItem';
 
 export default function ListProductNew() {
   const componentRef = useRef();
   const [isAppear, setIsAppear] = useState(false);
-    const [data,setData] = useState([])
+    const [data,setData] = useState({})
     const [loading,setLoading] = useState(false)
     const [isFetch,setIsFetch] = useState(false)
     const [page,setPage] = useState(1)
@@ -53,9 +54,9 @@ export default function ListProductNew() {
          </Link>
        </Stack>
        {
-        loading ?  <LoadingListProduct limit={4}/> : <ListProduct data={data.products} page={page} handleChange={handleChange} pages={data.pages}/>
-
+        loading ?  <LoadingListProduct limit={4}/> :  <ListProduct data={data.products} page={page} handleChange={handleChange} pages={data.pages}/>
        }
+  
      </Stack>
   )
 }

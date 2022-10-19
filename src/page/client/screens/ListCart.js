@@ -13,6 +13,8 @@ import { KEY_USER } from '../../../constant/LocalStored'
 import ErrorNoItem from '../../../components/client/ErrorNoItem'
 import FormChangeAddress from '../../../components/client/FormChangeAddress'
 import axios from 'axios'
+import { useForm } from 'react-hook-form'
+import  '../../../components/StyleComponent/Linkcss.css'
 export default function ListCart() {
     const background2 = useSelector(state => state.colorCommon.mainBackGround2)
     const backgroundWhite = useSelector(state => state.colorCommon.mainBackGround)
@@ -21,10 +23,6 @@ export default function ListCart() {
     const user = JSON.parse(localStorage.getItem(KEY_USER)) || ""
     const [isCheck,setIsCheck] = useState(false)
     const [checkedAll, setCheckedAll] = useState(false);
-    const handleChange = (event) => {
-      setCheckedAll(event.target.checked);
-      dispatch(checkedAllProductRequest(event.target.checked))
-    };
     const dispatch = useDispatch()
     useEffect(() => {
       dispatch(fetchTotalBill())
@@ -41,15 +39,12 @@ export default function ListCart() {
       "Wait admin Check Order",
     ];
     const [activeStep, setActiveStep] = useState(0);
- 
     useEffect(() => {
       axios
         .get(
           `https://api.mapbox.com/geocoding/v5/mapbox.places/${user.address}.json?access_token=pk.eyJ1IjoibGV0YXRjaGluaCIsImEiOiJjbDhjd2x1NTkwMzV0M3BvYmpweWJwZG9hIn0.crltMkQeuF92KSs1DRH2pQ`
         )
-        .then((res) => {
-          console.log(res);
-          axios
+        .then((res) => axios
             .get(
               `https://api.mapbox.com/directions/v5/mapbox/driving/108.24861,16.03083;${res.data.features[0].center[0]},${res.data.features[0].center[1]}?geometries=geojson&access_token=pk.eyJ1IjoibGV0YXRjaGluaCIsImEiOiJjbDhjd2x1NTkwMzV0M3BvYmpweWJwZG9hIn0.crltMkQeuF92KSs1DRH2pQ`
             )
@@ -58,12 +53,16 @@ export default function ListCart() {
              
                 setDistance((res.data.routes[0].distance / 900).toFixed(1) - 1)
               }
-            );
-        })
+            )
+        )
         .catch((err) => {});
     }, [user]);
-  //  const taxShip = parseFloat((distance * 0.8).toFixed(1))
-  console.log(taxShip);
+    const { register, handleSubmit,watch,  formState: { errors } } = useForm();
+     const handleChange = (event) => {
+      setCheckedAll(event.target.checked);
+      dispatch(checkedAllProductRequest(event.target.checked))
+    };
+  const onSubmit = data => console.log(data);
   return (
     <div style={{background : background2 , padding : '2rem 0' }}>
     <Container  >
@@ -81,10 +80,9 @@ export default function ListCart() {
      <Typography sx={{border : "2px solid gray" , padding : '7px' , borderRadius : '10px'}} color='black' fontSize='1.5rem'>My Cart</Typography>
      <div style={{flex : 1 , height : '2px' , background : 'gray', width : '100%'}}></div>
    </Stack> 
-   <FormControlLabel control={<Checkbox checked={checkedAll} onChange={handleChange}  />} label={!checkedAll ? "Check All" : "Un Check All"} />
+   {listCarts && listCarts.length !== 0 && <FormControlLabel control={<Checkbox checked={checkedAll} onChange={handleChange}  />} label={!checkedAll ? "Check All" : "Un Check All"} />}
                     {listCarts && listCarts.length === 0 ? <div style={{margin : '0 auto'}}><ErrorNoItem /></div>: listCarts.map(e =>  <ItemListCart key={v4()} item={e}/>)}
            
-          
         </Stack>
         <Stack textAlign={{md : 'left', sm : 'center'}} spacing={3} sx={{background : backgroundWhite, padding:'10px',borderRadius:'20px'}}>
         <Stack  spacing={1} borderBottom='1px solid #999' padding='10px 0'>
@@ -104,19 +102,25 @@ export default function ListCart() {
             <Typography>{totalBill} $</Typography>
           </Stack>
           <Stack direction='row' justifyContent='space-between'>
-          <Typography fontSize='14px' color='#757575'>Ship Price</Typography>
+          <Typography fontSize='14px' color='#757575'>Ship Price ({distance} km)</Typography>
             <Typography>{(distance * 0.8).toFixed(1)} $</Typography>
           </Stack>
+          <Stack direction='row' justifyContent='space-between'>
+          <Typography fontSize='14px' color='#757575'>Voucher</Typography>
+            <Typography>1 $</Typography>
+          </Stack>
         </Stack>
+        <form onSubmit={handleSubmit(onSubmit)}>
         <Stack direction='row' padding='20px 0' justifyContent='space-between'>
-        <TextField sx={{width : '70%'}} size='small' color='primary' variant='outlined' placeholder='Voucher...'/>
-        <Button variant='contained'>apply</Button>
+      <TextField error={errors && errors?.voucher !== undefined} {...register("voucher",{required : true})} sx={{width : '70%'}} size='small' color='primary' variant='outlined' placeholder='Voucher...'/>
+      <Button disabled={watch('voucher') === ""} variant='contained' type="submit" >apply</Button>
         </Stack>
+    </form>
         <Stack direction='row' justifyContent='space-between' alignItems='center'>
         <Typography fontSize='14px' color='#757575'>Total</Typography>
-            <Typography color='#f57224' fontSize='1.3rem'>{(totalBill + taxShip)} $</Typography>
+            <Typography color='#f57224' fontSize='1.3rem'>{(parseFloat(totalBill) + taxShip).toFixed(2)} $</Typography>
         </Stack>
-        <Link to='/payment'><Button endIcon={<ArrowForwardIcon className='surFaceArrow'/>}  disabled={!isCheck} sx={{width : {md :'100%' , sm :'50%'}}} color='warning' variant='contained'>Confirm Order</Button></Link>
+        <Link className={!isCheck ? 'disableLink': " "} to='/payment'><Button endIcon={<ArrowForwardIcon className='surFaceArrow'/>}  disabled={!isCheck} sx={{width : '100%'}} color='warning' variant='contained'>Confirm Order</Button></Link>
         </Stack>
         </Stack>
     </Container>
