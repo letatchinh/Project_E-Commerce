@@ -46,7 +46,6 @@ const cartReducers = (state = initvalue, action) => {
         totalBill: parseFloat(newTotal.toFixed(2)),
       };
       case TYPES.CAL_VOUCHER:
-
         return {
           ...state,
           voucher: action.payload,

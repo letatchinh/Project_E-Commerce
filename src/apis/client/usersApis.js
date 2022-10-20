@@ -8,3 +8,13 @@ export const fetchCheckUser = async(action) => {
         console.log(error);
     }
 }
+
+export const fetchListVoucher = async(action) => {
+    try {
+        const {queryKey} = action
+        const res =   await AxiosUser.get(`/api/users/getVoucherUser/${queryKey[0]}`)
+        return res.data
+    } catch (error) {
+        return []
+    }
+}

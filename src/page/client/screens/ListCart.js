@@ -15,11 +15,13 @@ import FormChangeAddress from '../../../components/client/FormChangeAddress'
 import axios from 'axios'
 import  '../../../components/StyleComponent/Linkcss.css'
 import FormVoucher from '../../../layout/client/FormVoucher'
+import AxiosUser from '../../../apis/client/AxiosUser'
 export default function ListCart() {
     const background2 = useSelector(state => state.colorCommon.mainBackGround2)
     const backgroundWhite = useSelector(state => state.colorCommon.mainBackGround)
     const listCarts = useSelector(state => state.cart.allListCart)
     const [distance, setDistance] = useState(0);
+    const [listVoucher,setListVoucher] = useState([])
     const user = JSON.parse(localStorage.getItem(KEY_USER)) || ""
     const [isCheck,setIsCheck] = useState(false)
     const [checkedAll, setCheckedAll] = useState(false);
@@ -34,6 +36,8 @@ export default function ListCart() {
     useEffect(() => {
       dispatch(fetchVoucher(0))
     },[])
+
+console.log(listVoucher);
     const totalBill = useSelector(state => state.cart.totalBill)
     const taxShip = useSelector(state => state.cart.taxShip)
     const voucher = useSelector(state => state.cart.voucher)
@@ -94,8 +98,6 @@ export default function ListCart() {
           <Typography color='black' fontSize='13px' fontWeight='medium'>{user.address || ""}</Typography>
           
            </Stack>}
-         
-          
         </Stack>
         <Stack spacing={1} >
           <Typography fontSize='1.2rem'>Infomation Order</Typography>
@@ -111,13 +113,11 @@ export default function ListCart() {
           <Typography fontSize='14px' color='#757575'>Voucher</Typography>
             <Typography>-{voucher} $</Typography>
           </Stack>
+           <Typography sx={{opacity : voucher !== 0 ? 1 : 0 , transition : '0.5s ease',backgroundImage: 'linear-gradient(to right , orange, red)',
+    backgroundClip: 'text',
+    color: 'transparent',
+    width: 'fit-content',}}><img style={{width : '30px'}} src="https://cdn-icons-png.flaticon.com/128/2548/2548362.png" alt='ll'/>{`congrats you got ${voucher}$ ​​off from voucher`}</Typography>
         </Stack>
-        {/* <form onSubmit={handleSubmit(onSubmit)}>
-        <Stack direction='row' padding='20px 0' justifyContent='space-between'>
-      <TextField error={errors && errors?.voucher !== undefined} {...register("voucher",{required : true})} sx={{width : '70%'}} size='small' color='primary' variant='outlined' placeholder='Voucher...'/>
-      <Button disabled={watch('voucher') === ""} variant='contained' type="submit" >apply</Button>
-        </Stack>
-    </form> */}
     <FormVoucher />
         <Stack direction='row' justifyContent='space-between' alignItems='center'>
         <Typography fontSize='14px' color='#757575'>Total</Typography>
