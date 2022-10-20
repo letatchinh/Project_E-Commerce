@@ -40,6 +40,7 @@ import Products from "./page/client/screens/Products";
 import ProductSellerScreen from "./page/admin/screens/ProductSellerScreen";
 import ContactUsUser from "./page/client/ContactUsUser";
 import EditCategory from "./components/admin/Categories/EditCategory";
+import ProductComments from "./page/admin/screens/ProductComments";
 const ComponentHomePage = React.lazy(() =>
   import("./page/client/screens/ComponentHomePage")
 );
@@ -132,6 +133,7 @@ function App() {
             <Route path="/admin" element={<HomeScreen />} />
           </Route>
           <Route path="/admin/addproduct" element={<AddProducts />} />
+          <Route path="/admin/productcomments" element={<ProductComments />} />
 
           <Route path="/admin" element={<HomeScreen />} />
           <Route

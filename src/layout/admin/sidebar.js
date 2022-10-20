@@ -67,6 +67,16 @@ const Sidebar = (props) => {
                 <NavLink
                   activeclassname="active"
                   className="menu-link"
+                  to="/admin/productcomments"
+                >
+                  <i className="icon fa-solid fa-comment"></i>
+                  <span className="text">List Comments</span>
+                </NavLink>
+              </li>
+              <li className="menu-item">
+                <NavLink
+                  activeclassname="active"
+                  className="menu-link"
                   to="/admin/categorys"
                 >
                   <i className="icon fas fa-list"></i>
