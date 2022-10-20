@@ -42,10 +42,10 @@ productRoute.get(
       $or:
         rangeFilterGte || rangeFilterLte
           ? [
-              { price: { $gte: rangeFilterGte } },
-              { price: { $lte: rangeFilterLte } },
+              { newPrice: { $gte: rangeFilterGte } },
+              { newPrice: { $lte: rangeFilterLte } },
             ]
-          : [{ price: { $gte: 0 } }],
+          : [{ newPrice: { $gte: 0 } }],
     })
       .limit(pageSize)
       .skip(pageSize * (page - 1))
@@ -66,6 +66,13 @@ productRoute.get(
     const count = await Product.countDocuments({ discount: { $gt: 1 } });
     const products = await Product.find({ discount: { $gt: 1 } }).limit(limit).skip(limit * (page - 1)).sort({discount : -1});
     res.json({ products,page,pages : Math.ceil(count / limit),count});
+  })
+);
+productRoute.get(
+  "/test",
+  asyncHandler(async (req, res) => {
+    const products = await Product.find({newPrice : {$gte : 10}});
+    res.json({ products});
   })
 );
 // FILTER PRODUCT NEW
