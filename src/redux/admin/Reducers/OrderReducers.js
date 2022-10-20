@@ -103,7 +103,7 @@ export const orderDetailsReducer = (
 };
 
 //ORDER DELIVERED
-export const orderDeliveredReducer = (state = { data: {} }, action) => {
+export const orderDeliveredReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_DELIVERED_REQUEST:
       return { ...state, loading: true };
@@ -112,7 +112,6 @@ export const orderDeliveredReducer = (state = { data: {} }, action) => {
         ...state,
         loading: false,
         success: true,
-        data: action.payload,
       };
     case ORDER_DETAILS_FAIL:
       return { ...state, loading: false, error: action.payload };

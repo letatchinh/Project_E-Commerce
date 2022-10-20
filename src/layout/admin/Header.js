@@ -65,7 +65,7 @@ const Header = (props) => {
     e.preventDefault();
     dispatch(logout());
   };
-  console.log(ordersNotice);
+  // console.log(ordersNotice);
   const [active, setActive] = useState(null);
   return (
     <header
@@ -124,7 +124,7 @@ const Header = (props) => {
                     ordersNotice
                       .filter((e) => e.watched === false)
                       .map((e) => (
-                        <div onClick={() => setActive(e)}>
+                        <div onClick={() => setActive(e)} key={e._id}>
                           <Link to={`/admin/order/${e._id}`} className="mask">
                             <tr
                               key={e._id}

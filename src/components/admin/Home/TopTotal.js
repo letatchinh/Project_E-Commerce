@@ -7,10 +7,14 @@ const TopTotal = (props) => {
   const { orders, products, count } = props;
   // console.log(orders);
   let totalSale = 0;
+  let countPaid = 0;
   if (orders) {
     orders.map((order) =>
       order.isPaid === true ? (totalSale = totalSale + order.totalPrice) : null
     );
+  }
+  if (orders) {
+    orders.map((order) => (order.isPaid === true ? countPaid++ : null));
   }
   const dispatch = useDispatch();
   const fetch = useCallback(async () => {
@@ -45,7 +49,7 @@ const TopTotal = (props) => {
             </span>
             <div className="text">
               <h6 className="mb-1">Total Orders</h6>
-              {count > 0 ? <span>{count}</span> : <span>0</span>}
+              {count > 0 ? <span>{countPaid}</span> : <span>0</span>}
             </div>
           </article>
         </div>
