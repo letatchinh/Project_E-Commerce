@@ -96,24 +96,6 @@ export default function CategoryCommon({ type, valueOfContentTop ,limit}) {
            (
              <Stack spacing={4}>
              <ListProduct data={data.products} page={page} pages={data.pages} handleChange={handleChange}/>
-      {/* <Grid container spacing={3}>
-        {data && data.products.length === 0 ? (
-          <ErrorNoItem src="https://cdn.dribbble.com/users/2382015/screenshots/6065978/no_result_still_2x.gif?compress=1&resize=400x300" />
-        ) : 
-        (
-          data &&
-          data.products.map((e) => (
-            <Grid className="abc" key={v4()} xs={6} md={3} item>
-              <ProductClient item={e} />
-            </Grid>
-          ))
-        )}
-      </Grid>
-      {data && data.products.length !== 0 && (
-        <Stack alignItems="center" spacing={2} sx={{ marginTop: "20px" }}>
-          <MyPagination count={data.pages} page={page} onChange={handleChange} />
-        </Stack>
-      )} */}
     </Stack>
            
           )

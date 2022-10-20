@@ -17,6 +17,13 @@ const productSchema = mongoose.Schema(
       require: true,
       default: 0,
     },
+    newPrice : {
+      type:Number,
+      require:true,
+      default: function() {
+        return this.price - ((this.price * this.discount) /100)
+      }
+    },
     numReviews: {
       type: Number,
       require: true,

@@ -1,3 +1,4 @@
+import { Button, Paper, Typography } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react'
 import { v4 } from 'uuid';
 import AxiosUser from '../../apis/client/AxiosUser';
@@ -17,11 +18,11 @@ export default function ListReview({_id,count}) {
     useEffect(() => {
       _id && fetchreview()
     },[fetchreview])
-    console.log(listReview);
    return (
      <>
-      { loadingReview ? <LoadingHomePage/> : 
-         listReview.map(e => <Review key={v4()}  item={e}/>)
+      { loadingReview ? <LoadingHomePage/> : (listReview.length !== 0) ?
+         listReview.map(e => <Review key={v4()}  item={e}/>) : <Paper sx={{padding : '50px',textAlign : 'center',backgroundColor : 'rgb(231, 235, 240)'}} elevation={3}><Typography lineHeight={3.5}>There are currently no reviews for this product. Be the first to review this product</Typography>
+         <Button href='#comment' variant='contained'>Send Your Comment</Button></Paper>
         }
      </>
   )

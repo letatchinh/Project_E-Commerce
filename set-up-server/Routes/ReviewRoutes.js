@@ -1,5 +1,6 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
+import Product from "../Models/ProductModel.js";
 import Review from "../Models/ReviewModel.js";
 const ReviewRoutes = express.Router();
 //GET ALL Review
@@ -59,7 +60,17 @@ ReviewRoutes.post(
     const reviews = await Review.find({product : req.params.id})
     const totalReview = await Review.countDocuments({product : req.params.id})
    const avgReview =  (reviews.reduce((sum,agv) => sum + agv.rating,0)  / reviews.length).toFixed(1)
-    res.json({avgReview,totalReview})
+   const newProduct = await Product.findById(req.params.id)
+   if(newProduct){
+     newProduct.rating = avgReview || 0;
+     newProduct.numReviews = totalReview || 0
+     const updatedProduct = await newProduct.save();
+     res.json({avgReview,totalReview,updatedProduct})
+   }else{
+     res.status(404)
+     throw new Error ("Not Found Product")
+   }
+    
   } catch (error) {
     throw new Error("Not found Sum reviews")
   }
