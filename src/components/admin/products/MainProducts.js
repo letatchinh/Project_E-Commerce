@@ -23,19 +23,12 @@ const MainProducts = () => {
     await dispatch(
       listProducts(keyword, pagenumber, sortPrice, keywordCategory)
     );
-  }, [
-    dispatch,
-    productDelete,
-    pagenumber,
-    keyword,
-    sortPrice,
-    keywordCategory,
-  ]);
+  }, [dispatch, pagenumber, keyword, sortPrice, keywordCategory]);
   useEffect(() => {
     fetch();
     // sortLoswtoHight();
     // setarrProduct(arrProduct);
-  }, [fetch]);
+  }, [fetch, productDelete]);
   // let arrProduct = [];
 
   const handlesortPrice = (e) => {

@@ -272,16 +272,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
 
 // CREATE PRODUCT
 export const createProduct =
-  (
-    name,
-    price,
-    description,
-    countInStock,
-    images,
-    category,
-    discount,
-    quantitySold
-  ) =>
+  (name, price, description, countInStock, images, category, discount) =>
   async (dispatch, getState) => {
     const token = ADMIN_TOKEN;
     try {
@@ -307,7 +298,6 @@ export const createProduct =
           images,
           category,
           discount,
-          quantitySold,
         },
         config
       );

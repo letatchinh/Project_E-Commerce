@@ -251,7 +251,6 @@ productRoute.post(
       countInStock,
       images,
       category,
-      quantitySold,
       discount,
     } = req.body;
     const productExists = await Product.findOne({ name });
@@ -268,7 +267,6 @@ productRoute.post(
         images,
         category,
         discount,
-        quantitySold,
       });
       if (product) {
         const createdproduct = await product.save();

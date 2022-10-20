@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { deleteProduct } from "../../../redux/admin/Actions/ProductActions";
+import StyledRating from "../../client/StyledRating";
 const Product = (props) => {
   const { product } = props;
   const dispatch = useDispatch();
+  const navigator = useNavigate();
   const [active, setActive] = useState(0);
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure ?")) {
       dispatch(deleteProduct(id));
     }
+    navigator(-1);
   };
 
   return (
@@ -46,6 +49,21 @@ const Product = (props) => {
                 </sup>
               </div>
             )}
+            <div className="product-rating">
+              <StyledRating value={product.rating} />
+              <span
+                style={{
+                  fontSize: "12px",
+                  fontWeight: "bold",
+                  marginLeft: "5px",
+                  marginBottom: "-10px",
+                  position: "relative",
+                  top: "-4px",
+                }}
+              >
+                ({product.numReviews})
+              </span>
+            </div>
             <div className="price mb-2">Category: {product.category}</div>
             <div className="price mb-2">
               Count In Stocks: {product.countInStock}

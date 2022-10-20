@@ -115,35 +115,29 @@ const Header = (props) => {
                 "aria-labelledby": "basic-button",
               }}
             >
-              <table>
-                <thead>
-                  <tr></tr>
-                </thead>
-                <tbody>
-                  {ordersNotice &&
-                    ordersNotice
-                      .filter((e) => e.watched === false)
-                      .map((e) => (
-                        <div onClick={() => setActive(e)} key={e._id}>
-                          <Link to={`/admin/order/${e._id}`} className="mask">
-                            <tr
-                              key={e._id}
-                              className={`${active === e && "active"}`}
-                            >
-                              <th scope="row">User: {e.user.name}</th>
-                              <td>Email: {e.user.email}</td>
-                              <td>
-                                {e.user.address === ""
-                                  ? ""
-                                  : "Address: " + e.user.address}
-                              </td>
-                              <td>Total: {e.totalPrice} $</td>
-                            </tr>
-                          </Link>
-                        </div>
-                      ))}
-                </tbody>
-              </table>
+              {ordersNotice &&
+                ordersNotice
+                  .filter((e) => e.watched === false)
+                  .map((e) => (
+                    <div onClick={() => setActive(e)} key={e._id}>
+                      <Link to={`/admin/order/${e._id}`} className="mask">
+                        <dl
+                          style={{ padding: "4px 4px 0", border: "1px solid" }}
+                          key={e._id}
+                          className={`${active === e && "active"}`}
+                        >
+                          <dd scope="row">User: {e.user.name}</dd>
+                          <dd>Email: {e.user.email}</dd>
+                          <dd>
+                            {e.user.address === ""
+                              ? ""
+                              : "Address: " + e.user.address}
+                          </dd>
+                          <dd>Total: {e.totalPrice} $</dd>
+                        </dl>
+                      </Link>
+                    </div>
+                  ))}
             </Menu>
           </li>
           <li className="nav-item">

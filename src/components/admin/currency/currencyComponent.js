@@ -20,22 +20,25 @@ const CurrencyComponent = () => {
   const [active, setActive] = useState(false);
   // const productList = useSelector((state) => state.productList);
   // const { loading, error, products } = productList;
+
   console.log(productsAll);
   useEffect(() => {
     dispatch(listAllProducts());
     dispatch(listProducts());
-    // dispatch(currencyUSD());
   }, [dispatch]);
+  const [index, setIndex] = useState(1);
 
   const handleCurrencyVND = () => {
     setActive(true);
     dispatch(currencyVND());
     toast("Change VND success ");
+    setIndex(2);
   };
   const handleCurrencyUSD = () => {
     setActive(true);
     dispatch(currencyUSD());
     toast("Change USD success ");
+    setIndex(1);
   };
 
   return (
@@ -46,16 +49,18 @@ const CurrencyComponent = () => {
           <button
             type="button"
             className="btn btn-success btn-ripple"
-            onClick={handleCurrencyVND}
+            style={{ background: index === 1 ? "gray" : "" }}
+            onClick={handleCurrencyUSD}
           >
-            VND
+            USD
           </button>
           <button
             type="button"
             className="btn btn-success btn-ripple"
-            onClick={handleCurrencyUSD}
+            onClick={handleCurrencyVND}
+            style={{ background: index === 2 ? "gray" : "" }}
           >
-            USD
+            VND
           </button>
         </div>
         <section className="content-main">
