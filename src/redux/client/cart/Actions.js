@@ -11,7 +11,8 @@ import {
   FETCH_CART,
   INCREASE_QUANLITY,
   CHECKED_ALL_PRODUCT,
-  FETCH_CART_NEW
+  FETCH_CART_NEW,
+  CAL_VOUCHER
 } from "./Types";
 const idUser =
   localStorage.getItem(KEY_USER) &&
@@ -38,6 +39,12 @@ export const fetchTotalBill = () => {
 export const fetchTaxShip = (action) => {
   return {
     type: "FETCH_TAX_SHIP",
+    payload: action,
+  };
+};
+export const fetchVoucher = (action) => {
+  return {
+    type: CAL_VOUCHER,
     payload: action,
   };
 };

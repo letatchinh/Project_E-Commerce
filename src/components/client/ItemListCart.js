@@ -14,10 +14,11 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import TypographyThreeDot from "./TypographyThreeDot";
 import PriceSell from './PriceSell'
+import ToastError from "./ToastError";
 export default function ItemListCart({ item }) {
   const listCarts = useSelector((state) => state.cart.allListCart);
   const dispatch = useDispatch();
-  const { name, images, price, quanlity, isChecked , discount } = item;
+  const { name, images, price, quanlity, isChecked , discount,countInStock } = item;
   const [checked, setChecked] = useState(isChecked);
   const handleChange = async (event) => {
     setChecked(event.target.checked);
@@ -63,7 +64,7 @@ export default function ItemListCart({ item }) {
         <Button
         disabled={quanlity === 1}
           onClick={() => {
-            dispatch(decreaseQuanlity(item));
+              dispatch(decreaseQuanlity(item));
           }}
           variant="outlined"
           sx={{ minWidth: 0, borderRadius: 0 }}
@@ -77,7 +78,12 @@ export default function ItemListCart({ item }) {
         </MyTypography></div>
         <Button
           onClick={() => {
-            dispatch(increaseQuanlity(item));
+            if(countInStock > quanlity){
+              dispatch(increaseQuanlity(item));
+            }
+            else{
+              ToastError(`${name} Is Out of stock`)
+            }
           }}
           variant="outlined"
           sx={{ minWidth: 0, borderRadius: 0 }}

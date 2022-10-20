@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import ItemListCart from '../../../components/client/ItemListCart'
 import PlaceIcon from '@mui/icons-material/Place';
 import { v4 } from 'uuid'
-import { checkedAllProductRequest, fetchTaxShip, fetchTotalBill, fetchTotalFinalOrder } from '../../../redux/client/cart/Actions'
+import { checkedAllProductRequest, fetchTaxShip, fetchTotalBill, fetchTotalFinalOrder, fetchVoucher } from '../../../redux/client/cart/Actions'
 import { Link } from 'react-router-dom'
 import '../../../components/StyleComponent/ListCart.css'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -13,8 +13,8 @@ import { KEY_USER } from '../../../constant/LocalStored'
 import ErrorNoItem from '../../../components/client/ErrorNoItem'
 import FormChangeAddress from '../../../components/client/FormChangeAddress'
 import axios from 'axios'
-import { useForm } from 'react-hook-form'
 import  '../../../components/StyleComponent/Linkcss.css'
+import FormVoucher from '../../../layout/client/FormVoucher'
 export default function ListCart() {
     const background2 = useSelector(state => state.colorCommon.mainBackGround2)
     const backgroundWhite = useSelector(state => state.colorCommon.mainBackGround)
@@ -31,8 +31,12 @@ export default function ListCart() {
     useEffect(() => {
       dispatch(fetchTaxShip(parseFloat((distance * 0.8).toFixed(1))))
     },[distance])
+    useEffect(() => {
+      dispatch(fetchVoucher(0))
+    },[])
     const totalBill = useSelector(state => state.cart.totalBill)
     const taxShip = useSelector(state => state.cart.taxShip)
+    const voucher = useSelector(state => state.cart.voucher)
     const steps = [
       "Add to Cart",
       "Choose Payment Method",
@@ -57,12 +61,10 @@ export default function ListCart() {
         )
         .catch((err) => {});
     }, [user]);
-    const { register, handleSubmit,watch,  formState: { errors } } = useForm();
      const handleChange = (event) => {
       setCheckedAll(event.target.checked);
       dispatch(checkedAllProductRequest(event.target.checked))
     };
-  const onSubmit = data => console.log(data);
   return (
     <div style={{background : background2 , padding : '2rem 0' }}>
     <Container  >
@@ -107,18 +109,19 @@ export default function ListCart() {
           </Stack>
           <Stack direction='row' justifyContent='space-between'>
           <Typography fontSize='14px' color='#757575'>Voucher</Typography>
-            <Typography>1 $</Typography>
+            <Typography>-{voucher} $</Typography>
           </Stack>
         </Stack>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        {/* <form onSubmit={handleSubmit(onSubmit)}>
         <Stack direction='row' padding='20px 0' justifyContent='space-between'>
       <TextField error={errors && errors?.voucher !== undefined} {...register("voucher",{required : true})} sx={{width : '70%'}} size='small' color='primary' variant='outlined' placeholder='Voucher...'/>
       <Button disabled={watch('voucher') === ""} variant='contained' type="submit" >apply</Button>
         </Stack>
-    </form>
+    </form> */}
+    <FormVoucher />
         <Stack direction='row' justifyContent='space-between' alignItems='center'>
         <Typography fontSize='14px' color='#757575'>Total</Typography>
-            <Typography color='#f57224' fontSize='1.3rem'>{(parseFloat(totalBill) + taxShip).toFixed(2)} $</Typography>
+            <Typography color='#f57224' fontSize='1.3rem'>{(parseFloat(totalBill) + taxShip - voucher).toFixed(2)} $</Typography>
         </Stack>
         <Link className={!isCheck ? 'disableLink': " "} to='/payment'><Button endIcon={<ArrowForwardIcon className='surFaceArrow'/>}  disabled={!isCheck} sx={{width : '100%'}} color='warning' variant='contained'>Confirm Order</Button></Link>
         </Stack>

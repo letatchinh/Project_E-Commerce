@@ -20,6 +20,7 @@ export default function HomePageUser() {
         newestOnTop={false}
         closeOnClick
         rtl={false}
+        limit={3}
         draggable
       />
      

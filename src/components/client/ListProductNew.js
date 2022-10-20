@@ -53,9 +53,11 @@ export default function ListProductNew() {
          <Button   endIcon={<ChevronRightIcon/>}>See More</Button>
          </Link>
        </Stack>
-       {
-        loading ?  <LoadingListProduct limit={4}/> :  <ListProduct data={data.products} page={page} handleChange={handleChange} pages={data.pages}/>
-       }
+       {loading ? (
+        <LoadingListProduct limit={4} />
+      ) : (
+        <ListProduct data={data.products} page={data.page} handleChange={handleChange} pages={data.pages}/>
+      )}
   
      </Stack>
   )

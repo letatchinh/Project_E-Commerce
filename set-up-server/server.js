@@ -11,6 +11,7 @@ import userRouter from "./Routes/UserRoutes.js";
 import orderRouter from "./Routes/orderRoutes.js";
 import CartRoutes from "./Routes/CartRoutes.js";
 import ReviewRoutes from "./Routes/ReviewRoutes.js";
+import VoucherRoutes from "./Routes/VoucherRoutes.js";
 // import socket from "socket.io";
 
 dotenv.config();
@@ -41,6 +42,7 @@ app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/carts", CartRoutes);
 app.use("/api/reviews", ReviewRoutes);
+app.use("/api/vouchers", VoucherRoutes);
 app.get("/api/config/paypal",(req,res) => {
   res.send(process.env.PAYPAL_CLIENT_ID);
 })

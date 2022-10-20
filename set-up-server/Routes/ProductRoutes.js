@@ -63,16 +63,12 @@ productRoute.get(
   asyncHandler(async (req, res) => {
     const limit = Number(req.query.limit) || 4;
     const page = Number(req.query.page) || 1;
-    const count = await Product.countDocuments({ discount: { $gt: 1 } });
-    const products = await Product.find({ discount: { $gt: 1 } }).limit(limit).skip(limit * (page - 1)).sort({discount : -1});
-    res.json({ products,page,pages : Math.ceil(count / limit),count});
-  })
-);
-productRoute.get(
-  "/test",
-  asyncHandler(async (req, res) => {
-    const products = await Product.find({newPrice : {$gte : 10}});
-    res.json({ products});
+    const count = await Product.countDocuments({ discount: { $gte: 1 } });
+    const products = await Product.find({ discount: { $gte: 1 } })
+      .limit(limit)
+      .skip(limit * (page - 1))
+      .sort({ discount: -1 });
+    res.json({ products, page, pages: Math.ceil(count / limit), count });
   })
 );
 // FILTER PRODUCT NEW
@@ -81,10 +77,13 @@ productRoute.get(
   asyncHandler(async (req, res) => {
     const limit = Number(req.query.limit) || 4;
     const page = Number(req.query.page) || 1;
-    const count = 4
+    const count = 4;
     // const count = Product.countDocuments({}) || 10
-    const products = await Product.find({}).limit(limit).skip(limit * (page - 1)).sort({createdAt : -1});
-    res.json({ products,page,pages : Math.ceil(count / limit),count});
+    const products = await Product.find({})
+      .limit(limit)
+      .skip(limit * (page - 1))
+      .sort({ createdAt: -1 });
+    res.json({ products, page, pages: Math.ceil(count / limit), count });
   })
 );
 // FILTER PRODUCT HOT
@@ -93,12 +92,36 @@ productRoute.get(
   asyncHandler(async (req, res) => {
     const limit = Number(req.query.limit) || 4;
     const page = Number(req.query.page) || 1;
-    const count =await Product.countDocuments({quantitySold : {$gte : 5}})
-    const products = await Product.find({quantitySold : {$gte : 5}}).limit(limit).skip(limit * (page - 1)).sort({quantitySold : -1});
-    res.json({ products , page , pages : Math.ceil(count / limit),count});
+    const count = await Product.countDocuments({ quantitySold: { $gte: 5 } });
+    const products = await Product.find({ quantitySold: { $gte: 5 } })
+      .limit(limit)
+      .skip(limit * (page - 1))
+      .sort({ quantitySold: -1 });
+    res.json({ products, page, pages: Math.ceil(count / limit), count });
   })
 );
+// Check countInStock
+productRoute.post(
+  "/checkCountInStock",
+  asyncHandler(async (req, res) => {
+    const productsId = req.body.map((e) => e.product);
+    const productsQty = req.body.map((e) => e.quanlity);
+    let p = [];
+    const product = await Product.find({ _id: { $in: productsId } });
+    product.forEach((e, i) => {
+      if (e.countInStock < productsQty[i]) {
+        p.push(e)
+      }
+    })
+    if(p.length !== 0){
+      res.json({status : false , listOutOfStock : p})
+    }
+    else{
 
+    }
+    res.json({status : true});
+  })
+);
 //ADMIN GET ALL PRODUCT WITHOUT SEARCH AND PAGENATION
 
 productRoute.get(

@@ -11,7 +11,7 @@ import AxiosUser from "../../apis/client/AxiosUser";
 import ToastSuccess from "./ToastSuccess";
 import ToastError from "./ToastError";
 export default function DetailListOrderUser({ click ,data}) {
-  const {_id,isDelivered,orderItem , shippingPrice ,totalPrice} = data
+  const {_id,isDelivered,orderItem , shippingPrice ,totalPrice,voucher} = data
   const handleCancelBill = async() => {
      AxiosUser.delete(`/api/orders/deleteById/${_id}`).then(res => {ToastSuccess("Delete Success");click()}).catch(err => ToastError("Delete Failed"))
   }
@@ -48,6 +48,7 @@ export default function DetailListOrderUser({ click ,data}) {
       <Stack marginLeft='auto' width="200px">
         <Stack>
           <TotalBill title="Tax Ship" value={shippingPrice} />
+          <TotalBill title="Voucher" value={voucher} />
           <TotalBill title="Total Bill" value={totalPrice} />
         </Stack>
       </Stack>

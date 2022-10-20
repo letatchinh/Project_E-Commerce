@@ -69,6 +69,7 @@ export default function DetailProduct() {
   const [listItem, setListItem] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isPayment, setIsPayment] = useState(false);
+  const [review,setReview] = useState({rating : 0,numReviews : 0})
   const [active, setActive] = useState(0);
   const [count, setCount] = useState(0);
   const [errorNoItem, setErrorNoItem] = useState(false);
@@ -77,7 +78,10 @@ export default function DetailProduct() {
     setLoading(true);
     axios
       .get(`/api/products/${params.productId}`)
-      .then((res) => setItem(res.data))
+      .then((res) => {
+        setReview({rating : res.data.rating,numReviews : res.data.numReviews})
+        setItem(res.data)
+      })
       .catch((err) => setErrorNoItem(true))
       .finally(() => setLoading(false));
   }, [params.productId]);
@@ -88,7 +92,6 @@ export default function DetailProduct() {
   const mainBackGround = useSelector(
     (state) => state.colorCommon.mainBackGround
   );
-
   useEffect(() => {
     AxiosUser.get(`/api/products/search?category=${itemm.category}`).then(
       (res) => setListItem(res.data.products)
@@ -112,7 +115,7 @@ export default function DetailProduct() {
       product: _id,
     };
     AxiosUser.post("/api/reviews/add", newComment).then((res) => {
-      AxiosUser.get(`/api/reviews/SumReviewByIdProduct/${_id}`).then(res => console.log(res)).catch(err => console.log(err))
+      AxiosUser.get(`/api/reviews/SumReviewByIdProduct/${_id}`).then(res => setReview({rating : res.data.avgReview,numReviews : res.data.totalReview})).catch(err => console.log(err))
       ToastSuccess("Tks For your Comment");
       setCount(count + 1);
       reset();
@@ -213,7 +216,7 @@ export default function DetailProduct() {
                         </MyTypography>
                         <Stack direction="row">
                           <StyledRating
-                            value={parseFloat(rating)}
+                            value={parseFloat(review.rating)}
                             readOnly={true}
                             precision={0.5}
                           />
@@ -221,7 +224,7 @@ export default function DetailProduct() {
                           <Link href="#review">
                             {" "}
                             <MyTypography variant="body2" component="span">
-                              ({numReviews})
+                              ({review.numReviews})
                             </MyTypography>
                           </Link>
                         </Stack>
