@@ -106,8 +106,8 @@ productRoute.get(
 
 productRoute.get(
   "/all",
-  // protect,
-  // admin,
+  protect,
+  admin,
   asyncHandler(async (req, res) => {
     const keyword = req.query.keyword
       ? {

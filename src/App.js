@@ -39,6 +39,7 @@ import AboutUs from "./page/client/AboutUs";
 import Products from "./page/client/screens/Products";
 import ProductSellerScreen from "./page/admin/screens/ProductSellerScreen";
 import ContactUsUser from "./page/client/ContactUsUser";
+import EditCategory from "./components/admin/Categories/EditCategory";
 const ComponentHomePage = React.lazy(() =>
   import("./page/client/screens/ComponentHomePage")
 );
@@ -133,6 +134,10 @@ function App() {
           <Route path="/admin/addproduct" element={<AddProducts />} />
 
           <Route path="/admin" element={<HomeScreen />} />
+          <Route
+            path="/admin/product/:id/edit"
+            element={<ProductEditScreen />}
+          />
           <Route path="/admin/products" element={<ProductScreen />} />
           <Route
             path="/admin/products/search/:keyword"
@@ -165,7 +170,8 @@ function App() {
             element={<ProductScreen />}
           /> */}
 
-          <Route path="/admin/category" element={<CategoriesScreen />} />
+          <Route path="/admin/categorys" element={<CategoriesScreen />} />
+          <Route path="/admin/category/:id/edit" element={<EditCategory />} />
           <Route path="/admin/currency" element={<CurrencyScreen />} />
           <Route path="/admin/seller" element={<ProductSellerScreen />} />
           <Route
@@ -221,10 +227,7 @@ function App() {
             path="/admin/users/page/:pagenumber"
             element={<UsersScreen />}
           />
-          <Route
-            path="/admin/product/:id/edit"
-            element={<ProductEditScreen />}
-          />
+
           <Route path="/admin/*" element={<NotFound />} />
         </Route>
       </Routes>

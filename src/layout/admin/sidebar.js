@@ -67,7 +67,7 @@ const Sidebar = (props) => {
                 <NavLink
                   activeclassname="active"
                   className="menu-link"
-                  to="/admin/category"
+                  to="/admin/categorys"
                 >
                   <i className="icon fas fa-list"></i>
                   <span className="text">Category</span>

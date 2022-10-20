@@ -13,7 +13,6 @@ import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const EditProductMain = (props) => {
   let id = 0;
   const { productId } = props;
-
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [discount, setDiscount] = useState(0);

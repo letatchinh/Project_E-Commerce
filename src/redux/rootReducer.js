@@ -1,4 +1,10 @@
 import {
+  categoryCreateReducer,
+  categoryEditReducer,
+  categoryListReducer,
+  categoryUpdateReducer,
+} from "./admin/Reducers/CategoryReducers";
+import {
   orderDeliveredReducer,
   orderDetailsReducer,
   orderListFiterNameReducer,
@@ -58,6 +64,10 @@ const rootReducer = combineReducers({
   orderNotice: orderNoticeReducer,
   orderListNopagination: orderListNopaginationReducer,
   productListSellersa: productListSellerReducer,
+  categoryList: categoryListReducer,
+  categoryCreate: categoryCreateReducer,
+  categoryEdit: categoryEditReducer,
+  categoryUpdate: categoryUpdateReducer,
 });
 
 export default rootReducer;

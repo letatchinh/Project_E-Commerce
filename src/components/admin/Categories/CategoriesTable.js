@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { listAllCategorys } from "../../../redux/admin/Actions/CategoryAction";
 import {
   listAllProducts,
   listProducts,
@@ -12,39 +13,26 @@ const CategoriesTable = () => {
   const dispatch = useDispatch();
   let id = 1;
 
-  let counter = 0;
-
   const productsListAll = useSelector((state) => state.productsListAll);
   const { loading, error, productsAll } = productsListAll;
-  // console.log(productsListAll);
+
+  const categoryList = useSelector((state) => state.categoryList);
+  const { categorys } = categoryList;
+
   const fecth = useCallback(async () => {
     await dispatch(listAllProducts());
+    await dispatch(listAllCategorys());
   }, [dispatch]);
 
   useEffect(() => {
     fecth();
   }, [fecth]);
-  // console.log(productsAll);
-  // console.log(products);
-  const category = [
-    {
-      name: "trousers",
-      num: 0,
-    },
-    {
-      name: "hat",
-      num: 0,
-    },
-    {
-      name: "shirt",
-      num: 0,
-    },
-    {
-      name: "shoe",
-      num: 0,
-    },
-  ];
-  // console.log(productsAll);
+
+  const category = [];
+  for (var i = 0; i < categorys.length; i++) {
+    category.push({ name: categorys[i].name, num: 0 });
+  }
+
   const newCate =
     category &&
     category.map((el) => {
@@ -58,7 +46,8 @@ const CategoriesTable = () => {
     });
   return (
     <>
-      <div className="col-md-12 col-lg-12">
+      <div className="col-md-12 col-lg-12 mt-3 mb-3">
+        <h2>Sum Product In Each Category</h2>
         {loading ? (
           <LoadingDashboard />
         ) : error ? (

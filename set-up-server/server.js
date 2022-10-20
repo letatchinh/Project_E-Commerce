@@ -11,6 +11,7 @@ import userRouter from "./Routes/UserRoutes.js";
 import orderRouter from "./Routes/orderRoutes.js";
 import CartRoutes from "./Routes/CartRoutes.js";
 import ReviewRoutes from "./Routes/ReviewRoutes.js";
+import categoryRoute from "./Routes/CategoryRoutes.js";
 // import socket from "socket.io";
 // import { Server } from "socket.io";
 // import { createServer } from "http";
@@ -43,6 +44,7 @@ app.use(cors());
 //API
 app.use("/api/import", ImportData);
 app.use("/api/products", productRoute);
+app.use("/api/categorys", categoryRoute);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/carts", CartRoutes);

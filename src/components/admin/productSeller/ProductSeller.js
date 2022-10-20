@@ -25,7 +25,7 @@ const ProductSeller = () => {
   useEffect(() => {
     fetch();
   }, [fetch]);
-  // console.log(products);
+  console.log(products);
   return (
     <section className="content-main">
       <div className="content-header">
@@ -42,9 +42,11 @@ const ProductSeller = () => {
             <div className="row">
               {/* Products */}
               {products &&
+                products.lenght > 0 &&
                 products.map((product) => (
                   <Product product={product} key={product._id} />
                 ))}
+              {products.length === 0 && <div>No product</div>}
             </div>
           )}
           {pages > 1 && (

@@ -13,6 +13,8 @@ import Voucher from "./Models/VocherModel.js";
 import vouches from "./data/Voucher.js";
 import Review from "./Models/ReviewModel.js";
 import reviews from "./data/review.js";
+import categorys from "./data/Category.js";
+import Category from "./Models/CategoryModel.js";
 const ImportData = express.Router();
 
 ImportData.post(
@@ -33,14 +35,14 @@ ImportData.post(
   })
 );
 
-// ImportData.post(
-//   "/categorys",
-//   asyncHandler(async (req, res) => {
-//     await Category.remove({});
-//     const importCategorys = await Category.insertMany(categorys);
-//     res.send({ importCategorys });
-//   })
-// );
+ImportData.post(
+  "/categorys",
+  asyncHandler(async (req, res) => {
+    await Category.remove({});
+    const importCategorys = await Category.insertMany(categorys);
+    res.send({ importCategorys });
+  })
+);
 
 ImportData.post(
   "/orderUser",
