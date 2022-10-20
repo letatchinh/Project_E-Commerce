@@ -35,6 +35,7 @@ import ListReview from "../../../components/client/ListReview.js";
 import ToastSuccess from "../../../components/client/ToastSuccess";
 import ErrorNoItem from "../../../components/client/ErrorNoItem";
 export default function DetailProduct() {
+
   let params = useParams();
   const navigate = useNavigate();
   const StyledTextField = styled(TextField)({
@@ -64,11 +65,10 @@ export default function DetailProduct() {
   });
   const user = JSON.parse(localStorage.getItem(KEY_USER)) || "";
   const [itemm, setItem] = useState({});
-  const { name, images, price,  _id, discount } = itemm;
+  const { name, images, price,  _id, discount,rating,numReviews } = itemm;
   const [listItem, setListItem] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isPayment, setIsPayment] = useState(false);
-  const [review, setReview] = useState({ numReview: 0, count: 0 });
   const [active, setActive] = useState(0);
   const [count, setCount] = useState(0);
   const [errorNoItem, setErrorNoItem] = useState(false);
@@ -99,19 +99,8 @@ export default function DetailProduct() {
     // AxiosUser.get("/api/products/getRandomProduct/random")
     //   .then((res) => setNextItem(res.data._id))
     //   .catch((err) => console.log(err));
+    window.scrollTo(0, 0)
   }, [itemm]);
-  useEffect(() => {
-    _id &&
-      AxiosUser.get(`/api/reviews/SumReviewByIdProduct/${_id}`)
-        .then((res) =>
-          setReview({
-            ...review,
-            numReview: res.data.avgReview,
-            count: res.data.totalReview,
-          })
-        )
-        .catch((err) => console.log(err));
-  }, [count, itemm]);
   const [value, setValue] = useState(null);
   const dispatch = useDispatch();
   const onSubmit = (data) => {
@@ -123,10 +112,11 @@ export default function DetailProduct() {
       product: _id,
     };
     AxiosUser.post("/api/reviews/add", newComment).then((res) => {
+      AxiosUser.get(`/api/reviews/SumReviewByIdProduct/${_id}`).then(res => console.log(res)).catch(err => console.log(err))
       ToastSuccess("Tks For your Comment");
       setCount(count + 1);
       reset();
-    });
+    }).catch(err => console.log(err));
   };
   const onHoverChangeActive = (index) => {
     setActive(index);
@@ -223,14 +213,15 @@ export default function DetailProduct() {
                         </MyTypography>
                         <Stack direction="row">
                           <StyledRating
-                            value={parseFloat(review.numReview)}
+                            value={parseFloat(rating)}
                             readOnly={true}
+                            precision={0.5}
                           />
 
                           <Link href="#review">
                             {" "}
                             <MyTypography variant="body2" component="span">
-                              ({review.count})
+                              ({numReviews})
                             </MyTypography>
                           </Link>
                         </Stack>
@@ -281,7 +272,7 @@ export default function DetailProduct() {
                     </Stack>
                     <Box width="80%">
                       <form onSubmit={handleSubmit(onSubmit)}>
-                        <Stack spacing={2}>
+                        <Stack id='comment' spacing={2}>
                           <MyTypography variant="h6" color={mainColorText}>
                             WRITE A CUSTOMER REVIEW
                           </MyTypography>

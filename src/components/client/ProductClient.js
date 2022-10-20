@@ -24,6 +24,8 @@ export default function ProductClient({ item }) {
     images,
     price,
     _id,
+    rating,
+    numReviews
   } = item;
   const [review,setReview] = useState({numReview : 0,count : 0})
   const mainColorText = useSelector((state) => state.colorCommon.mainColorText);
@@ -31,12 +33,12 @@ export default function ProductClient({ item }) {
   const idUser = localStorage.getItem(KEY_USER) && JSON.parse(localStorage.getItem(KEY_USER))._id;
   const [active, setActive] = useState(0);
   const myRef = useRef()
-  const fetch = useCallback(() => {
-    AxiosUser.get(`/api/reviews/SumReviewByIdProduct/${_id}`).then(res => setReview({...review,numReview :res.data.avgReview,count : res.data.totalReview})).catch(err => console.log(err))
-  },[isFetch])
-  useEffect(() => {
-    isFetch && fetch()
-  },[fetch])
+  // const fetch = useCallback(() => {
+  //   AxiosUser.get(`/api/reviews/SumReviewByIdProduct/${_id}`).then(res => setReview({...review,numReview :res.data.avgReview,count : res.data.totalReview})).catch(err => console.log(err))
+  // },[isFetch])
+  // useEffect(() => {
+  //   isFetch && fetch()
+  // },[fetch])
   useEffect(() => {
     if (!myRef?.current) return;
     const observer = new IntersectionObserver(([entry]) => {
@@ -148,13 +150,13 @@ export default function ProductClient({ item }) {
 
       </Link>
       <CardContent sx={{ padding: "5px 0" , display : 'flex' , alignItems : 'center' }}>
-        <StyledRating value={parseFloat(review.numReview)} precision={.5} readOnly={true} size="small" />
+        <StyledRating value={parseFloat(rating)} precision={.5} readOnly={true} size="small" />
         <Typography
           variant="body2"
           component="span"
           color={mainColorText}
         >
-          ({review.count})
+          ({numReviews})
         </Typography>
       </CardContent>
       <Stack

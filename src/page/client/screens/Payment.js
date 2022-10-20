@@ -100,7 +100,6 @@ export default function Payment() {
       isPaid : value === "Paypal" ? true : false,
       paidAt : value === "Paypal" ? now : ""
     };
-    console.log(newOrder);
  await dispatch(fetchAddOrderRequest({newOrder,config}))
   setActiveStep(2)
   };
