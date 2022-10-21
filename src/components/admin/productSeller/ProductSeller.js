@@ -42,11 +42,10 @@ const ProductSeller = () => {
             <div className="row">
               {/* Products */}
               {products &&
-                products.lenght > 0 &&
                 products.map((product) => (
                   <Product product={product} key={product._id} />
                 ))}
-              {products.length === 0 && <div>No product</div>}
+              {products.lengsth === 0 && <div>No product</div>}
             </div>
           )}
           {pages > 1 && (

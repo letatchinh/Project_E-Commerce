@@ -122,7 +122,11 @@ const Header = (props) => {
                     <div onClick={() => setActive(e)} key={e._id}>
                       <Link to={`/admin/order/${e._id}`} className="mask">
                         <dl
-                          style={{ padding: "4px 4px 0", border: "1px solid" }}
+                          style={{
+                            padding: "4px 4px 0",
+                            width: "100%",
+                            border: "1px solid",
+                          }}
                           key={e._id}
                           className={`${active === e && "active"}`}
                         >

@@ -24,39 +24,49 @@ const CategoriesTableEx = () => {
   }, [fecth, categoryCreate]);
   return (
     <>
-      <div className="col-md-12 col-lg-12">
+      <div className="col-md-12 col-lg-8">
         {error && <Message variant="alert-danger">{error}</Message>}
         {loading && <LoadingDashboard />}
-        <table className="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          {/* Table Data */}
-          <tbody>
-            {/* Products */}
-            {categorys &&
-              categorys.map((cate) => (
-                <tr key={id}>
-                  <td>{id++}</td>
-                  <td style={{ width: "20%" }}>
-                    <b>{cate.name}</b>
-                  </td>
-                  <td>
-                    <Link
-                      to={`/admin/category/${cate._id}/edit`}
-                      className="btn btn-sm btn-outline-success p-2 pb-3 col-md-3"
-                    >
-                      <i className="fas fa-pen"></i>
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+        <div
+          style={{
+            maxHeight: "135px",
+            overflow: "auto",
+            display: "inline-block",
+            width: "100%",
+          }}
+          className="wrapper-table"
+        >
+          <table className="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
+            {/* Table Data */}
+            <tbody>
+              {/* Products */}
+              {categorys &&
+                categorys.map((cate) => (
+                  <tr key={id}>
+                    <td>{id++}</td>
+                    <td style={{ width: "20%" }}>
+                      <b>{cate.name}</b>
+                    </td>
+                    <td>
+                      <Link
+                        to={`/admin/category/${cate._id}/edit`}
+                        className="text-success"
+                      >
+                        <i className="fa-solid fa-pen-to-square"></i>
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );
