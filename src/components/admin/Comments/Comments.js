@@ -119,17 +119,22 @@ const CommentsTables = () => {
                       <b>{e.name}</b>
                     </td>
                     <td>
-                      <div class="itemside">
-                        <div class="left">
-                          <img
-                            src={`/images/${e.product.images[0]}`}
-                            alt={e.product.name}
-                            className="img-xs"
-                            style={{ width: "40px", height: "40px" }}
-                          />
+                      {e.product && (
+                        <div class="itemside">
+                          <div class="left">
+                            <img
+                              src={
+                                `/images/${e.product.images[0]}` ||
+                                `/images/img01.png}`
+                              }
+                              alt={e.product.name}
+                              className="img-xs"
+                              style={{ width: "40px", height: "40px" }}
+                            />
+                          </div>
+                          <div class="info">{e.product.name}</div>
                         </div>
-                        <div class="info">{e.product.name}</div>
-                      </div>
+                      )}
                     </td>
                     <td>
                       <StyledRating value={e.rating} />
