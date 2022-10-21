@@ -134,7 +134,29 @@ function App() {
           </Route>
           <Route path="/admin/addproduct" element={<AddProducts />} />
           <Route path="/admin/productcomments" element={<ProductComments />} />
-
+          <Route
+            path="/admin/productcomments/:id"
+            element={<ProductComments />}
+          />
+          <Route
+            path="/admin/productcomments/page/:pagenumber"
+            element={<ProductComments />}
+          />
+          <Route
+            path="/admin/productcomments/search/:keyword"
+            element={<ProductComments />}
+            exact
+          />
+          <Route
+            path="/admin/productcomments/search/:keyword/page/:pagenumber"
+            element={<ProductComments />}
+            exact
+          />
+          <Route
+            path="/admin/productcomments/page/:pagenumber/:sortRating"
+            element={<ProductComments />}
+            exact
+          />
           <Route path="/admin" element={<HomeScreen />} />
           <Route
             path="/admin/product/:id/edit"

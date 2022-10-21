@@ -22,7 +22,10 @@ import {
   productListSellerReducer,
   productUpdateReducer,
 } from "./admin/Reducers/ProductReducers";
-import { reviewListReducer } from "./admin/Reducers/ReviewReducers";
+import {
+  reviewDeleteReducer,
+  reviewListReducer,
+} from "./admin/Reducers/ReviewReducers";
 import {
   userActiveSReducer,
   userDisabledReducer,
@@ -70,6 +73,7 @@ const rootReducer = combineReducers({
   categoryEdit: categoryEditReducer,
   categoryUpdate: categoryUpdateReducer,
   reviewList: reviewListReducer,
+  reviewDelete: reviewDeleteReducer,
 });
 
 export default rootReducer;

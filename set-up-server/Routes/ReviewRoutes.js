@@ -1,5 +1,6 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
+import { admin, protect } from "../MiddelWare/AuthMiddleware.js";
 import Product from "../Models/ProductModel.js";
 import Review from "../Models/ReviewModel.js";
 const ReviewRoutes = express.Router();
@@ -12,6 +13,52 @@ ReviewRoutes.get(
       res.json(reviews);
     } catch (error) {
       throw new Error("Not found reviews");
+    }
+  })
+);
+
+//GET ALL Review Admin
+ReviewRoutes.get(
+  "/allReview",
+  protect,
+  admin,
+  asyncHandler(async (req, res) => {
+    const keyword = req.query.keyword
+      ? {
+          name: {
+            $regex: req.query.keyword,
+            $options: "i",
+          },
+        }
+      : {};
+    const ratings = req.query.sortRating || null;
+    const pageSize = 6;
+    const page = Number(req.query.pageNumber) || 1;
+    const count = await Review.countDocuments({
+      ...keyword,
+    });
+    const reviews = await Review.find({ ...keyword })
+      .populate("product")
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
+      .sort(!ratings ? { _id: -1 } : { rating: ratings });
+    res.json({ reviews, page, pages: Math.ceil(count / pageSize) });
+  })
+);
+
+//DELETE REVIEW
+ReviewRoutes.delete(
+  "/:id",
+  protect,
+  admin,
+  asyncHandler(async (req, res) => {
+    const review = await Review.findById(req.params.id);
+    if (review) {
+      await review.remove();
+      res.json({ message: "Review deleted" });
+    } else {
+      res.status(404);
+      throw new Error("Review Not Found");
     }
   })
 );
