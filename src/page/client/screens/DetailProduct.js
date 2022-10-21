@@ -99,9 +99,6 @@ export default function DetailProduct() {
     AxiosUser.get(`/api/orders/checkPayment/${user._id}?product=${_id}`)
       .then((res) => setIsPayment(res.data.isPayment))
       .catch((err) => console.log(err));
-    // AxiosUser.get("/api/products/getRandomProduct/random")
-    //   .then((res) => setNextItem(res.data._id))
-    //   .catch((err) => console.log(err));
     window.scrollTo(0, 0)
   }, [itemm]);
   const [value, setValue] = useState(null);
