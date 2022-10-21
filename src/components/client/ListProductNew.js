@@ -20,7 +20,7 @@ export default function ListProductNew() {
     const [page,setPage] = useState(1)
     const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
 
-    const limit = 1;
+    const limit = 4;
     const fetch = useCallback(async() => {
       setLoading(true)
        AxiosUser.get(`api/products/filterNewProduct?page=${page}&limit=${limit}`).then(res => setData(res.data)).catch(err => console.log(err))
