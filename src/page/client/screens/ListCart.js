@@ -1,11 +1,11 @@
-import { Button, Checkbox, FormControlLabel, Step, StepLabel, Stepper, TextField, Typography } from '@mui/material'
+import { Button, Checkbox, FormControlLabel, Step, StepLabel, Stepper, Typography } from '@mui/material'
 import { Container, Stack } from '@mui/system'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ItemListCart from '../../../components/client/ItemListCart'
 import PlaceIcon from '@mui/icons-material/Place';
 import { v4 } from 'uuid'
-import { checkedAllProductRequest, fetchTaxShip, fetchTotalBill, fetchTotalFinalOrder, fetchVoucher } from '../../../redux/client/cart/Actions'
+import { checkedAllProductRequest, fetchTaxShip, fetchTotalBill, fetchVoucher } from '../../../redux/client/cart/Actions'
 import { Link } from 'react-router-dom'
 import '../../../components/StyleComponent/ListCart.css'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -15,7 +15,6 @@ import FormChangeAddress from '../../../components/client/FormChangeAddress'
 import axios from 'axios'
 import  '../../../components/StyleComponent/Linkcss.css'
 import FormVoucher from '../../../layout/client/FormVoucher'
-import AxiosUser from '../../../apis/client/AxiosUser'
 export default function ListCart() {
     const background2 = useSelector(state => state.colorCommon.mainBackGround2)
     const backgroundWhite = useSelector(state => state.colorCommon.mainBackGround)
@@ -36,11 +35,10 @@ export default function ListCart() {
     useEffect(() => {
       dispatch(fetchVoucher(0))
     },[])
-
-console.log(listVoucher);
     const totalBill = useSelector(state => state.cart.totalBill)
     const taxShip = useSelector(state => state.cart.taxShip)
     const voucher = useSelector(state => state.cart.voucher)
+    const SubAddress = useSelector(state => state.cart.SubAddress)
     const steps = [
       "Add to Cart",
       "Choose Payment Method",
@@ -86,16 +84,16 @@ console.log(listVoucher);
      <Typography sx={{border : "2px solid gray" , padding : '7px' , borderRadius : '10px'}} color='black' fontSize='1.5rem'>My Cart</Typography>
      <div style={{flex : 1 , height : '2px' , background : 'gray', width : '100%'}}></div>
    </Stack> 
-   {listCarts && listCarts.length !== 0 && <FormControlLabel control={<Checkbox checked={checkedAll} onChange={handleChange}  />} label={!checkedAll ? "Check All" : "Un Check All"} />}
+   {listCarts && listCarts.length !== 0 && <FormControlLabel control={<Checkbox checked={checkedAll} onChange={handleChange}  />} label={!checkedAll ? "Check All" : "UnCheck All"} />}
                     {listCarts && listCarts.length === 0 ? <div style={{margin : '0 auto'}}><ErrorNoItem /></div>: listCarts.map(e =>  <ItemListCart key={v4()} item={e}/>)}
            
         </Stack>
         <Stack textAlign={{md : 'left', sm : 'center'}} spacing={3} sx={{background : backgroundWhite, padding:'10px',borderRadius:'20px'}}>
         <Stack  spacing={1} borderBottom='1px solid #999' padding='10px 0'>
           <Typography  textAlign={{md : 'left', sm : 'center'}} color='#9e9e9e' fontSize='14px'>Address</Typography>
-          {user.address === "" ?  <FormChangeAddress /> :  <Stack direction='row' sx={{color : '#9e9e9e'}} alignItems='center' spacing={1} >
+          {user.address === "" && !SubAddress ?  <FormChangeAddress /> :  <Stack direction='row' sx={{color : '#9e9e9e'}} alignItems='center' spacing={1} >
           <PlaceIcon/>
-          <Typography color='black' fontSize='13px' fontWeight='medium'>{user.address || ""}</Typography>
+          <Typography color='black' fontSize='13px' fontWeight='medium'>{user.address || SubAddress || ""}</Typography>
           
            </Stack>}
         </Stack>
@@ -123,7 +121,7 @@ console.log(listVoucher);
         <Typography fontSize='14px' color='#757575'>Total</Typography>
             <Typography color='#f57224' fontSize='1.3rem'>{(parseFloat(totalBill) + taxShip - voucher).toFixed(2)} $</Typography>
         </Stack>
-        <Link className={!isCheck ? 'disableLink': " "} to='/payment'><Button endIcon={<ArrowForwardIcon className='surFaceArrow'/>}  disabled={!isCheck} sx={{width : '100%'}} color='warning' variant='contained'>Confirm Order</Button></Link>
+        <Link className={((isCheck && user.address !== "" )&& (isCheck && SubAddress !== null)) ? 'disableLink': " "} to='/payment'><Button endIcon={<ArrowForwardIcon className='surFaceArrow'/>}  disabled={!isCheck || user.address=== ""} sx={{width : '100%'}} color='warning' variant='contained'>Confirm Order</Button></Link>
         </Stack>
         </Stack>
     </Container>

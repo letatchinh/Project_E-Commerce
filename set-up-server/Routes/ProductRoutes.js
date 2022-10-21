@@ -35,6 +35,13 @@ productRoute.get(
     const count = await Product.countDocuments({
       ...nameFilter,
       ...categoryFilter,
+      $or:
+        rangeFilterGte || rangeFilterLte
+          ? [
+              { newPrice: { $gte: rangeFilterGte } },
+              { newPrice: { $lte: rangeFilterLte } },
+            ]
+          : [{ newPrice: { $gte: 0 } }],
     });
     const products = await Product.find({
       ...nameFilter,
@@ -54,7 +61,7 @@ productRoute.get(
           ? { price: sortPrice, rating: sortRating }
           : { _id: -1 }
       );
-    res.send({ products, page, pages: Math.ceil(count / pageSize) });
+    res.send({ products, page, pages: Math.ceil(count / pageSize),count });
     // const arr = products.find()
   })
 );

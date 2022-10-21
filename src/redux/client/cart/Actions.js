@@ -48,6 +48,12 @@ export const fetchVoucher = (action) => {
     payload: action,
   };
 };
+export const fetchSubAddress = (action) => {
+  return {
+    type: "FETCH_SUBADDRESS",
+    payload: action,
+  };
+};
 export const increaseQuanlity = (data) => {
   return {
     type: INCREASE_QUANLITY,

@@ -107,30 +107,39 @@ userRouter.post(
     const { name, email, password } = req.body;
     const user = await User.findOne({ email });
     if (user) {
-      res.json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        address : user.address || "",
-        avatar : user.avatar || "",
-        isAdmin: user.isAdmin,
-        listVoucher: user.listVoucher || [],
-        token: generateToken(user._id),
-        createdAt: user.createdAt,
-      });
+      if (!user.active) {
+        res.status(401);
+        throw new Error("User Has Been Disable Please Contact Us ");
+      }else{
+        res.json({
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          address : user.address || "",
+          avatar : user.avatar || "",
+          isAdmin: user.isAdmin,
+          listVoucher: user.listVoucher || [],
+          token: generateToken(user._id),
+          createdAt: user.createdAt,
+        });
+      }
+      
     } else {
       const newUser = await User.create({
         name,
-        email,
-        password,
+      email,
+      password,
+      address : "",
+      avatar : "",
+      listVoucher : []
       });
       res.status(201).json({
-        _id: newUser.id,
+        _id : newUser._id,
         name: newUser.name,
         email: newUser.email,
-        address : user.address || "",
-        avatar : user.avatar || "",
-        listVoucher : user.listVoucher || [],
+        address : newUser.address || "",
+        avatar : newUser.avatar,
+        listVoucher : newUser.listVoucher || [],
         isAdmin: false,
         token: generateToken(newUser._id),
         createdAt: newUser.createdAt,

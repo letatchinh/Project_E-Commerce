@@ -21,7 +21,7 @@ export default function ItemCart({ value ,handleClose}) {
     <>
       {
         <ListItem
-          sx={{ borderBottom: "1px solid #C4C4C4" , justifyContent : 'space-between' }}
+          sx={{ borderBottom: "1px solid #C4C4C4" , justifyContent : 'space-between',paddingTop:'30px' }}
           key={v4()}
           disableGutters
           secondaryAction={
@@ -42,7 +42,7 @@ export default function ItemCart({ value ,handleClose}) {
           />
           </div>
           </Link>
-          <Stack margin="0 10px" width='60%'  overflow='hidden'>
+          <Stack margin="0 10px"  width='60%'  overflow='hidden'>
            <TypographyThreeDot>
               {value.name}
               </TypographyThreeDot>
