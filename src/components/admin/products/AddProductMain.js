@@ -12,11 +12,12 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { NewReleasesOutlined } from "@mui/icons-material";
-
+import { listAllCategorys } from "../../../redux/admin/Actions/CategoryAction";
 //Use Hook form with material and yup
 const validationSchema = yup.object().shape({
   name: yup.string().required("Required"),
   price: yup.number().required("Required"),
+  discount: yup.number().required("Required"),
   countInStock: yup.number().required("Required"),
   description: yup
     .string()
@@ -36,6 +37,9 @@ const AddProductMain = () => {
   const { loading, error, product } = productCreate;
   // console.log(product);
 
+  const categoryList = useSelector((state) => state.categoryList);
+  const { categorys } = categoryList;
+
   //inittiali
   const {
     register,
@@ -47,6 +51,7 @@ const AddProductMain = () => {
   });
 
   const fetch = useCallback(async () => {
+    await dispatch(listAllCategorys());
     if (product) {
       toast.success("Product Added");
       dispatch({ type: PRODUCT_CREATE_RESET });
@@ -73,7 +78,8 @@ const AddProductMain = () => {
         data.description,
         data.countInStock,
         images,
-        category
+        category,
+        data.discount
       )
     );
     reset();
@@ -184,10 +190,12 @@ const AddProductMain = () => {
                       onChange={(e) => setCategory(e.target.value)}
                     >
                       <option value="">Select</option>
-                      <option value="trousers">trousers</option>
-                      <option value="shirt">shirt</option>
-                      <option value="hat">hat</option>
-                      <option value="shoe">shoe</option>
+                      {categorys &&
+                        categorys.map((cate) => (
+                          <option key={cate._id} value={cate.name}>
+                            {cate.name}
+                          </option>
+                        ))}
                     </select>
                   </div>
 
@@ -224,6 +232,16 @@ const AddProductMain = () => {
                           />
                         ))}
                     </div>
+                  </div>
+                  <div className="mb-4">
+                    <TextField
+                      variant="outlined"
+                      label="Discount"
+                      {...register("discount")}
+                      error={errors?.discount !== undefined}
+                      helperText={errors.discount && errors.discount.message}
+                      fullWidth
+                    />
                   </div>
                 </div>
               </div>

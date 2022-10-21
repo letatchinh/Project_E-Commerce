@@ -1,32 +1,33 @@
-import {
-  USER_ACTIVE_FAIL,
-  USER_ACTIVE_REQUEST,
-  USER_ACTIVE_SUCCESS,
-  USER_DISABLED_FAIL,
-  USER_DISABLED_REQUEST,
-  USER_DISABLED_SUCCESS,
-  USER_EDIT_FAIL,
-  USER_EDIT_REQUEST,
-  USER_EDIT_SUCCESS,
-  USER_FILTERACTIVE_FAIL,
-  USER_FILTERACTIVE_REQUEST,
-  USER_FILTERACTIVE_SUCCESS,
-  USER_LIST_FAIL,
-  USER_LIST_REQUEST,
-  USER_LIST_RESET,
-  USER_LIST_SUCCESS,
-  USER_LOGIN_FAIL,
-  USER_LOGIN_REQUEST,
-  USER_LOGIN_SUCCESS,
-  USER_LOGOUT,
-} from "../Constants/UserContants";
+// import {
+//   USER_ACTIVE_FAIL,
+//   USER_ACTIVE_REQUEST,
+//   USER_ACTIVE_SUCCESS,
+//   USER_DISABLED_FAIL,
+//   USER_DISABLED_REQUEST,
+//   USER_DISABLED_SUCCESS,
+//   USER_EDIT_FAIL,
+//   USER_EDIT_REQUEST,
+//   USER_EDIT_SUCCESS,
+//   USER_FILTERACTIVE_FAIL,
+//   USER_FILTERACTIVE_REQUEST,
+//   USER_FILTERACTIVE_SUCCESS,
+//   USER_LIST_FAIL,
+//   USER_LIST_REQUEST,
+//   USER_LIST_RESET,
+//   USER_LIST_SUCCESS,
+//   USER_LOGIN_FAIL,
+//   USER_LOGIN_REQUEST,
+//   USER_LOGIN_SUCCESS,
+//   USER_LOGOUT,
+// } from "../Constants/UserContants";
+import * as __ from "../Constants/UserContants";
 import axios from "axios";
 import { ADMIN_TOKEN } from "../Constants/token";
 
 //LOGIN
 export const login = (email, password) => async (dispatch) => {
   try {
-    dispatch({ type: USER_LOGIN_REQUEST });
+    dispatch({ type: __.USER_LOGIN_REQUEST });
 
     const config = {
       headers: {
@@ -40,7 +41,7 @@ export const login = (email, password) => async (dispatch) => {
       config
     );
 
-    dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+    dispatch({ type: __.USER_LOGIN_SUCCESS, payload: data });
 
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
@@ -52,7 +53,7 @@ export const login = (email, password) => async (dispatch) => {
       dispatch(logout());
     }
     dispatch({
-      type: USER_LOGIN_FAIL,
+      type: __.USER_LOGIN_FAIL,
       payload: message,
     });
   }
@@ -61,8 +62,8 @@ export const login = (email, password) => async (dispatch) => {
 //LOGOUT
 export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
-  dispatch({ type: USER_LOGOUT });
-  dispatch({ type: USER_LIST_RESET });
+  dispatch({ type: __.USER_LOGOUT });
+  dispatch({ type: __.USER_LIST_RESET });
 };
 
 //ALL USER
@@ -71,7 +72,7 @@ export const listUser =
   async (dispatch, getState) => {
     const token = ADMIN_TOKEN;
     try {
-      await dispatch({ type: USER_LIST_REQUEST });
+      await dispatch({ type: __.USER_LIST_REQUEST });
 
       // let { userLogin: userInfo } = getState();
 
@@ -87,7 +88,7 @@ export const listUser =
         config
       );
 
-      dispatch({ type: USER_LIST_SUCCESS, payload: data });
+      dispatch({ type: __.USER_LIST_SUCCESS, payload: data });
     } catch (error) {
       const message =
         error.response && error.response.data.message
@@ -97,7 +98,7 @@ export const listUser =
         dispatch(logout());
       }
       dispatch({
-        type: USER_LIST_FAIL,
+        type: __.USER_LIST_FAIL,
         payload: message,
       });
     }
@@ -107,7 +108,7 @@ export const listUser =
 export const userDisabledaction = (user) => async (dispatch) => {
   const token = ADMIN_TOKEN;
   try {
-    await dispatch({ type: USER_DISABLED_REQUEST });
+    await dispatch({ type: __.USER_DISABLED_REQUEST });
 
     // let { userLogin: userInfo } = getState();
 
@@ -121,7 +122,7 @@ export const userDisabledaction = (user) => async (dispatch) => {
     const { data } = await axios
       .put(`/api/users/${user._id}/disabled`, config)
       .then((res) =>
-        dispatch({ type: USER_DISABLED_SUCCESS, payload: res.updateUser })
+        dispatch({ type: __.USER_DISABLED_SUCCESS, payload: res.updateUser })
       );
   } catch (error) {
     const message =
@@ -132,7 +133,7 @@ export const userDisabledaction = (user) => async (dispatch) => {
       dispatch(logout());
     }
     dispatch({
-      type: USER_DISABLED_FAIL,
+      type: __.USER_DISABLED_FAIL,
       payload: message,
     });
   }
@@ -142,7 +143,7 @@ export const userDisabledaction = (user) => async (dispatch) => {
 export const userActiveaction = (user) => async (dispatch) => {
   const token = ADMIN_TOKEN;
   try {
-    await dispatch({ type: USER_ACTIVE_REQUEST });
+    await dispatch({ type: __.USER_ACTIVE_REQUEST });
 
     // let { userLogin: userInfo } = getState();
 
@@ -156,7 +157,10 @@ export const userActiveaction = (user) => async (dispatch) => {
     const { data } = await axios
       .put(`/api/users/${user._id}/active`, config)
       .then((res) =>
-        dispatch({ type: USER_ACTIVE_SUCCESS, payload: res.updateActiveUser })
+        dispatch({
+          type: __.USER_ACTIVE_SUCCESS,
+          payload: res.updateActiveUser,
+        })
       );
   } catch (error) {
     const message =
@@ -167,7 +171,7 @@ export const userActiveaction = (user) => async (dispatch) => {
       dispatch(logout());
     }
     dispatch({
-      type: USER_ACTIVE_FAIL,
+      type: __.USER_ACTIVE_FAIL,
       payload: message,
     });
   }
@@ -179,7 +183,7 @@ export const listOrdersPaidS =
   async (dispatch) => {
     const token = ADMIN_TOKEN;
     try {
-      await dispatch({ type: USER_FILTERACTIVE_REQUEST });
+      await dispatch({ type: __.USER_FILTERACTIVE_REQUEST });
 
       // let { userLogin: userInfo } = getState();
 
@@ -195,7 +199,7 @@ export const listOrdersPaidS =
         config
       );
 
-      dispatch({ type: USER_FILTERACTIVE_SUCCESS, payload: data });
+      dispatch({ type: __.USER_FILTERACTIVE_SUCCESS, payload: data });
     } catch (error) {
       const message =
         error.response && error.response.data.message
@@ -205,7 +209,7 @@ export const listOrdersPaidS =
         dispatch(logout());
       }
       dispatch({
-        type: USER_FILTERACTIVE_FAIL,
+        type: __.USER_FILTERACTIVE_FAIL,
         payload: message,
       });
     }
@@ -214,9 +218,9 @@ export const listOrdersPaidS =
 //EDIT PRODUCT
 export const editUser = (id) => async (dispatch) => {
   try {
-    dispatch({ type: USER_EDIT_REQUEST });
+    dispatch({ type: __.USER_EDIT_REQUEST });
     const { data } = await axios.get(`/api/users/${id}/sendMail`);
-    dispatch({ type: USER_EDIT_SUCCESS, payload: data });
+    dispatch({ type: __.USER_EDIT_SUCCESS, payload: data });
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -226,7 +230,7 @@ export const editUser = (id) => async (dispatch) => {
       dispatch(logout());
     }
     dispatch({
-      type: USER_EDIT_FAIL,
+      type: __.USER_EDIT_FAIL,
       payload: message,
     });
   }

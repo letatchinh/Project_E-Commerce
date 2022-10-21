@@ -1,4 +1,10 @@
 import {
+  categoryCreateReducer,
+  categoryEditReducer,
+  categoryListReducer,
+  categoryUpdateReducer,
+} from "./admin/Reducers/CategoryReducers";
+import {
   orderDeliveredReducer,
   orderDetailsReducer,
   orderListFiterNameReducer,
@@ -13,8 +19,13 @@ import {
   productEditReducer,
   productListAllReducer,
   productListReducer,
+  productListSellerReducer,
   productUpdateReducer,
 } from "./admin/Reducers/ProductReducers";
+import {
+  reviewDeleteReducer,
+  reviewListReducer,
+} from "./admin/Reducers/ReviewReducers";
 import {
   userActiveSReducer,
   userDisabledReducer,
@@ -56,6 +67,13 @@ const rootReducer = combineReducers({
   userOpenActive: userOpenActiveReducer,
   orderNotice: orderNoticeReducer,
   orderListNopagination: orderListNopaginationReducer,
+  productListSellersa: productListSellerReducer,
+  categoryList: categoryListReducer,
+  categoryCreate: categoryCreateReducer,
+  categoryEdit: categoryEditReducer,
+  categoryUpdate: categoryUpdateReducer,
+  reviewList: reviewListReducer,
+  reviewDelete: reviewDeleteReducer,
 });
 
 export default rootReducer;

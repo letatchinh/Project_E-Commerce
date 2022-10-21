@@ -1,3 +1,4 @@
+import { Update } from "@mui/icons-material";
 import mongoose from "mongoose";
 
 const productSchema = mongoose.Schema(
@@ -17,13 +18,14 @@ const productSchema = mongoose.Schema(
       require: true,
       default: 0,
     },
-    newPrice : {
-      type:Number,
-      require:true,
-      default: function() {
-        return this.price - ((this.price * this.discount) /100)
-      }
+    newPrice: {
+      type: Number,
+      require: true,
+      default: function () {
+        return this.price - (this.price * this.discount) / 100;
+      },
     },
+
     numReviews: {
       type: Number,
       require: true,

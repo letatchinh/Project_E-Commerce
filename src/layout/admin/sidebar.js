@@ -12,7 +12,7 @@ const Sidebar = (props) => {
           style={{ background: isColor ? "#000" : "#fff" }}
         >
           <div className="aside-top">
-            <Link to="/admin" className="brand-wrap">
+            <Link to="/admin/" className="brand-wrap">
               <img
                 src="/images/logo.png"
                 style={{ height: "46" }}
@@ -36,7 +36,7 @@ const Sidebar = (props) => {
                 <NavLink
                   activeclassname="active"
                   className="menu-link"
-                  to="/admin"
+                  to="/admin/"
                   // exact={true}
                 >
                   <i className="icon fas fa-home"></i>
@@ -67,7 +67,17 @@ const Sidebar = (props) => {
                 <NavLink
                   activeclassname="active"
                   className="menu-link"
-                  to="/admin/category"
+                  to="/admin/productcomments"
+                >
+                  <i className="icon fa-solid fa-comment"></i>
+                  <span className="text">List Comments</span>
+                </NavLink>
+              </li>
+              <li className="menu-item">
+                <NavLink
+                  activeclassname="active"
+                  className="menu-link"
+                  to="/admin/categorys"
                 >
                   <i className="icon fas fa-list"></i>
                   <span className="text">Category</span>
@@ -96,7 +106,7 @@ const Sidebar = (props) => {
               <li className="menu-item">
                 <NavLink
                   activeclassname="active"
-                  className="menu-link disabled"
+                  className="menu-link"
                   to="/admin/seller"
                 >
                   <i className="icon fa-solid fa-store"></i>

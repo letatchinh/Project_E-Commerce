@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { deleteProduct } from "../../../redux/admin/Actions/ProductActions";
+import StyledRating from "../../client/StyledRating";
 const Product = (props) => {
   const { product } = props;
   const dispatch = useDispatch();
+  const navigator = useNavigate();
   const [active, setActive] = useState(0);
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure ?")) {
       dispatch(deleteProduct(id));
     }
+    navigator(-1);
   };
 
   return (
@@ -24,12 +27,54 @@ const Product = (props) => {
             <Link to="#" className="title text-truncate">
               {product.name}
             </Link>
-            <div className="price mb-2">
-              {product.price < 1000
-                ? "$" + product.price
-                : product.price + "VND"}
+            {product.discount === 0 && (
+              <div className="price mb-2 price-box">
+                {product.price < 1000
+                  ? "$" + product.price
+                  : product.price.toLocaleString() + "VND"}
+              </div>
+            )}
+            {product.discount !== 0 && (
+              <div className="price mb-2 price-box">
+                {product.price < 1000
+                  ? "$" + product.price * ((100 - product.discount) / 100)
+                  : (
+                      product.price *
+                      ((100 - product.discount) / 100)
+                    ).toLocaleString() + "VND"}
+                <sup className="price-old">
+                  {product.price < 1000
+                    ? "$" + product.price
+                    : product.price.toLocaleString() + "VND"}
+                </sup>
+              </div>
+            )}
+            <div className="product-rating">
+              <StyledRating value={product.rating} />
+              <span
+                style={{
+                  fontSize: "12px",
+                  fontWeight: "bold",
+                  marginLeft: "5px",
+                  marginBottom: "-10px",
+                  position: "relative",
+                  top: "-4px",
+                }}
+              >
+                ({product.numReviews})
+              </span>
             </div>
             <div className="price mb-2">Category: {product.category}</div>
+            <div className="price mb-2">
+              Count In Stocks: {product.countInStock}
+            </div>
+            {product.discount > 0 && (
+              <div className="dicount mb-2">-{product.discount}%</div>
+            )}
+
+            <div className="price mb-2">
+              Quantity Sold: {product.quantitySold}
+            </div>
             <div className="row productImageSub">
               {product.images.map((e, i) => (
                 <img

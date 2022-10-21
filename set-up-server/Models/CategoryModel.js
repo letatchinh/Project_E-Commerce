@@ -4,7 +4,7 @@ const categotySchema = mongoose.Schema(
   {
     name: {
       type: String,
-      require: true,
+      require: [true, "Please add a category Name"],
     },
   },
   {

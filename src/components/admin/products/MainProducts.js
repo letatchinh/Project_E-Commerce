@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../../../redux/admin/Actions/ProductActions.js";
 import Message from "../LoadingError/Error";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
+import { listAllCategorys } from "../../../redux/admin/Actions/CategoryAction";
 const MainProducts = () => {
   const [keyword, setKeyword] = useState();
   const [sortPrice, setSortPrice] = useState();
@@ -19,23 +20,21 @@ const MainProducts = () => {
   const { loading, error, products, page, pages } = productList;
   const productDelete = useSelector((state) => state.productDelete);
   const { error: errorDelete, success: successDelete } = productDelete;
+
+  const categoryList = useSelector((state) => state.categoryList);
+  const { categorys } = categoryList;
+
   const fetch = useCallback(async () => {
+    await dispatch(listAllCategorys());
     await dispatch(
       listProducts(keyword, pagenumber, sortPrice, keywordCategory)
     );
-  }, [
-    dispatch,
-    productDelete,
-    pagenumber,
-    keyword,
-    sortPrice,
-    keywordCategory,
-  ]);
+  }, [dispatch, pagenumber, keyword, sortPrice, keywordCategory]);
   useEffect(() => {
     fetch();
     // sortLoswtoHight();
     // setarrProduct(arrProduct);
-  }, [fetch]);
+  }, [fetch, productDelete]);
   // let arrProduct = [];
 
   const handlesortPrice = (e) => {
@@ -82,10 +81,12 @@ const MainProducts = () => {
             <div className="col-lg-2 col-6 col-md-3">
               <select className="form-select" onChange={handlesortCategory}>
                 <option value="">All category</option>
-                <option value="trousers">Trousers</option>
-                <option value="hat">hat</option>
-                <option value="shirt">Shirt</option>
-                <option value="shoe">Shoe</option>
+                {categorys &&
+                  categorys.map((cate) => (
+                    <option key={cate._id} value={cate.name}>
+                      {cate.name}
+                    </option>
+                  ))}
               </select>
             </div>
 

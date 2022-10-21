@@ -1284,3 +1284,59 @@ a:hover span {
 .fas.fa-bell {
   font-size: 15px;
 }
+
+.dicount {
+  position: absolute;
+  color: #fff;
+  font-size: 12px;
+  top: -1px;
+  right: 0;
+  background: red;
+  padding: 0px 9px;
+  border-top-right-radius: 2px;
+}
+
+.price-box {
+  color: rgb(238, 77, 45);
+  margin-top: 5px;
+  white-space: nowrap;
+}
+
+.price-old {
+  margin-left: 2px;
+  font-size: 14px;
+  text-decoration: line-through;
+
+}
+
+.bg-image {
+  display: block;
+  padding: 5px 0px;
+}
+
+.mask {
+  display: flex;
+  margin: 5px 0px;
+}
+
+.mask>* {
+  margin: 0px 5px;
+}
+
+.active {
+  background-color: #adb5bd;
+}
+
+.wrapper-table::-webkit-scrollbar {
+  width: 12px;
+}
+
+.wrapper-table::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+.wrapper-table::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}

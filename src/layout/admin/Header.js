@@ -15,6 +15,7 @@ import { Stack } from "@mui/material";
 const Header = (props) => {
   const dispatch = useDispatch();
   const navigator = useNavigate();
+  const [countNotice, setCountNotice] = useState(0);
 
   //modal popup
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -22,6 +23,7 @@ const Header = (props) => {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     dispatch(orderNoticeAction(orderWatch));
+    setCountNotice(0);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -41,11 +43,14 @@ const Header = (props) => {
   const orderNotice = useSelector((state) => state.orderNotice);
   const { orderWatch } = orderNotice;
 
+  const orderDetails = useSelector((state) => state.orderDetail);
+  const { loading, error, order } = orderDetails;
+
   const orderListNopagination = useSelector(
     (state) => state.orderListNopagination
   );
   const { ordersNotice } = orderListNopagination;
-  const [countNotice, setCountNotice] = useState(0);
+
   const fetch = useCallback(async () => {
     await dispatch(listOrders());
     await dispatch(orderListNoticeAction());
@@ -60,12 +65,8 @@ const Header = (props) => {
     e.preventDefault();
     dispatch(logout());
   };
-
-  console.log(ordersNotice);
-  const handleNotice = () => {
-    // dispatch(orderNoticeAction(orderWatch));
-    // navigator("/admin/orders");
-  };
+  // console.log(ordersNotice);
+  const [active, setActive] = useState(null);
   return (
     <header
       className="main-header navbar"
@@ -100,7 +101,7 @@ const Header = (props) => {
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
             >
-              <div className="" onClick={handleNotice}>
+              <div className="">
                 <i className="fas fa-bell"></i>
                 <span className="btn-notice-number">{countNotice}</span>
               </div>
@@ -114,29 +115,33 @@ const Header = (props) => {
                 "aria-labelledby": "basic-button",
               }}
             >
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Shipping Address</th>
-                    <th scope="col">Tax price</th>
-                    <th scope="col">Total Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {ordersNotice &&
-                    ordersNotice
-                      .filter((e) => e.watched === false)
-                      .map((e) => (
-                        <tr key={e._id}>
-                          <th scope="row">{e.user}</th>
-                          <td>{e.shippingAddress.address}</td>
-                          <td>{e.taxPrice}</td>
-                          <td>{e.totalPrice}</td>
-                        </tr>
-                      ))}
-                </tbody>
-              </table>
+              {ordersNotice &&
+                ordersNotice
+                  .filter((e) => e.watched === false)
+                  .map((e) => (
+                    <div onClick={() => setActive(e)} key={e._id}>
+                      <Link to={`/admin/order/${e._id}`} className="mask">
+                        <dl
+                          style={{
+                            padding: "4px 4px 0",
+                            width: "100%",
+                            border: "1px solid",
+                          }}
+                          key={e._id}
+                          className={`${active === e && "active"}`}
+                        >
+                          <dd scope="row">User: {e.user.name}</dd>
+                          <dd>Email: {e.user.email}</dd>
+                          <dd>
+                            {e.user.address === ""
+                              ? ""
+                              : "Address: " + e.user.address}
+                          </dd>
+                          <dd>Total: {e.totalPrice} $</dd>
+                        </dl>
+                      </Link>
+                    </div>
+                  ))}
             </Menu>
           </li>
           <li className="nav-item">
@@ -159,9 +164,6 @@ const Header = (props) => {
             </Link>
             <div className={isDisplay ? "drop-active" : ""}>
               <div className="dropdown-menu dropdown-menu-end">
-                <Link className="dropdown-item" to="/admin/">
-                  My profile
-                </Link>
                 {/*  <Link className="dropdown-item" to="#">
                   Settings
                 </Link> */}

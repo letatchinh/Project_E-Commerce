@@ -51,7 +51,7 @@ orderRouter.post(
 orderRouter.get(
   "/allOrderNotice",
   asyncHandler(async (req, res) => {
-    const ordersNotice = await Order.find({});
+    const ordersNotice = await Order.find({}).populate("user");
 
     // const orders = orders1.filter((e) => e.user.name.includes(req.query.name));
     res.json({ ordersNotice });
@@ -190,6 +190,7 @@ orderRouter.put(
 
     if (order) {
       order.isDelivered = true;
+      order.isPaid = true;
       order.deliveredAt = Date.now();
 
       const updateOrder = await order.save();

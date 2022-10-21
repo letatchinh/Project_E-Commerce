@@ -12,6 +12,9 @@ import {
   PRODUCT_LISTALL_FAIL,
   PRODUCT_LISTALL_REQUEST,
   PRODUCT_LISTALL_SUCCESS,
+  PRODUCT_LISTSELLER_FAIL,
+  PRODUCT_LISTSELLER_REQUEST,
+  PRODUCT_LISTSELLER_SUCCESS,
   PRODUCT_LIST_FAIL,
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
@@ -55,6 +58,45 @@ export const listProducts =
       }
       dispatch({
         type: PRODUCT_LIST_FAIL,
+        payload: message,
+      });
+    }
+  };
+
+//ALL PRODUCT WITH PAGENITION
+export const listProductSeller =
+  (pageNumber = "") =>
+  async (dispatch, getState) => {
+    try {
+      const token = ADMIN_TOKEN;
+      await dispatch({ type: PRODUCT_LISTSELLER_REQUEST });
+
+      // let { userLogin: userInfo } = getState();
+
+      const config = {
+        headers: {
+          // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
+          // Authorization: `Bearer ${token}`,
+          // "Content-Type": "application/json",
+        },
+      };
+
+      const { data } = await axios.get(
+        `/api/products/filterHotProduct?page=${pageNumber}`,
+        config
+      );
+
+      dispatch({ type: PRODUCT_LISTSELLER_SUCCESS, payload: data });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === "Not authorized, token failed") {
+        dispatch(logout());
+      }
+      dispatch({
+        type: PRODUCT_LISTSELLER_FAIL,
         payload: message,
       });
     }
@@ -230,7 +272,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
 
 // CREATE PRODUCT
 export const createProduct =
-  (name, price, description, countInStock, images, category) =>
+  (name, price, description, countInStock, images, category, discount) =>
   async (dispatch, getState) => {
     const token = ADMIN_TOKEN;
     try {
@@ -248,7 +290,15 @@ export const createProduct =
 
       const { data } = await axios.post(
         `/api/products/`,
-        { name, price, description, countInStock, images, category },
+        {
+          name,
+          price,
+          description,
+          countInStock,
+          images,
+          category,
+          discount,
+        },
         config
       );
 

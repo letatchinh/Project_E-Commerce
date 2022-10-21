@@ -16,7 +16,7 @@ const SalesStatistical = () => {
               width: "100%",
               height: "350px",
             }}
-            src="https://charts.mongodb.com/charts-clotheshop-isudy/embed/charts?id=633f90fa-ed2a-4c99-8f5e-c98f4d6e3544&maxDataAge=300&theme=light&autoRefresh=true"
+            src="https://charts.mongodb.com/charts-clotheshop-isudy/embed/charts?id=633f90fa-ed2a-4c99-8f5e-c98f4d6e3544&maxDataAge=10&theme=light&autoRefresh=true"
           ></iframe>
         </article>
       </div>

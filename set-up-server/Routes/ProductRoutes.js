@@ -55,6 +55,7 @@ productRoute.get(
           : { _id: -1 }
       );
     res.send({ products, page, pages: Math.ceil(count / pageSize) });
+    // const arr = products.find()
   })
 );
 // FILTER PRODUCT SALE
@@ -110,16 +111,14 @@ productRoute.post(
     const product = await Product.find({ _id: { $in: productsId } });
     product.forEach((e, i) => {
       if (e.countInStock < productsQty[i]) {
-        p.push(e)
+        p.push(e);
       }
-    })
-    if(p.length !== 0){
-      res.json({status : false , listOutOfStock : p})
+    });
+    if (p.length !== 0) {
+      res.json({ status: false, listOutOfStock: p });
+    } else {
     }
-    else{
-
-    }
-    res.json({status : true});
+    res.json({ status: true });
   })
 );
 //ADMIN GET ALL PRODUCT WITHOUT SEARCH AND PAGENATION
@@ -264,8 +263,15 @@ productRoute.post(
   protect,
   admin,
   asyncHandler(async (req, res) => {
-    const { name, price, description, countInStock, images, category } =
-      req.body;
+    const {
+      name,
+      price,
+      description,
+      countInStock,
+      images,
+      category,
+      discount,
+    } = req.body;
     const productExists = await Product.findOne({ name });
     if (productExists) {
       res.status(400);
@@ -279,6 +285,7 @@ productRoute.post(
         user: req.user._id,
         images,
         category,
+        discount,
       });
       if (product) {
         const createdproduct = await product.save();
@@ -333,8 +340,16 @@ productRoute.put(
   protect,
   admin,
   asyncHandler(async (req, res) => {
-    const { name, price, description, countInStock, images, category } =
-      req.body;
+    const {
+      name,
+      price,
+      description,
+      countInStock,
+      images,
+      category,
+      discount,
+      quantitySold,
+    } = req.body;
     const product = await Product.findById(req.params.id);
     const productExists = await Product.findOne({ name });
     if (productExists) {
@@ -347,6 +362,8 @@ productRoute.put(
       product.countInStock = countInStock || product.countInStock;
       product.images = images || product.images;
       product.category = category || product.category;
+      product.discount = discount || product.discount;
+      product.quantitySold = quantitySold || product.quantitySold;
 
       const updatedProduct = await product.save();
       res.json(updatedProduct);

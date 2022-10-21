@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -17,23 +17,28 @@ const CurrencyComponent = () => {
 
   const productsListAll = useSelector((state) => state.productsListAll);
   const { loading, error, productsAll } = productsListAll;
-
+  const [active, setActive] = useState(false);
   // const productList = useSelector((state) => state.productList);
   // const { loading, error, products } = productList;
+
   console.log(productsAll);
   useEffect(() => {
     dispatch(listAllProducts());
     dispatch(listProducts());
-    // dispatch(currencyUSD());
   }, [dispatch]);
+  const [index, setIndex] = useState(1);
 
   const handleCurrencyVND = () => {
+    setActive(true);
     dispatch(currencyVND());
     toast("Change VND success ");
+    setIndex(2);
   };
   const handleCurrencyUSD = () => {
+    setActive(true);
     dispatch(currencyUSD());
     toast("Change USD success ");
+    setIndex(1);
   };
 
   return (
@@ -44,16 +49,18 @@ const CurrencyComponent = () => {
           <button
             type="button"
             className="btn btn-success btn-ripple"
-            onClick={handleCurrencyVND}
+            style={{ background: index === 1 ? "gray" : "" }}
+            onClick={handleCurrencyUSD}
           >
-            VND
+            USD
           </button>
           <button
             type="button"
             className="btn btn-success btn-ripple"
-            onClick={handleCurrencyUSD}
+            onClick={handleCurrencyVND}
+            style={{ background: index === 2 ? "gray" : "" }}
           >
-            USD
+            VND
           </button>
         </div>
         <section className="content-main">
@@ -63,8 +70,17 @@ const CurrencyComponent = () => {
 
           <div className="card mb-4 shadow-sm">
             <div className="card-body">
-              <div className="row">{!productsAll.products && <p>Empty</p>}</div>
-              {loading ? (
+              {active === false && (
+                <div className="row">
+                  {/* Products */}
+                  {productsAll &&
+                    productsAll.map((product) => (
+                      <Product product={product} key={product._id} />
+                    ))}
+                </div>
+              )}
+              {/* <div className="row">{!productsAll.products && <p>Empty</p>}</div> */}
+              {active === true && loading ? (
                 <LoadingDashboard />
               ) : error ? (
                 <Message variant="alert-danger">{error}</Message>

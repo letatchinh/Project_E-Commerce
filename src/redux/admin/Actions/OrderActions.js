@@ -189,11 +189,13 @@ export const deliverOrder = (order) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios
-      .put(`/api/orders/${order._id}/delivered`, {}, config)
-      .then((res) =>
-        dispatch({ type: ORDER_DELIVERED_SUCCESS, payload: res.data })
-      );
+    const { data } = await axios.put(
+      `/api/orders/${order._id}/delivered`,
+      {},
+      config
+    );
+
+    dispatch({ type: ORDER_DELIVERED_SUCCESS, payload: data });
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -225,7 +227,7 @@ export const orderNoticeAction = () => async (dispatch) => {
       },
     };
 
-    const { data } = await axios
+    await axios
       .put(`/api/orders/all/watched`, config)
       .then((res) =>
         dispatch({ type: ORDER_LISTNOTICE_SUCCESS, payload: res.orderWatch })

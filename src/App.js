@@ -37,13 +37,15 @@ import Search from "./components/client/Search";
 import ForgotPassword from "./page/client/screens/ForgotPassword";
 import AboutUs from "./page/client/AboutUs";
 import Products from "./page/client/screens/Products";
+import ProductSellerScreen from "./page/admin/screens/ProductSellerScreen";
 import ContactUsUser from "./page/client/ContactUsUser";
+import EditCategory from "./components/admin/Categories/EditCategory";
+import ProductComments from "./page/admin/screens/ProductComments";
 const ComponentHomePage = React.lazy(() =>
   import("./page/client/screens/ComponentHomePage")
 );
 
 function App() {
-  
   return (
     <>
       <Routes>
@@ -128,11 +130,38 @@ function App() {
         <Route path="/admin/login" element={<Login />} />
         <Route element={<HomePage />}>
           <Route element={<PrivateRouter />}>
-            <Route path="/admin/" element={<HomeScreen />} />
+            <Route path="/admin" element={<HomeScreen />} />
           </Route>
           <Route path="/admin/addproduct" element={<AddProducts />} />
-
-          <Route path="/admin/" element={<HomeScreen />} />
+          <Route path="/admin/productcomments" element={<ProductComments />} />
+          <Route
+            path="/admin/productcomments/:id"
+            element={<ProductComments />}
+          />
+          <Route
+            path="/admin/productcomments/page/:pagenumber"
+            element={<ProductComments />}
+          />
+          <Route
+            path="/admin/productcomments/search/:keyword"
+            element={<ProductComments />}
+            exact
+          />
+          <Route
+            path="/admin/productcomments/search/:keyword/page/:pagenumber"
+            element={<ProductComments />}
+            exact
+          />
+          <Route
+            path="/admin/productcomments/page/:pagenumber/:sortRating"
+            element={<ProductComments />}
+            exact
+          />
+          <Route path="/admin" element={<HomeScreen />} />
+          <Route
+            path="/admin/product/:id/edit"
+            element={<ProductEditScreen />}
+          />
           <Route path="/admin/products" element={<ProductScreen />} />
           <Route
             path="/admin/products/search/:keyword"
@@ -165,8 +194,14 @@ function App() {
             element={<ProductScreen />}
           /> */}
 
-          <Route path="/admin/category" element={<CategoriesScreen />} />
+          <Route path="/admin/categorys" element={<CategoriesScreen />} />
+          <Route path="/admin/category/:id/edit" element={<EditCategory />} />
           <Route path="/admin/currency" element={<CurrencyScreen />} />
+          <Route path="/admin/seller" element={<ProductSellerScreen />} />
+          <Route
+            path="/admin/seller/page/:pageNumber"
+            element={<ProductSellerScreen />}
+          />
           <Route path="/admin/orders" element={<OrderScreen />} />
           <Route
             path="/admin/orders/search/:paymentMethod"
@@ -216,10 +251,7 @@ function App() {
             path="/admin/users/page/:pagenumber"
             element={<UsersScreen />}
           />
-          <Route
-            path="/admin/product/:id/edit"
-            element={<ProductEditScreen />}
-          />
+
           <Route path="/admin/*" element={<NotFound />} />
         </Route>
       </Routes>

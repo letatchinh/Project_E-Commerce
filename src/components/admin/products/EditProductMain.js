@@ -13,9 +13,10 @@ import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const EditProductMain = (props) => {
   let id = 0;
   const { productId } = props;
-
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
+  const [discount, setDiscount] = useState(0);
+  const [quantitySold, setDuantitySold] = useState(0);
   const [category, setCategory] = useState("");
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
@@ -58,6 +59,8 @@ const EditProductMain = (props) => {
       setCategory(product.category);
       setPrice(product.price);
       setImages(product.images);
+      setDiscount(product.discount);
+      setDuantitySold(product.quantitySold);
     }
     // }
   }, [product, dispatch, productId]);
@@ -76,6 +79,8 @@ const EditProductMain = (props) => {
         countInStock,
         images,
         category,
+        discount,
+        quantitySold,
       })
     );
     if (product.name !== name && !products.includes(product.name)) {
@@ -89,7 +94,7 @@ const EditProductMain = (props) => {
         <form onSubmit={submitHandler}>
           <div className="pcShow">
             <div className="content-header">
-              <Link to="/admin/products" className="btn btn-danger text-white">
+              <Link to={-1} className="btn btn-danger text-white">
                 Go to products
               </Link>
               <h2 className="content-title">Update Product</h2>
@@ -247,6 +252,23 @@ const EditProductMain = (props) => {
                               />
                             ))}
                         </div>
+                      </div>
+                      <div className="mb-4">
+                        <label
+                          htmlFor="product_discount"
+                          className="form-label"
+                        >
+                          Discount
+                        </label>
+                        <input
+                          type="number"
+                          placeholder="Type here"
+                          className="form-control"
+                          id="product_discount"
+                          required
+                          value={discount}
+                          onChange={(e) => setDiscount(e.target.value)}
+                        />
                       </div>
                     </>
                   )}

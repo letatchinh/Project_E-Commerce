@@ -16,7 +16,7 @@ const ProductsStatistic = () => {
               width: "100%",
               height: "350px",
             }}
-            src="https://charts.mongodb.com/charts-clotheshop-isudy/embed/charts?id=633fb952-bcee-48ec-8a98-8cbbfdcad525&maxDataAge=300&theme=light&autoRefresh=true"
+            src="https://charts.mongodb.com/charts-clotheshop-isudy/embed/charts?id=633fb952-bcee-48ec-8a98-8cbbfdcad525&maxDataAge=10&theme=light&autoRefresh=true"
           />
         </article>
       </div>
