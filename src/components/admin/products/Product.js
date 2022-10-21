@@ -12,7 +12,7 @@ const Product = (props) => {
     if (window.confirm("Are you sure ?")) {
       dispatch(deleteProduct(id));
     }
-    navigator(-1);
+    // navigator(-1);
   };
 
   return (

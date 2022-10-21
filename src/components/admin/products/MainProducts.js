@@ -111,9 +111,11 @@ const MainProducts = () => {
           ) : (
             <div className="row">
               {/* Products */}
-              {products.map((product) => (
-                <Product product={product} key={product._id} />
-              ))}
+              {products &&
+                products.map((product) => (
+                  <Product product={product} key={product._id} />
+                ))}
+              {products.length === 0 && <div>No Empty product</div>}
             </div>
           )}
           {pages > 1 && (
