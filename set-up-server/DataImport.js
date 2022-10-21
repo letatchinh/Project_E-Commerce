@@ -77,5 +77,12 @@ ImportData.post(
     res.send({ importReview });
   })
 );
-
+ImportData.post(
+  "/listVouchers",
+  asyncHandler(async (req, res) => {
+    await Voucher.remove({});
+    const importVoucher = await Voucher.insertMany(vouches);
+    res.send({ importVoucher });
+  })
+);
 export default ImportData;

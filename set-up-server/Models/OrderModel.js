@@ -42,6 +42,9 @@ const orderSchema = mongoose.Schema(
       require: true,
       default: 0.0,
     },
+    voucher : {
+      type : Number,
+    },
     shippingPrice: {
       type: Number,
       require: true,

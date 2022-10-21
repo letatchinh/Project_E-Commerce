@@ -22,6 +22,7 @@ userRouter.post(
         email: user.email,
         address: user.address,
         avatar: user.avatar,
+        listVoucher: user.listVoucher || [],
         isAdmin: user.isAdmin,
         token: generateToken(user._id),
         createdAt: user.createdAt,
@@ -47,6 +48,7 @@ userRouter.post(
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
+        listVoucher: user.listVoucher || [],
         address : user.address,
         avatar:user.avatar,
         token: generateToken(user._id),
@@ -63,7 +65,7 @@ userRouter.post(
 userRouter.post(
   "/",
   asyncHandler(async (req, res) => {
-    const { name, email, password ,address , avatar } = req.body;
+    const { name, email, password ,address , avatar,listVoucher } = req.body;
 
     const userExists = await User.findOne({ email });
 
@@ -77,7 +79,8 @@ userRouter.post(
       email,
       password,
       address,
-      avatar
+      avatar,
+      listVoucher
     });
 
     if (user) {
@@ -87,6 +90,7 @@ userRouter.post(
         email: user.email,
         address: user.address,
         avatar: user.avatar,
+        listVoucher: user.listVoucher || [],
         isAdmin: user.idAdmin,
         token: generateToken(user._id),
       });
@@ -110,6 +114,7 @@ userRouter.post(
         address : user.address || "",
         avatar : user.avatar || "",
         isAdmin: user.isAdmin,
+        listVoucher: user.listVoucher || [],
         token: generateToken(user._id),
         createdAt: user.createdAt,
       });
@@ -125,6 +130,7 @@ userRouter.post(
         email: newUser.email,
         address : user.address || "",
         avatar : user.avatar || "",
+        listVoucher : user.listVoucher || [],
         isAdmin: false,
         token: generateToken(newUser._id),
         createdAt: newUser.createdAt,
@@ -132,19 +138,6 @@ userRouter.post(
     }
   })
 );
-// PROFILE
-
-// userRouter.get(
-//   "/profileUser",
-//   (async (req, res) => {
-//     const user = await User.find({});
-
-//       res.json(
-//         user
-//       );
-
-//   })
-// );
 
 //UPDATE PROFILE
 userRouter.put(
@@ -155,6 +148,7 @@ userRouter.put(
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
       user.address = req.body.address || user.address;
+      user.listVoucher = [...user.listVoucher,req.body.newVoucher] || user.listVoucher;
       if (req.body.password) {
         user.password = req.body.password;
       }
@@ -166,6 +160,7 @@ userRouter.put(
         address: updateUser.address,
         avatar: updateUser.avatar,
         isAdmin: updateUser.isAdmin,
+        listVoucher: updateUser.listVoucher,
         createdAt: updateUser.createdAt,
         token: generateToken(updateUser._id),
       });
@@ -176,6 +171,36 @@ userRouter.put(
   })
 );
 
+//ADD NEW VOUCHER
+userRouter.put(
+  "/addNewVoucher/:id",
+  asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+    const newVoucher = req.body.newVoucher
+    if(user){
+            user.listVoucher = [...user.listVoucher,{voucher : newVoucher}] || user.listVoucher;
+            const updateUser = await user.save();
+            res.json(updateUser)
+    }
+    else {
+      res.status(404);
+      throw new Error("User not found");
+    }
+  })
+);
+//get Voucher By id user
+userRouter.get(
+  "/getVoucherUser/:id",
+  asyncHandler(async (req, res) => {
+    const user =   await User.findById(req.params.id).populate({
+      path : 'listVoucher.voucher',
+      select: 'name discount image'
+    });
+    const listVoucher = user.listVoucher
+    const listVouchers = listVoucher.map(e => (e.voucher))
+    res.json(listVouchers)
+  })
+);
 // RESET PASSWORD
 userRouter.put(
   "/resetPassword",
@@ -193,6 +218,7 @@ userRouter.put(
         email: updateUser.email,
         isAdmin: updateUser.isAdmin,
         address: updateUser.address,
+        listVoucher: updateUser.listVoucher,
         avatar: updateUser.avatar,
         createdAt: updateUser.createdAt,
         token: generateToken(updateUser._id),
@@ -203,6 +229,7 @@ userRouter.put(
     }
   })
 );
+//get id user
 userRouter.get(
   "/getId/:id",
   asyncHandler(async (req, res) => {
@@ -210,7 +237,8 @@ userRouter.get(
     res.json(user)
   })
 );
-//get id user
+
+
 
 //USER DISABLED
 userRouter.put(
@@ -263,6 +291,7 @@ userRouter.put(
         email: updateUser.email,
         address: updateUser.address,
         avatar: updateUser.avatar,
+        listVoucher: updateUser.listVoucher,
         isAdmin: updateUser.isAdmin,
         createdAt: updateUser.createdAt,
         token: generateToken(updateUser._id),

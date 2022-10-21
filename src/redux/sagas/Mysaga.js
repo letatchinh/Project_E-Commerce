@@ -140,6 +140,9 @@ export function* fetchAddOrder(action) {
     );
     if (status === STATUS_CODE.CREATED) {
       yield put({ type: "ADD_ORDER_SUCCESS", payload: data });
+      if(action.payload.setStep){
+        yield action.payload.setStep()
+      }
     }
   } catch (error) {
     ToastError("Failed Order")

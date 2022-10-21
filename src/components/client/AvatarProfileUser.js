@@ -56,7 +56,7 @@ export default function AvatarProfileUser() {
             borderRadius: fill ? 0 : "50%",
           }}
           alt="Remy Sharp"
-          src={`/images/${users.avatar}`}
+          src={users.avatar === "" ? `/images/img02.png` : `/images/${users.avatar}`}
         />
       </Button>
       <Menu

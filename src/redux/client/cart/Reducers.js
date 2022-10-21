@@ -5,6 +5,7 @@ const initvalue = {
   totalBill: 0,
   allListCart: [],
   taxShip : 0,
+  voucher : 0,
 };
 const cartReducers = (state = initvalue, action) => {
   switch (action.type) {
@@ -42,9 +43,13 @@ const cartReducers = (state = initvalue, action) => {
       }, 0);
       return {
         ...state,
-        totalBill: newTotal,
+        totalBill: parseFloat(newTotal.toFixed(2)),
       };
-
+      case TYPES.CAL_VOUCHER:
+        return {
+          ...state,
+          voucher: action.payload,
+        };
     case "FETCH_TAX_SHIP":
   
       return {

@@ -25,6 +25,8 @@ import moment from "moment";
 import getToken from "../../../constant/getTokenUser";
 import { PayPalButton } from 'react-paypal-button-v2'
 import { fetchAddOrderRequest} from "../../../redux/sagas/Mysaga";
+import AxiosUser from "../../../apis/client/AxiosUser";
+import ToastError from "../../../components/client/ToastError";
 export default function Payment() {
   const config = {
     headers: { Authorization: `Bearer ${getToken()}` }
@@ -52,6 +54,8 @@ export default function Payment() {
   ];
   const [activeStep, setActiveStep] = useState(1);
   const taxShip = useSelector(state => state.cart.taxShip)
+  const voucher = useSelector(state => state.cart.voucher)
+
   const [value, setValue] = useState("");
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -68,8 +72,15 @@ export default function Payment() {
       setActiveStep(1)
     }
   },[listChecked])
+  const setStep = () => {
+    setActiveStep(2)
+  }
   const handlePayment = async () => {
     const now = moment()._d;
+    const listToCheckStock = listChecked.map(e => ({product : e._id,quanlity : e.quanlity}))
+    // CHECK IN SERVER STOCK
+ AxiosUser.post("/api/products/checkCountInStock",listToCheckStock).then(res => {
+  if(res.data.status){
     const filnalList = listChecked.map(e => ({
       name : e.name,
       qty : e.quanlity,
@@ -77,6 +88,7 @@ export default function Payment() {
       price : (e.discount > 0) ? (e.price - (e.price * e.discount) / 100) : e.price,
       product : e._id
     }))
+
     const newOrder = {
       user : idUser,
       orderItem :filnalList,
@@ -95,15 +107,20 @@ export default function Payment() {
 
       },
       taxPrice : 10,
+      voucher : voucher,
       shippingPrice : taxShip,
-      totalPrice : parseFloat((parseFloat(totalBill) + taxShip).toFixed(2)),
+      totalPrice : parseFloat((parseFloat(totalBill) + taxShip - voucher).toFixed(2)),
       isPaid : value === "Paypal" ? true : false,
       paidAt : value === "Paypal" ? now : ""
     };
- await dispatch(fetchAddOrderRequest({newOrder,config}))
-  setActiveStep(2)
+  dispatch(fetchAddOrderRequest({newOrder,config,setStep}))
+  }
+  else{
+    res.data.listOutOfStock.map(e => ToastError(`${e.name} Is Out Of Stock , Stock is ${e.countInStock}`))
+  }
+  })
+   
   };
-
   useEffect(() => {
     const addPaypalScript = async() => {
       const {data : clientId} = await axios.get("/api/config/paypal").catch(err => console.log());
@@ -173,6 +190,10 @@ if(value === ""){
                   <Typography variant="h6" fontWeight="bold">
                   {taxShip} $
                   </Typography>
+                  <Typography variant="h6">Voucher :</Typography>
+                  <Typography variant="h6" fontWeight="bold">
+                  {voucher} $
+                  </Typography>
                 </Stack>
                 <Stack
                   width="100%"
@@ -183,7 +204,7 @@ if(value === ""){
                     Total
                   </Typography>
                   <Typography variant="h6" fontWeight="bold">
-                    {(parseFloat(totalBill) + taxShip).toFixed(2)} $
+                    {(parseFloat(totalBill) + taxShip - voucher).toFixed(2)} $
                   </Typography>
                 </Stack>
               </Stack>
@@ -244,7 +265,7 @@ if(value === ""){
                     </RadioGroup>
                   </FormControl>
                   {
-                    value === "Paypal" && <PayPalButton amount={totalBill && (parseFloat(totalBill) + taxShip)} onSuccess={successPaymentPaypal}/> 
+                    value === "Paypal" && <PayPalButton amount={totalBill && (parseFloat(totalBill) + taxShip - voucher)} onSuccess={successPaymentPaypal}/> 
                   }
                 </Stack>
                 <Button

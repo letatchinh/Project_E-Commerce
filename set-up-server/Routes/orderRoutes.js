@@ -18,6 +18,7 @@ orderRouter.post(
       paymentMethod,
       itemsPrice,
       taxPrice,
+      voucher,
       isPaid,
       shippingPrice,
       totalPrice,
@@ -35,6 +36,7 @@ orderRouter.post(
         itemsPrice,
         taxPrice,
         isPaid,
+        voucher,
         shippingPrice,
         totalPrice,
       });

@@ -36,7 +36,6 @@ const loginSuccess = useSelector((state) => state.user.loginSuccess);
 const statusThemme = useSelector((state) => state.colorCommon.status);
 let [searchParams, setSearchParams] = useSearchParams()
 const [anchorEl, setAnchorEl] = useState(null);
-const {pathname} = location
 const open = Boolean(anchorEl);
 const navigate = useNavigate();
 const handleClick = (event) => {
@@ -125,11 +124,7 @@ const handleClick = (event) => {
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
             >
-              <AccountCircleOutlinedIcon
-              
-                className="IconsWhite"
-                fontSize="medium"
-              />
+              <div style={{width : '35px' , height : '35px'}}><img style={{height : '100%',objectFit : 'cover' , borderRadius : '50%'}} src={loginSuccess.avatar === "" ? "/images/img02.png" : `/images/${loginSuccess.avatar}` } alt="avatart"/></div>
                <MyTypography fontSize="12px" color="white">
                 {loginSuccess.name}
               </MyTypography>
