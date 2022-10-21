@@ -190,10 +190,18 @@ if(value === ""){
                   <Typography variant="h6" fontWeight="bold">
                   {taxShip} $
                   </Typography>
-                  <Typography variant="h6">Voucher :</Typography>
+                  
+                </Stack>
+                <Stack
+                  width="100%"
+                  justifyContent="space-between"
+                  direction="row"
+                >
+                 <Typography variant="h6">Voucher :</Typography>
                   <Typography variant="h6" fontWeight="bold">
                   {voucher} $
                   </Typography>
+                  
                 </Stack>
                 <Stack
                   width="100%"
