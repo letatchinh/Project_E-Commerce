@@ -48,7 +48,7 @@ export default function ListCart() {
     useEffect(() => {
       axios
         .get(
-          `https://api.mapbox.com/geocoding/v5/mapbox.places/${user.address}.json?access_token=pk.eyJ1IjoibGV0YXRjaGluaCIsImEiOiJjbDhjd2x1NTkwMzV0M3BvYmpweWJwZG9hIn0.crltMkQeuF92KSs1DRH2pQ`
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${SubAddress || user.address}.json?access_token=pk.eyJ1IjoibGV0YXRjaGluaCIsImEiOiJjbDhjd2x1NTkwMzV0M3BvYmpweWJwZG9hIn0.crltMkQeuF92KSs1DRH2pQ`
         )
         .then((res) => axios
             .get(
@@ -121,7 +121,7 @@ export default function ListCart() {
         <Typography fontSize='14px' color='#757575'>Total</Typography>
             <Typography color='#f57224' fontSize='1.3rem'>{(parseFloat(totalBill) + taxShip - voucher).toFixed(2)} $</Typography>
         </Stack>
-        <Link className={((isCheck && user.address !== "" )&& (isCheck && SubAddress !== null)) ? 'disableLink': " "} to='/payment'><Button endIcon={<ArrowForwardIcon className='surFaceArrow'/>}  disabled={!isCheck || user.address=== ""} sx={{width : '100%'}} color='warning' variant='contained'>Confirm Order</Button></Link>
+        <Link className={(((!isCheck || user.address === "" ) && (!isCheck || !SubAddress))) ? 'disableLink': " "} to='/payment'><Button endIcon={<ArrowForwardIcon className='surFaceArrow'/>}  disabled={(((!isCheck || user.address === "" ) && (!isCheck || !SubAddress)))} sx={{width : '100%'}} color='warning' variant='contained'>Confirm Order</Button></Link>
         </Stack>
         </Stack>
     </Container>

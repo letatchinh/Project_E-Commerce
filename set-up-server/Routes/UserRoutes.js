@@ -280,7 +280,7 @@ userRouter.put(
     }
   })
 );
-
+// EDIT USER
 userRouter.put(
   "/profileUser/:id",
   asyncHandler(async (req, res) => {
@@ -305,6 +305,24 @@ userRouter.put(
         createdAt: updateUser.createdAt,
         token: generateToken(updateUser._id),
       });
+    } else {
+      res.status(404);
+      throw new Error("User not found");
+    }
+  })
+);
+// ADD VOUCHER FOR USER
+userRouter.put(
+  "/addVoucher/:id",
+  asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+    const newvoucher = String(req.body.IdnewVoucher)
+    if (user) {
+      const isHave = User.find({_id : req.params.id , listVoucher : {$in : newvoucher}})
+      // user.listVoucher = [...user.listVoucher,{voucher:newvoucher}];
+      // const updateUser = await user.save();
+      // res.json(updateUser);
+      res.json(isHave)
     } else {
       res.status(404);
       throw new Error("User not found");

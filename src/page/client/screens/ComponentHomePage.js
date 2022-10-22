@@ -9,6 +9,7 @@ import ListProductNew from "../../../components/client/ListProductNew";
 import ListProductTrending from "../../../components/client/ListProductTrending";
 import BannerShowMainProduct from "../../../components/client/BannerShowMainProduct";
 import ListProductForYou from "../../../components/client/ListProductForYou";
+import ListVoucherScreen from "./ListVoucherScreen";
 
 export default function ComponentHomePage() {
   const mainBackGround2 = useSelector(
@@ -29,6 +30,7 @@ export default function ComponentHomePage() {
         <Container>
           <Stack spacing={2}>
             <Category />
+            <ListVoucherScreen />
             <ListProductSale />
             <ListProductNew />
             <ListProductTrending />

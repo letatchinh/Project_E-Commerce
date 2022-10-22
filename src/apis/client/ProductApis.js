@@ -55,3 +55,11 @@ export const fetchListHot = async(action) => {
         console.log(error);
     }
 }
+export const fetchListVoucherScreen = async(action) => {
+    try{
+        const res = await AxiosUser.get(`/api/vouchers/all`)
+        return res.data
+    } catch (error) {
+        console.log(error);
+    }
+}

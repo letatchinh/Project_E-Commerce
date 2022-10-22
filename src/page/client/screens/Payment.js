@@ -39,7 +39,7 @@ export default function Payment() {
   const listCarts = useSelector(state => state.cart.allListCart)
   const [sdkReady,setSdkReady]=useState(false)
   const users = JSON.parse(localStorage.getItem(KEY_USER))
-  const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id
+
   const navigate = useNavigate()
   useEffect(() => {
     if(users === null){
@@ -55,6 +55,7 @@ export default function Payment() {
   const [activeStep, setActiveStep] = useState(1);
   const taxShip = useSelector(state => state.cart.taxShip)
   const voucher = useSelector(state => state.cart.voucher)
+  const SubAddress = useSelector(state => state.cart.SubAddress)
 
   const [value, setValue] = useState("");
   const handleChange = (event) => {
@@ -90,10 +91,10 @@ export default function Payment() {
     }))
 
     const newOrder = {
-      user : idUser,
+      user : users._id,
       orderItem :filnalList,
       shippingAddress : {
-        address: users.address || "",
+        address: SubAddress || users.address || "",
             city: "aa",
             postalCode: "POX : 12233",
             country: "aaa"
