@@ -1,11 +1,17 @@
 import { Button, Paper, Stack, Typography } from '@mui/material'
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchAddVoucherRequest } from '../../redux/sagas/Mysaga'
 import MyTypography from './MyTypography'
 
 export default function ItemListVoucherScreen({item}) {
-    const {name,discount,_id} = item
+    const {discount,_id} = item
+    const mainBackGround = useSelector(
+      (state) => state.colorCommon.mainBackGround
+    );
+    const dispatch = useDispatch()
   const  handleGetVoucher = () => {
-      
+    dispatch(fetchAddVoucherRequest({IdnewVoucher : _id}))
   }
   return (
     <Stack direction="row">
@@ -17,6 +23,7 @@ export default function ItemListVoucherScreen({item}) {
         flex: 1,
         textTransform: "capitalize",
         padding: "20px",
+        background :mainBackGround
       }}
       variant="outlined"
     >

@@ -20,7 +20,6 @@ export default function ListCart() {
     const backgroundWhite = useSelector(state => state.colorCommon.mainBackGround)
     const listCarts = useSelector(state => state.cart.allListCart)
     const [distance, setDistance] = useState(0);
-    const [listVoucher,setListVoucher] = useState([])
     const user = JSON.parse(localStorage.getItem(KEY_USER)) || ""
     const [isCheck,setIsCheck] = useState(false)
     const [checkedAll, setCheckedAll] = useState(false);
@@ -33,7 +32,7 @@ export default function ListCart() {
       dispatch(fetchTaxShip(parseFloat((distance * 0.8).toFixed(1))))
     },[distance])
     useEffect(() => {
-      dispatch(fetchVoucher(0))
+      dispatch(fetchVoucher({discount : 0,_id : null}))
     },[])
     const totalBill = useSelector(state => state.cart.totalBill)
     const taxShip = useSelector(state => state.cart.taxShip)

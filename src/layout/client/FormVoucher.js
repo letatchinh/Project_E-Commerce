@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import AxiosUser from "../../apis/client/AxiosUser";
-import { fetchVoucher } from "../../redux/client/cart/Actions";
+import { fetchCodeVoucher, fetchVoucher } from "../../redux/client/cart/Actions";
 import ListVoucher from "../../components/client/ListVoucher";
-export default function FormVoucher() {
+export default function FormVoucher({disable}) {
   const {
     register,
     handleSubmit,
@@ -14,13 +14,13 @@ export default function FormVoucher() {
     formState: { errors },
   } = useForm();
   const voucher = useSelector((state) => state.cart.voucher);
-
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const onSubmit = (data) => {
     setLoading(true);
     AxiosUser.get(`/api/vouchers/filterId/${data.voucher}`)
-      .then((res) => dispatch(fetchVoucher(res.data.discount)))
+      .then((res) => dispatch(fetchVoucher({discount : res.data.discount,_id : res.data._id}))
+     )
       .catch((err) =>
         setError("voucher", {
           type: "notFoundVoucher",
@@ -29,9 +29,15 @@ export default function FormVoucher() {
       );
     setLoading(false);
   };
-
+const disableStyle = {
+  opacity : 0.5,
+  pointerEvents : 'none'
+}
+const enableStyle = {
+  opacity : 1,
+}
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form style={disable ? disableStyle : enableStyle} onSubmit={handleSubmit(onSubmit)}>
       <Stack direction="row" padding="20px 0" justifyContent="space-between">
         <TextField
           disabled={voucher !== 0}

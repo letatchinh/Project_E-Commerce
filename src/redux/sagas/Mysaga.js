@@ -1,13 +1,11 @@
-import axios from "axios";
-import { toast } from "react-toastify";
-import { call, put, take, takeEvery, takeLatest } from "redux-saga/effects";
+import { call, put, select,  takeEvery, takeLatest } from "redux-saga/effects";
 import AxiosUser from "../../apis/client/AxiosUser";
 import { userApi } from "../../apis/usersApi";
 import ToastError from "../../components/client/ToastError";
 import ToastSuccess from "../../components/client/ToastSuccess";
 import { KEY_USER } from "../../constant/LocalStored";
 import { STATUS_CODE } from "../../constant/StatusCode";
-import { fetchCart } from "../client/cart/Actions";
+import { fetchCart, fetchVoucher } from "../client/cart/Actions";
 import { FILTER_LIST } from "../filterProduct/Types";
 import { fecthLogginSuccess } from "../login/Actions";
 export const fetchCancelOrderRequest = (user) => {
@@ -46,13 +44,24 @@ export const fetchAddOrderRequest = (action) => {
     payload: action,
   };
 };
+export const fetchRemoveVoucherRequest = (action) => {
+  return {
+    type: "REMOVE_VOUCHER",
+    payload: action,
+  };
+};
 export const fetchListCheckedRequest = (action) => {
   return {
     type: "FETCH_LIST_CHECKED_REQUEST",
     payload: action,
   };
 };
-
+export const fetchApplyVoucherRequest = (action) => {
+  return {
+    type: "FETCH_APPLY_VOUCHER_REQUEST",
+    payload: action,
+  };
+};
 export const fetchFilterPriceRequest = (action) => {
   return {
     type: "FETCH_FILTER_PRICE",
@@ -62,6 +71,12 @@ export const fetchFilterPriceRequest = (action) => {
 export const fetchLoginRequest = (action) => {
   return {
     type: "LOGIN_REQUEST",
+    payload: action,
+  };
+};
+export const fetchAddVoucherRequest = (action) => {
+  return {
+    type: "ADD_VOUCHER_REQUEST",
     payload: action,
   };
 };
@@ -140,10 +155,12 @@ export function* fetchAddOrder(action) {
       )
     );
     if (status === STATUS_CODE.CREATED) {
+      const getVoucher = (state) => state.cart.CodeVoucher
+      let Voucher = yield select(getVoucher)
       yield put({ type: "ADD_ORDER_SUCCESS", payload: data });
-      if(action.payload.setStep){
+      yield put(fetchRemoveVoucherRequest(Voucher))
         yield action.payload.setStep()
-      }
+        
     }
   } catch (error) {
     ToastError("Failed Order")
@@ -246,6 +263,55 @@ export function* fetchDeleteAllCart(){
     console.log(error);
   }
 }
+export function* fetchAddVoucher(action){
+  try {
+    const user =  JSON.parse(localStorage.getItem(KEY_USER)) || "";
+    const res = yield call(() => AxiosUser.put(`/api/users/addVoucher/${user._id}`,action.payload))
+    if(res.status === STATUS_CODE.SUCCESS){
+      yield ToastSuccess("Get Voucher Successed")
+    }
+    else{
+      ToastError("Get Voucher Failed")
+    }
+  } catch (error) {
+    ToastError(error.response.data.message)
+  }
+}
+export function* fetchRemoveVoucher(action){
+  try {
+    const user =  JSON.parse(localStorage.getItem(KEY_USER)) || "";
+    const res = yield call(() => AxiosUser.put(`/api/users/removeVoucher/${user._id}`,{IdnewVoucher :action.payload}))
+    if(res.status === STATUS_CODE.SUCCESS){
+      yield ToastSuccess("Remove Voucher Successed")
+      yield put(fetchVoucher(null))
+    }
+    else{
+      ToastError("Get Voucher Failed")
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+export function* fetchApplyVoucher(action){
+  const taxShip = (state) => state.cart.taxShip
+  const totalBill = (state) => state.cart.totalBill
+  const voucher = (state) => state.cart.voucher
+  try {
+    const Voucher = yield select(voucher)
+    const TotalBill = yield select(totalBill)
+    const TaxShip = yield select(taxShip)
+    if(Voucher < TotalBill + TaxShip){
+      yield put(fetchVoucher({discount : action.payload.discount,_id : action.payload._id}))
+      yield action.payload.handleSetActive()
+    }
+    else{
+      ToastError("Cant Apply This Voucher , i Need Money")
+    }
+  
+  } catch (error) {
+    console.log(error);
+  }
+}
 function* mySaga() {
   yield takeLatest("FETCH_ADD_CART", fetchAddToCart);
   yield takeLatest("FETCH_CART_REQUEST", fetchCartSaga);
@@ -254,7 +320,10 @@ function* mySaga() {
   // yield takeLatest("FETCH_REVIEW_REQUEST", fetchListReviewSaga);
   yield takeLatest("ADD_ORDER_REQUEST", fetchAddOrder);
   yield takeLatest("FETCH_LOGIN_WITH_GG_AND_FB_REQUEST", fetchLoginWithGgAndFb);
+  yield takeLatest("FETCH_APPLY_VOUCHER_REQUEST", fetchApplyVoucher);
   yield takeLatest("ADD_ORDER_SUCCESS", fetchAddOrderSuccessAndDeleteCart);
+  yield takeLatest("ADD_VOUCHER_REQUEST", fetchAddVoucher);
+  yield takeLatest("REMOVE_VOUCHER", fetchRemoveVoucher);
   yield takeEvery("FETCH_CART_SUCCESS", fetchCartSuccess);
   yield takeEvery("REMOVE_LIST_ORDER_REQUEST", fetchCancelOrder);
   yield takeEvery("FETCH_FILTER_PRICE", fetchFilterPrice);

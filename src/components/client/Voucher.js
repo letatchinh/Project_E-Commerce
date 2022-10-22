@@ -2,25 +2,26 @@ import { Button } from '@mui/material'
 import { Stack } from '@mui/system'
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { fetchVoucher } from '../../redux/client/cart/Actions';
+import {  fetchVoucher } from '../../redux/client/cart/Actions';
+import { fetchApplyVoucherRequest } from '../../redux/sagas/Mysaga';
 
 export default function Voucher({item,active,handleSetActive,handleUnSetActive}) {
     const dispatch = useDispatch()
-    const {name,discount} = item
+    const {name,discount,_id} = item
     const handleSetVoucher = () => {
       if(active){
         return
       }
       else{
-        dispatch(fetchVoucher(discount))
-        handleSetActive()
+        dispatch(fetchApplyVoucherRequest({discount,_id,handleSetActive}))
       }
     
     }
     const handleCancelVoucher = () => {
       if(active){
-        dispatch(fetchVoucher(0))
+        dispatch(fetchVoucher({discount : 0,_id : null}))
         handleUnSetActive()
+        
       }
       else{
         return

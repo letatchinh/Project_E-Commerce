@@ -5,7 +5,7 @@ import asyncHandler from "express-async-handler";
 import generateToken from "../utils/generateToken.js";
 import User from "../Models/UserModel.js";
 import { protect, admin } from "../MiddelWare/AuthMiddleware.js";
-import { trusted } from "mongoose";
+import mongoose, { trusted } from "mongoose";
 
 const userRouter = express.Router();
 
@@ -316,18 +316,41 @@ userRouter.put(
   "/addVoucher/:id",
   asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
-    const newvoucher = String(req.body.IdnewVoucher)
+    const newvoucher = mongoose.Types.ObjectId(req.body.IdnewVoucher);
     if (user) {
-      const isHave = User.find({_id : req.params.id , listVoucher : {$in : newvoucher}})
-      // user.listVoucher = [...user.listVoucher,{voucher:newvoucher}];
-      // const updateUser = await user.save();
-      // res.json(updateUser);
-      res.json(isHave)
-    } else {
-      res.status(404);
-      throw new Error("User not found");
-    }
-  })
+      const isHave = user.listVoucher.some(e => JSON.stringify(e.voucher)===JSON.stringify(newvoucher))
+      if(isHave){
+       res.status(401);
+       throw new Error("This voucher is Exist in your Bag")
+      }
+      else{
+        user.listVoucher = [...user.listVoucher,{voucher : newvoucher}] || user.listVoucher;
+        const updateUser = await user.save();
+        res.json(updateUser)
+    } 
+  }
+  else {
+    res.status(404);
+    throw new Error("User not found");
+  }})
+);
+// REMOVE VOUCHER FOR USER
+userRouter.put(
+  "/removeVoucher/:id",
+  asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+    const newvoucher = mongoose.Types.ObjectId(req.body.IdnewVoucher);
+    if (user) {
+  
+      user.listVoucher =  user.listVoucher.filter(e => JSON.stringify(e.voucher) !== JSON.stringify(newvoucher))
+        const updateUser = await user.save();
+        res.json(updateUser)
+    
+  }
+  else {
+    res.status(404);
+    throw new Error("User not found");
+  }})
 );
 // GET ALL USER ADMIN
 userRouter.get(
