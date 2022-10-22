@@ -147,7 +147,7 @@ productRoute.get(
 
     const prices = req.query.sortPrice || null;
     // const categorie = req.query.sortCategory || null;
-    const pageSize = 2;
+    const pageSize = 12;
     const page = Number(req.query.pageNumber) || 1;
     const count = await Product.countDocuments({
       ...keyword,
