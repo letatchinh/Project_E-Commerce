@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import { call, put, take, takeEvery, takeLatest } from "redux-saga/effects";
 import AxiosUser from "../../apis/client/AxiosUser";
 import { userApi } from "../../apis/usersApi";
@@ -213,21 +214,21 @@ export function* fetchCartSaga() {
 // }
 export function* fetchLoginWithGgAndFb(action) {
   try {
-    const { data, status } = yield call(() =>
+    const res = yield call(() =>
       AxiosUser.post(`/api/users/check`, action.payload)
     );
-    if (status === STATUS_CODE.SUCCESS) {
-      yield localStorage.setItem(KEY_USER, JSON.stringify(data));
-      yield put(fecthLogginSuccess(data));
+    if (res.status === STATUS_CODE.SUCCESS) {
+      yield localStorage.setItem(KEY_USER, JSON.stringify(res.data));
+      yield put(fecthLogginSuccess(res.data));
       ToastSuccess("Login Success");
     }
-    else if(status === STATUS_CODE.CREATED){
-      yield localStorage.setItem(KEY_USER, JSON.stringify(data));
-      yield put(fecthLogginSuccess(data));
+    else if(res.status === STATUS_CODE.CREATED){
+      yield localStorage.setItem(KEY_USER, JSON.stringify(res.data));
+      yield put(fecthLogginSuccess(res.data));
       ToastSuccess("Login Success");
     }
   } catch (error) {
-    console.log(error);
+    ToastError(error.response.data.message)
   }
 }
 export function* fetchDeleteAllCart(){

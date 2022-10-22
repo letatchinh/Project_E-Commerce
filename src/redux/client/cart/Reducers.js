@@ -6,6 +6,7 @@ const initvalue = {
   allListCart: [],
   taxShip : 0,
   voucher : 0,
+  SubAddress : null
 };
 const cartReducers = (state = initvalue, action) => {
   switch (action.type) {
@@ -49,6 +50,11 @@ const cartReducers = (state = initvalue, action) => {
         return {
           ...state,
           voucher: action.payload,
+        };
+      case "FETCH_SUBADDRESS":
+        return {
+          ...state,
+          SubAddress: action.payload,
         };
     case "FETCH_TAX_SHIP":
   

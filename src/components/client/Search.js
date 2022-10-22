@@ -30,10 +30,11 @@ export default function Search() {
   },[more10,more50,low5])
   let [searchParams, setSearchParams] = useSearchParams()
   const [page, setPage] = useState(1);
-  const { data, error, isLoading } = useQuery(
+  const { data, isLoading } = useQuery(
     [keywordSearch,type,page,sortPrice,sortRating,low,more],
     fetchSearch
   )
+  console.log(data);
 useEffect(() => {
   let objectSearch = {name : keywordSearch , page : page}
   if(type){
@@ -73,7 +74,7 @@ useEffect(() => {
     : <MyTypography fontSize='1.5rem'>No result for find</MyTypography>}
     <Stack direction="row" width='100%'>
      <Stack position={{md : 'relative',sm : 'absolute' , xs : 'absolute'}} top={0}>
-     <SideBarFilter />
+     <SideBarFilter setPage={() => setPage(1)}/>
      </Stack>
       <Stack width='100%'>
         <Stack
@@ -85,7 +86,7 @@ useEffect(() => {
             color="#7a7a9d"
             sx={{ textShadow: "0 0 1px gray", fontSize : 'calc(0.5vw + 0.8rem)', display : {md : 'block' , sm : 'none' , xs : 'none'} }}
           >
-            {data && data.products?.length} Products
+            {data && data.count} Products
           </Typography>
           <SortBar />
         </Stack>

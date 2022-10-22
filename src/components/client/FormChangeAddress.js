@@ -21,6 +21,7 @@ import AxiosUser from '../../apis/client/AxiosUser';
 import { useDispatch } from 'react-redux';
 import { fecthLogginSuccess } from '../../redux/login/Actions';
 import ToastSuccess from './ToastSuccess';
+import { fetchSubAddress } from '../../redux/client/cart/Actions';
 export default function FormChangeAddress() {
     const [loading,setLoading] = useState(false)
     const user = JSON.parse(localStorage.getItem(KEY_USER))
@@ -44,14 +45,13 @@ export default function FormChangeAddress() {
     const [SubDistrict, setSubDistrict] = useState("");
     const dispatch = useDispatch()
     const onSubmit = async(data) => {
-setLoading(true)
         const newAddress = `${data.numberHouse},${data.phuong},${data.quan},Đà Nẵng`
-        await AxiosUser.put(`/api/users/profileUser/${user._id}`,{...user,address : newAddress}).then(res => {
-            localStorage.setItem(KEY_USER,JSON.stringify(res.data))
-            dispatch(fecthLogginSuccess(res.data))
-            ToastSuccess("Update Success")
-    })
-    setLoading(false)
+    //     await AxiosUser.put(`/api/users/profileUser/${user._id}`,{...user,address : newAddress}).then(res => {
+    //         localStorage.setItem(KEY_USER,JSON.stringify(res.data))
+    //         dispatch(fecthLogginSuccess(res.data))
+    //         ToastSuccess("Update Success")
+    // })
+    await dispatch(fetchSubAddress(newAddress))
 }
     const [open, setOpen] = useState(false);
 

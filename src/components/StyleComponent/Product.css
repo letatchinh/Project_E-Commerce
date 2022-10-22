@@ -8,7 +8,14 @@
     color: black !important;
     transition: all 0.3s ease;
 }
-
+.cardContentHover{
+    overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-line-clamp: 2; /* number of lines to show */
+           line-clamp: 2; 
+   -webkit-box-orient: vertical;
+}
 .cardHover {
     overflow: hidden;
 }

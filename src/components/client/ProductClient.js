@@ -12,7 +12,6 @@ import { v4 } from "uuid";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { KEY_USER } from "../../constant/LocalStored";
 import { fetchAddToCartRequestSaga } from "../../redux/sagas/Mysaga";
-import AxiosUser from "../../apis/client/AxiosUser";
 import TypographyThreeDot from "./TypographyThreeDot";
 import PriceSell from './PriceSell'
 export default function ProductClient({ item }) {
@@ -124,7 +123,7 @@ export default function ProductClient({ item }) {
         >
           {name}
         </Typography> */}
-        <div style={{padding : '5px 0'}}><TypographyThreeDot className='cardContentHover'>{name}</TypographyThreeDot></div>
+        <div style={{padding : '5px 0' , height : '50px'}}><TypographyThreeDot className='cardContentHover'>{name}</TypographyThreeDot></div>
         <Stack direction='row' justifyContent='space-between'>
         <PriceSell fontSize="18px" price={price} discount={item.discount}/>
         <Button
