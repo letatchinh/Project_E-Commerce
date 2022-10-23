@@ -22,6 +22,7 @@ export default function Search() {
   const more50 = useSelector((state) => state.filterProduct.more50);
   const [more,setMore] = useState(null)
   const [low,setLow] = useState(null)
+  const [mainData,setMainData] = useState([])
   useEffect(() => {
     const arrMore = [more10,more50]
     arrMore.sort()
@@ -34,7 +35,6 @@ export default function Search() {
     [keywordSearch,type,page,sortPrice,sortRating,low,more],
     fetchSearch
   )
-  console.log(data);
 useEffect(() => {
   let objectSearch = {name : keywordSearch , page : page}
   if(type){
@@ -54,6 +54,10 @@ useEffect(() => {
   }
   setSearchParams(objectSearch) 
 },[searchParams.get('name'),type,sortPrice,sortRating,low,more,page])
+// useEffect(() => {
+//  data && setMainData([...mainData,[data.products]])
+// },[data])
+// console.log(mainData);
   const handleChange = (event, value) => {
     setPage(value);
   };

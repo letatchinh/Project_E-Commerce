@@ -234,14 +234,27 @@ export default function DetailProduct() {
                       width="70%"
                       justifyContent="space-between"
                     >
-                      <Tooltip placement="top-end" title="Đang bảo trì">
-                        <Button
+                      {/* <Tooltip placement="top-end" title="Đang bảo trì"> */}
+                        <Button onClick={async(e) => {
+            if(localStorage.getItem(KEY_USER)){
+             await dispatch(
+            fetchAddToCartRequestSaga({
+        product: _id,
+        user: user._id,
+      })
+    )
+    navigate("/cart")
+            }
+            else{
+              navigate("/login")
+            }
+          }}
                           sx={{ width: "45%", textTransform: "capitalize" }}
                           variant="contained"
                         >
                           <Typography fontSize="1.2rem">Buy</Typography>
                         </Button>
-                      </Tooltip>
+                      {/* </Tooltip> */}
                       <Button
                         onClick={() => {
                           if (localStorage.getItem(KEY_USER)) {

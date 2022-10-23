@@ -57,11 +57,15 @@ productRoute.get(
       .limit(pageSize)
       .skip(pageSize * (page - 1))
       .sort(
-        sortPrice || sortRating
+        sortPrice && sortRating
           ? { price: sortPrice, rating: sortRating }
+          : sortPrice
+          ? { price: sortPrice }
+          : sortRating
+          ? { rating: sortRating }
           : { _id: -1 }
       );
-    res.send({ products, page, pages: Math.ceil(count / pageSize),count });
+    res.send({ products, page, pages: Math.ceil(count / pageSize), count });
     // const arr = products.find()
   })
 );

@@ -2,7 +2,7 @@ import { FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/mate
 import { Stack } from '@mui/system'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setSortPrice, setSortRating, sortHighToLow, sortLowToHigh, sortRatingHighToLow, sortRatingLowtoHigh } from '../../redux/filterProduct/Actions'
+import { setSortPrice, setSortRating} from '../../redux/filterProduct/Actions'
 import '../StyleComponent/SideBarFilter.css'
 
 export default function SortBar() {
@@ -14,8 +14,11 @@ export default function SortBar() {
     if(event.target.value){
       dispatch(setSortPrice(-1))
     }
-    else{
+    else if(event.target.value === false){
       dispatch(setSortPrice(1))
+    }
+    else{
+      dispatch(setSortPrice(null))
     }
   };
   const [rating, setRating] = useState('');
@@ -24,8 +27,11 @@ export default function SortBar() {
     if(event.target.value){
       dispatch(setSortRating(-1))
     }
-    else{
+    else if(event.target.value === false){
       dispatch(setSortRating(1))
+    }else{
+      dispatch(setSortRating(null))
+
     }
   };
   return (
@@ -42,6 +48,7 @@ export default function SortBar() {
         >
           <MenuItem value={true}>High to low</MenuItem>
           <MenuItem value={false}>Low to High</MenuItem>
+          <MenuItem value={null}>None</MenuItem>
         </Select>
       </FormControl>
     <FormControl sx={{width : {md : '200px' , sm : '100px' , xs : '100px'}  , background : 'white'}}>
@@ -55,6 +62,7 @@ export default function SortBar() {
         >
           <MenuItem value={true}>High to low</MenuItem>
           <MenuItem value={false}>Low to High</MenuItem>
+          <MenuItem value={null}>None</MenuItem>
         </Select>
       </FormControl>
    </Stack>

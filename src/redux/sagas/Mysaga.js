@@ -74,6 +74,12 @@ export const fetchLoginRequest = (action) => {
     payload: action,
   };
 };
+export const fetchCheckVoucherRequest = (action) => {
+  return {
+    type: "FETCH_CHECK_VOUCHER_REQUEST",
+    payload: action,
+  };
+};
 export const fetchAddVoucherRequest = (action) => {
   return {
     type: "ADD_VOUCHER_REQUEST",
@@ -292,24 +298,29 @@ export function* fetchRemoveVoucher(action){
     console.log(error);
   }
 }
+
 export function* fetchApplyVoucher(action){
+  try {
+    yield put(fetchCheckVoucherRequest({discount : action.payload.discount,handleSetActive : action.payload.handleSetActive}))
+  } catch (error) {
+    console.log(error);
+  }
+}
+export function* fetchCheckVoucher(action){
   const taxShip = (state) => state.cart.taxShip
   const totalBill = (state) => state.cart.totalBill
-  const voucher = (state) => state.cart.voucher
   try {
-    const Voucher = yield select(voucher)
     const TotalBill = yield select(totalBill)
     const TaxShip = yield select(taxShip)
-    if(Voucher < TotalBill + TaxShip){
+    if(action.payload.discount < TotalBill + TaxShip){
       yield put(fetchVoucher({discount : action.payload.discount,_id : action.payload._id}))
-      yield action.payload.handleSetActive()
+        yield action.payload.handleSetActive()
     }
     else{
       ToastError("Cant Apply This Voucher , i Need Money")
     }
-  
   } catch (error) {
-    console.log(error);
+    
   }
 }
 function* mySaga() {
@@ -319,6 +330,7 @@ function* mySaga() {
   yield takeLatest("FETCH_DELETE_ALL_CART_REQUEST", fetchDeleteAllCart);
   // yield takeLatest("FETCH_REVIEW_REQUEST", fetchListReviewSaga);
   yield takeLatest("ADD_ORDER_REQUEST", fetchAddOrder);
+  yield takeLatest("FETCH_CHECK_VOUCHER_REQUEST", fetchCheckVoucher);
   yield takeLatest("FETCH_LOGIN_WITH_GG_AND_FB_REQUEST", fetchLoginWithGgAndFb);
   yield takeLatest("FETCH_APPLY_VOUCHER_REQUEST", fetchApplyVoucher);
   yield takeLatest("ADD_ORDER_SUCCESS", fetchAddOrderSuccessAndDeleteCart);
