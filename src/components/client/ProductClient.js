@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
@@ -17,7 +17,7 @@ import PriceSell from './PriceSell'
 export default function ProductClient({ item }) {
   const dispatch = useDispatch();
   const navigate = useNavigate()
-  const [isFetch,setIsFetch] = useState(false)
+  // const [isFetch,setIsFetch] = useState(false)
   const {
     name,
     images,
@@ -26,23 +26,22 @@ export default function ProductClient({ item }) {
     rating,
     numReviews
   } = item;
-  const [review,setReview] = useState({numReview : 0,count : 0})
   const mainColorText = useSelector((state) => state.colorCommon.mainColorText);
-  const mainTextShadow = useSelector((state) => state.colorCommon.mainTextShadow);
   const idUser = localStorage.getItem(KEY_USER) && JSON.parse(localStorage.getItem(KEY_USER))._id;
   const [active, setActive] = useState(0);
-  const myRef = useRef()
-  useEffect(() => {
-    if (!myRef?.current) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsFetch(true)
-      }
-    });
-    observer.observe(myRef.current);
-  }, [myRef]);
+  // const myRef = useRef()
+  // useEffect(() => {
+  //   if (!myRef?.current) return;
+  //   const observer = new IntersectionObserver(([entry]) => {
+  //     if (entry.isIntersecting) {
+  //       setIsFetch(true)
+  //     }
+  //   });
+  //   observer.observe(myRef.current);
+  // }, [myRef]);
   return (
-    <Box ref={myRef}
+    <Box
+    //  ref={myRef}
       sx={{
         boxShadow: "0 0 6px 2px #e5e3e3",
         display: "flex",

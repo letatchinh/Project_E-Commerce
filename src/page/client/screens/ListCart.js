@@ -21,7 +21,6 @@ export default function ListCart() {
     const background2 = useSelector(state => state.colorCommon.mainBackGround2)
     const backgroundWhite = useSelector(state => state.colorCommon.mainBackGround)
     const status = useSelector(state => state.colorCommon.status)
-
     const listCarts = useSelector(state => state.cart.allListCart)
     const [distance, setDistance] = useState(0);
     const user = JSON.parse(localStorage.getItem(KEY_USER)) || ""
@@ -31,10 +30,10 @@ export default function ListCart() {
     useEffect(() => {
       dispatch(fetchTotalBill())
      setIsCheck(listCarts.some(e => e.isChecked))
-    },[listCarts])
+    },[listCarts,dispatch])
     useEffect(() => {
       dispatch(fetchTaxShip(parseFloat((distance * 0.8).toFixed(1))))
-    },[distance])
+    },[distance,dispatch])
     useEffect(() => {
       dispatch(fetchVoucher({discount : 0,_id : null}))
     },[])
@@ -47,7 +46,6 @@ export default function ListCart() {
       "Choose Payment Method",
       "Wait admin Check Order",
     ];
-    const [activeStep, setActiveStep] = useState(0);
     useEffect(() => {
       axios
         .get(
@@ -65,7 +63,7 @@ export default function ListCart() {
             )
         )
         .catch((err) => {});
-    }, [user]);
+    }, [user,SubAddress]);
      const handleChange = (event) => {
       setCheckedAll(event.target.checked);
       dispatch(checkedAllProductRequest(event.target.checked))

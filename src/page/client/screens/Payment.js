@@ -56,7 +56,6 @@ export default function Payment() {
   const taxShip = useSelector(state => state.cart.taxShip)
   const voucher = useSelector(state => state.cart.voucher)
   const SubAddress = useSelector(state => state.cart.SubAddress)
-
   const [value, setValue] = useState("");
   const handleChange = (event) => {
     setValue(event.target.value);

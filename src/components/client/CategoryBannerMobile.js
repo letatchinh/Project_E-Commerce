@@ -12,7 +12,6 @@ export default function CategoryBannerMobile() {
     left: false,
   });
   const toggleDrawer = (anchor, open) => () => {
-    console.log("ok");
     setState({ ...state, [anchor]: open });
   };
   const list = () => (

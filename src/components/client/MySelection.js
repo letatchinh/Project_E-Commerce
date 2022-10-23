@@ -4,11 +4,11 @@ import {  styled } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 import { v4 } from 'uuid';
 
-function MySelection({...props},children,ref) {
+function MySelection({...props},ref) {
     const status = useSelector(state => state.colorCommon.status)
     const CssSelect = styled(Select)({
-        '& .MuiFormControl-root':{
-            color : 'white'
+        '& .MuiSelect-outlined':{
+            color : !status && 'white'
           },
         '& .MuiOutlinedInput-notchedOutline': {
             borderColor: !status && '#999',

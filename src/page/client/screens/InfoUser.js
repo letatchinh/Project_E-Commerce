@@ -34,9 +34,6 @@ export default function InfoUser() {
   const statusColor = useSelector(state => state.colorCommon.status)
 
   const CssSelect = styled(Select)({
-    '& .MuiFormControl-root':{
-      color : 'white'
-    },
     '& .MuiOutlinedInput-notchedOutline': {
         borderColor: !statusColor && '#999',
     },
@@ -152,7 +149,7 @@ export default function InfoUser() {
             <Alert severity="error">{errors.quan?.message}</Alert>
           )}
           <MyTypography>Phường</MyTypography>
-          <CssSelect sx={{color : "white"}}
+          <CssSelect sx={{color :!statusColor && "white"}}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             {...register("phuong", {

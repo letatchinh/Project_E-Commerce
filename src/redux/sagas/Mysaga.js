@@ -222,19 +222,6 @@ export function* fetchCartSaga() {
     console.log(error);
   }
 }
-// export function* fetchListReviewSaga(action){
-//   const user =  JSON.parse(localStorage.getItem(KEY_USER)) || "";
-
-//   try {
-//     const {data,status} = yield call(() => AxiosUser.get(`/api/review/getReviewByIdProduct/${action.payload}`))
-//     if(status === STATUS_CODE.SUCCESS){
-
-//     }
-
-//   } catch (error) {
-//       ToastError(error)
-//   }
-// }
 export function* fetchLoginWithGgAndFb(action) {
   try {
     const res = yield call(() =>
@@ -289,7 +276,7 @@ export function* fetchRemoveVoucher(action){
     const res = yield call(() => AxiosUser.put(`/api/users/removeVoucher/${user._id}`,{IdnewVoucher :action.payload}))
     if(res.status === STATUS_CODE.SUCCESS){
       yield ToastSuccess("Remove Voucher Successed")
-      yield put(fetchVoucher(null))
+      yield put(fetchVoucher({discount : 0,_id : null}))
     }
     else{
       ToastError("Get Voucher Failed")
@@ -301,7 +288,7 @@ export function* fetchRemoveVoucher(action){
 
 export function* fetchApplyVoucher(action){
   try {
-    yield put(fetchCheckVoucherRequest({discount : action.payload.discount,handleSetActive : action.payload.handleSetActive}))
+    yield put(fetchCheckVoucherRequest({discount : action.payload.discount,_id : action.payload._id,handleSetActive : action.payload.handleSetActive}))
   } catch (error) {
     console.log(error);
   }
