@@ -89,6 +89,9 @@ const handleClick = (event) => {
     right : 0,
   }
   const isHomePage = (window.location.href === "http://localhost:3000/");
+  const handleOnKeyUp = () => {
+    console.log("ok");
+  }
   return (
     <>
       <div
@@ -233,7 +236,7 @@ const handleClick = (event) => {
                   borderRadius: "25px",
                 }}
               >
-                <InputBase
+                <InputBase onKeyUp={handleOnKeyUp}
                   {...register("searchKeyword",{ required: true })}
                   sx={{ ml: 1, flex: 1}}
                   placeholder={(location.pathname.includes(isCategory)) ? `Search in ${location.pathname.slice(9)}` : "Search"}
