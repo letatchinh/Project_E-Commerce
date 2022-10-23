@@ -6,7 +6,6 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { KEY_USER } from "../../constant/LocalStored";
 import {
   decreaseQuanlity,
-  fetchCart,
   fetchCartNew,
   fetchDeleteCartRequest,
   increaseQuanlity,
@@ -16,6 +15,8 @@ import TypographyThreeDot from "./TypographyThreeDot";
 import PriceSell from './PriceSell'
 import ToastError from "./ToastError";
 export default function ItemListCart({ item }) {
+  const status = useSelector(state => state.colorCommon.status)
+
   const listCarts = useSelector((state) => state.cart.allListCart);
   const dispatch = useDispatch();
   const { name, images, price, quanlity, isChecked , discount,countInStock } = item;
@@ -41,7 +42,7 @@ export default function ItemListCart({ item }) {
       padding="10px"
     >
       <Stack direction="row" alignItems="center" spacing={1} width="60%">
-        <Checkbox
+        <Checkbox sx={{color : !status && 'white'}}
           checked={checked}
           onChange={handleChange}
           inputProps={{ "aria-label": "controlled" }}

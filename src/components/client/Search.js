@@ -11,7 +11,6 @@ import MyTypography from "./MyTypography";
 import { useSearchParams } from "react-router-dom";
 import ErrorNoItem from "./ErrorNoItem";
 import ListProduct from "./ListProduct";
-
 export default function Search() {
   const keywordSearch = useSelector((state) => state.filterProduct.keyword);
   const type = useSelector((state) => state.filterProduct.type);
@@ -22,7 +21,6 @@ export default function Search() {
   const more50 = useSelector((state) => state.filterProduct.more50);
   const [more,setMore] = useState(null)
   const [low,setLow] = useState(null)
-  const [mainData,setMainData] = useState([])
   useEffect(() => {
     const arrMore = [more10,more50]
     arrMore.sort()
@@ -54,10 +52,6 @@ useEffect(() => {
   }
   setSearchParams(objectSearch) 
 },[searchParams.get('name'),type,sortPrice,sortRating,low,more,page])
-// useEffect(() => {
-//  data && setMainData([...mainData,[data.products]])
-// },[data])
-// console.log(mainData);
   const handleChange = (event, value) => {
     setPage(value);
   };
@@ -101,11 +95,7 @@ useEffect(() => {
         : 
        
         <ErrorNoItem/>
-     
-  
-
         }
-       
       </Stack>
     </Stack>
   </Stack>

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AxiosUser from "../../apis/client/AxiosUser";
 import { fetchCodeVoucher, fetchVoucher } from "../../redux/client/cart/Actions";
 import ListVoucher from "../../components/client/ListVoucher";
+import MyTextField from "../../components/client/MyTextField";
 export default function FormVoucher({disable}) {
   const {
     register,
@@ -39,20 +40,20 @@ const enableStyle = {
   return (
     <form style={disable ? disableStyle : enableStyle} onSubmit={handleSubmit(onSubmit)}>
       <Stack direction="row" padding="20px 0" justifyContent="space-between">
-        <TextField
-          disabled={voucher !== 0}
+       
+        <MyTextField disabled={voucher !== 0}
           helperText={errors.voucher && errors.voucher.message}
           error={
             (errors && errors?.voucher !== undefined) ||
             errors.type === "notFoundVoucher"
           }
           {...register("voucher", { required: true })}
-          sx={{ width: "70%" }}
+          sx={{ width: "90%" }}
           size="small"
           color="primary"
           variant="outlined"
-          placeholder="Voucher..."
-        />
+          // fullwidth
+          placeholder="Voucher..."/>
         <Button
           sx={{ height: "100%" }}
           disabled={watch("voucher") === ""}

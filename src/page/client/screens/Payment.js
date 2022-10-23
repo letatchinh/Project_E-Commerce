@@ -5,9 +5,6 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
-  Step,
-  StepLabel,
-  Stepper,
   Typography,
 } from "@mui/material";
 import { Container, Stack } from "@mui/system";
@@ -27,6 +24,8 @@ import { PayPalButton } from 'react-paypal-button-v2'
 import { fetchAddOrderRequest} from "../../../redux/sagas/Mysaga";
 import AxiosUser from "../../../apis/client/AxiosUser";
 import ToastError from "../../../components/client/ToastError";
+import MyStepper from "./MyStepper";
+import MyTypography from "../../../components/client/MyTypography";
 export default function Payment() {
   const config = {
     headers: { Authorization: `Bearer ${getToken()}` }
@@ -35,7 +34,8 @@ export default function Payment() {
 
   const mainBackGround = useSelector(state => state.colorCommon.mainBackGround)
   const mainBackGround2 = useSelector(state => state.colorCommon.mainBackGround2)
-  const mainColorText = useSelector(state => state.colorCommon.mainColorText)
+  const status = useSelector(state => state.colorCommon.status)
+
   const listCarts = useSelector(state => state.cart.allListCart)
   const [sdkReady,setSdkReady]=useState(false)
   const users = JSON.parse(localStorage.getItem(KEY_USER))
@@ -150,13 +150,13 @@ if(value === ""){
   }
   return (
     <>
-        <div style={{ background: mainBackGround2, padding: "20px", position : 'relative' }}>
+        <div style={{ background: mainBackGround, padding: "20px", position : 'relative' }}>
         {listChecked.length === 0 && activeStep !== 2  &&  <Stack>
           <Link style={{position : 'absolute' , top : '2rem' , left : '5rem'}} to='/cart'><Button startIcon={<ArrowBackIosIcon/>} >Back</Button></Link>
         <ErrorNoItem src='https://bizweb.dktcdn.net/100/351/215/themes/713955/assets/empty-cart.png?1617619216743'/>
         </Stack>}
           {activeStep === 1 && listChecked.length !== 0  && (
-            <Container sx={{ background: 'white', borderRadius: "10px", position : 'relative' }}>
+            <Container sx={{ background: mainBackGround2, borderRadius: "10px", position : 'relative' }}>
             <Link style={{position : 'absolute' , top : '2rem' , left : '2rem'}} to='/cart'><Button startIcon={<ArrowBackIosIcon/>} >Back</Button></Link>
               <Stack
                 spacing={3}
@@ -164,14 +164,9 @@ if(value === ""){
                 padding="20px"
                 textAlign="center"
               >
-                <Typography variant="h4">Payment </Typography>
-                <Stepper activeStep={activeStep} alternativeLabel>
-                  {steps.map((label) => (
-                    <Step key={label}>
-                      <StepLabel color='primary'>{label}</StepLabel>
-                    </Step>
-                  ))}
-                </Stepper>
+                <MyTypography variant="h4">Payment </MyTypography>
+                <MyStepper activeStep={1} steps={steps}/>
+
               </Stack>
               <Stack>
                 {listChecked?.map((value) => (
@@ -187,10 +182,10 @@ if(value === ""){
                   justifyContent="space-between"
                   direction="row"
                 >
-                  <Typography variant="h6">Tax Ship :</Typography>
-                  <Typography variant="h6" fontWeight="bold">
+                  <MyTypography variant="h6">Tax Ship :</MyTypography>
+                  <MyTypography variant="h6" fontWeight="bold">
                   {taxShip} $
-                  </Typography>
+                  </MyTypography>
                   
                 </Stack>
                 <Stack
@@ -198,10 +193,10 @@ if(value === ""){
                   justifyContent="space-between"
                   direction="row"
                 >
-                 <Typography variant="h6">Voucher :</Typography>
-                  <Typography variant="h6" fontWeight="bold">
+                 <MyTypography variant="h6">Voucher :</MyTypography>
+                  <MyTypography variant="h6" fontWeight="bold">
                   {voucher} $
-                  </Typography>
+                  </MyTypography>
                   
                 </Stack>
                 <Stack
@@ -209,12 +204,12 @@ if(value === ""){
                   justifyContent="space-between"
                   direction="row"
                 >
-                  <Typography variant="h6" fontWeight="bold">
+                  <MyTypography variant="h6" fontWeight="bold">
                     Total
-                  </Typography>
-                  <Typography variant="h6" fontWeight="bold">
+                  </MyTypography>
+                  <MyTypography variant="h6" fontWeight="bold">
                     {(parseFloat(totalBill) + taxShip - voucher).toFixed(2)} $
-                  </Typography>
+                  </MyTypography>
                 </Stack>
               </Stack>
 
@@ -231,12 +226,13 @@ if(value === ""){
                 <Stack>
                   <FormControl>
                     <FormLabel id="demo-row-radio-buttons-group-label">
-                      <Typography variant="h5" fontWeight="bold">
+                      <MyTypography variant="h5" fontWeight="bold">
                         Payment Method
-                      </Typography>
+                      </MyTypography>
                     </FormLabel>
                     <RadioGroup
                       row
+                      sx={{color : !status && 'white'}}
                       aria-labelledby="demo-row-radio-buttons-group-label"
                       name="row-radio-buttons-group"
                       value={value}
@@ -253,7 +249,7 @@ if(value === ""){
                           />
                         }
                       />
-                      <FormControlLabel
+                      <FormControlLabel 
                         onChange={handleChange}
                         value="shipCod"
                         control={<Radio />}
@@ -289,7 +285,7 @@ if(value === ""){
               </Stack>
             </Container>) }
           { activeStep === 2  && (
-            <Container sx={{ background: 'white', borderRadius: "10px"  , padding : '10px'}}>
+            <Container sx={{ background: mainBackGround2 , borderRadius: "10px"  , padding : '10px'}}>
               <OrderSuccess />
             </Container>
           )}

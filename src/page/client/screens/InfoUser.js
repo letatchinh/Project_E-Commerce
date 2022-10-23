@@ -14,7 +14,6 @@ import DoneIcon from "@mui/icons-material/Done";
 import { fecthLogginSuccess } from "../../../redux/login/Actions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import * as regex from "../../../constant/YupGlobal.js";
 import Alert from "@mui/material/Alert";
 import "../../../components/StyleComponent/StyleCommomUser.css";
 import InputLabel from "@mui/material/InputLabel";
@@ -26,8 +25,25 @@ import { KEY_USER } from "../../../constant/LocalStored";
 import { useNavigate } from "react-router-dom";
 import AxiosUser from "../../../apis/client/AxiosUser";
 import ToastSuccess from "../../../components/client/ToastSuccess";
+import MyTextField from "../../../components/client/MyTextField";
+import MyTypography from "../../../components/client/MyTypography";
+import MySelection from "../../../components/client/MySelection";
+import {  styled } from '@mui/material/styles';
 
 export default function InfoUser() {
+  const statusColor = useSelector(state => state.colorCommon.status)
+
+  const CssSelect = styled(Select)({
+    '& .MuiFormControl-root':{
+      color : 'white'
+    },
+    '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: !statusColor && '#999',
+    },
+    '& .MuiSvgIcon-root' : {
+        color : !statusColor && '#999'
+    }
+  });
   const users = JSON.parse(localStorage.getItem(KEY_USER))
   const navigate = useNavigate()
   useEffect(() => {
@@ -83,17 +99,15 @@ export default function InfoUser() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Stack spacing={2}>
-          <TextField
-            defaultValue={user.name}
+          <MyTextField  defaultValue={user.name}
             fullWidth
             {...register("name")}
             label="Name"
-            variant="outlined"
-          />{" "}
+            variant="outlined"/>
           {errors.name && (
             <Alert severity="error">{errors.name?.message}</Alert>
           )}
-          <TextField
+          <MyTextField
             defaultValue={user.email}
             fullWidth
             {...register("email")}
@@ -106,11 +120,11 @@ export default function InfoUser() {
           )}
           
     
-          <InputLabel id="demo-simple-select-label">
+          <MyTypography id="demo-simple-select-label">
             Vui lòng chọn đúng địa chỉ , nếu không bạn sẽ mất quyền lợi
-          </InputLabel>
-          <InputLabel id="demo-simple-select-label">Quận Huyện</InputLabel>
-          <Select
+          </MyTypography>
+          <MyTypography >Quận Huyện</MyTypography>
+          {/* <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={addressSelect}
@@ -123,12 +137,22 @@ export default function InfoUser() {
             label="Quận"
           >
             {QUAN.map(e => <MenuItem key={v4()} value={e}>{e}</MenuItem>) }
-          </Select>
+          </Select> */}
+          <MySelection   labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            data={QUAN}
+            value={addressSelect}
+            {...register("quan", {
+              onChange: (e) => {
+                setAddressSelect(e.target.value);
+                setSubDistrict('')
+              },
+            })}/>
           {errors.quan && (
             <Alert severity="error">{errors.quan?.message}</Alert>
           )}
-          <InputLabel id="demo-simple-select-label">Phường</InputLabel>
-          <Select
+          <MyTypography>Phường</MyTypography>
+          <CssSelect sx={{color : "white"}}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             {...register("phuong", {
@@ -197,12 +221,13 @@ export default function InfoUser() {
               </MenuItem>)
             }
             
-          </Select>
-          <TextField
+          </CssSelect>
+          <MyTypography>Number house</MyTypography>
+          <MyTextField
             fullWidth
             sx={{ display: isCheckDistrit ? "block" : "none" }}
             {...register("numberHouse")}
-            label="apartment number : Vui lòng viết tiếng việt có dấu"
+            label="apartment number"
             variant="outlined"
           />{" "}
           {errors.numberHouse && (
