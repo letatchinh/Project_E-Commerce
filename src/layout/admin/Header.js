@@ -65,7 +65,6 @@ const Header = (props) => {
     e.preventDefault();
     dispatch(logout());
   };
-  // console.log(ordersNotice);
   const [active, setActive] = useState(null);
   return (
     <header
@@ -116,6 +115,7 @@ const Header = (props) => {
               }}
             >
               {ordersNotice &&
+              ordersNotice.filter((e) => e.watched === false).length > 0 ? (
                 ordersNotice
                   .filter((e) => e.watched === false)
                   .map((e) => (
@@ -130,18 +130,17 @@ const Header = (props) => {
                           key={e._id}
                           className={`${active === e && "active"}`}
                         >
-                          <dd scope="row">User: {e.user.name}</dd>
-                          <dd>Email: {e.user.email}</dd>
                           <dd>
-                            {e.user.address === ""
-                              ? ""
-                              : "Address: " + e.user.address}
+                            User: {e.user.name} just ordered{" "}
+                            <i className="fas fa-eye"></i>
                           </dd>
-                          <dd>Total: {e.totalPrice} $</dd>
                         </dl>
                       </Link>
                     </div>
-                  ))}
+                  ))
+              ) : (
+                <div className="p-2">No Order</div>
+              )}
             </Menu>
           </li>
           <li className="nav-item">
