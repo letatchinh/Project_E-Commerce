@@ -1,4 +1,4 @@
-import { call, put, select,  takeEvery, takeLatest } from "redux-saga/effects";
+import { all, call, put, select,  takeEvery, takeLatest } from "redux-saga/effects";
 import AxiosUser from "../../apis/client/AxiosUser";
 import { userApi } from "../../apis/usersApi";
 import ToastError from "../../components/client/ToastError";
@@ -164,9 +164,9 @@ export function* fetchAddOrder(action) {
       const getVoucher = (state) => state.cart.CodeVoucher
       let Voucher = yield select(getVoucher)
       yield put({ type: "ADD_ORDER_SUCCESS", payload: data });
+      yield all(data.orderItem.map(e => call(() => AxiosUser.put("/api/products/updateProduct",e))))
       yield put(fetchRemoveVoucherRequest(Voucher))
-        yield action.payload.setStep()
-        
+      yield action.payload.setStep()
     }
   } catch (error) {
     ToastError("Failed Order")

@@ -88,7 +88,7 @@ export default function Payment() {
       price : (e.discount > 0) ? (e.price - (e.price * e.discount) / 100) : e.price,
       product : e._id
     }))
-
+console.log(listChecked);
     const newOrder = {
       user : users._id,
       orderItem :filnalList,
