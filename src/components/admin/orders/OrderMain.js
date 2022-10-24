@@ -48,7 +48,7 @@ const OrderMain = () => {
       navigator("/admin/orders");
     }
   };
-  // console.log(!orders.includes(name));
+  console.log(orders);
   const HandlerPaiD = (e) => {
     if (paid) {
       setPaid(e.target.value);

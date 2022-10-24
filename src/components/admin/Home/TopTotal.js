@@ -2,20 +2,25 @@ import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listOrders } from "../../../redux/admin/Actions/OrderActions";
 import { listProducts } from "../../../redux/admin/Actions/ProductActions";
-
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 const TopTotal = (props) => {
   const { orders, products, count } = props;
   // console.log(orders);
   let totalSale = 0;
   let countPaid = 0;
+  let totalPure = 0;
   if (orders) {
     orders.map((order) =>
       order.isPaid === true ? (totalSale = totalSale + order.totalPrice) : null
     );
-  }
-  if (orders) {
     orders.map((order) => (order.isPaid === true ? countPaid++ : null));
+    let arrPaid = orders.filter((order) => order.isPaid === true);
+    arrPaid.map((e) =>
+      e.orderItem.map((el) => (totalPure = el.pricePure * el.qty + totalPure))
+    );
   }
+
+  // console.log(orsders);
   const dispatch = useDispatch();
   const fetch = useCallback(async () => {
     await dispatch(listProducts());
@@ -27,7 +32,7 @@ const TopTotal = (props) => {
   }, [fetch]);
   return (
     <div className="row">
-      <div className="col-lg-4">
+      <div className="col-lg-3">
         <div className="card card-body mb-4 shadow-sm">
           <article className="icontext">
             <span className="icon icon-sm rounded-circle alert-primary">
@@ -35,13 +40,28 @@ const TopTotal = (props) => {
             </span>
             <div className="text">
               <h6 className="mb-1">Total Sales</h6>{" "}
-              <span>${Number.parseInt(totalSale).toLocaleString()}</span>
+              <span>${totalSale.toFixed(2).toLocaleString()}</span>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div className="col-lg-3">
+        <div className="card card-body mb-4 shadow-sm">
+          <article className="icontext">
+            <span className="icon icon-sm rounded-circle alert-danger text-danger">
+              <CurrencyExchangeIcon />
+            </span>
+            <div className="text">
+              <h6 className="mb-1">Total Profit</h6>{" "}
+              <span>
+                ${(totalSale - totalPure).toFixed(2).toLocaleString()}
+              </span>
             </div>
           </article>
         </div>
       </div>
 
-      <div className="col-lg-4">
+      <div className="col-lg-3">
         <div className="card card-body mb-4 shadow-sm">
           <article className="icontext">
             <span className="icon icon-sm rounded-circle alert-success">
@@ -55,7 +75,7 @@ const TopTotal = (props) => {
         </div>
       </div>
 
-      <div className="col-lg-4">
+      <div className="col-lg-3">
         <div className="card card-body mb-4 shadow-sm">
           <article className="icontext">
             <span className="icon icon-sm rounded-circle alert-warning">

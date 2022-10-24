@@ -75,6 +75,14 @@ const Product = (props) => {
             <div className="price mb-2">
               Quantity Sold: {product.quantitySold}
             </div>
+            <div className="price mb-2" style={{ whiteSpace: "nowrap" }}>
+              Price Pure:{" "}
+              <span className=" price-box">
+                {product.price < 1000
+                  ? "$" + product.pricePure
+                  : ((product.price * 80) / 100).toLocaleString() + "VND"}
+              </span>
+            </div>
             <div className="row productImageSub">
               {product.images.map((e, i) => (
                 <img
