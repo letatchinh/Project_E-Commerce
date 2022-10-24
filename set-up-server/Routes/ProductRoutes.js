@@ -2,7 +2,6 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import Product from "./../Models/ProductModel.js";
 import { admin, protect } from "./../MiddelWare/AuthMiddleware.js";
-import { number } from "yup";
 
 const productRoute = express.Router();
 
@@ -114,6 +113,32 @@ productRoute.get(
       .skip(limit * (page - 1))
       .sort({ createdAt: -1 });
     res.json({ products, page, pages: Math.ceil(count / limit), count });
+  })
+);
+
+// Update Product
+productRoute.put(
+  "/updateProduct",
+  asyncHandler(async (req,res) => {
+    const product = req.body
+    const products = await Product.findOne({_id : product.product})
+    if(products){
+       products.countInStock = products.countInStock - product.qty 
+       products.quantitySold = products.quantitySold + product.qty || products.quantitySold
+       if(products.countInStock < 0){
+        res.status(401)
+        throw new Error("out of stock")
+       }
+       else{
+        await products.save();
+        res.json(products)
+       }
+   
+    }
+    else{
+      res.status(401)
+      throw new Error("not found Product")
+    }
   })
 );
 // FILTER PRODUCT HOT
