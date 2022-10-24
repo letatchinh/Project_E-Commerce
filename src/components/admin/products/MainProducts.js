@@ -49,7 +49,7 @@ const MainProducts = () => {
     }
   };
 
-  console.log(keywordCategory);
+  // console.log(keywordCategory);
   const submitHandler = (e) => {
     e.preventDefault();
     if (keyword.trim()) {

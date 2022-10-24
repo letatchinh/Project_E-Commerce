@@ -48,6 +48,7 @@ const OrderMain = () => {
       navigator("/admin/orders");
     }
   };
+  // console.log(!orders.includes(name));
   const HandlerPaiD = (e) => {
     if (paid) {
       setPaid(e.target.value);
@@ -172,12 +173,25 @@ const OrderMain = () => {
                 <LoadingDashboard />
               ) : errors ? (
                 <Message variant="alert-danger">{errors}</Message>
-              ) : (
+              ) : orders.includes(name) ? (
                 <Orders orders={ordersFilter} />
+              ) : (
+                <div>No order</div>
               )}
             </div>
           )}
-          {paid && (
+          {paid && !name && (
+            <div className="table-responsive">
+              {loading ? (
+                <LoadingDashboard />
+              ) : errors ? (
+                <Message variant="alert-danger">{errors}</Message>
+              ) : (
+                <Orders orders={ordersPaidS} />
+              )}
+            </div>
+          )}
+          {paid && name && (
             <div className="table-responsive">
               {loading ? (
                 <LoadingDashboard />

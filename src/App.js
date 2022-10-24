@@ -135,7 +135,7 @@ function App() {
           <Route path="/admin/addproduct" element={<AddProducts />} />
           <Route path="/admin/productcomments" element={<ProductComments />} />
           <Route
-            path="/admin/productcomments/:id"
+            path="/admin/productcomments/:id/disabled"
             element={<ProductComments />}
           />
           <Route

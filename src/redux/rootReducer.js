@@ -23,7 +23,9 @@ import {
   productUpdateReducer,
 } from "./admin/Reducers/ProductReducers";
 import {
+  reviewActiveReducer,
   reviewDeleteReducer,
+  reviewDisabledReducer,
   reviewListReducer,
 } from "./admin/Reducers/ReviewReducers";
 import {
@@ -74,6 +76,8 @@ const rootReducer = combineReducers({
   categoryUpdate: categoryUpdateReducer,
   reviewList: reviewListReducer,
   reviewDelete: reviewDeleteReducer,
+  reviewDisabled: reviewDisabledReducer,
+  reviewActive: reviewActiveReducer,
 });
 
 export default rootReducer;
