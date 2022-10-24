@@ -65,7 +65,7 @@ export default function DetailProduct() {
   });
   const user = JSON.parse(localStorage.getItem(KEY_USER)) || "";
   const [itemm, setItem] = useState({});
-  const { name, images, price,  _id, discount,rating,numReviews } = itemm;
+  const { name, images, price,  _id, discount,countInStock } = itemm;
   const [listItem, setListItem] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isPayment, setIsPayment] = useState(false);
@@ -227,7 +227,12 @@ export default function DetailProduct() {
                         </Stack>
                       </Stack>
                     </Stack>
+                    <Stack direction='row' alignItems='center' spacing={2}>
                     <SelectDetailSize />
+                    
+                   {countInStock === 0 ? <MyTypography color='red'>(out of stock) </MyTypography> : <MyTypography>({countInStock}) available </MyTypography>} 
+                    </Stack>
+                    
                     {/* <AmoutDetailToOrder /> */}
                     <Stack
                       direction="row"
@@ -282,6 +287,7 @@ export default function DetailProduct() {
                         <ShoppingCartIcon />
                         <MyTypography>Add To Cart</MyTypography>
                       </Button>
+                      
                     </Stack>
                     <Box width="80%">
                       <form onSubmit={handleSubmit(onSubmit)}>

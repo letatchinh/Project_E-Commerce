@@ -73,6 +73,7 @@ productRoute.get(
   asyncHandler(async (req, res) => {
     const pageSize = Number(req.query.limit) || 8;
     const name = req.query.name || "";
+   if(name !== ""){
     const nameFilter = name ? { name: { $regex: name, $options: "i" } } : {};
     const page = Number(req.query.page) || 1;
     const products = await Product.find({
@@ -83,6 +84,10 @@ productRoute.get(
       .sort( { _id: -1 }
       );
     res.send({ products });
+   }
+   else{
+    res.send({ products : [] });
+   }
     // const arr = products.find()
   })
 );

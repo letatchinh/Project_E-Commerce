@@ -321,10 +321,13 @@ export function* fetchCheckVoucher(action){
 }
 export function* fetchSearchOnkeyUp(action){
   try {
-    yield delay(1000)
+    yield delay(500)
   const res =  yield call(() => AxiosUser.get(`/api/products/searchOnKeyUp?name=${action.payload.value}`))
      if(action.payload.func){
       yield action.payload.func(res.data.products)
+    }
+     if(action.payload.funcLoading){
+      yield action.payload.funcLoading(false)
     }
     yield console.log(action.payload);
   } catch (error) {
