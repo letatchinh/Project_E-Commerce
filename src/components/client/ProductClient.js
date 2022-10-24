@@ -24,7 +24,8 @@ export default function ProductClient({ item }) {
     price,
     _id,
     rating,
-    numReviews
+    numReviews,
+    countInStock
   } = item;
   const mainColorText = useSelector((state) => state.colorCommon.mainColorText);
   const idUser = localStorage.getItem(KEY_USER) && JSON.parse(localStorage.getItem(KEY_USER))._id;
@@ -91,14 +92,15 @@ export default function ProductClient({ item }) {
         </Typography>
       </div>
       <Link to={`/products/${_id}`}>
-        <Stack className="cardHover" sx={{ height: { md: "350px",sm : '400px', xs: "200px" }, objectFit: "cover" }}>
+        <Stack position='relative' className="cardHover" sx={{ height: { md: "350px",sm : '400px', xs: "200px" }, objectFit: "cover" }}>
           <CardMedia
             className="imgProduct"
-            sx={{ width : '100%' , height : '100%', objectFit: "cover" }}
+            sx={{ width : '100%' , height : '100%', objectFit: "cover" , opacity : countInStock === 0 ? 0.6 : 1}}
             component="img"
             alt="green iguana"
             src={`/images/${images[active]}`}
           />
+       {countInStock === 0 &&  <Stack sx={{position : 'absolute' , inset : 0,justifyContent : 'center' , alignItems : 'center'}}><Typography sx={{ padding : '60px 30px' ,borderRadius : '50%' , backgroundColor : '#00000069'}} color='white' variant="body2">Out Of Stock</Typography></Stack>}
         </Stack>
       </Link>
       <Link to={`/products/${_id}`}>
