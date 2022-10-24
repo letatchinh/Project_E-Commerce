@@ -6,10 +6,12 @@ import Header from "../../layout/client/Header/Index";
 import Footer from '../../layout/client/Footer'
 import { Button, Container, Paper, Stack, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
+import MyTextField from '../../components/client/MyTextField'
 export default function ContactUsUser() {
   const { register, handleSubmit,reset,  formState: { errors } } = useForm();
+  const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
+  const mainBackGround2 = useSelector((state) => state.colorCommon.mainBackGround2);
   const [status,setStatus] = useState(false)
   const [statusGif,setStatusGif] = useState(false)
   const onSubmit = data => {
@@ -22,9 +24,9 @@ export default function ContactUsUser() {
       <LoadingHomePageFull/>
       <Header contactActive/>
       <SwitchBackGround />
-      <div style={{background : '#F8F9FD', padding : '100px 0'}}>
+      <div style={{background: mainBackGround, padding : '100px 0'}}>
     <Container sx={{ width: {md : "60%" , xs : '100%'} }}>
-       <Paper elevation={3} sx={{  display : 'flex' , flexDirection : {md : 'row' , xs : 'column'}}}>
+       <Paper elevation={3} sx={{background: mainBackGround2,  display : 'flex' , flexDirection : {md : 'row' , xs : 'column'}}}>
        <form style={{flex : 1, padding : '50px'}} onSubmit={handleSubmit(onSubmit)}>
         <Stack alignItems={"center"} spacing={2}>
         <Typography sx={{ backgroundImage: 'linear-gradient(to right , orange, red)',
@@ -37,26 +39,15 @@ export default function ContactUsUser() {
           </Typography>
          
           </Stack>
-          <TextField size="small" 
-            {...register("email")}
-            fullWidth
-            label="Email"
-            variant="outlined"
-            error={errors.email !== undefined}
-            helperText={errors.email && errors?.email.message}
-          />
-          <TextField size="small" 
-                    id="outlined-multiline-static"
-
-            {...register("messenger")}
-            fullWidth
+          <MyTextField  size='small' {...register("email")} label="Email" error={errors.email !== undefined}
+            helperText={errors.email && errors?.email.message}/>
+          <MyTextField {...register("messenger")}
             label="Messenger"
             variant="outlined"
             multiline
             rows={4}
             error={errors.messenger !== undefined}
-            helperText={errors.messenger && errors?.messenger.message}
-          />
+            helperText={errors.messenger && errors?.messenger.message}/>
           <Button sx={{backgroundImage: "linear-gradient(45deg, #E26560, #E36183)" ,borderRadius : '50px'}} fullWidth type="submit" variant="contained">
             Send
           </Button>

@@ -4,7 +4,7 @@ import "../StyleComponent/CountDownTimer.css";
 import { Stack } from "@mui/system";
 import { Typography } from "@mui/material";
 import MyTypography from "./MyTypography";
-export default function CountdownTimer() {
+export default function CountdownTimer({timer}) {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
@@ -12,7 +12,7 @@ export default function CountdownTimer() {
   useEffect(() => {
     setInterval(() => {
       const now = moment();
-      const then = moment("2022-10-15 10:00:00", "YYYY-MM-DD hh:mm:ss");
+      const then = moment(`2022-10-15 ${timer ? timer : "10:00:00"}`, "YYYY-MM-DD hh:mm:ss");
       const countdown = moment(then - now);
       setHours(countdown.format("HH"));
       setMinutes(countdown.format("mm"));

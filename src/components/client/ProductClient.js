@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
@@ -17,7 +17,7 @@ import PriceSell from './PriceSell'
 export default function ProductClient({ item }) {
   const dispatch = useDispatch();
   const navigate = useNavigate()
-  const [isFetch,setIsFetch] = useState(false)
+  // const [isFetch,setIsFetch] = useState(false)
   const {
     name,
     images,
@@ -26,29 +26,22 @@ export default function ProductClient({ item }) {
     rating,
     numReviews
   } = item;
-  const [review,setReview] = useState({numReview : 0,count : 0})
   const mainColorText = useSelector((state) => state.colorCommon.mainColorText);
-  const mainTextShadow = useSelector((state) => state.colorCommon.mainTextShadow);
   const idUser = localStorage.getItem(KEY_USER) && JSON.parse(localStorage.getItem(KEY_USER))._id;
   const [active, setActive] = useState(0);
-  const myRef = useRef()
-  // const fetch = useCallback(() => {
-  //   AxiosUser.get(`/api/reviews/SumReviewByIdProduct/${_id}`).then(res => setReview({...review,numReview :res.data.avgReview,count : res.data.totalReview})).catch(err => console.log(err))
-  // },[isFetch])
+  // const myRef = useRef()
   // useEffect(() => {
-  //   isFetch && fetch()
-  // },[fetch])
-  useEffect(() => {
-    if (!myRef?.current) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsFetch(true)
-      }
-    });
-    observer.observe(myRef.current);
-  }, [myRef]);
+  //   if (!myRef?.current) return;
+  //   const observer = new IntersectionObserver(([entry]) => {
+  //     if (entry.isIntersecting) {
+  //       setIsFetch(true)
+  //     }
+  //   });
+  //   observer.observe(myRef.current);
+  // }, [myRef]);
   return (
-    <Box ref={myRef}
+    <Box
+    //  ref={myRef}
       sx={{
         boxShadow: "0 0 6px 2px #e5e3e3",
         display: "flex",
@@ -109,20 +102,6 @@ export default function ProductClient({ item }) {
         </Stack>
       </Link>
       <Link to={`/products/${_id}`}>
-        {/* <Typography
-          className="cardContentHover"
-          sx={{
-            padding: "10px 0",
-            fontSize: "calc(0.3vw + 10px)",
-            textShadow : mainTextShadow
-          }}
-          
-          variant="body2"
-          fontWeight="400"
-          color={mainColorText}
-        >
-          {name}
-        </Typography> */}
         <div style={{padding : '5px 0' , height : '50px'}}><TypographyThreeDot className='cardContentHover'>{name}</TypographyThreeDot></div>
         <Stack direction='row' justifyContent='space-between'>
         <PriceSell fontSize="18px" price={price} discount={item.discount}/>

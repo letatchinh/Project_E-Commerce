@@ -11,7 +11,6 @@ import MyTypography from "./MyTypography";
 import { useSearchParams } from "react-router-dom";
 import ErrorNoItem from "./ErrorNoItem";
 import ListProduct from "./ListProduct";
-
 export default function Search() {
   const keywordSearch = useSelector((state) => state.filterProduct.keyword);
   const type = useSelector((state) => state.filterProduct.type);
@@ -34,7 +33,6 @@ export default function Search() {
     [keywordSearch,type,page,sortPrice,sortRating,low,more],
     fetchSearch
   )
-  console.log(data);
 useEffect(() => {
   let objectSearch = {name : keywordSearch , page : page}
   if(type){
@@ -97,11 +95,7 @@ useEffect(() => {
         : 
        
         <ErrorNoItem/>
-     
-  
-
         }
-       
       </Stack>
     </Stack>
   </Stack>

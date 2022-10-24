@@ -4,24 +4,25 @@ import React from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import { Link } from "react-router-dom";
+import MyTypography from "./MyTypography";
 export default function OrderSuccess() {
   return (
     <Container sx={{ width: "50%" }}>
       <Stack spacing={2} alignItems="center">
-        <Typography variant="h4" fontWeight="bold">
+        <MyTypography variant="h4" fontWeight="bold">
           Your Order has been received
-        </Typography>
+        </MyTypography>
         <img
           style={{ width: "100px", height: "100px", marginTop: "50px" }}
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flat_tick_icon.svg/768px-Flat_tick_icon.svg.png"
           alt="ok"
         />
-        <Typography variant="h6" fontWeight="bold">
+        <MyTypography variant="h6" fontWeight="bold">
           Thank you for your purchase
-        </Typography>
-        <Typography variant="body1">
+        </MyTypography>
+        <MyTypography variant="body1">
           Please wait admin Check your Order
-        </Typography>
+        </MyTypography>
         <Stack spacing={3} direction="row">
           <Link to="/profile_ListOrder">
             <Button variant="contained" startIcon={<ListAltIcon />}>

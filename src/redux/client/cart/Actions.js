@@ -48,6 +48,12 @@ export const fetchVoucher = (action) => {
     payload: action,
   };
 };
+export const fetchCodeVoucher = (action) => {
+  return {
+    type: "FETCH_CODEVOUCHER",
+    payload: action,
+  };
+};
 export const fetchSubAddress = (action) => {
   return {
     type: "FETCH_SUBADDRESS",

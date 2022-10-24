@@ -15,7 +15,7 @@ productRoute.get(
     res.json(length);
   })
 );
-
+//FIlter
 productRoute.get(
   "/search",
   asyncHandler(async (req, res) => {
@@ -57,11 +57,33 @@ productRoute.get(
       .limit(pageSize)
       .skip(pageSize * (page - 1))
       .sort(
-        sortPrice || sortRating
+        sortPrice && sortRating
           ? { price: sortPrice, rating: sortRating }
+          : sortPrice
+          ? { price: sortPrice }
+          : sortRating
+          ? { rating: sortRating }
           : { _id: -1 }
       );
-    res.send({ products, page, pages: Math.ceil(count / pageSize),count });
+    res.send({ products, page, pages: Math.ceil(count / pageSize), count });
+    // const arr = products.find()
+  })
+);
+productRoute.get(
+  "/searchOnKeyUp",
+  asyncHandler(async (req, res) => {
+    const pageSize = Number(req.query.limit) || 8;
+    const name = req.query.name || "";
+    const nameFilter = name ? { name: { $regex: name, $options: "i" } } : {};
+    const page = Number(req.query.page) || 1;
+    const products = await Product.find({
+      ...nameFilter,
+    })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
+      .sort( { _id: -1 }
+      );
+    res.send({ products });
     // const arr = products.find()
   })
 );

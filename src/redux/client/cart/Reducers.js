@@ -6,6 +6,7 @@ const initvalue = {
   allListCart: [],
   taxShip : 0,
   voucher : 0,
+  CodeVoucher : null,
   SubAddress : null
 };
 const cartReducers = (state = initvalue, action) => {
@@ -49,8 +50,10 @@ const cartReducers = (state = initvalue, action) => {
       case TYPES.CAL_VOUCHER:
         return {
           ...state,
-          voucher: action.payload,
+          voucher: action.payload.discount,
+          CodeVoucher: action.payload._id,
         };
+   
       case "FETCH_SUBADDRESS":
         return {
           ...state,

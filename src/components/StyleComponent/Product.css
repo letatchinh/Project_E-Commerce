@@ -5,7 +5,7 @@
 
 .cardContentHover:hover {
     cursor: pointer;
-    color: black !important;
+    color: #D43725;
     transition: all 0.3s ease;
 }
 .cardContentHover{

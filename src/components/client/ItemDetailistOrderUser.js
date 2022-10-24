@@ -6,10 +6,10 @@ import '../StyleComponent/ItemListPayment.css'
 import PriceSell from './PriceSell';
 
 export default function ItemDetailistOrderUser({value}) {
-  const {images,name,quanlity,price,_id,discount} = value
+  const {images,name,quanlity,price,discount,product} = value
   const mainColorText = useSelector(state => state.colorCommon.mainColorText)
   return (
-    <Link  to={`/products/${_id}`}> 
+    <Link  to={`/products/${product}`}> 
     <Stack className='itemListPayment' direction='row' spacing={3} borderBottom='1px solid #CACACA' padding='10px'>
     <img style={{width : '120px',height : '120px',objectFit : 'cover'}} src={`/images/${images[0]}`} alt='22'/>
     <Stack>

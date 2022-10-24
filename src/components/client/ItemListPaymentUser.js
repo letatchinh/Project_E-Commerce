@@ -24,13 +24,11 @@ user: idUser,
     <Link to={`/products/${_id}`} >
     <Stack className='itemListPayment' direction='row' spacing={3} borderBottom='1px solid #CACACA' padding='10px'>
     <img style={{width : '100px',height : '100px',objectFit : 'cover'}} src={`/images/${images[0]}`} alt='22'/>
-    <Stack alignItems='center'>
+    <Stack alignItems='flex-start'>
         <Typography variant='body1' fontWeight='bold' color={mainColorText}>{name}</Typography>
         <Button onClick={handleBuyAgain} type="button" variant='outlined'>Buy Again</Button>
     </Stack>
     <Typography sx={{marginLeft : 'auto!important'}} alignSelf='center' variant='h6'>
-    {/* <PriceSell isSell={isSell} price={price} discount={discount}/> */}
-    {/* <Typography color='rgb(238, 77, 45)'>{price} $</Typography> */}
     <PriceSell discount={discount} price={price}/>
     </Typography>
 </Stack>

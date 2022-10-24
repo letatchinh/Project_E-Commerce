@@ -1,14 +1,18 @@
 import { Container, Stack } from "@mui/system";
 import React from "react";
-import HeaderAboutUs from "../../layout/client/HeaderAboutUs";
 import "../../components/StyleComponent/Header.css";
 import { Paper, Typography } from "@mui/material";
 import Footer from "../../layout/client/Footer";
 import PurposeAboutUs from "../../components/client/PurposeAboutUs";
 import PersonalityAboutUs from "../../components/client/PersonalityAboutUs";
 import Header from "../../layout/client/Header/Index";
+import { useSelector } from "react-redux";
+import MyTypography from "../../components/client/MyTypography";
 
 export default function AboutUs() {
+  const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
+  const mainBackGround2 = useSelector((state) => state.colorCommon.mainBackGround2);
+
   return (
     <Stack position="relative">
       {/* <HeaderAboutUs /> */}
@@ -30,7 +34,7 @@ export default function AboutUs() {
           </Typography>
         </div>
       </div>
-     <div style={{background : 'white' , padding : '2rem 0'}}>
+     <div style={{background : mainBackGround , padding : '2rem 0'}}>
      <Container sx={{marginTop : '2rem', marginBottom : '2rem' }}>
       <Stack direction={{md : 'row' , xs : 'column'}} justifyContent='space-between' spacing={10}>
       <PurposeAboutUs contentTop="Our purpose" contentBody="We believe in the transformative power of technology and want to change the world for the better by providing a platform to connect buyers and sellers within one community."/>
@@ -38,11 +42,11 @@ export default function AboutUs() {
       </Stack>
       </Container>
       <Container>
-          <Paper elevation={3} sx={{padding : '30px' ,textAlign : 'center'}}>
+          <Paper elevation={3} sx={{padding : '30px' ,textAlign : 'center',background :mainBackGround2}}>
               <Stack spacing={2} >
-                <Typography variant="h5">
+                <MyTypography variant="h5">
                 Our Personality
-                </Typography>
+                </MyTypography>
                 <Typography  variant="body1" color='#999' sx={{marginBottom : '2rem!important'}}>
                 To define who we are - how we talk, behave or react to any given situation - in essence, we are Simple, Happy and Together. These key attributes are visible at every step of the Shopee journey.
                 </Typography>

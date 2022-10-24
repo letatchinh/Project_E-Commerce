@@ -9,7 +9,7 @@ import { Container, Stack } from "@mui/system";
 import React, {  useEffect, useState } from "react";
 import InfoIcon from "@mui/icons-material/Info";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import { KEY_USER } from "../../../constant/LocalStored";
 import { useSelector } from "react-redux";
@@ -19,14 +19,31 @@ export default function ProfileUser({children}) {
   const mainBackGround2 = useSelector((state) => state.colorCommon.mainBackGround2);
   const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
   const mainColorText = useSelector(state => state.colorCommon.mainColorText)
-
   const navigate = useNavigate()
+  const location = useLocation()
+  const [active, setActive] = useState(1);
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/profile_Info":
+        setActive(1)
+        break;
+      case "/profile_ListPayment":
+        setActive(2)
+        break;
+      case "/profile_ListOrder":
+        setActive(3)
+        break;
+    
+      default: setActive(1)
+        break;
+    }
+    
+  },[location])
   useEffect(() => {
     if(users === null){
       navigate('/login')
     }
   },[users])
-  const [active, setActive] = useState(1);
   const handleCLickList = (active) => {
     setActive(active)
   }
@@ -39,7 +56,7 @@ export default function ProfileUser({children}) {
             <AvatarProfileUser />
             <MenuList>
               <Link to='/profile_Info'> 
-              <MenuItem onClick={() => handleCLickList(1)} sx={{background : (active === 1) ? "#a5d5ff8a" : 'none' , borderRadius : '10px'}}>
+              <MenuItem  sx={{background : (active === 1) ? "#a5d5ff8a" : 'none' , borderRadius : '10px'}}>
                 <ListItemIcon>
                   <InfoIcon color='primary' fontSize="small" />
                 </ListItemIcon>
@@ -47,7 +64,7 @@ export default function ProfileUser({children}) {
               </MenuItem>
               </Link>
              <Link to='/profile_ListPayment'>
-             <MenuItem onClick={() => handleCLickList(2)} sx={{background : (active === 2) ? "#a5d5ff8a" : 'none',borderRadius : '10px'}}>
+             <MenuItem sx={{background : (active === 2) ? "#a5d5ff8a" : 'none',borderRadius : '10px'}}>
                 <ListItemIcon>
                   <ShoppingBasketIcon color='primary' fontSize="small" />
                 </ListItemIcon>
@@ -55,7 +72,7 @@ export default function ProfileUser({children}) {
               </MenuItem>
               </Link>
           <Link to='/profile_ListOrder'>
-          <MenuItem onClick={() => handleCLickList(3)} sx={{background : (active === 3) ? "#a5d5ff8a" : 'none',borderRadius : '10px'}}>
+          <MenuItem sx={{background : (active === 3) ? "#a5d5ff8a" : 'none',borderRadius : '10px'}}>
                 <ListItemIcon>
                   <ListAltIcon color='primary' fontSize="small" />
                 </ListItemIcon>

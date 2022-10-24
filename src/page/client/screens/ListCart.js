@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormControlLabel, Step, StepLabel, Stepper, Typography } from '@mui/material'
+import { Button, Checkbox, FormControlLabel,  Typography } from '@mui/material'
 import { Container, Stack } from '@mui/system'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,12 +15,14 @@ import FormChangeAddress from '../../../components/client/FormChangeAddress'
 import axios from 'axios'
 import  '../../../components/StyleComponent/Linkcss.css'
 import FormVoucher from '../../../layout/client/FormVoucher'
+import MyStepper from './MyStepper'
+import MyTypography from '../../../components/client/MyTypography'
 export default function ListCart() {
     const background2 = useSelector(state => state.colorCommon.mainBackGround2)
     const backgroundWhite = useSelector(state => state.colorCommon.mainBackGround)
+    const status = useSelector(state => state.colorCommon.status)
     const listCarts = useSelector(state => state.cart.allListCart)
     const [distance, setDistance] = useState(0);
-    const [listVoucher,setListVoucher] = useState([])
     const user = JSON.parse(localStorage.getItem(KEY_USER)) || ""
     const [isCheck,setIsCheck] = useState(false)
     const [checkedAll, setCheckedAll] = useState(false);
@@ -28,12 +30,12 @@ export default function ListCart() {
     useEffect(() => {
       dispatch(fetchTotalBill())
      setIsCheck(listCarts.some(e => e.isChecked))
-    },[listCarts])
+    },[listCarts,dispatch])
     useEffect(() => {
       dispatch(fetchTaxShip(parseFloat((distance * 0.8).toFixed(1))))
-    },[distance])
+    },[distance,dispatch])
     useEffect(() => {
-      dispatch(fetchVoucher(0))
+      dispatch(fetchVoucher({discount : 0,_id : null}))
     },[])
     const totalBill = useSelector(state => state.cart.totalBill)
     const taxShip = useSelector(state => state.cart.taxShip)
@@ -44,11 +46,10 @@ export default function ListCart() {
       "Choose Payment Method",
       "Wait admin Check Order",
     ];
-    const [activeStep, setActiveStep] = useState(0);
     useEffect(() => {
       axios
         .get(
-          `https://api.mapbox.com/geocoding/v5/mapbox.places/${user.address}.json?access_token=pk.eyJ1IjoibGV0YXRjaGluaCIsImEiOiJjbDhjd2x1NTkwMzV0M3BvYmpweWJwZG9hIn0.crltMkQeuF92KSs1DRH2pQ`
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${SubAddress || user.address}.json?access_token=pk.eyJ1IjoibGV0YXRjaGluaCIsImEiOiJjbDhjd2x1NTkwMzV0M3BvYmpweWJwZG9hIn0.crltMkQeuF92KSs1DRH2pQ`
         )
         .then((res) => axios
             .get(
@@ -62,7 +63,7 @@ export default function ListCart() {
             )
         )
         .catch((err) => {});
-    }, [user]);
+    }, [user,SubAddress]);
      const handleChange = (event) => {
       setCheckedAll(event.target.checked);
       dispatch(checkedAllProductRequest(event.target.checked))
@@ -70,21 +71,17 @@ export default function ListCart() {
   return (
     <div style={{background : background2 , padding : '2rem 0' }}>
     <Container  >
-    <Stepper sx={{padding : '20px'}} activeStep={activeStep} alternativeLabel>
-                  {steps.map((label) => (
-                    <Step key={label}>
-                      <StepLabel color='primary'>{label}</StepLabel>
-                    </Step>
-                  ))}
-                </Stepper>
+                <MyStepper activeStep={0} steps={steps}/>
         <Stack direction={{md : 'row' , sm : 'column'}} spacing={1} >
         <Stack width={{md : '70%' , sm : '100%'}} spacing={1} sx={{background : backgroundWhite, padding:'10px',borderRadius:'20px'}}>
         <Stack width = '100%' direction='row' alignItems='center' >
      <div style={{flex : 1 , height : '2px' , background : 'gray', width : '100%'}}></div>
-     <Typography sx={{border : "2px solid gray" , padding : '7px' , borderRadius : '10px'}} color='black' fontSize='1.5rem'>My Cart</Typography>
+     <Typography sx={{border : "2px solid gray" , padding : '7px' , borderRadius : '10px'}} color={status ? 'black' : 'white'} fontSize='1.5rem'>My Cart</Typography>
      <div style={{flex : 1 , height : '2px' , background : 'gray', width : '100%'}}></div>
    </Stack> 
-   {listCarts && listCarts.length !== 0 && <FormControlLabel control={<Checkbox checked={checkedAll} onChange={handleChange}  />} label={!checkedAll ? "Check All" : "UnCheck All"} />}
+   {listCarts && listCarts.length !== 0 && 
+   <FormControlLabel sx={{color : !status && 'white'}} control={<Checkbox sx={{color : !status && 'white'}}  checked={checkedAll} onChange={handleChange}  />} label={!checkedAll ? "Check All" : "UnCheck All"} />
+   }
                     {listCarts && listCarts.length === 0 ? <div style={{margin : '0 auto'}}><ErrorNoItem /></div>: listCarts.map(e =>  <ItemListCart key={v4()} item={e}/>)}
            
         </Stack>
@@ -93,23 +90,23 @@ export default function ListCart() {
           <Typography  textAlign={{md : 'left', sm : 'center'}} color='#9e9e9e' fontSize='14px'>Address</Typography>
           {user.address === "" && !SubAddress ?  <FormChangeAddress /> :  <Stack direction='row' sx={{color : '#9e9e9e'}} alignItems='center' spacing={1} >
           <PlaceIcon/>
-          <Typography color='black' fontSize='13px' fontWeight='medium'>{user.address || SubAddress || ""}</Typography>
+          <MyTypography  fontSize='13px' fontWeight='medium'>{user.address || SubAddress || ""}</MyTypography>
           
            </Stack>}
         </Stack>
         <Stack spacing={1} >
-          <Typography fontSize='1.2rem'>Infomation Order</Typography>
+          <MyTypography fontSize='1.2rem'>Infomation Order</MyTypography>
           <Stack direction='row' justifyContent='space-between'>
-            <Typography fontSize='14px' color='#757575'>Total Price</Typography>
-            <Typography>{totalBill} $</Typography>
+            <MyTypography fontSize='14px' color='#757575'>Total Price</MyTypography>
+            <MyTypography>{totalBill} $</MyTypography>
           </Stack>
           <Stack direction='row' justifyContent='space-between'>
-          <Typography fontSize='14px' color='#757575'>Ship Price ({distance} km)</Typography>
-            <Typography>{(distance * 0.8).toFixed(1)} $</Typography>
+          <MyTypography fontSize='14px' color='#757575'>Ship Price ({distance} km)</MyTypography>
+            <MyTypography>{(distance * 0.8).toFixed(1)} $</MyTypography>
           </Stack>
           <Stack direction='row' justifyContent='space-between'>
-          <Typography fontSize='14px' color='#757575'>Voucher</Typography>
-            <Typography>-{voucher} $</Typography>
+          <MyTypography fontSize='14px' color='#757575'>Voucher</MyTypography>
+            <MyTypography>-{voucher} $</MyTypography>
           </Stack>
            <Typography sx={{opacity : voucher !== 0 ? 1 : 0 , transition : '0.5s ease',backgroundImage: 'linear-gradient(to right , orange, red)',
     backgroundClip: 'text',
@@ -121,7 +118,7 @@ export default function ListCart() {
         <Typography fontSize='14px' color='#757575'>Total</Typography>
             <Typography color='#f57224' fontSize='1.3rem'>{(parseFloat(totalBill) + taxShip - voucher).toFixed(2)} $</Typography>
         </Stack>
-        <Link className={((isCheck && user.address !== "" )&& (isCheck && SubAddress !== null)) ? 'disableLink': " "} to='/payment'><Button endIcon={<ArrowForwardIcon className='surFaceArrow'/>}  disabled={!isCheck || user.address=== ""} sx={{width : '100%'}} color='warning' variant='contained'>Confirm Order</Button></Link>
+        <Link className={(((!isCheck || user.address === "" ) && (!isCheck || !SubAddress))) ? 'disableLink': " "} to='/payment'><Button endIcon={<ArrowForwardIcon className='surFaceArrow'/>}  disabled={(((!isCheck || user.address === "" ) && (!isCheck || !SubAddress)))} sx={{width : '100%'}} color='warning' variant='contained'>Confirm Order</Button></Link>
         </Stack>
         </Stack>
     </Container>
