@@ -29,19 +29,24 @@ const userSchema = mongoose.Schema(
       type: String,
       require: true,
     },
-    listVoucher : [
+    listVoucher: [
       {
-        voucher : {
-          type : mongoose.Schema.Types.ObjectId,
-          require : true,
-          ref : "Voucher"
-        }
-      }
+        voucher: {
+          type: mongoose.Schema.Types.ObjectId,
+          require: true,
+          ref: "Voucher",
+        },
+      },
     ],
     active: {
       type: Boolean,
       require: true,
       default: true,
+    },
+    phone: {
+      type: Number,
+      require: true,
+      default: 0,
     },
   },
   {
