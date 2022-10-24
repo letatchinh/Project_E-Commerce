@@ -82,13 +82,13 @@ export default function Payment() {
  AxiosUser.post("/api/products/checkCountInStock",listToCheckStock).then(res => {
   if(res.data.status){
     const filnalList = listChecked.map(e => ({
+      pricePure : e.pricePure,
       name : e.name,
       qty : e.quanlity,
       images : e.images,
       price : (e.discount > 0) ? (e.price - (e.price * e.discount) / 100) : e.price,
       product : e._id
     }))
-console.log(listChecked);
     const newOrder = {
       user : users._id,
       orderItem :filnalList,
@@ -269,7 +269,7 @@ if(value === ""){
                     </RadioGroup>
                   </FormControl>
                   {
-                    value === "Paypal" && <PayPalButton amount={totalBill && (parseFloat(totalBill) + taxShip - voucher)} onSuccess={successPaymentPaypal}/> 
+                    value === "Paypal" && <PayPalButton amount={totalBill && (parseFloat((parseFloat(totalBill) + taxShip - voucher).toFixed(2)))} onSuccess={successPaymentPaypal}/> 
                   }
                 </Stack>
                 <Button

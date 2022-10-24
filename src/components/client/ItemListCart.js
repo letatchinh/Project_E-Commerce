@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TypographyThreeDot from "./TypographyThreeDot";
 import PriceSell from './PriceSell'
 import ToastError from "./ToastError";
+import Dialo from "./Dialo";
 export default function ItemListCart({ item }) {
   const status = useSelector(state => state.colorCommon.status)
 
@@ -91,15 +92,15 @@ export default function ItemListCart({ item }) {
         >
           +
         </Button>
-        <Button
-          onClick={async() => {
+       <Dialo messenger='Are you want to delete This item'   click={async() => {
            await dispatch(
               fetchDeleteCartRequest({ user: idUser, product: item._id })
             );
-          }}
+          }}> <Button
+        
         >
           <DeleteOutlineIcon color="secondary" />
-        </Button>
+        </Button></Dialo>
       </Stack>
     </Stack>
   );

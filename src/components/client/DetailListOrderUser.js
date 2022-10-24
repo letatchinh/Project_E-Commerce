@@ -43,7 +43,10 @@ export default function DetailListOrderUser({ click ,data}) {
       </Stack>
     </ContainerScoll>
     <Stack direction="row" alignItems='center'>
-    {!isDelivered &&  <Dialo click={handleCancelBill}/>}
+    {!isDelivered &&  <Dialo messenger="Are you want Cancel Bill ?" click={handleCancelBill}>
+    <Button variant="outlined">
+        Cancel Bill
+      </Button></Dialo>}
    
       <Stack marginLeft='auto' width="200px">
         <Stack>
