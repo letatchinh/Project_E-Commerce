@@ -25,7 +25,13 @@ const productSchema = mongoose.Schema(
         return this.price - (this.price * this.discount) / 100;
       },
     },
-
+    pricePure: {
+      type: Number,
+      require: true,
+      default: function () {
+        return (this.price * 80) / 100;
+      },
+    },
     numReviews: {
       type: Number,
       require: true,

@@ -1,8 +1,14 @@
 import axios from "axios";
 import {
+  REVIEW_ACTIVE_FAIL,
+  REVIEW_ACTIVE_REQUEST,
+  REVIEW_ACTIVE_SUCCESS,
   REVIEW_DELETE_FAIL,
   REVIEW_DELETE_REQUEST,
   REVIEW_DELETE_SUCCESS,
+  REVIEW_DISABLED_FAIL,
+  REVIEW_DISABLED_REQUEST,
+  REVIEW_DISABLED_SUCCESS,
   REVIEW_LIST_FAIL,
   REVIEW_LIST_REQUEST,
   REVIEW_LIST_SUCCESS,
@@ -75,6 +81,72 @@ export const deleteReview = (id) => async (dispatch, getState) => {
     }
     dispatch({
       type: REVIEW_DELETE_FAIL,
+      payload: message,
+    });
+  }
+};
+
+//REVIEW DISABLED
+export const disabledReivew = (id) => async (dispatch) => {
+  const token = ADMIN_TOKEN;
+  try {
+    await dispatch({ type: REVIEW_DISABLED_REQUEST });
+
+    // let { userLogin: userInfo } = getState();
+
+    const config = {
+      headers: {
+        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.put(`/api/reviews/${id}/disabled`, {}, config);
+
+    dispatch({ type: REVIEW_DISABLED_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: REVIEW_DISABLED_FAIL,
+      payload: message,
+    });
+  }
+};
+
+//REVIEW ACTIVE
+export const activeReivew = (id) => async (dispatch) => {
+  const token = ADMIN_TOKEN;
+  try {
+    await dispatch({ type: REVIEW_ACTIVE_REQUEST });
+
+    // let { userLogin: userInfo } = getState();
+
+    const config = {
+      headers: {
+        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.put(`/api/reviews/${id}/active`, {}, config);
+
+    dispatch({ type: REVIEW_ACTIVE_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "Not authorized, token failed") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: REVIEW_ACTIVE_FAIL,
       payload: message,
     });
   }

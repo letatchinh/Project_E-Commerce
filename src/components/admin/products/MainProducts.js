@@ -44,7 +44,12 @@ const MainProducts = () => {
   const handlesortCategory = (e) => {
     setKeywordCategory(e.target.value);
     navigator(`/admin/products/page/${page}/category/${e.target.value}`);
+    if (e.target.value === "") {
+      navigator("/admin/products");
+    }
   };
+
+  // console.log(keywordCategory);
   const submitHandler = (e) => {
     e.preventDefault();
     if (keyword.trim()) {
@@ -80,6 +85,7 @@ const MainProducts = () => {
             </form>
             <div className="col-lg-2 col-6 col-md-3">
               <select className="form-select" onChange={handlesortCategory}>
+                <option value="">Select</option>
                 <option value="">All category</option>
                 {categorys &&
                   categorys.map((cate) => (

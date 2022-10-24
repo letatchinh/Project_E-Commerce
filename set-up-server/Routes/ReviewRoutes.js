@@ -128,4 +128,44 @@ ReviewRoutes.get(
     }
   })
 );
+
+//REVIEW DISABLED
+ReviewRoutes.put(
+  "/:id/disabled",
+  protect,
+  admin,
+  asyncHandler(async (req, res) => {
+    const review = await Review.findById(req.params.id);
+
+    if (review) {
+      review.active = false;
+      review.updatedAt = Date.now();
+
+      const updateReview = await review.save();
+      res.json(updateReview);
+    } else {
+      res.status(404);
+      throw new Error("Review Not Found");
+    }
+  })
+);
+
+//REVIEW active
+ReviewRoutes.put(
+  "/:id/active",
+  protect,
+  admin,
+  asyncHandler(async (req, res) => {
+    const review = await Review.findById(req.params.id);
+    if (review) {
+      review.active = true;
+      review.updatedAt = Date.now();
+      const updateReview = await review.save();
+      res.json(updateReview);
+    } else {
+      res.status(404);
+      throw new Error("Review Not Found");
+    }
+  })
+);
 export default ReviewRoutes;

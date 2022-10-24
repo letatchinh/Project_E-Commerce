@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { listAllCategorys } from "../../../redux/admin/Actions/CategoryAction";
 import {
+  activeReivew,
   deleteReview,
+  disabledReivew,
   listReviews,
 } from "../../../redux/admin/Actions/ReviewAction.js";
 import Message from "../LoadingError/Error";
@@ -11,6 +13,7 @@ import Loading from "../LoadingError/Loading";
 import StyledRating from "../../client/StyledRating.js";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
 import { toast, ToastContainer } from "react-toastify";
+import moment from "moment";
 const CommentsTables = () => {
   const [keyword, setKeyword] = useState();
   const [sortRating, setSortRating] = useState();
@@ -22,8 +25,9 @@ const CommentsTables = () => {
   const reviewList = useSelector((state) => state.reviewList);
   const { loading, error, reviews, page, pages } = reviewList;
 
-  const reviewDelete = useSelector((state) => state.reviewDelete);
-  const { error: errorDelete, success: successDelete } = reviewDelete;
+  const reviewDisabled = useSelector((state) => state.reviewDisabled);
+
+  const reviewActive = useSelector((state) => state.reviewActive);
 
   const fecth = useCallback(async () => {
     await dispatch(listReviews(keyword, pagenumber, sortRating));
@@ -31,7 +35,7 @@ const CommentsTables = () => {
 
   useEffect(() => {
     fecth();
-  }, [fecth, reviewDelete]);
+  }, [fecth, reviewDisabled, reviewActive]);
   const handlesortRating = (e) => {
     setSortRating(e.target.value);
     navigator(`/admin/productcomments/page/${page}/${e.target.value}`);
@@ -45,13 +49,19 @@ const CommentsTables = () => {
     }
   };
   // console.log(reviewList);
-  const deleteHandler = (id) => {
-    if (window.confirm("Are you sure ?")) {
-      dispatch(deleteReview(id));
-      toast("Delete success");
-    }
+  const handelDisabled = (id) => {
+    dispatch(disabledReivew(id));
+    toast("Disabled success");
+
     // navigator(-1);
   };
+  const handelActive = (id) => {
+    dispatch(activeReivew(id));
+    toast("Active success");
+
+    // navigator(-1);
+  };
+  console.log(reviews.reviews);
   return (
     <>
       <ToastContainer />
@@ -113,7 +123,12 @@ const CommentsTables = () => {
               {/* Products */}
               {reviews.reviews &&
                 reviews.reviews.map((e) => (
-                  <tr key={id}>
+                  <tr
+                    key={id}
+                    style={{
+                      background: e.active ? "" : "rgba(108, 117, 125, 0.25)",
+                    }}
+                  >
                     <td>{id++}</td>
                     <td>
                       <b>{e.name}</b>
@@ -141,13 +156,18 @@ const CommentsTables = () => {
                     </td>
                     <td>{e.comment}</td>
                     <td>
-                      <Link
-                        to="#"
-                        onClick={() => deleteHandler(e._id)}
-                        className="text-danger"
-                      >
-                        <i className="fas fa-trash-alt"></i>
-                      </Link>
+                      {e.active ? (
+                        <Link
+                          to={`/admin/productcomments/${e._id}/disabled`}
+                          onClick={() => handelDisabled(e._id)}
+                        >
+                          <span className="btn btn-success">Active</span>
+                        </Link>
+                      ) : (
+                        <Link to="#" onClick={() => handelActive(e._id)}>
+                          <span className="btn btn-secondary">disabled</span>
+                        </Link>
+                      )}
                     </td>
                   </tr>
                 ))}
