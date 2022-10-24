@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
-export default function Dialo({click}) {
+export default function Dialo({click,children,messenger}) {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -27,9 +27,12 @@ export default function Dialo({click}) {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      {/* <Button variant="outlined" onClick={handleClickOpen}>
         Cancel Bill
-      </Button>
+      </Button> */}
+      <div onClick={handleClickOpen}>
+      {children}
+      </div>
       <Dialog
         fullScreen={fullScreen}
         open={open}
@@ -40,7 +43,7 @@ export default function Dialo({click}) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you want Cancel Bill ?
+            {messenger}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

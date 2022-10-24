@@ -14,6 +14,7 @@ import {  fetchDeleteCartRequest} from "../../redux/client/cart/Actions";
 import TypographyThreeDot from "./TypographyThreeDot";
 import PriceSell from './PriceSell'
 import { Link } from "react-router-dom";
+import Dialo from "./Dialo";
 export default function ItemCart({ value ,handleClose}) {
   const dispatch = useDispatch();
   const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id;
@@ -25,12 +26,14 @@ export default function ItemCart({ value ,handleClose}) {
           key={v4()}
           disableGutters
           secondaryAction={
-            <IconButton
-              onClick={() => dispatch(fetchDeleteCartRequest({user :idUser , product : value._id }))}
+           <Dialo messenger="Are you ok?" click={() => dispatch(fetchDeleteCartRequest({user :idUser , product : value._id }))}>
+              <IconButton
+              
               aria-label="comment"
             >
               <DeleteIcon />
             </IconButton>
+           </Dialo>
           }
         >
           <Link to={`/products/${value._id}`} onClick={handleClose}>

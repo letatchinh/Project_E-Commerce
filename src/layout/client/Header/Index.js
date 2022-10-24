@@ -24,16 +24,19 @@ import "../../../components/StyleComponent/Icons.css";
 import MyTypography from "../../../components/client/MyTypography";
 
 import '../../../components/StyleComponent/Header.css'
-import { fetchCartRequest } from "../../../redux/sagas/Mysaga";
+import { fetchCartRequest, fetchSearchOnkeyUpRequest } from "../../../redux/sagas/Mysaga";
 import { setCategorySearch, setKeywordSearch } from "../../../redux/filterProduct/Actions";
 import ToastError from "../../../components/client/ToastError";
 import CategoryBannerMobile from "../../../components/client/CategoryBannerMobile";
+import AxiosUser from "../../../apis/client/AxiosUser";
 
 export default function Index({aboutActive,contactActive}) {
 const location = useLocation();
 const statusLogin = useSelector((state) => state.user.statusLogin);
 const loginSuccess = useSelector((state) => state.user.loginSuccess);
 const statusThemme = useSelector((state) => state.colorCommon.status);
+const [listSuggestSearch,setListSuggestSearch] = useState([])
+const [loadingSearch,setLoadingSearch] = useState(false)
 let [searchParams, setSearchParams] = useSearchParams()
 const [anchorEl, setAnchorEl] = useState(null);
 const open = Boolean(anchorEl);
@@ -89,9 +92,13 @@ const handleClick = (event) => {
     right : 0,
   }
   const isHomePage = (window.location.href === "http://localhost:3000/");
-  const handleOnKeyUp = () => {
-    console.log("ok");
+  const handleOnKeyUp = async(e) => {
+    setLoadingSearch(true)
+   await dispatch(fetchSearchOnkeyUpRequest({value : e.target.value , func : setListSuggestSearch}))
+   setLoadingSearch(false)
+    // const res = await AxiosUser.get(`/api/products/searchOnKeyUp?name=${e.target.value}`)
   }
+  console.log(listSuggestSearch);
   return (
     <>
       <div
@@ -232,6 +239,7 @@ const handleClick = (event) => {
                     : "flex",
                   alignItems: "center",
                   width: "82%",
+                  position : 'relative',
                   // background: isHomePage ? "rgba(255,255,255,0.2)" : "white",
                   borderRadius: "25px",
                 }}
@@ -243,6 +251,9 @@ const handleClick = (event) => {
                   inputProps={{ "aria-label": "search" }}
                   error
                 />
+                <Stack sx={{position : 'absolute' , top : '100%', width : '100%',height : '10rem' ,left : 0,right : 0 , background : 'black' ,borderRadius : '20px'}}>
+                  
+                </Stack>
                 <IconButton
                   type="submit"
                   sx={{ p: "10px" }}

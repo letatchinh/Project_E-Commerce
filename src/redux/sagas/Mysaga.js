@@ -1,4 +1,4 @@
-import { all, call, put, select,  takeEvery, takeLatest } from "redux-saga/effects";
+import { all, call, delay, put, select,  takeEvery, takeLatest } from "redux-saga/effects";
 import AxiosUser from "../../apis/client/AxiosUser";
 import { userApi } from "../../apis/usersApi";
 import ToastError from "../../components/client/ToastError";
@@ -56,6 +56,12 @@ export const fetchListCheckedRequest = (action) => {
     payload: action,
   };
 };
+export const fetchSearchOnkeyUpRequest = (action) => {
+  return{
+    type : "FETCH_SEARCH_ONKEYUP_REQUEST",
+    payload : action
+  }
+}
 export const fetchApplyVoucherRequest = (action) => {
   return {
     type: "FETCH_APPLY_VOUCHER_REQUEST",
@@ -237,6 +243,9 @@ export function* fetchLoginWithGgAndFb(action) {
       yield put(fecthLogginSuccess(res.data));
       ToastSuccess("Login Success");
     }
+    else{
+      ToastError("Login Failed");
+    }
   } catch (error) {
     ToastError(error.response.data.message)
   }
@@ -310,6 +319,18 @@ export function* fetchCheckVoucher(action){
     
   }
 }
+export function* fetchSearchOnkeyUp(action){
+  try {
+    yield delay(1000)
+  const res =  yield call(() => AxiosUser.get(`/api/products/searchOnKeyUp?name=${action.payload.value}`))
+     if(action.payload.func){
+      yield action.payload.func(res.data.products)
+    }
+    yield console.log(action.payload);
+  } catch (error) {
+    
+  }
+}
 function* mySaga() {
   yield takeLatest("FETCH_ADD_CART", fetchAddToCart);
   yield takeLatest("FETCH_CART_REQUEST", fetchCartSaga);
@@ -323,6 +344,7 @@ function* mySaga() {
   yield takeLatest("ADD_ORDER_SUCCESS", fetchAddOrderSuccessAndDeleteCart);
   yield takeLatest("ADD_VOUCHER_REQUEST", fetchAddVoucher);
   yield takeLatest("REMOVE_VOUCHER", fetchRemoveVoucher);
+  yield takeLatest("FETCH_SEARCH_ONKEYUP_REQUEST", fetchSearchOnkeyUp);
   yield takeEvery("FETCH_CART_SUCCESS", fetchCartSuccess);
   yield takeEvery("REMOVE_LIST_ORDER_REQUEST", fetchCancelOrder);
   yield takeEvery("FETCH_FILTER_PRICE", fetchFilterPrice);
