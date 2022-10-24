@@ -8,7 +8,7 @@ import CategoryBannerMobile from "./CategoryBannerMobile";
 export default function BannerShowMainProduct() {
   return (
     <div className="boxBanner">
-    <img className="imgHeader" src='/images/BannerTop.jpeg' alt="banner"/>
+    <img className="imgHeader" src={'/images/BannerTop.jpeg'} alt="banner"/>
       <div className="fillBanner">
         <CategoryBanner />
         <CategoryBannerMobile />

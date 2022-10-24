@@ -57,7 +57,7 @@ export default function ProductClient({ item }) {
         style={{
           position: "absolute",
           width: "50px",
-          height: "20px",
+          height: "25px",
           background: "#cd151c",
           right: "0",
           top: "0",
@@ -66,7 +66,7 @@ export default function ProductClient({ item }) {
           display: item.discount > 0 ?"block" : "none",
         }}
       >
-        <Typography color="white" fontSize="14px" textAlign="center">
+        <Typography color="white" fontSize="16px" textAlign="center">
           -{item.discount}%
         </Typography>
       </div>
@@ -100,7 +100,7 @@ export default function ProductClient({ item }) {
             alt="green iguana"
             src={`/images/${images[active]}`}
           />
-       {countInStock === 0 &&  <Stack sx={{position : 'absolute' , inset : 0,justifyContent : 'center' , alignItems : 'center'}}><Typography sx={{ padding : '60px 30px' ,borderRadius : '50%' , backgroundColor : '#00000069'}} color='white' variant="body2">Out Of Stock</Typography></Stack>}
+       {countInStock === 0 &&  <Stack sx={{position : 'absolute' , inset : 0,justifyContent : 'center' , alignItems : 'center'}}><Typography sx={{ padding : '60px 30px' ,borderRadius : '50%' , backgroundColor : '#00000079'}} color='white' variant="body1">Out Of Stock</Typography></Stack>}
         </Stack>
       </Link>
       <Link to={`/products/${_id}`}>

@@ -23,7 +23,6 @@ export default function HomePageUser() {
         limit={3}
         draggable
       />
-     
       <Outlet />
       <Footer />
     

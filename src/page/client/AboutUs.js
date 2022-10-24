@@ -17,6 +17,7 @@ export default function AboutUs() {
     <Stack position="relative">
       {/* <HeaderAboutUs /> */}
       <Header aboutActive/>
+      
       <div className="fillTopAboutUs">
       </div>
       <div className="InFillTopAboutUs">

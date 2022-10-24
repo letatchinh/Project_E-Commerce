@@ -81,7 +81,8 @@ const handleClick = (event) => {
     background: statusThemme
     ? "linear-gradient(rgb(238, 77, 45), rgb(255, 115, 55))"
     : "#00255E" ,
-    padding: "0px 5px 5px 5px"
+    padding: "0px 5px 5px 5px",
+   
   }
   const styHeadNotHomePage = {
     background: "transparent",
@@ -104,17 +105,15 @@ const handleClick = (event) => {
     console.log("ok");
     setStatusOpenSearch(false)
   }
-  console.log(statusOpenSearch);
   return (
     <>
    
       <div
-        id="top"
         style={ !isHomePage ? styHeadHomePage : styHeadNotHomePage }
       >
        <CategoryBannerMobile />
         <Container sx={{ flexGrow: 1 }}>
-          <Stack direction="row" padding="5px 20px" alignItems="center" justifyContent='space-between'>
+          <Stack direction="row" padding="0px" alignItems="center" justifyContent='space-between'>
           <Stack direction='row' spacing={1} alignItems='center'>
           <Link to='/'>
        <Button  sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'}}}>
@@ -248,7 +247,7 @@ const handleClick = (event) => {
                   width: "82%",
                   position : 'relative',
                   borderRadius: "25px",
-                  zIndex : 999999999
+                  zIndex : listSuggestSearch.length !== 0 ? 9999999 : 1
                 }}
               >
                 <InputBase onKeyUp={handleOnKeyUp}

@@ -65,7 +65,8 @@ export default function DetailProduct() {
   });
   const user = JSON.parse(localStorage.getItem(KEY_USER)) || "";
   const [itemm, setItem] = useState({});
-  const { name, images, price,  _id, discount,countInStock } = itemm;
+  const { name, images, price,  _id, discount,countInStock,quantitySold  } = itemm;
+  console.log(itemm);
   const [listItem, setListItem] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isPayment, setIsPayment] = useState(false);
@@ -148,7 +149,7 @@ export default function DetailProduct() {
                 >
                   <Stack
                     margin="0 auto"
-                    sx={{ width: { md: "35%", sm: "70%", xs: "100%" } }}
+                    sx={{ width: { md: "35%", sm: "70%", xs: "90%" } }}
                     spacing={1}
                   >
                     {images && (
@@ -206,7 +207,7 @@ export default function DetailProduct() {
                       <Stack
                         direction="row"
                         justifyContent="space-between"
-                        sx={{ padding: "10px" }}
+                        sx={{ padding: "10px",borderBottom: "2px solid #f3f3f3", }}
                       >
                         <MyTypography variant="h6" color={mainColorText}>
                           Review
@@ -226,13 +227,28 @@ export default function DetailProduct() {
                           </Link>
                         </Stack>
                       </Stack>
+                      <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        sx={{ padding: "10px",borderBottom: "2px solid #f3f3f3", }}
+                      >
+                         <MyTypography variant="h6" color={mainColorText}>
+                          Sold
+                        </MyTypography>
+                        <MyTypography>{quantitySold}</MyTypography>
+                      </Stack>
+                      <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        sx={{ padding: "10px" }}
+                      >
+                         <MyTypography variant="h6" color={mainColorText}>
+                          Count Of Stock
+                        </MyTypography>
+                        {countInStock === 0 ? <MyTypography color='red'>(out of stock) </MyTypography> : <MyTypography>({countInStock}) available </MyTypography>} 
+                      </Stack>
                     </Stack>
-                    <Stack direction='row' alignItems='center' spacing={2}>
                     <SelectDetailSize />
-                    
-                   {countInStock === 0 ? <MyTypography color='red'>(out of stock) </MyTypography> : <MyTypography>({countInStock}) available </MyTypography>} 
-                    </Stack>
-                    
                     {/* <AmoutDetailToOrder /> */}
                     <Stack
                       direction="row"
@@ -240,7 +256,7 @@ export default function DetailProduct() {
                       justifyContent="space-between"
                     >
                       {/* <Tooltip placement="top-end" title="Đang bảo trì"> */}
-                        <Button onClick={async(e) => {
+                        <Button disabled={countInStock === 0} onClick={async(e) => {
             if(localStorage.getItem(KEY_USER)){
              await dispatch(
             fetchAddToCartRequestSaga({
@@ -335,7 +351,7 @@ export default function DetailProduct() {
                       <Alert severity="error">{errors.comment.message}</Alert>
                     )}
                     {!isPayment && (
-                      <Alert severity="error">Chưa mua mà đòi Rating</Alert>
+                      <Alert severity="error">You must by To Rating</Alert>
                     )}
                   </Stack>
                 </Stack>
