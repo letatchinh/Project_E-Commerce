@@ -22,7 +22,7 @@ export default function TypographyThreeDot({ children, className }) {
       arrow
     >
       <Typography
-        fontSize="calc(0.35vw + 10px)"
+        fontSize="calc(0.35vw + 11px)"
         color={mainColorText}
         className={className}
         variant="body1"

@@ -22,7 +22,7 @@ export default function AboutUs() {
       </div>
       <div className="InFillTopAboutUs">
         <div className="ItemInFillTopAboutUs">
-          <Typography sx={{fontSize : 'calc(0.5vw + 30px)'}}      fontWeight="300" textAlign='center'>
+          <Typography sx={{fontSize : {md : 'calc(0.5vw + 30px)',xs : 'calc(0.5vw + 20px)'}}}      fontWeight="300" textAlign='center'>
             UT is the leading e-commerce platform in Southeast Asia and Taiwan.
           </Typography>
           <Typography sx={{fontSize : 'calc(0.5vw + 10px)'}} fontWeight='300' textAlign='center'>

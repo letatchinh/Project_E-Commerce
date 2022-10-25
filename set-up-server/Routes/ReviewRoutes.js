@@ -86,12 +86,12 @@ ReviewRoutes.get(
   "/getReviewByIdProduct/:id",
   asyncHandler(async (req, res) => {
     try {
-      const pageSize = 5;
-      const page = Number(req.query.pageNumber) || 1;
+      const pageSize = Number(req.query.limit) || 1;
+      const page = Number(req.query.page) || 1;
       const count = await Review.find({
         product: req.params.id,
       }).countDocuments({});
-      const reviews = await Review.find({ product: req.params.id })
+      const reviews = await Review.find({ product: req.params.id,active : true })
         .limit(pageSize)
         .skip(pageSize * (page - 1))
         .sort({ _id: -1 });

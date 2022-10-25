@@ -23,26 +23,43 @@ export default function ItemListCart({ item }) {
   const { name, images, price, quanlity, isChecked , discount,countInStock } = item;
   const [checked, setChecked] = useState(isChecked);
   const handleChange = async (event) => {
-    setChecked(event.target.checked);
-    const newListCart = listCarts.map((e) => {
-      if (e._id === item._id) {
-        e = { ...item, isChecked: event.target.checked };
+    if(event.target.checked){
+      if(countInStock > quanlity){
+        setChecked(event.target.checked);
+        const newListCart = listCarts.map((e) => {
+          if (e._id === item._id) {
+            e = { ...item, isChecked: event.target.checked };
+          }
+          return e;
+        });
+        await dispatch(fetchCartNew(newListCart));
       }
-      return e;
-    });
-    await dispatch(fetchCartNew(newListCart));
+      else{
+        ToastError(`${name} is out of stock`)
+      }
+    }
+    else{
+      setChecked(event.target.checked);
+        const newListCart = listCarts.map((e) => {
+          if (e._id === item._id) {
+            e = { ...item, isChecked: event.target.checked };
+          }
+          return e;
+        });
+        await dispatch(fetchCartNew(newListCart));
+    }
   };
   const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id;
-
   return (
     <Stack
-      direction="row"
+      direction={{md : "row" ,sm : "row", xs : 'column'}}
       borderTop="1px solid #999"
       alignItems="center"
-      justifyContent="space-between"
-      padding="10px"
+      spacing={{md : 0,sm : 1 , xs : 1}}
+      justifyContent={{md : "space-between" , xs : 'start'}}
+      padding={{md : "10px",xs : "10px 0"}}
     >
-      <Stack direction="row" alignItems="center" spacing={1} width="60%">
+      <Stack direction="row" alignItems="center" spacing={1} width={{md : "60%",xs : '100%'}}>
         <Checkbox sx={{color : !status && 'white'}}
           checked={checked}
           onChange={handleChange}

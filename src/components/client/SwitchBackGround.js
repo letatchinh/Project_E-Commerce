@@ -57,7 +57,7 @@ export default function SwitchBackGround() {
         },
       }));
   return (
-    <FormControlLabel sx={{position :  "absolute", top : 0 , right : {md : '26%' , xs : '65%'} , zIndex : 1000}} onClick={handleChangeBg}
+    <FormControlLabel sx={{position :  "absolute", top : 0 , right : {md : '26%' , xs : '58%'} , zIndex : 1000}} onClick={handleChangeBg}
     control={<MaterialUISwitch sx={{ m: 1 }}  />}
   />
   )

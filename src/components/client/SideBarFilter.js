@@ -5,7 +5,7 @@ import FilterMoblie from './FilterMoblie';
 import ItemFilter from './ItemFilter';
 export default function SideBarFilter({setPage}) {
   return (
-   <Box position='relative' >
+   <Box position={{md : 'relative',xs : 'absolute'}} >
       <Box className='sideBar' display={{md : 'block',sm : 'none' , xs : 'none'}}>
           <ItemFilter setPage={setPage}/>
      </Box>

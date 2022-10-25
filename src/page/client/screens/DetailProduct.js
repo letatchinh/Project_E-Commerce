@@ -66,7 +66,6 @@ export default function DetailProduct() {
   const user = JSON.parse(localStorage.getItem(KEY_USER)) || "";
   const [itemm, setItem] = useState({});
   const { name, images, price,  _id, discount,countInStock,quantitySold  } = itemm;
-  console.log(itemm);
   const [listItem, setListItem] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isPayment, setIsPayment] = useState(false);
@@ -364,9 +363,9 @@ export default function DetailProduct() {
                     >
                       Review
                     </MyTypography>
-                    <div id="review">
-                      <ListReview count={count} _id={_id} />
-                    </div>
+                    <Stack width={{md : '50%',xs : '100%'}} id="review">
+                      { _id && <ListReview  _id={_id} />}
+                    </Stack>
                   </Stack>
                   <Stack>
                     <ContentTop value="Product Lien Quan" />

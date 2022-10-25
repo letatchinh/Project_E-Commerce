@@ -46,11 +46,12 @@ export default function CategoryCommon({ type, valueOfContentTop ,limit}) {
     <Stack
       alignItems="center"
       spacing={1}
-      padding="0 50px 30px"
+      
+      padding={{md : "0 50px 30px", xs : "0 2px 30px"}}
       sx={{ background: mainBackGround, width: "100%" }}
     >
       <Category />
-      <Stack width="100%" direction="row" alignItems="center">
+      <Stack  width="100%" direction="row" alignItems="center">
         <div
           style={{ flex: 1, height: "2px", background: "gray", width: "100%" }}
         ></div>
@@ -70,9 +71,9 @@ export default function CategoryCommon({ type, valueOfContentTop ,limit}) {
         ></div>
       </Stack>
 
-      <Stack width="100%" direction="row">
+      <Stack  width="100%" direction="row">
         <SideBarFilter />
-        <Stack flex={1}>
+        <Stack minWidth='320px' flex={1}>
           <Stack
             direction="row"
             justifyContent="space-between"

@@ -89,7 +89,9 @@ const cartReducers = (state = initvalue, action) => {
       };
     case TYPES.CHECKED_ALL_PRODUCT:
       const newCartCheckALl = state.allListCart.map((e) => {
-        e.isChecked = action.payload;
+        if(e.countInStock > e.quanlity){
+          e.isChecked = action.payload;
+        }
         return e;
       });
       return {

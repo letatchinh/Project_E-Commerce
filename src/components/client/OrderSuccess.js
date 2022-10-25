@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import MyTypography from "./MyTypography";
 export default function OrderSuccess() {
   return (
-    <Container sx={{ width: "50%" }}>
+    <Container sx={{ width: "100%" ,textAlign : 'center' }}>
       <Stack spacing={2} alignItems="center">
         <MyTypography variant="h4" fontWeight="bold">
           Your Order has been received
