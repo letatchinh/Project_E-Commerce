@@ -49,8 +49,8 @@ userRouter.post(
         email: user.email,
         isAdmin: user.isAdmin,
         listVoucher: user.listVoucher || [],
-        address : user.address,
-        avatar:user.avatar,
+        address: user.address,
+        avatar: user.avatar,
         token: generateToken(user._id),
         createdAt: user.createdAt,
       });
@@ -65,7 +65,7 @@ userRouter.post(
 userRouter.post(
   "/",
   asyncHandler(async (req, res) => {
-    const { name, email, password ,address , avatar,listVoucher } = req.body;
+    const { name, email, password, address, avatar, listVoucher } = req.body;
 
     const userExists = await User.findOne({ email });
 
@@ -80,7 +80,7 @@ userRouter.post(
       password,
       address,
       avatar,
-      listVoucher
+      listVoucher,
     });
 
     if (user) {
@@ -110,36 +110,35 @@ userRouter.post(
       if (!user.active) {
         res.status(401);
         throw new Error("User Has Been Disable Please Contact Us ");
-      }else{
+      } else {
         res.json({
           _id: user._id,
           name: user.name,
           email: user.email,
-          address : user.address || "",
-          avatar : user.avatar || "",
+          address: user.address || "",
+          avatar: user.avatar || "",
           isAdmin: user.isAdmin,
           listVoucher: user.listVoucher || [],
           token: generateToken(user._id),
           createdAt: user.createdAt,
         });
       }
-      
     } else {
       const newUser = await User.create({
         name,
-      email,
-      password,
-      address : "",
-      avatar : "",
-      listVoucher : []
+        email,
+        password,
+        address: "",
+        avatar: "",
+        listVoucher: [],
       });
       res.status(201).json({
-        _id : newUser._id,
+        _id: newUser._id,
         name: newUser.name,
         email: newUser.email,
-        address : newUser.address || "",
-        avatar : newUser.avatar,
-        listVoucher : newUser.listVoucher || [],
+        address: newUser.address || "",
+        avatar: newUser.avatar,
+        listVoucher: newUser.listVoucher || [],
         isAdmin: false,
         token: generateToken(newUser._id),
         createdAt: newUser.createdAt,
@@ -157,7 +156,8 @@ userRouter.put(
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
       user.address = req.body.address || user.address;
-      user.listVoucher = [...user.listVoucher,req.body.newVoucher] || user.listVoucher;
+      user.listVoucher =
+        [...user.listVoucher, req.body.newVoucher] || user.listVoucher;
       if (req.body.password) {
         user.password = req.body.password;
       }
@@ -185,13 +185,13 @@ userRouter.put(
   "/addNewVoucher/:id",
   asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
-    const newVoucher = req.body.newVoucher
-    if(user){
-            user.listVoucher = [...user.listVoucher,{voucher : newVoucher}] || user.listVoucher;
-            const updateUser = await user.save();
-            res.json(updateUser)
-    }
-    else {
+    const newVoucher = req.body.newVoucher;
+    if (user) {
+      user.listVoucher =
+        [...user.listVoucher, { voucher: newVoucher }] || user.listVoucher;
+      const updateUser = await user.save();
+      res.json(updateUser);
+    } else {
       res.status(404);
       throw new Error("User not found");
     }
@@ -201,13 +201,13 @@ userRouter.put(
 userRouter.get(
   "/getVoucherUser/:id",
   asyncHandler(async (req, res) => {
-    const user =   await User.findById(req.params.id).populate({
-      path : 'listVoucher.voucher',
-      select: 'name discount image'
+    const user = await User.findById(req.params.id).populate({
+      path: "listVoucher.voucher",
+      select: "name discount image",
     });
-    const listVoucher = user.listVoucher
-    const listVouchers = listVoucher.map(e => (e.voucher))
-    res.json(listVouchers)
+    const listVoucher = user.listVoucher;
+    const listVouchers = listVoucher.map((e) => e.voucher);
+    res.json(listVouchers);
   })
 );
 // RESET PASSWORD
@@ -243,11 +243,9 @@ userRouter.get(
   "/getId/:id",
   asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
-    res.json(user)
+    res.json(user);
   })
 );
-
-
 
 //USER DISABLED
 userRouter.put(
@@ -318,21 +316,23 @@ userRouter.put(
     const user = await User.findById(req.params.id);
     const newvoucher = mongoose.Types.ObjectId(req.body.IdnewVoucher);
     if (user) {
-      const isHave = user.listVoucher.some(e => JSON.stringify(e.voucher)===JSON.stringify(newvoucher))
-      if(isHave){
-       res.status(401);
-       throw new Error("This voucher is Exist in your Bag")
-      }
-      else{
-        user.listVoucher = [...user.listVoucher,{voucher : newvoucher}] || user.listVoucher;
+      const isHave = user.listVoucher.some(
+        (e) => JSON.stringify(e.voucher) === JSON.stringify(newvoucher)
+      );
+      if (isHave) {
+        res.status(401);
+        throw new Error("This voucher is Exist in your Bag");
+      } else {
+        user.listVoucher =
+          [...user.listVoucher, { voucher: newvoucher }] || user.listVoucher;
         const updateUser = await user.save();
-        res.json(updateUser)
-    } 
-  }
-  else {
-    res.status(404);
-    throw new Error("User not found");
-  }})
+        res.json(updateUser);
+      }
+    } else {
+      res.status(404);
+      throw new Error("User not found");
+    }
+  })
 );
 // REMOVE VOUCHER FOR USER
 userRouter.put(
@@ -341,16 +341,16 @@ userRouter.put(
     const user = await User.findById(req.params.id);
     const newvoucher = mongoose.Types.ObjectId(req.body.IdnewVoucher);
     if (user) {
-  
-      user.listVoucher =  user.listVoucher.filter(e => JSON.stringify(e.voucher) !== JSON.stringify(newvoucher))
-        const updateUser = await user.save();
-        res.json(updateUser)
-    
-  }
-  else {
-    res.status(404);
-    throw new Error("User not found");
-  }})
+      user.listVoucher = user.listVoucher.filter(
+        (e) => JSON.stringify(e.voucher) !== JSON.stringify(newvoucher)
+      );
+      const updateUser = await user.save();
+      res.json(updateUser);
+    } else {
+      res.status(404);
+      throw new Error("User not found");
+    }
+  })
 );
 // GET ALL USER ADMIN
 userRouter.get(
@@ -366,13 +366,19 @@ userRouter.get(
           },
         }
       : {};
+
+    const active = req.query.active
+      ? {
+          active: req.query.active,
+        }
+      : {};
     const pageSize = 7;
     const page = Number(req.query.pageNumber) || 1;
-    const count = await User.countDocuments({ ...keyword });
-    const users = await User.find({ ...keyword })
+    const count = await User.countDocuments({ ...keyword, ...active });
+    const users = await User.find({ ...keyword, ...active })
       .limit(pageSize)
       .skip(pageSize * (page - 1));
-    res.json({ users, page, pages: Math.ceil(count / pageSize) });
+    res.json({ users, page, pages: Math.ceil(count / pageSize), count });
   })
 );
 

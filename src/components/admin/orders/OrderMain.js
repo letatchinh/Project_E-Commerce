@@ -94,20 +94,14 @@ const OrderMain = () => {
             </form>
 
             <div className="col-lg-2 col-6 col-md-3 w-pc-28">
-              <select
-                className="form-select"
-                onChange={(e) => setPaid(e.target.value)}
-              >
+              <select className="form-select" onChange={HandlerPaiD}>
                 <option value="">Show all Paid</option>
                 <option value="true">Paided</option>
                 <option value="false">Unpaid</option>
               </select>
             </div>
             <div className="col-lg-2 col-6 col-md-3 w-pc-28">
-              <select
-                className="form-select"
-                onChange={(e) => setDelivered(e.target.value)}
-              >
+              <select className="form-select" onChange={HandlerDislivered}>
                 <option value="">Show all Deilivered</option>
                 <option value="true">Shippered</option>
                 <option value="false">Not shipper</option>

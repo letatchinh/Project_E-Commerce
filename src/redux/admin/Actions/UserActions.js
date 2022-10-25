@@ -68,7 +68,7 @@ export const logout = () => (dispatch) => {
 
 //ALL USER
 export const listUser =
-  (keyword = "", pageNumber = "") =>
+  (keyword = "", pageNumber = "", active = "") =>
   async (dispatch, getState) => {
     const token = ADMIN_TOKEN;
     try {
@@ -84,7 +84,7 @@ export const listUser =
       };
 
       const { data } = await axios.get(
-        `/api/users/all?name=${keyword}&&pageNumber=${pageNumber}`,
+        `/api/users/all?name=${keyword}&&active=${active}&&pageNumber=${pageNumber}`,
         config
       );
 

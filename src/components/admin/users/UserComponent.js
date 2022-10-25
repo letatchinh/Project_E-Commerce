@@ -16,24 +16,25 @@ import PersonIcon from "@mui/icons-material/Person";
 import UserChildComponent from "./UserChildComponent.js";
 const UserComponent = () => {
   const [keyword, setKeyword] = useState();
+  const [active, setActive] = useState();
 
   const params = useParams();
   const pagenumber = params.pagenumber;
   const dispatch = useDispatch();
   let navigator = useNavigate();
   const userList = useSelector((state) => state.userList);
-  const { loading, error, users, page, pages } = userList;
+  const { loading, error, users, page, pages, count } = userList;
 
   const userActive = useSelector((state) => state.userActive);
   const { loadingActive, userListActive } = userActive;
 
   const [actives, setActives] = useState();
   const fetch = useCallback(async () => {
-    await dispatch(listUser(keyword, pagenumber));
+    await dispatch(listUser(keyword, pagenumber, active));
     // await dispatch(userDisabledaction(updateUser));
     // await dispatch(userActiveaction(updateActiveUser));
     await dispatch(listOrdersPaidS(actives));
-  }, [dispatch, keyword, pagenumber, actives]);
+  }, [dispatch, keyword, pagenumber, actives, active]);
   useEffect(() => {
     fetch();
   }, [fetch]);
@@ -42,6 +43,15 @@ const UserComponent = () => {
     if (keyword.trim()) {
       navigator(`/admin/users/search/${keyword}`);
     } else {
+      navigator("/admin/users");
+    }
+  };
+  const handlerActive = (e) => {
+    if (active) {
+      setActive(e.target.value);
+      navigator(`/admin/users/search/${keyword}`);
+    } else {
+      setActive(e.target.value);
       navigator("/admin/users");
     }
   };
@@ -67,10 +77,7 @@ const UserComponent = () => {
               />
             </form>
             <div className="col-lg-2 col-6 col-md-3">
-              <select
-                className="form-select"
-                onChange={(e) => setActives(e.target.value)}
-              >
+              <select className="form-select" onChange={handlerActive}>
                 <option value="">Status: all</option>
                 <option value="true">Active only</option>
                 <option value="false">Disabled</option>
@@ -81,14 +88,16 @@ const UserComponent = () => {
 
         {/* Card */}
 
-        {!actives && (
+        {users && (
           <div className="card-body">
             {loading ? (
               <LoadingDashboard />
             ) : error ? (
               <Message variant={"alert-danger"}>{error}</Message>
-            ) : (
+            ) : count > 0 ? (
               <UserChildComponent users={users} />
+            ) : (
+              <div>No user</div>
             )}
 
             {/* nav */}
@@ -153,15 +162,6 @@ const UserComponent = () => {
                   )}
                 </ul>
               </nav>
-            )}
-          </div>
-        )}
-        {actives && (
-          <div className="card-body">
-            {loadingActive ? (
-              <LoadingDashboard />
-            ) : (
-              <UserChildComponent users={userListActive} actives={actives} />
             )}
           </div>
         )}
