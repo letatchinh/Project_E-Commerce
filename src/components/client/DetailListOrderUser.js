@@ -10,10 +10,10 @@ import Dialo from "./Dialo";
 import AxiosUser from "../../apis/client/AxiosUser";
 import ToastSuccess from "./ToastSuccess";
 import ToastError from "./ToastError";
-export default function DetailListOrderUser({ click ,data}) {
+export default function DetailListOrderUser({ click ,data,reFetch}) {
   const {_id,isDelivered,orderItem , shippingPrice ,totalPrice,voucher} = data
   const handleCancelBill = async() => {
-     AxiosUser.delete(`/api/orders/deleteById/${_id}`).then(res => {ToastSuccess("Delete Success");click()}).catch(err => ToastError("Delete Failed"))
+     AxiosUser.delete(`/api/orders/deleteById/${_id}`).then(res => {ToastSuccess("Delete Success");click();reFetch()}).catch(err => ToastError("Delete Failed"))
   }
   return (
  <Stack>

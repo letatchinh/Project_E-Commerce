@@ -22,6 +22,7 @@ export default function ListCart() {
     const backgroundWhite = useSelector(state => state.colorCommon.mainBackGround)
     const status = useSelector(state => state.colorCommon.status)
     const listCarts = useSelector(state => state.cart.allListCart)
+    const [loadingDistance,setLoadingDistance] = useState(false)
     const [distance, setDistance] = useState(0);
     const user = JSON.parse(localStorage.getItem(KEY_USER)) || ""
     const [isCheck,setIsCheck] = useState(false)
@@ -47,6 +48,8 @@ export default function ListCart() {
       "Wait admin Check Order",
     ];
     useEffect(() => {
+     if(SubAddress || user.address){
+      setLoadingDistance(true)
       axios
         .get(
           `https://api.mapbox.com/geocoding/v5/mapbox.places/${SubAddress || user.address}.json?access_token=pk.eyJ1IjoibGV0YXRjaGluaCIsImEiOiJjbDhjd2x1NTkwMzV0M3BvYmpweWJwZG9hIn0.crltMkQeuF92KSs1DRH2pQ`
@@ -57,17 +60,24 @@ export default function ListCart() {
             )
             .then((res) =>
               {
-             
-                setDistance((res.data.routes[0].distance / 900).toFixed(1) - 1)
+           setLoadingDistance(false)
+             if(parseFloat((res.data.routes[0].distance / 900).toFixed(1)) <= 0){
+              setDistance(0)
+             }else{
+
+               setDistance((res.data.routes[0].distance / 900).toFixed(1) - 1)
+             }
               }
             )
         )
         .catch((err) => {});
+     }
     }, [user,SubAddress]);
      const handleChange = (event) => {
       setCheckedAll(event.target.checked);
       dispatch(checkedAllProductRequest(event.target.checked))
     };
+    console.log(loadingDistance);
   return (
     <div style={{background : background2 , padding : '2rem 0' }}>
     <Container  >
@@ -101,7 +111,8 @@ export default function ListCart() {
           </Stack>
           <Stack direction='row' justifyContent='space-between'>
           <MyTypography fontSize='14px' color='#757575'>Ship Price ({distance} km)</MyTypography>
-            <MyTypography>{(distance * 0.8).toFixed(1)} $</MyTypography>
+          {loadingDistance ? <div>...loading</div> : <MyTypography>{(distance * 0.8).toFixed(1)} $</MyTypography>}
+            
           </Stack>
           <Stack direction='row' justifyContent='space-between'>
           <MyTypography fontSize='14px' color='#757575'>Voucher</MyTypography>
