@@ -55,7 +55,7 @@ ReviewRoutes.get(
       reviews,
       page,
       pages: Math.ceil(count / pageSize),
-      keywordActive,
+      count,
     });
   })
 );

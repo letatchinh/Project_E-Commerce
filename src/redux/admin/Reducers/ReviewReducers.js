@@ -25,6 +25,7 @@ export const reviewListReducer = (state = { reviews: [] }, action) => {
         loading: false,
         pages: action.payload.pages,
         page: action.payload.page,
+        count: action.payload.count,
         reviews: action.payload,
       };
     case REVIEW_LIST_FAIL:

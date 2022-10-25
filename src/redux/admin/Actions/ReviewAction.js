@@ -37,7 +37,6 @@ export const listReviews =
         `/api/reviews/allReview?keywordActive=${activeComment}&&keyword=${keyword}&&pageNumber=${pageNumber}&&sortRating=${sortRating}`,
         config
       );
-      console.log(data);
       dispatch({ type: REVIEW_LIST_SUCCESS, payload: data });
     } catch (error) {
       const message =

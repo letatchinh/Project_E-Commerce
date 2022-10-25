@@ -20,8 +20,7 @@ const OrderMain = () => {
 
   const orderListPaidS = useSelector((state) => state.orderListPaidS);
   const { loadingPaid, errorPaid, ordersPaidS } = orderListPaidS;
-  // console.log(ordsssersPaidS);
-  // console.log(orderListFiterName, "sda");
+
   const [keyword, setKeyword] = useState();
   const [name, setName] = useState();
   const dispatch = useDispatch();
@@ -57,6 +56,10 @@ const OrderMain = () => {
       navigator("/admin/orders");
     }
   };
+  let count = 0;
+  if (ordersFilter) {
+    ordersFilter.filter((e) => (e.user.name.includes(name) ? count++ : 0));
+  }
 
   return (
     <section className="content-main">
@@ -173,7 +176,7 @@ const OrderMain = () => {
                 <LoadingDashboard />
               ) : errors ? (
                 <Message variant="alert-danger">{errors}</Message>
-              ) : orders.includes(name) ? (
+              ) : count > 0 ? (
                 <Orders orders={ordersFilter} />
               ) : (
                 <div>No order</div>

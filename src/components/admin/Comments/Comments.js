@@ -21,8 +21,7 @@ const CommentsTables = () => {
 
   const pagenumber = params.pagenumber;
   const reviewList = useSelector((state) => state.reviewList);
-  const { loading, error, reviews, page, pages } = reviewList;
-  console.log(reviewList);
+  const { loading, error, reviews, page, pages, count } = reviewList;
   const reviewDisabled = useSelector((state) => state.reviewDisabled);
 
   const reviewActive = useSelector((state) => state.reviewActive);
@@ -63,6 +62,7 @@ const CommentsTables = () => {
     dispatch(activeReivew(id));
     toast("Active success");
   };
+
   return (
     <>
       <ToastContainer />
@@ -118,7 +118,7 @@ const CommentsTables = () => {
             {/* Table Data */}
             <tbody>
               {/* Products */}
-              {reviews.reviews &&
+              {reviews.reviews && count > 0 ? (
                 reviews.reviews.map((e) => (
                   <tr
                     key={id}
@@ -167,7 +167,10 @@ const CommentsTables = () => {
                       )}
                     </td>
                   </tr>
-                ))}
+                ))
+              ) : (
+                <div>No comment</div>
+              )}
             </tbody>
           </table>
         )}
