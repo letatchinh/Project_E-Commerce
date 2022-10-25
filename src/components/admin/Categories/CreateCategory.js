@@ -13,14 +13,13 @@ import { useNavigate } from "react-router-dom";
 
 //Use Hook form with material and yup
 const validationSchema = yup.object().shape({
-  name: yup.string().required("Required"),
+  name: yup.string().required("You have must enter name for categorys"),
 });
 
 const CreateCategory = () => {
   const isInitialMount = useRef(true);
 
   const dispatch = useDispatch();
-  const navigator = useNavigate();
   //inittiali
   const {
     register,

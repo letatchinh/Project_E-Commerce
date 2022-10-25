@@ -15,22 +15,30 @@ import { NewReleasesOutlined } from "@mui/icons-material";
 import { listAllCategorys } from "../../../redux/admin/Actions/CategoryAction";
 //Use Hook form with material and yup
 const validationSchema = yup.object().shape({
-  name: yup.string().required("Required"),
-  price: yup.number().required("Required"),
-  discount: yup.number().required("Required"),
-  countInStock: yup.number().required("Required"),
+  name: yup.string().required("You Must Enter Name Product"),
+  price: yup
+    .number()
+    .typeError("You must specify a number for price")
+    .min(0, "Min value 0.")
+    .required("Required"),
+  discount: yup
+    .number()
+    .typeError("You must specify a number for discount")
+    .min(0, "Min value 0.")
+    .required("Required"),
+  countInStock: yup
+    .number()
+    .typeError("You must specify a number for count instock")
+    .min(0, "Min value 0.")
+    .required("Required"),
   description: yup
     .string()
-    .required("Required")
+    .required("Filed description not empty")
     .min(10, "Must be more 10 character"),
 });
 
 const AddProductMain = () => {
-  // const [name, setName] = useState("");
-  // const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
-  // const [countInStock, setCountInStock] = useState(0);
-  // const [description, setDescription] = useState("");
   const [images, setImages] = useState([]);
   const dispatch = useDispatch();
   const productCreate = useSelector((state) => state.productCreate);

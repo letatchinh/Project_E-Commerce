@@ -6,17 +6,11 @@ import {
   editCategory,
   updateCategory,
 } from "../../../redux/admin/Actions/CategoryAction";
-import {
-  editProduct,
-  updateProduct,
-} from "../../../redux/admin/Actions/ProductActions";
-import { PRODUCT_UPDATE_RESET } from "../../../redux/admin/Constants/ProductContants";
+
 import Message from "../LoadingError/Error";
 // import Loading from "../LoadingError/Loading";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const EditCategory = (props) => {
-  let id = 0;
-
   const params = useParams();
   const categoryId = params.id;
   const [name, setName] = useState("");
