@@ -8,7 +8,7 @@ export default function Review({item}) {
     const {comment,rating,name,createdAt} = item
     const mainColorText = useSelector(state =>state.colorCommon.mainColorText)
   return (
-    <Stack sx={{border : '2px solid #f3f3f3', padding : '10px' , borderRadius : '10px' , width : {sm : '50%' , sx : '90%'} , margin : '10px 0'}}>
+    <Stack sx={{border : '2px solid #f3f3f3', padding : '10px' , borderRadius : '10px' , width : '100%' , margin : '10px 0'}}>
     <Typography variant="h6" color={mainColorText}>{name}</Typography>
     <StyledRating readOnly={true} defaultValue={rating} precision={0.5} />
     <Typography color={mainColorText}>{moment(createdAt).format("llll")}</Typography>

@@ -9,7 +9,7 @@ import Footer from "../../layout/client/Footer";
 export default function HomePageUser() {
 
   return (
-    <div style={{ minWidth: "435px", position: "relative" }}>
+    <div style={{ minWidth: "320px", position: "relative" }}>
       <LoadingHomePageFull/>
       <Header />
       <SwitchBackGround />
@@ -23,7 +23,6 @@ export default function HomePageUser() {
         limit={3}
         draggable
       />
-     
       <Outlet />
       <Footer />
     

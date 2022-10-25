@@ -40,9 +40,9 @@ function FacebookCircularProgress(props) {
   );
 }
 
-export default function LoadingHomePage({height}) {
+export default function LoadingHomePage({height,width}) {
   return (
-    <Box sx={{ flexGrow: 1  , width : '100%', height : height ? height : '10rem',display : "flex" , alignItems : 'center' , justifyContent : 'center'}}>
+    <Box sx={{ flexGrow: 1  , width : width ? width : '100%', height : height ? height : '10rem',display : "flex" , alignItems : 'center' , justifyContent : 'center'}}>
       <FacebookCircularProgress />
     </Box>
   );

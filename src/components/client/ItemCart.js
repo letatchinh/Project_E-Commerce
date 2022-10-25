@@ -46,7 +46,7 @@ export default function ItemCart({ value ,handleClose}) {
           </div>
           </Link>
           <Stack margin="0 10px"  width='60%'  overflow='hidden'>
-           <TypographyThreeDot>
+           <TypographyThreeDot >
               {value.name}
               </TypographyThreeDot>
           </Stack>

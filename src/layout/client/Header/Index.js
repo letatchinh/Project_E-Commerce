@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Container, Stack } from "@mui/system";
 import {
   Grid,
@@ -28,13 +27,15 @@ import { fetchCartRequest, fetchSearchOnkeyUpRequest } from "../../../redux/saga
 import { setCategorySearch, setKeywordSearch } from "../../../redux/filterProduct/Actions";
 import ToastError from "../../../components/client/ToastError";
 import CategoryBannerMobile from "../../../components/client/CategoryBannerMobile";
-import AxiosUser from "../../../apis/client/AxiosUser";
+import ListItemSearchOnKey from "../../../components/client/ListItemSearchOnKey";
+import LoadingHomePage from "../../../components/client/LoadingHomePage";
 
 export default function Index({aboutActive,contactActive}) {
 const location = useLocation();
 const statusLogin = useSelector((state) => state.user.statusLogin);
 const loginSuccess = useSelector((state) => state.user.loginSuccess);
 const statusThemme = useSelector((state) => state.colorCommon.status);
+const [statusOpenSearch,setStatusOpenSearch] = useState(false)
 const [listSuggestSearch,setListSuggestSearch] = useState([])
 const [loadingSearch,setLoadingSearch] = useState(false)
 let [searchParams, setSearchParams] = useSearchParams()
@@ -80,7 +81,8 @@ const handleClick = (event) => {
     background: statusThemme
     ? "linear-gradient(rgb(238, 77, 45), rgb(255, 115, 55))"
     : "#00255E" ,
-    padding: "0px 5px 5px 5px"
+    padding: "0px 5px 5px 5px",
+   
   }
   const styHeadNotHomePage = {
     background: "transparent",
@@ -94,20 +96,24 @@ const handleClick = (event) => {
   const isHomePage = (window.location.href === "http://localhost:3000/");
   const handleOnKeyUp = async(e) => {
     setLoadingSearch(true)
-   await dispatch(fetchSearchOnkeyUpRequest({value : e.target.value , func : setListSuggestSearch}))
-   setLoadingSearch(false)
-    // const res = await AxiosUser.get(`/api/products/searchOnKeyUp?name=${e.target.value}`)
+   await dispatch(fetchSearchOnkeyUpRequest({value : e.target.value , func : setListSuggestSearch,funcLoading :  setLoadingSearch}))  
   }
-  console.log(listSuggestSearch);
+  const handleOpenSearch = () => {
+    setStatusOpenSearch(true)
+  }
+  const handleCloseSearch = () => {
+    console.log("ok");
+    setStatusOpenSearch(false)
+  }
   return (
     <>
+   
       <div
-        id="top"
         style={ !isHomePage ? styHeadHomePage : styHeadNotHomePage }
       >
        <CategoryBannerMobile />
         <Container sx={{ flexGrow: 1 }}>
-          <Stack direction="row" padding="5px 20px" alignItems="center" justifyContent='space-between'>
+          <Stack direction="row" padding="0px" alignItems="center" justifyContent='space-between'>
           <Stack direction='row' spacing={1} alignItems='center'>
           <Link to='/'>
        <Button  sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'}}}>
@@ -227,7 +233,7 @@ const handleClick = (event) => {
               </Link>
             </Grid>
             <Grid item xs={8} sm={8}>
-              <Paper
+              <Paper onFocus={handleOpenSearch}
                 onSubmit={handleSubmit(onSubmit)}
                 component="form"
                 sx={{
@@ -240,8 +246,8 @@ const handleClick = (event) => {
                   alignItems: "center",
                   width: "82%",
                   position : 'relative',
-                  // background: isHomePage ? "rgba(255,255,255,0.2)" : "white",
                   borderRadius: "25px",
+                  zIndex : listSuggestSearch.length !== 0 ? 9999999 : 1
                 }}
               >
                 <InputBase onKeyUp={handleOnKeyUp}
@@ -251,9 +257,9 @@ const handleClick = (event) => {
                   inputProps={{ "aria-label": "search" }}
                   error
                 />
-                <Stack sx={{position : 'absolute' , top : '100%', width : '100%',height : '10rem' ,left : 0,right : 0 , background : 'black' ,borderRadius : '20px'}}>
-                  
-                </Stack>
+                {  loadingSearch ? <Stack sx={{position : 'absolute' , top : '100%', width : '100%' ,left : 0,right : 0 ,background : 'white' ,borderRadius : '20px', padding : '20px 10px' , zIndex : 10, border : "1px solid #1976d2"}}>
+                <LoadingHomePage/>
+                </Stack> : statusOpenSearch && listSuggestSearch.length !== 0 && <ListItemSearchOnKey clickClose={handleCloseSearch}  data={listSuggestSearch}/>}
                 <IconButton
                   type="submit"
                   sx={{ p: "10px" }}
@@ -262,6 +268,7 @@ const handleClick = (event) => {
                   <SearchIcon />
                 </IconButton>
               </Paper>
+              {listSuggestSearch.length !== 0 && <div onClick={handleCloseSearch} style={{position : 'fixed' , inset : 0,background : "#00000069" , zIndex : 10011 , display : statusOpenSearch ? "block" : 'none'}}></div>}
             </Grid>
             <Grid sx={{ display: "flex", alignItems: "center" }} item>
               <IconCart />

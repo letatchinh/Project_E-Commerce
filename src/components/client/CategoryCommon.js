@@ -1,17 +1,13 @@
-import { Grid, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { v4 } from "uuid";
 import { fetchSearch } from "../../apis/client/ProductApis";
 import Category from "../../layout/client/Category";
 import { setCategorySearch } from "../../redux/filterProduct/Actions";
-import ErrorNoItem from "./ErrorNoItem";
 import ListProduct from "./ListProduct";
 import LoadingHomePage from "./LoadingHomePage";
-import MyPagination from "./MyPagination";
-import ProductClient from "./ProductClient";
 import SideBarFilter from "./SideBarFilter";
 import SortBar from "./SortBar";
 export default function CategoryCommon({ type, valueOfContentTop ,limit}) {
@@ -50,11 +46,12 @@ export default function CategoryCommon({ type, valueOfContentTop ,limit}) {
     <Stack
       alignItems="center"
       spacing={1}
-      padding="30px 50px"
+      
+      padding={{md : "0 50px 30px", xs : "0 2px 30px"}}
       sx={{ background: mainBackGround, width: "100%" }}
     >
       <Category />
-      <Stack width="100%" direction="row" alignItems="center">
+      <Stack  width="100%" direction="row" alignItems="center">
         <div
           style={{ flex: 1, height: "2px", background: "gray", width: "100%" }}
         ></div>
@@ -74,9 +71,9 @@ export default function CategoryCommon({ type, valueOfContentTop ,limit}) {
         ></div>
       </Stack>
 
-      <Stack width="100%" direction="row">
+      <Stack  width="100%" direction="row">
         <SideBarFilter />
-        <Stack flex={1}>
+        <Stack minWidth='320px' flex={1}>
           <Stack
             direction="row"
             justifyContent="space-between"

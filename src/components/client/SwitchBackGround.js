@@ -5,7 +5,7 @@ import { FormControlLabel } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { changeBgRequest } from '../../redux/Common/Actions';
 
-export default function SwitchBackGround({setStatus}) {
+export default function SwitchBackGround() {
   const dispatch = useDispatch()
   const handleChangeBg = () => {
     dispatch(changeBgRequest())
@@ -57,8 +57,8 @@ export default function SwitchBackGround({setStatus}) {
         },
       }));
   return (
-    <FormControlLabel sx={{position : 'absolute' , top : 0 , right : {md : '26%' , xs : '65%'} , zIndex : 1000}} onClick={handleChangeBg}
-    control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
+    <FormControlLabel sx={{position :  "absolute", top : 0 , right : {md : '26%' , xs : '58%'} , zIndex : 1000}} onClick={handleChangeBg}
+    control={<MaterialUISwitch sx={{ m: 1 }}  />}
   />
   )
 }

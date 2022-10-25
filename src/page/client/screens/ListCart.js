@@ -83,7 +83,6 @@ export default function ListCart() {
    <FormControlLabel sx={{color : !status && 'white'}} control={<Checkbox sx={{color : !status && 'white'}}  checked={checkedAll} onChange={handleChange}  />} label={!checkedAll ? "Check All" : "UnCheck All"} />
    }
                     {listCarts && listCarts.length === 0 ? <div style={{margin : '0 auto'}}><ErrorNoItem /></div>: listCarts.map(e =>  <ItemListCart key={v4()} item={e}/>)}
-           
         </Stack>
         <Stack textAlign={{md : 'left', sm : 'center'}} spacing={3} sx={{background : backgroundWhite, padding:'10px',borderRadius:'20px'}}>
         <Stack  spacing={1} borderBottom='1px solid #999' padding='10px 0'>

@@ -23,7 +23,6 @@ export default function ContactUsUser() {
     <div style={{ minWidth: "435px", position: "relative" }}>
       <LoadingHomePageFull/>
       <Header contactActive/>
-      <SwitchBackGround />
       <div style={{background: mainBackGround, padding : '100px 0'}}>
     <Container sx={{ width: {md : "60%" , xs : '100%'} }}>
        <Paper elevation={3} sx={{background: mainBackGround2,  display : 'flex' , flexDirection : {md : 'row' , xs : 'column'}}}>

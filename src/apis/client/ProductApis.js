@@ -55,6 +55,16 @@ export const fetchListHot = async(action) => {
         console.log(error);
     }
 }
+export const fetchListReview = async(action) => {
+    try{
+        // const {queryKey} = action
+        // console.log(action);
+        const res = await AxiosUser.get(`/api/reviews/getReviewByIdProduct/${action._id}?page=${action.pageParam}`)
+        return res.data
+    } catch (error) {
+        console.log(error);
+    }
+}
 export const fetchListVoucherScreen = async(action) => {
     try{
         const res = await AxiosUser.get(`/api/vouchers/all`)
