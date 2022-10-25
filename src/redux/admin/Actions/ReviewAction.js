@@ -1,4 +1,5 @@
 import axios from "axios";
+import { boolean } from "yup";
 import {
   REVIEW_ACTIVE_FAIL,
   REVIEW_ACTIVE_REQUEST,
@@ -17,7 +18,7 @@ import { ADMIN_TOKEN } from "../Constants/token";
 import { logout } from "./UserActions";
 
 export const listReviews =
-  (keyword = "", pageNumber = "", sortRating = "") =>
+  (keyword = "", pageNumber = "", sortRating = "", activeComment = "") =>
   async (dispatch, getState) => {
     try {
       const token = ADMIN_TOKEN;
@@ -33,10 +34,10 @@ export const listReviews =
       };
 
       const { data } = await axios.get(
-        `/api/reviews/allReview?keyword=${keyword}&&pageNumber=${pageNumber}&&sortRating=${sortRating}`,
+        `/api/reviews/allReview?keywordActive=${activeComment}&&keyword=${keyword}&&pageNumber=${pageNumber}&&sortRating=${sortRating}`,
         config
       );
-
+      console.log(data);
       dispatch({ type: REVIEW_LIST_SUCCESS, payload: data });
     } catch (error) {
       const message =

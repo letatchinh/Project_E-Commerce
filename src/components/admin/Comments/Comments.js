@@ -1,37 +1,35 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { listAllCategorys } from "../../../redux/admin/Actions/CategoryAction";
 import {
   activeReivew,
-  deleteReview,
   disabledReivew,
   listReviews,
 } from "../../../redux/admin/Actions/ReviewAction.js";
 import Message from "../LoadingError/Error";
-import Loading from "../LoadingError/Loading";
 import StyledRating from "../../client/StyledRating.js";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
 import { toast, ToastContainer } from "react-toastify";
-import moment from "moment";
 const CommentsTables = () => {
+  const params = useParams();
+  let navigator = useNavigate();
   const [keyword, setKeyword] = useState();
+  const [activeComment, setActiveComment] = useState();
   const [sortRating, setSortRating] = useState();
   const dispatch = useDispatch();
   let id = 1;
-  const params = useParams();
-  let navigator = useNavigate();
+
   const pagenumber = params.pagenumber;
   const reviewList = useSelector((state) => state.reviewList);
   const { loading, error, reviews, page, pages } = reviewList;
-
+  console.log(reviewList);
   const reviewDisabled = useSelector((state) => state.reviewDisabled);
 
   const reviewActive = useSelector((state) => state.reviewActive);
 
   const fecth = useCallback(async () => {
-    await dispatch(listReviews(keyword, pagenumber, sortRating));
-  }, [dispatch, pagenumber, keyword, sortRating]);
+    await dispatch(listReviews(keyword, pagenumber, sortRating, activeComment));
+  }, [dispatch, pagenumber, keyword, sortRating, activeComment]);
 
   useEffect(() => {
     fecth();
@@ -39,6 +37,15 @@ const CommentsTables = () => {
   const handlesortRating = (e) => {
     setSortRating(e.target.value);
     navigator(`/admin/productcomments/page/${page}/${e.target.value}`);
+  };
+  const handleActive = (e) => {
+    if (e.target.value === "") {
+      setActiveComment(e.target.value);
+      navigator(`/admin/productcomments/`);
+    } else {
+      setActiveComment(e.target.value);
+      navigator(`/admin/productcomments/active/${e.target.value}`);
+    }
   };
   const submitHandler = (e) => {
     e.preventDefault();
@@ -48,20 +55,14 @@ const CommentsTables = () => {
       navigator("/admin/productcomments");
     }
   };
-  // console.log(reviewList);
   const handelDisabled = (id) => {
     dispatch(disabledReivew(id));
     toast("Disabled success");
-
-    // navigator(-1);
   };
   const handelActive = (id) => {
     dispatch(activeReivew(id));
     toast("Active success");
-
-    // navigator(-1);
   };
-  console.log(reviews.reviews);
   return (
     <>
       <ToastContainer />
@@ -81,23 +82,19 @@ const CommentsTables = () => {
                 onChange={(e) => setKeyword(e.target.value)}
               />
             </form>
-            {/* <div className="col-lg-2 col-6 col-md-3">
-              <select className="form-select" onChange={handlesortCategory}>
-                <option value="">All category</option>
-                {categorys &&
-                  categorys.map((cate) => (
-                    <option key={cate._id} value={cate.name}>
-                      {cate.name}
-                    </option>
-                  ))}
-              </select>
-            </div> */}
 
             <div className="col-lg-2 col-6 col-md-3">
               <select className="form-select" onChange={handlesortRating}>
                 <option value="">All rating</option>
                 <option value="-1">High to Low</option>
                 <option value="1">Low to High</option>
+              </select>
+            </div>
+            <div className="col-lg-2 col-6 col-md-3">
+              <select className="form-select" onChange={handleActive}>
+                <option value="">All Status</option>
+                <option value={true}>Active</option>
+                <option value={false}>Disabled</option>
               </select>
             </div>
           </div>

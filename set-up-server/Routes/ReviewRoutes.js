@@ -31,18 +31,32 @@ ReviewRoutes.get(
           },
         }
       : {};
+    const keywordActive = req.query.keywordActive
+      ? {
+          active: req.query.keywordActive,
+        }
+      : {};
     const ratings = req.query.sortRating || null;
     const pageSize = 6;
     const page = Number(req.query.pageNumber) || 1;
     const count = await Review.countDocuments({
       ...keyword,
+      ...keywordActive,
     });
-    const reviews = await Review.find({ ...keyword })
+    const reviews = await Review.find({
+      ...keyword,
+      ...keywordActive,
+    })
       .populate("product")
       .limit(pageSize)
       .skip(pageSize * (page - 1))
       .sort(!ratings ? { _id: -1 } : { rating: ratings });
-    res.json({ reviews, page, pages: Math.ceil(count / pageSize) });
+    res.json({
+      reviews,
+      page,
+      pages: Math.ceil(count / pageSize),
+      keywordActive,
+    });
   })
 );
 

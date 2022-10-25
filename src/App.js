@@ -157,6 +157,11 @@ function App() {
             element={<ProductComments />}
             exact
           />
+          <Route
+            path="/admin/productcomments/active/:active"
+            element={<ProductComments />}
+            exact
+          />
           <Route path="/admin" element={<HomeScreen />} />
           <Route
             path="/admin/product/:id/edit"
