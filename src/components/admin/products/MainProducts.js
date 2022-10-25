@@ -84,12 +84,19 @@ const MainProducts = () => {
               />
             </form>
             <div className="col-lg-2 col-6 col-md-3">
-              <select className="form-select" onChange={handlesortCategory}>
-                <option value="">Select</option>
+              <select
+                className="form-select"
+                value={keywordCategory}
+                onChange={handlesortCategory}
+              >
                 <option value="">All category</option>
                 {categorys &&
                   categorys.map((cate) => (
-                    <option key={cate._id} value={cate.name}>
+                    <option
+                      key={cate._id}
+                      value={cate.name}
+                      // {...(cate.name === keywordCategory ? "selected" : "")}
+                    >
                       {cate.name}
                     </option>
                   ))}
