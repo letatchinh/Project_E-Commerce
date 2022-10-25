@@ -85,19 +85,19 @@ orderRouter.get(
   admin,
 
   asyncHandler(async (req, res) => {
-    const keywordPaid = req.query.keywordPaid
+    const isPaid = req.query.isPaid
       ? {
-          isPaid: req.query.keywordPaid,
+          isPaid: req.query.isPaid,
         }
       : {};
-    const keywordDelivered = req.query.keywordDelivered
+    const isDelivered = req.query.isDelivered
       ? {
-          isDelivered: req.query.keywordDelivered,
+          isDelivered: req.query.isDelivered,
         }
       : {};
     const ordersPaidS = await Order.find({
-      ...keywordPaid,
-      ...keywordDelivered,
+      ...isPaid,
+      ...isDelivered,
     }).populate("user");
     res.json({ ordersPaidS });
   })

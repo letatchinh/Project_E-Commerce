@@ -28,13 +28,14 @@ const OrderMain = () => {
   const pagenumber = params.pagenumber;
   const pageFiterNumber = params.pageFiterNumber;
   const [paid, setPaid] = useState();
+  const [delivered, setDelivered] = useState();
 
   const fetch = useCallback(async () => {
     await dispatch(listOrders(keyword, pagenumber));
     await dispatch(listOrdersFiterName(name, pageFiterNumber));
-    await dispatch(listOrdersPaidS(paid));
+    await dispatch(listOrdersPaidS(paid, delivered));
     // setPaid(false);
-  }, [dispatch, keyword, pagenumber, name, pageFiterNumber, paid]);
+  }, [dispatch, keyword, pagenumber, name, pageFiterNumber, paid, delivered]);
   useEffect(() => {
     fetch();
     // setarrProduct(arrProduct);
@@ -53,6 +54,16 @@ const OrderMain = () => {
       setPaid(e.target.value);
       navigator(`/admin/orders/search/${e.target.value}`);
     } else {
+      setPaid(e.target.value);
+      navigator("/admin/orders");
+    }
+  };
+  const HandlerDislivered = (e) => {
+    if (delivered) {
+      setDelivered(e.target.value);
+      navigator(`/admin/orders/search/${e.target.value}`);
+    } else {
+      setDelivered(e.target.value);
       navigator("/admin/orders");
     }
   };
@@ -90,6 +101,16 @@ const OrderMain = () => {
                 <option value="">Show all Paid</option>
                 <option value="true">Paided</option>
                 <option value="false">Unpaid</option>
+              </select>
+            </div>
+            <div className="col-lg-2 col-6 col-md-3 w-pc-28">
+              <select
+                className="form-select"
+                onChange={(e) => setDelivered(e.target.value)}
+              >
+                <option value="">Show all Deilivered</option>
+                <option value="true">Shippered</option>
+                <option value="false">Not shipper</option>
               </select>
             </div>
           </div>
