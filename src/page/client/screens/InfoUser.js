@@ -1,4 +1,4 @@
-import { Button, List, TextField, Typography } from "@mui/material";
+import { Button, List,  Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ItemInfoUser from "../../../components/client/ItemInfoUser";
 import PeopleIcon from "@mui/icons-material/People";
@@ -16,7 +16,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Alert from "@mui/material/Alert";
 import "../../../components/StyleComponent/StyleCommomUser.css";
-import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { v4 } from "uuid";
@@ -32,7 +31,7 @@ import {  styled } from '@mui/material/styles';
 
 export default function InfoUser() {
   const statusColor = useSelector(state => state.colorCommon.status)
-
+  const [address,setAddress] = useState([])
   const CssSelect = styled(Select)({
     '& .MuiOutlinedInput-notchedOutline': {
         borderColor: !statusColor && '#999',
@@ -41,21 +40,20 @@ export default function InfoUser() {
         color : !statusColor && '#999'
     }
   });
-  const users = JSON.parse(localStorage.getItem(KEY_USER))
+  const userLogin = JSON.parse(localStorage.getItem(KEY_USER)) || ""
   const navigate = useNavigate()
   useEffect(() => {
-    if(users === null){
+    if(userLogin === null){
       navigate('/login')
     }
-  },[users])
+  },[userLogin])
   const [status, setStatus] = useState(false);
   const [loading, setLoading] = useState(false);
-  const userLogin = JSON.parse(localStorage.getItem(KEY_USER))
+  const [mainAddress,setMainAddress] = useState({})
   const [isCheckDistrit, setisCheckDistrit] = useState(false);
   const [addressSelect, setAddressSelect] = useState("");
   const [SubDistrict, setSubDistrict] = useState("");
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.loginSuccess);
   const schema = yup.object().shape({
     name: yup.string().required("Required").min(2).max(20),
     // email: yup.string().required("Required").email(),
@@ -71,10 +69,15 @@ export default function InfoUser() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
     reset,
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues : {
+      quan : mainAddress.quan || "" ,
+      phuong : mainAddress.phuong || "",
+      numberHouse : mainAddress.sonha || "",
+    }
   });
   const onSubmit = async (data) => {
     const newAddress =
@@ -88,6 +91,20 @@ export default function InfoUser() {
     setStatus(!status);
   }).catch(err => console.log(err)).finally(() =>  setLoading(false))  
   };
+  useEffect(() => {
+    let indexSlice = 0
+    let address2 = []
+   for(let i = 0 ; i < userLogin.address.length ; i++){
+     let chr = userLogin.address[i]
+     if(chr === ','){
+       let news = userLogin.address.slice(indexSlice,i)
+       address2.push(news)
+       indexSlice = i + 1
+     }
+   }
+   setMainAddress({quan : address2[2], phuong : address2[1], sonha : address2[0]})
+   reset({quan : address2[2], phuong : address2[1], sonha : address2[0]})
+  },[userLogin.address])
   return (
     <>
       <ContentTop value={"Infomation"} />
@@ -96,7 +113,8 @@ export default function InfoUser() {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Stack spacing={2}>
-          <MyTextField  defaultValue={user.name}
+          <MyTextField  
+            defaultValue={userLogin.name}
             fullWidth
             {...register("name")}
             label="Name"
@@ -105,40 +123,25 @@ export default function InfoUser() {
             <Alert severity="error">{errors.name?.message}</Alert>
           )}
           <MyTextField
-            defaultValue={user.email}
+            defaultValue={userLogin.email}
             fullWidth
+            disabled
             {...register("email")}
             label="Email"
             variant="outlined"
             
           />
-          {errors.email && (
+          {/* {errors.email && (
             <Alert severity="error">{errors.email?.message}</Alert>
-          )}
+          )} */}
           
     
-          <MyTypography id="demo-simple-select-label">
-            Vui lòng chọn đúng địa chỉ , nếu không bạn sẽ mất quyền lợi
-          </MyTypography>
-          <MyTypography >Quận Huyện</MyTypography>
-          {/* <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={addressSelect}
-            {...register("quan", {
-              onChange: (e) => {
-                setAddressSelect(e.target.value);
-                setSubDistrict('')
-              },
-            })}
-            label="Quận"
-          >
-            {QUAN.map(e => <MenuItem key={v4()} value={e}>{e}</MenuItem>) }
-          </Select> */}
+
+          <MyTypography >District</MyTypography>
           <MySelection   labelId="demo-simple-select-label"
             id="demo-simple-select"
             data={QUAN}
-            value={addressSelect}
+            value={addressSelect === "" ? mainAddress.quan ? mainAddress.quan : addressSelect : addressSelect}
             {...register("quan", {
               onChange: (e) => {
                 setAddressSelect(e.target.value);
@@ -148,7 +151,7 @@ export default function InfoUser() {
           {errors.quan && (
             <Alert severity="error">{errors.quan?.message}</Alert>
           )}
-          <MyTypography>Phường</MyTypography>
+          <MyTypography>SubDistrict</MyTypography>
           <CssSelect sx={{color :!statusColor && "white"}}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -159,7 +162,7 @@ export default function InfoUser() {
               },
             })}
             label="Phường"
-            value={SubDistrict}
+            value={SubDistrict === "" ? mainAddress.phuong ? mainAddress.phuong : SubDistrict : SubDistrict}
           >
             {CAM_LE.map((e) => (
               <MenuItem
@@ -219,13 +222,18 @@ export default function InfoUser() {
             }
             
           </CssSelect>
+          {errors.phuong && (
+            <Alert severity="error">{errors.phuong?.message}</Alert>
+          )}
           <MyTypography>Number house</MyTypography>
           <MyTextField
             fullWidth
-            sx={{ display: isCheckDistrit ? "block" : "none" }}
+            // sx={{ display: isCheckDistrit ? "block" : "none" }}
             {...register("numberHouse")}
             label="apartment number"
             variant="outlined"
+            // defaultValue={address}
+            defaultValue={mainAddress.sonha}
           />{" "}
           {errors.numberHouse && (
             <Alert severity="error">{errors.numberHouse?.message}</Alert>
@@ -267,10 +275,10 @@ export default function InfoUser() {
         </Stack>
       </form>
       <List style={{ display: !status ? "block" : "none" }}>
-        <ItemInfoUser icon={<PeopleIcon color="primary" />} value={user.name} />
-        <ItemInfoUser icon={<EmailIcon color="primary" />} value={user.email} />
-        <ItemInfoUser icon={<PhoneIcon color="primary" />} value={user.phone} />
-        <ItemInfoUser icon={<LocationOnIcon  color="primary"/>} value={user.address} />
+        <ItemInfoUser icon={<PeopleIcon color="primary" />} value={userLogin.name} />
+        <ItemInfoUser icon={<EmailIcon color="primary" />} value={userLogin.email} />
+        <ItemInfoUser icon={<PhoneIcon color="primary" />} value={userLogin.phone} />
+        <ItemInfoUser icon={<LocationOnIcon  color="primary"/>} value={userLogin.address} />
       </List>
       <Button
         onClick={() => setStatus(!status)}

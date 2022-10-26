@@ -83,6 +83,7 @@ export default function ListOrder() {
           ) : (
             <DetailListOrderUser
               click={() => setStatus(true)}
+              reFetch={fetchListOrder}
               data={list[indexActive]}
             />
           )}
