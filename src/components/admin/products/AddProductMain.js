@@ -207,6 +207,7 @@ const AddProductMain = () => {
                       multiple
                       onChange={fileSelectedHandler}
                       className="form-control mt-3"
+                      required
                     />
                   </div>
                   <div className="mb-4">

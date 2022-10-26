@@ -7,7 +7,6 @@ import {
   listOrdersPaidS,
 } from "../../../redux/admin/Actions/OrderActions";
 import Message from "../LoadingError/Error";
-// import Loading from "../LoadingError/Loading";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
 import Orders from "./Orders";
 const OrderMain = () => {
@@ -45,7 +44,6 @@ const OrderMain = () => {
       navigator("/admin/orders");
     }
   };
-  console.log(orders);
   const HandlerPaiD = (e) => {
     if (paid) {
       setPaid(e.target.value);

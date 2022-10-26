@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { listAllCategorys } from "../../../redux/admin/Actions/CategoryAction";
 import {
   editProduct,
   updateProduct,
@@ -28,6 +29,9 @@ const EditProductMain = (props) => {
   const productList = useSelector((state) => state.productList);
   const { products } = productList;
 
+  const categoryList = useSelector((state) => state.categoryList);
+  const { categorys } = categoryList;
+
   const productUpdate = useSelector((state) => state.productUpdate);
   const {
     loading: loadingUpdate,
@@ -41,13 +45,8 @@ const EditProductMain = (props) => {
     }
     setImages(newFiles);
   };
-  // console.log(images);
   const fetch = useCallback(async () => {
-    // if (!successUpdate) {
-    //   // dispatch({ type: PRODUCT_UPDATE_RESET });
-    //   // toast.success("Product Update");
-    // } else {
-
+    await dispatch(listAllCategorys());
     if (!product.name || product._id !== productId) {
       dispatch(editProduct(productId));
     } else {
@@ -85,6 +84,7 @@ const EditProductMain = (props) => {
       toast.success("Edit success");
     }
   };
+
   return (
     <>
       <ToastContainer />
@@ -198,10 +198,12 @@ const EditProductMain = (props) => {
                           onChange={(e) => setCategory(e.target.value)}
                         >
                           <option value="">Select</option>
-                          <option value="trousers">trousers</option>
-                          <option value="shirt">shirt</option>
-                          <option value="hat">hat</option>
-                          <option value="shoe">shoe</option>
+                          {categorys &&
+                            categorys.map((cate) => (
+                              <option key={cate._id} value={cate.name}>
+                                {cate.name}
+                              </option>
+                            ))}
                         </select>
                       </div>
                       <div className="mb-4">

@@ -8,17 +8,19 @@ const TopTotal = (props) => {
   let totalSale = 0;
   let countPaid = 0;
   let totalPure = 0;
+  let countNoPaid = 0;
   if (orders) {
     orders.map((order) =>
       order.isPaid === true ? (totalSale = totalSale + order.totalPrice) : null
     );
-    orders.map((order) => (order.isPaid === true ? countPaid++ : null));
+    orders.map((order) => (order.isPaid === true ? countPaid++ : 0));
+    orders.map((order) => (order.isPaid === false ? countNoPaid++ : 0));
     let arrPaid = orders.filter((order) => order.isPaid === true);
     arrPaid.map((e) =>
       e.orderItem.map((el) => (totalPure = el.pricePure * el.qty + totalPure))
     );
   }
-
+  // console.log(countPaid, countNoPaid);
   const dispatch = useDispatch();
   const fetch = useCallback(async () => {
     await dispatch(listProducts());
