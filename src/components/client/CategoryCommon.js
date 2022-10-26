@@ -28,8 +28,18 @@ export default function CategoryCommon({ type, valueOfContentTop ,limit}) {
     setLow(Math.max(low5));
   }, [more10, more50, low5]);
   const dispatch = useDispatch();
+  const temp={
+    keywordSearch,
+type,
+page,
+sortPrice,
+sortRating,
+low,
+more,
+limit
+  }
   const query = useQuery(
-    [keywordSearch, type, page, sortPrice, sortRating, low, more,limit],
+    [temp],
     fetchSearch
   );
   const { data, isLoading } = query
@@ -72,7 +82,7 @@ export default function CategoryCommon({ type, valueOfContentTop ,limit}) {
       </Stack>
 
       <Stack  width="100%" direction="row">
-        <SideBarFilter />
+        <SideBarFilter setPage={handleChange}/>
         <Stack minWidth='320px' flex={1}>
           <Stack
             direction="row"

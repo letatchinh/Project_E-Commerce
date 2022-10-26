@@ -60,3 +60,9 @@ export const setFilter = (action) => {
         payload : action.filter
     }
 }
+export const setReFetchReview = (action) => {
+    return {
+        type : "REFETCH_REVIEW",
+        payload : action
+    }
+}

@@ -32,6 +32,12 @@ export const fetchDeleteAllCartRequest = () => {
     payload: "",
   };
 };
+export const fetchAddCommentRequest = (action) => {
+  return {
+    type: "FETCH_ADD_COMMENT_REQUEST",
+    payload: action,
+  };
+};
 // export const fetchListReviewRequest = (action) => {
 //   return{
 //     type : "FETCH_REVIEW_REQUEST",
@@ -334,6 +340,23 @@ export function* fetchSearchOnkeyUp(action){
     
   }
 }
+export function* fetchAddComment(action){
+  try {
+    const {status} = yield call(() =>  AxiosUser.post("/api/reviews/add", action.payload.newComment))
+   if(status === STATUS_CODE.CREATED){
+     const {status,data} = yield call(() => AxiosUser.get(`/api/reviews/SumReviewByIdProduct/${action.payload._id}`))
+     if(status === STATUS_CODE.SUCCESS){
+     yield  action.payload.handleSetItem(data.updatedProduct)
+     yield action.payload.setCount()
+     yield action.payload.reset()
+     yield ToastSuccess("Tks for Your Comment <3")
+     }
+   }
+  } catch (error) {
+    ToastError("Error connect")
+    console.log(error,"error");
+  }
+}
 function* mySaga() {
   yield takeLatest("FETCH_ADD_CART", fetchAddToCart);
   yield takeLatest("FETCH_CART_REQUEST", fetchCartSaga);
@@ -346,6 +369,7 @@ function* mySaga() {
   yield takeLatest("FETCH_APPLY_VOUCHER_REQUEST", fetchApplyVoucher);
   yield takeLatest("ADD_ORDER_SUCCESS", fetchAddOrderSuccessAndDeleteCart);
   yield takeLatest("ADD_VOUCHER_REQUEST", fetchAddVoucher);
+  yield takeLatest("FETCH_ADD_COMMENT_REQUEST", fetchAddComment);
   yield takeLatest("REMOVE_VOUCHER", fetchRemoveVoucher);
   yield takeLatest("FETCH_SEARCH_ONKEYUP_REQUEST", fetchSearchOnkeyUp);
   yield takeEvery("FETCH_CART_SUCCESS", fetchCartSuccess);
