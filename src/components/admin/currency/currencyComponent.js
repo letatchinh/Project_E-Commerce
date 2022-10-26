@@ -14,7 +14,6 @@ const CurrencyComponent = () => {
 
   const productsListAll = useSelector((state) => state.productsListAll);
   const { loading, error, productsAll } = productsListAll;
-  const [active, setActive] = useState(false);
 
   useEffect(() => {
     dispatch(listAllProducts());
@@ -22,18 +21,16 @@ const CurrencyComponent = () => {
   const [index, setIndex] = useState(1);
 
   const handleCurrencyVND = () => {
-    setActive(true);
     dispatch(currencyVND());
     toast("Change VND success ");
     setIndex(2);
   };
   const handleCurrencyUSD = () => {
-    setActive(true);
     dispatch(currencyUSD());
     toast("Change USD success ");
     setIndex(1);
   };
-
+  console.log(productsAll);
   return (
     <>
       <ToastContainer />
@@ -63,16 +60,17 @@ const CurrencyComponent = () => {
 
           <div className="card mb-4 shadow-sm">
             <div className="card-body">
-              {active === false && (
+              {
                 <div className="row">
                   {/* Products */}
                   {productsAll &&
+                    !productsAll.products &&
                     productsAll.map((product) => (
                       <Product product={product} key={product._id} />
                     ))}
                 </div>
-              )}
-              {active === true && loading ? (
+              }
+              {loading ? (
                 <LoadingDashboard />
               ) : error ? (
                 <Message variant="alert-danger">{error}</Message>

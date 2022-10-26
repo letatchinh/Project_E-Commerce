@@ -89,6 +89,7 @@ export const productListAllReducer = (state = { productsAll: [] }, action) => {
     case PRODUCT_LISTALL_REQUEST:
       return { ...state, loading: true, productsAll: [] };
     case PRODUCT_LISTALL_SUCCESS:
+      console.log(action);
       return {
         ...state,
         loading: false,
