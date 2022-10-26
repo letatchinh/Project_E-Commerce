@@ -1,5 +1,4 @@
 import axios from "axios";
-import { boolean } from "yup";
 import {
   REVIEW_ACTIVE_FAIL,
   REVIEW_ACTIVE_REQUEST,
