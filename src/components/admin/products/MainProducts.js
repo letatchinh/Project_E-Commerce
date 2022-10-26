@@ -10,6 +10,7 @@ const MainProducts = () => {
   const [keyword, setKeyword] = useState();
   const [sortPrice, setSortPrice] = useState();
   const [keywordCategory, setKeywordCategory] = useState();
+  const [keywordQuantitySold, setKeywordQuantitySold] = useState();
   const params = useParams();
   const pagenumber = params.pagenumber;
 
@@ -26,9 +27,22 @@ const MainProducts = () => {
   const fetch = useCallback(async () => {
     await dispatch(listAllCategorys());
     await dispatch(
-      listProducts(keyword, pagenumber, sortPrice, keywordCategory)
+      listProducts(
+        keyword,
+        pagenumber,
+        sortPrice,
+        keywordCategory,
+        keywordQuantitySold
+      )
     );
-  }, [dispatch, pagenumber, keyword, sortPrice, keywordCategory]);
+  }, [
+    dispatch,
+    pagenumber,
+    keyword,
+    sortPrice,
+    keywordCategory,
+    keywordQuantitySold,
+  ]);
   useEffect(() => {
     fetch();
   }, [fetch, productDelete]);
@@ -40,6 +54,13 @@ const MainProducts = () => {
   const handlesortCategory = (e) => {
     setKeywordCategory(e.target.value);
     navigator(`/admin/products/page/${page}/category/${e.target.value}`);
+    if (e.target.value === "") {
+      navigator("/admin/products");
+    }
+  };
+  const handlesortQuantitySold = (e) => {
+    setKeywordQuantitySold(e.target.value);
+    navigator(`/admin/products/page/${page}/quantitySold/${e.target.value}`);
     if (e.target.value === "") {
       navigator("/admin/products");
     }
@@ -99,6 +120,14 @@ const MainProducts = () => {
                 <option value="">All price</option>
                 <option value="-1">High to Low</option>
                 <option value="1">Low to High</option>
+              </select>
+            </div>
+            <div className="col-lg-2 col-6 col-md-3">
+              <select className="form-select" onChange={handlesortQuantitySold}>
+                <option value="">All Quantity Sold</option>
+                <option value={5}>+5 product</option>
+                <option value={20}>+20 product</option>
+                <option value={30}>+30 product</option>
               </select>
             </div>
           </div>

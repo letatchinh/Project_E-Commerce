@@ -27,7 +27,13 @@ import { logout } from "./UserActions";
 
 //ALL PRODUCT WITH PAGENITION
 export const listProducts =
-  (keyword = "", pageNumber = "", sortPrice = "", keywordCategory = "") =>
+  (
+    keyword = "",
+    pageNumber = "",
+    sortPrice = "",
+    keywordCategory = "",
+    keywordQuantitySold = ""
+  ) =>
   async (dispatch) => {
     try {
       const token = ADMIN_TOKEN;
@@ -40,7 +46,7 @@ export const listProducts =
       };
 
       const { data } = await axios.get(
-        `/api/products/all?keyword=${keyword}&&pageNumber=${pageNumber}&&sortPrice=${sortPrice}&&category=${keywordCategory}`,
+        `/api/products/all?keyword=${keyword}&&pageNumber=${pageNumber}&&sortPrice=${sortPrice}&&category=${keywordCategory}&&quantitySold=${keywordQuantitySold}`,
         config
       );
 

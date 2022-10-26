@@ -279,16 +279,26 @@ productRoute.get(
           },
         }
       : {};
+    const keywordQuantitySold = req.query.quantitySold
+      ? {
+          quantitySold: { $gte: req.query.quantitySold },
+        }
+      : {};
 
     const prices = req.query.sortPrice || null;
-    // const categorie = req.query.sortCategory || null;
+
     const pageSize = 12;
     const page = Number(req.query.pageNumber) || 1;
     const count = await Product.countDocuments({
       ...keyword,
       ...keywordCategory,
+      ...keywordQuantitySold,
     });
-    const products = await Product.find({ ...keyword, ...keywordCategory })
+    const products = await Product.find({
+      ...keyword,
+      ...keywordCategory,
+      ...keywordQuantitySold,
+    })
       .limit(pageSize)
       .skip(pageSize * (page - 1))
       .sort(!prices ? { _id: -1 } : { price: prices });

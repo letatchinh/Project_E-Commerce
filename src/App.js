@@ -47,9 +47,7 @@ const ComponentHomePage = React.lazy(() =>
 
 function App() {
   return (
-    
     <>
-    
       <Routes>
         <Route element={<HomePageUser />}>
           <Route
@@ -197,6 +195,10 @@ function App() {
 
           <Route
             path="/admin/products/page/:pagenumber"
+            element={<ProductScreen />}
+          />
+          <Route
+            path="/admin/products/page/:pagenumber/quantitySold/:quantitySold"
             element={<ProductScreen />}
           />
 
