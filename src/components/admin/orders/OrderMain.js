@@ -176,7 +176,7 @@ const OrderMain = () => {
               )}
             </div>
           )}
-          {!paid && name && (
+          {!paid && !delivered && name && (
             <div className="table-responsive">
               {loadings ? (
                 <LoadingDashboard />
@@ -257,29 +257,7 @@ const OrderMain = () => {
               )}
             </div>
           )}
-          {paid && !delivered && !name && (
-            <div className="table-responsive">
-              {loading ? (
-                <LoadingDashboard />
-              ) : errors ? (
-                <Message variant="alert-danger">{errors}</Message>
-              ) : (
-                <Orders orders={ordersPaidS} />
-              )}
-            </div>
-          )}
-          {delivered && !paid && !name && (
-            <div className="table-responsive">
-              {loading ? (
-                <LoadingDashboard />
-              ) : errors ? (
-                <Message variant="alert-danger">{errors}</Message>
-              ) : (
-                <Orders orders={ordersPaidS} />
-              )}
-            </div>
-          )}
-          {paid && delivered && !name && (
+          {(paid || delivered) && !name && (
             <div className="table-responsive">
               {loading ? (
                 <LoadingDashboard />
