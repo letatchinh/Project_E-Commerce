@@ -4,10 +4,15 @@
   "description": "",
   "type": "module",
   "main": "server.js",
+  "engines": {
+    "node": "16.8.0",
+    "npm" : "7.21.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./server.js",
-    "server": "nodemon ./server.js"
+    "server": "nodemon ./server.js",
+    "heroku-postbuild" : "NPM_CONFIG_PRODUCTION=false npm install --prefix ../Untitled && npm run build ../Untitled"
   },
   "author": "",
   "license": "ISC",

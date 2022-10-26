@@ -21,6 +21,7 @@ import VoucherRoutes from "./Routes/VoucherRoutes.js";
 dotenv.config();
 connnectDatabase();
 const app = express();
+const path = require("path")
 app.use(express.json());
 app.use(cors());
 
@@ -45,7 +46,12 @@ app.get("/", (req, res) => {
 });
 
 const PORT = process.env.PORT || 1000;
-
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static('../Untitled/build'))
+  app.get("*",(req,res) => {
+    res.sendFile(path.resolve(__dirname ,'../Untitled', 'build' ,'index.html'))
+  })
+}
 app.listen(PORT, console.log(`server run in port ${PORT}`));
 
 // io.on('connnection',(socket)=>{
