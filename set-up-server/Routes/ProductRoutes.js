@@ -5,6 +5,7 @@ import { admin, protect } from "./../MiddelWare/AuthMiddleware.js";
 
 const productRoute = express.Router();
 
+// USER
 //GET ALL PRODUCT
 productRoute.get(
   "/",
@@ -73,25 +74,24 @@ productRoute.get(
   asyncHandler(async (req, res) => {
     const pageSize = Number(req.query.limit) || 8;
     const name = req.query.name || "";
-   if(name !== ""){
-    const nameFilter = name ? { name: { $regex: name, $options: "i" }  } : {};
-    const page = Number(req.query.page) || 1;
-    const products = await Product.find({
-      ...nameFilter,
-    })
-      .limit(pageSize)
-      .skip(pageSize * (page - 1))
-      .sort( { _id: -1 }
-      );
-    res.send({ products });
-   }
-   else{
-    res.send({ products : [] });
-   }
+    if (name !== "") {
+      const nameFilter = name ? { name: { $regex: name, $options: "i" } } : {};
+      const page = Number(req.query.page) || 1;
+      const products = await Product.find({
+        ...nameFilter,
+      })
+        .limit(pageSize)
+        .skip(pageSize * (page - 1))
+        .sort({ _id: -1 });
+      res.send({ products });
+    } else {
+      res.send({ products: [] });
+    }
     // const arr = products.find()
   })
 );
-// FILTER PRODUCT SALE
+
+// FILTER PRODUCT SALE (best seller)
 productRoute.get(
   "/filterSaleProduct",
   asyncHandler(async (req, res) => {
@@ -105,6 +105,7 @@ productRoute.get(
     res.json({ products, page, pages: Math.ceil(count / limit), count });
   })
 );
+
 // FILTER PRODUCT NEW
 productRoute.get(
   "/filterNewProduct",
@@ -124,28 +125,27 @@ productRoute.get(
 // Update Product
 productRoute.put(
   "/updateProduct",
-  asyncHandler(async (req,res) => {
-    const product = req.body
-    const products = await Product.findOne({_id : product.product})
-    if(products){
-       products.countInStock = products.countInStock - product.qty 
-       products.quantitySold = products.quantitySold + product.qty || products.quantitySold
-       if(products.countInStock < 0){
-        res.status(401)
-        throw new Error("out of stock")
-       }
-       else{
+  asyncHandler(async (req, res) => {
+    const product = req.body;
+    const products = await Product.findOne({ _id: product.product });
+    if (products) {
+      products.countInStock = products.countInStock - product.qty;
+      products.quantitySold =
+        products.quantitySold + product.qty || products.quantitySold;
+      if (products.countInStock < 0) {
+        res.status(401);
+        throw new Error("out of stock");
+      } else {
         await products.save();
-        res.json(products)
-       }
-   
-    }
-    else{
-      res.status(401)
-      throw new Error("not found Product")
+        res.json(products);
+      }
+    } else {
+      res.status(401);
+      throw new Error("not found Product");
     }
   })
 );
+
 // FILTER PRODUCT HOT
 productRoute.get(
   "/filterHotProduct",
@@ -160,6 +160,7 @@ productRoute.get(
     res.json({ products, page, pages: Math.ceil(count / limit), count });
   })
 );
+
 // Check countInStock
 productRoute.post(
   "/checkCountInStock",
@@ -180,8 +181,83 @@ productRoute.post(
     res.json({ status: true });
   })
 );
-//ADMIN GET ALL PRODUCT WITHOUT SEARCH AND PAGENATION
 
+//PRODUCT REVIEW
+productRoute.post(
+  "/:id/review",
+  protect,
+  asyncHandler(async (req, res) => {
+    const { rating, comment } = req.body;
+    const product = await Product.findById(req.params.id);
+
+    if (product) {
+      const alreadyReviewed = product.reviews.find(
+        (r) => r.user.toString() === req.user._id.toString()
+      );
+      if (alreadyReviewed) {
+        res.status(400);
+        throw new Error("Product already Reviewed");
+      }
+      const review = {
+        name: req.user.name,
+        rating: Number(rating),
+        comment,
+        user: req.user._id,
+      };
+
+      product.review.push(review);
+      product.numReviews = product.reviews.length;
+      product.rating =
+        product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+        product.reviews.length;
+
+      await product.save();
+      res.status(201).json({ message: "Reviewed Added" });
+    } else {
+      res.status(404);
+      throw new Error("Product not found");
+    }
+  })
+);
+
+productRoute.get(
+  "/sortCreatedAt/sort",
+  asyncHandler(async (req, res) => {
+    try {
+      const pageSize = Number(req.query.limit) || 4;
+      const stream = Number(req.query.stream) || -1;
+      const page = Number(req.query.page) || 1;
+      const count = await Product.countDocuments({});
+      const products = await Product.find({})
+        .limit(pageSize)
+        .skip(pageSize * (page - 1))
+        .sort({ createdAt: stream });
+      res.json({ products, pages: Math.ceil(count / pageSize), page });
+    } catch (error) {
+      res.status(404);
+      throw new Error("product not found");
+    }
+  })
+);
+// GET RANDOM PRODUCT
+productRoute.get(
+  "/getRandomProduct/random",
+  asyncHandler(async (req, res) => {
+    try {
+      const count = await Product.countDocuments();
+      let random = Math.floor(Math.random() * count);
+      const products = await Product.findOne().skip(random);
+      res.json(products);
+    } catch (error) {
+      res.status(404);
+      throw new Error("product not found");
+    }
+  })
+);
+
+// ADMIN
+
+//ADMIN GET ALL PRODUCT WITHOUT SEARCH AND PAGENATION
 productRoute.get(
   "/all",
   protect,
@@ -220,23 +296,7 @@ productRoute.get(
   })
 );
 
-//ADMIN PAGINATION HIGH
-productRoute.get(
-  "/allSortHigh",
-  protect,
-  admin,
-  asyncHandler(async (req, res) => {
-    const pageSize = 2;
-    const page = Number(req.query.pageNumber) || 1;
-    const count = await Product.countDocuments({});
-    const products = await Product.find({})
-      .limit(pageSize)
-      .skip(pageSize * (page - 1))
-      .sort({ price: -1 });
-    res.json({ products, page, pages: Math.ceil(count / pageSize) });
-  })
-);
-
+// PRODUCT NO PAGENITION : USE FOR COUNT PRODUCT IN EACH CATEGORY, SUM PRODUCT IN DASHBOARD, EXCHANGE CURRENCY
 productRoute.get(
   "/allProduct",
   protect,
@@ -247,7 +307,7 @@ productRoute.get(
   })
 );
 
-//GET SINGLE PRODUCT
+//GET SINGLE PRODUCT (USER AND ADMIN USE)
 productRoute.get(
   "/:id",
   asyncHandler(async (req, res) => {
@@ -257,44 +317,6 @@ productRoute.get(
     } else {
       res.status(404);
       throw new Error("Product Not Found");
-    }
-  })
-);
-
-//PRODUCT REVIEW
-productRoute.post(
-  "/:id/review",
-  protect,
-  asyncHandler(async (req, res) => {
-    const { rating, comment } = req.body;
-    const product = await Product.findById(req.params.id);
-
-    if (product) {
-      const alreadyReviewed = product.reviews.find(
-        (r) => r.user.toString() === req.user._id.toString()
-      );
-      if (alreadyReviewed) {
-        res.status(400);
-        throw new Error("Product already Reviewed");
-      }
-      const review = {
-        name: req.user.name,
-        rating: Number(rating),
-        comment,
-        user: req.user._id,
-      };
-
-      product.review.push(review);
-      product.numReviews = product.reviews.length;
-      product.rating =
-        product.reviews.reduce((acc, item) => item.rating + acc, 0) /
-        product.reviews.length;
-
-      await product.save();
-      res.status(201).json({ message: "Reviewed Added" });
-    } else {
-      res.status(404);
-      throw new Error("Product not found");
     }
   })
 );
@@ -429,41 +451,6 @@ productRoute.put(
     } else {
       res.status(404);
       throw new Error("Product Not Found");
-    }
-  })
-);
-
-productRoute.get(
-  "/sortCreatedAt/sort",
-  asyncHandler(async (req, res) => {
-    try {
-      const pageSize = Number(req.query.limit) || 4;
-      const stream = Number(req.query.stream) || -1;
-      const page = Number(req.query.page) || 1;
-      const count = await Product.countDocuments({});
-      const products = await Product.find({})
-        .limit(pageSize)
-        .skip(pageSize * (page - 1))
-        .sort({ createdAt: stream });
-      res.json({ products, pages: Math.ceil(count / pageSize), page });
-    } catch (error) {
-      res.status(404);
-      throw new Error("product not found");
-    }
-  })
-);
-// GET RANDOM PRODUCT
-productRoute.get(
-  "/getRandomProduct/random",
-  asyncHandler(async (req, res) => {
-    try {
-      const count = await Product.countDocuments();
-      let random = Math.floor(Math.random() * count);
-      const products = await Product.findOne().skip(random);
-      res.json(products);
-    } catch (error) {
-      res.status(404);
-      throw new Error("product not found");
     }
   })
 );

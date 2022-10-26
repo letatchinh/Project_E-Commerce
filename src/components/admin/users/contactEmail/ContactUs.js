@@ -1,16 +1,14 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { editUser } from "../../../../redux/admin/Actions/UserActions";
-// import { TextField, TextareaAutosize } from "";
 import { toast, ToastContainer } from "react-toastify";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { TextField, TextareaAutosize } from "@mui/material";
 import LoadingDashboard from "../../LoadingError/LoadingDashboard";
-import Message from "../../LoadingError/Error";
 
 //Use Hook form with material and yup
 
@@ -25,7 +23,6 @@ export const ContactUs = () => {
   const dispatch = useDispatch();
   const params = useParams();
   const user = params.id;
-  // console.log(user);
 
   const userSendMail = useSelector((state) => state.userSendMail);
   const { loadingEditMail, errorEditMail, userMail } = userSendMail;

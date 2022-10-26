@@ -8,7 +8,6 @@ import {
 } from "../../../redux/admin/Actions/CategoryAction";
 
 import Message from "../LoadingError/Error";
-// import Loading from "../LoadingError/Loading";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const EditCategory = (props) => {
   const params = useParams();
@@ -24,11 +23,7 @@ const EditCategory = (props) => {
   const { categorys } = categoryList;
 
   const categoryUpdate = useSelector((state) => state.categoryUpdate);
-  const {
-    loading: loadingUpdate,
-    error: errorUpdate,
-    success: successUpdate,
-  } = categoryUpdate;
+  const { loading: loadingUpdate, error: errorUpdate } = categoryUpdate;
 
   //   console.log(dispatch(editCategory(categoryId)));
   const fetch = useCallback(async () => {

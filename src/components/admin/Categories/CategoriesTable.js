@@ -1,13 +1,8 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { listAllCategorys } from "../../../redux/admin/Actions/CategoryAction";
-import {
-  listAllProducts,
-  listProducts,
-} from "../../../redux/admin/Actions/ProductActions";
+import { listAllProducts } from "../../../redux/admin/Actions/ProductActions";
 import Message from "../LoadingError/Error";
-import Loading from "../LoadingError/Loading";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const CategoriesTable = () => {
   const dispatch = useDispatch();

@@ -128,7 +128,6 @@ export const orderNoticeReducer = (state = { orderWatch: {} }, action) => {
     case ORDER_LISTNOTICE_REQUEST:
       return { ...state, loadingNotice: true };
     case ORDER_LISTNOTICE_SUCCESS:
-      // console.log(action.payload);
       return {
         ...state,
         loadingNotice: false,

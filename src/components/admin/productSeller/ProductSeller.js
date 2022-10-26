@@ -1,11 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-// import products from "../../../data/Products";
+import React, { useCallback, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  listProducts,
-  listProductSeller,
-} from "../../../redux/admin/Actions/ProductActions.js";
+import { listProductSeller } from "../../../redux/admin/Actions/ProductActions.js";
 import Message from "../LoadingError/Error";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
 import Product from "../products/Product.js";
@@ -17,8 +13,6 @@ const ProductSeller = () => {
   const productListSellersa = useSelector((state) => state.productListSellersa);
   const { products, loadingSeller, errorSeller, page, pages } =
     productListSellersa;
-  //   const productDelete = useSelector((state) => state.productDelete);
-  //   const { error: errorDelete, success: successDelete } = productDelete;
   const fetch = useCallback(async () => {
     await dispatch(listProductSeller(pageNumber));
   }, [dispatch, pageNumber]);

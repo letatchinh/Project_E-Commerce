@@ -5,13 +5,11 @@ import { toast, ToastContainer } from "react-toastify";
 import { createProduct } from "../../../redux/admin/Actions/ProductActions";
 import { PRODUCT_CREATE_RESET } from "../../../redux/admin/Constants/ProductContants";
 import Message from "../LoadingError/Error";
-// import Loading from "../LoadingError/Loading";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
 import { TextareaAutosize, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { NewReleasesOutlined } from "@mui/icons-material";
 import { listAllCategorys } from "../../../redux/admin/Actions/CategoryAction";
 //Use Hook form with material and yup
 const validationSchema = yup.object().shape({
@@ -111,11 +109,6 @@ const AddProductMain = () => {
               >
                 Add product
               </h2>
-              {/* <div>
-                <button type="submit" className="btn btn-primary">
-                  Publish now
-                </button>
-              </div> */}
             </div>
           </div>
           <div className="spShow">
@@ -257,10 +250,6 @@ const AddProductMain = () => {
           </div>
           <div className="pcShow">
             <div className="content-header">
-              {/* <Link to="/admin/products" className="btn btn-danger text-white">
-                Go to products
-              </Link>
-              <h2 className="content-title">Add product</h2> */}
               <div>
                 <button type="submit" className="btn btn-primary">
                   Publish now

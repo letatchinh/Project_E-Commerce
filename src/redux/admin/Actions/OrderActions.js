@@ -1,5 +1,4 @@
 import axios from "axios";
-import { boolean, number } from "yup";
 import {
   ORDER_DELIVERED_FAIL,
   ORDER_DELIVERED_REQUEST,
@@ -28,24 +27,21 @@ import { logout } from "./UserActions";
 
 //ALL ORDER
 export const listOrders =
-  (keyword = "", pageNumber = "") =>
-  async (dispatch, getState) => {
+  (pageNumber = "") =>
+  async (dispatch) => {
     const token = ADMIN_TOKEN;
 
     try {
       await dispatch({ type: ORDER_LIST_REQUEST });
 
-      // let { userLogin: userInfo } = getState();
-
       const config = {
         headers: {
-          // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
           Authorization: `Bearer ${token}`,
         },
       };
 
       const { data } = await axios.get(
-        `/api/orders/all?keyword=${keyword}&&pageNumber=${pageNumber}`,
+        `/api/orders/all?pageNumber=${pageNumber}`,
         config
       );
 
@@ -64,7 +60,40 @@ export const listOrders =
       });
     }
   };
+//ALL ORDER FITER NAME OF USER
+export const listOrdersFiterName =
+  (name = "", pageFiterNumber = "") =>
+  async (dispatch) => {
+    const token = ADMIN_TOKEN;
+    try {
+      await dispatch({ type: ORDER_LISTFILTERNAME_REQUEST });
 
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await axios.get(
+        `/api/orders/allOrder?name=${name}&&pageFiter=${pageFiterNumber}`,
+        config
+      );
+
+      dispatch({ type: ORDER_LISTFILTERNAME_SUCCESS, payload: data });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === "Not authorized, token failed") {
+        dispatch(logout());
+      }
+      dispatch({
+        type: ORDER_LISTFILTERNAME_FAIL,
+        payload: message,
+      });
+    }
+  };
 //ALL ORDER WITH PAID SUCCESS
 export const listOrdersPaidS =
   (isPaid = "", isDelivered = "") =>
@@ -73,11 +102,8 @@ export const listOrdersPaidS =
     try {
       await dispatch({ type: ORDER_LISTFILTERPAID_REQUEST });
 
-      // let { userLogin: userInfo } = getState();
-
       const config = {
         headers: {
-          // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
           Authorization: `Bearer ${token}`,
         },
       };
@@ -103,55 +129,14 @@ export const listOrdersPaidS =
     }
   };
 
-//ALL ORDER FITER NAME OF USER
-export const listOrdersFiterName =
-  (name = "", pageFiterNumber = "") =>
-  async (dispatch, getState) => {
-    const token = ADMIN_TOKEN;
-    try {
-      await dispatch({ type: ORDER_LISTFILTERNAME_REQUEST });
-
-      // let { userLogin: userInfo } = getState();
-
-      const config = {
-        headers: {
-          // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      const { data } = await axios.get(
-        `/api/orders/allOrder?name=${name}&&pageFiter=${pageFiterNumber}`,
-        config
-      );
-
-      dispatch({ type: ORDER_LISTFILTERNAME_SUCCESS, payload: data });
-    } catch (error) {
-      const message =
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message;
-      if (message === "Not authorized, token failed") {
-        dispatch(logout());
-      }
-      dispatch({
-        type: ORDER_LISTFILTERNAME_FAIL,
-        payload: message,
-      });
-    }
-  };
-
 //ORDER DETAILS
 export const getOrderDetails = (id) => async (dispatch) => {
   const token = ADMIN_TOKEN;
   try {
     await dispatch({ type: ORDER_DETAILS_REQUEST });
 
-    // let { userLogin: userInfo } = getState();
-
     const config = {
       headers: {
-        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
         Authorization: `Bearer ${token}`,
       },
     };
@@ -213,16 +198,11 @@ export const deliverOrder = (order) => async (dispatch) => {
 
 //ORDER NOTICE
 export const orderNoticeAction = () => async (dispatch) => {
-  // const token = ADMIN_TOKEN;
   try {
     await dispatch({ type: ORDER_LISTNOTICE_REQUEST });
 
-    // let { userLogin: userInfo } = getState();
-
     const config = {
       headers: {
-        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
-        // Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     };
@@ -249,28 +229,19 @@ export const orderNoticeAction = () => async (dispatch) => {
 
 //LIST ORDER NOTICE
 export const orderListNoticeAction = () => async (dispatch) => {
-  const token = ADMIN_TOKEN;
   try {
     await dispatch({ type: ORDER_LISTNOPAGINATION_REQUEST });
 
-    // let { userLogin: userInfo } = getState();
-
     const config = {
-      headers: {
-        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
-        // Authorization: `Bearer ${token}`,
-        // "Content-Type": "application/json",
-      },
+      headers: {},
     };
 
-    const { data } = await axios
-      .get(`/api/orders/allOrderNotice`, config)
-      .then((res) => {
-        dispatch({
-          type: ORDER_LISTNOPAGINATION_SUCCESS,
-          payload: res.data.ordersNotice,
-        });
+    await axios.get(`/api/orders/allOrderNotice`, config).then((res) => {
+      dispatch({
+        type: ORDER_LISTNOPAGINATION_SUCCESS,
+        payload: res.data.ordersNotice,
       });
+    });
   } catch (error) {
     const message =
       error.response && error.response.data.message

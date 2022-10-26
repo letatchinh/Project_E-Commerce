@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import {
   currencyUSD,
   currencyVND,
   listAllProducts,
-  listProducts,
 } from "../../../redux/admin/Actions/ProductActions.js";
 import Message from "../LoadingError/Error.js";
-// import Loading from "../LoadingError/Loading.js";
 import LoadingDashboard from "../LoadingError/LoadingDashboard.js";
 import Product from "../products/Product.js";
 import { ToastContainer, toast } from "react-toastify";
@@ -18,13 +15,9 @@ const CurrencyComponent = () => {
   const productsListAll = useSelector((state) => state.productsListAll);
   const { loading, error, productsAll } = productsListAll;
   const [active, setActive] = useState(false);
-  // const productList = useSelector((state) => state.productList);
-  // const { loading, error, products } = productList;
 
-  console.log(productsAll);
   useEffect(() => {
     dispatch(listAllProducts());
-    dispatch(listProducts());
   }, [dispatch]);
   const [index, setIndex] = useState(1);
 
@@ -79,7 +72,6 @@ const CurrencyComponent = () => {
                     ))}
                 </div>
               )}
-              {/* <div className="row">{!productsAll.products && <p>Empty</p>}</div> */}
               {active === true && loading ? (
                 <LoadingDashboard />
               ) : error ? (

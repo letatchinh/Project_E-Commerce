@@ -1,39 +1,13 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
-// import protects from "../MiddelWare/AuthMiddleware.js";
-// pro
 import generateToken from "../utils/generateToken.js";
 import User from "../Models/UserModel.js";
 import { protect, admin } from "../MiddelWare/AuthMiddleware.js";
-import mongoose, { trusted } from "mongoose";
+import mongoose from "mongoose";
 
 const userRouter = express.Router();
 
-// LOGIN
-userRouter.post(
-  "/login",
-  asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (user && (await user.matchPassword(password))) {
-      res.json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        address: user.address,
-        avatar: user.avatar,
-        listVoucher: user.listVoucher || [],
-        isAdmin: user.isAdmin,
-        token: generateToken(user._id),
-        createdAt: user.createdAt,
-      });
-    } else {
-      res.status(401);
-      throw new Error("Invalid Email or Password");
-    }
-  })
-);
-
+//USER
 userRouter.post(
   "/loginUser",
   asyncHandler(async (req, res) => {
@@ -100,6 +74,7 @@ userRouter.post(
     }
   })
 );
+
 // LOGIN WITH FB AND GG
 userRouter.post(
   "/check",
@@ -247,37 +222,6 @@ userRouter.get(
   })
 );
 
-//USER DISABLED
-userRouter.put(
-  "/:id/disabled",
-  asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
-    if (user) {
-      user.active = false;
-      const updateUser = await user.save();
-      res.json(updateUser);
-    } else {
-      res.status(404);
-      throw new Error("User Not Found");
-    }
-  })
-);
-
-//USER ACTVIVE
-userRouter.put(
-  "/:id/active",
-  asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
-    if (user) {
-      user.active = true;
-      const updateActiveUser = await user.save();
-      res.json(updateActiveUser);
-    } else {
-      res.status(404);
-      throw new Error("User Not Found");
-    }
-  })
-);
 // EDIT USER
 userRouter.put(
   "/profileUser/:id",
@@ -352,6 +296,66 @@ userRouter.put(
     }
   })
 );
+
+//ADMIN
+
+// LOGIN
+userRouter.post(
+  "/login",
+  asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (user && (await user.matchPassword(password))) {
+      res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        address: user.address,
+        avatar: user.avatar,
+        listVoucher: user.listVoucher || [],
+        isAdmin: user.isAdmin,
+        token: generateToken(user._id),
+        createdAt: user.createdAt,
+      });
+    } else {
+      res.status(401);
+      throw new Error("Invalid Email or Password");
+    }
+  })
+);
+
+//USER DISABLED
+userRouter.put(
+  "/:id/disabled",
+  asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+    if (user) {
+      user.active = false;
+      const updateUser = await user.save();
+      res.json(updateUser);
+    } else {
+      res.status(404);
+      throw new Error("User Not Found");
+    }
+  })
+);
+
+//USER ACTVIVE
+userRouter.put(
+  "/:id/active",
+  asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+    if (user) {
+      user.active = true;
+      const updateActiveUser = await user.save();
+      res.json(updateActiveUser);
+    } else {
+      res.status(404);
+      throw new Error("User Not Found");
+    }
+  })
+);
+
 // GET ALL USER ADMIN
 userRouter.get(
   "/all",
@@ -372,26 +376,13 @@ userRouter.get(
           active: req.query.active,
         }
       : {};
-    const pageSize = 7;
+    const pageSize = 8;
     const page = Number(req.query.pageNumber) || 1;
     const count = await User.countDocuments({ ...keyword, ...active });
     const users = await User.find({ ...keyword, ...active })
       .limit(pageSize)
       .skip(pageSize * (page - 1));
     res.json({ users, page, pages: Math.ceil(count / pageSize), count });
-  })
-);
-
-//ADMIN GET ALL ORDERS
-userRouter.get(
-  "/allActive",
-  protect,
-  admin,
-  asyncHandler(async (req, res) => {
-    const userListActive = await User.find({ active: req.query.active });
-    // const orders = orders1.filter((e) => e.user.name.includes(req.query.name));
-
-    res.json({ userListActive });
   })
 );
 
@@ -403,7 +394,7 @@ userRouter.get(
   })
 );
 
-//GET SINGLE USER SEND MAIL
+//GET SINGLE USER SEND MAIL (ADMIN USE)
 userRouter.get(
   "/:id/sendMail",
   asyncHandler(async (req, res) => {

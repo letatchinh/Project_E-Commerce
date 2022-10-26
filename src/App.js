@@ -15,7 +15,6 @@ import CategoriesScreen from "./page/admin/screens/CategoriesScreen";
 import OrderScreen from "./page/admin/screens/OrderScreen";
 import OrderDetailScreen from "./page/admin/screens/OrderDetailScreen";
 import AddProducts from "./page/admin/screens/AddProducts";
-import AdminLogin from "./page/admin/screens/LoginScreen";
 import UsersScreen from "./page/admin/screens/UsersScreen";
 import ProductEditScreen from "./page/admin/screens/ProductEditScreen";
 import NotFound from "./page/admin/screens/NotFound";
@@ -139,6 +138,10 @@ function App() {
             element={<ProductComments />}
           />
           <Route
+            path="/admin/productcomments/:id/active"
+            element={<ProductComments />}
+          />
+          <Route
             path="/admin/productcomments/page/:pagenumber"
             element={<ProductComments />}
           />
@@ -193,11 +196,6 @@ function App() {
             path="/admin/products/page/:pagenumber"
             element={<ProductScreen />}
           />
-
-          {/* <Route
-            path="/admin/products/allSortHigh"
-            element={<ProductScreen />}
-          /> */}
 
           <Route path="/admin/categorys" element={<CategoriesScreen />} />
           <Route path="/admin/category/:id/edit" element={<EditCategory />} />

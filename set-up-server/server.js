@@ -24,24 +24,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// const server = createServer(app);
-// const io = new Server(server);
-// // LOAD PRODUCT FROM SERVER
-// app.get("/api/products", (req, res) => {
-//   res.json(products);
-// });
-
-// // // LOAD USER FROM SERVER
-// app.get("/api/user", (req, res) => {
-//   res.json(users);
-// });
-
-// // SINGLE PRODUCT FROM SERVER
-// app.get("/api/products/:id", (req, res) => {
-//   const product = products.find((p) => p._id === req.params.id);
-//   res.json(product);
-// });
-
 //API
 app.use("/api/import", ImportData);
 app.use("/api/products", productRoute);

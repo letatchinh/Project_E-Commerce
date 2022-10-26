@@ -2,11 +2,9 @@ import moment from "moment";
 import React from "react";
 import { Link } from "react-router-dom";
 import Message from "../LoadingError/Error";
-// import Loading from "../LoadingError/Loading";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const LatestOrder = (props) => {
   const { error, loading, orders } = props;
-  // console.log(orders);
   return (
     <div className="card-body">
       <h3 className="card-title">New orders</h3>

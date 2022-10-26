@@ -1,18 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import {
-  listOrdersPaidS,
-  listUser,
-  userActiveaction,
-  userDisabled,
-  userDisabledaction,
-} from "../../../redux/admin/Actions/UserActions.js";
+import { listUser } from "../../../redux/admin/Actions/UserActions.js";
 import Message from "../LoadingError/Error.js";
 // import Loading from "../LoadingError/Loading.js";
 import LoadingDashboard from "../LoadingError/LoadingDashboard.js";
-import ReactTooltip from "react-tooltip";
-import PersonIcon from "@mui/icons-material/Person";
 import UserChildComponent from "./UserChildComponent.js";
 const UserComponent = () => {
   const [keyword, setKeyword] = useState();
@@ -25,16 +17,9 @@ const UserComponent = () => {
   const userList = useSelector((state) => state.userList);
   const { loading, error, users, page, pages, count } = userList;
 
-  const userActive = useSelector((state) => state.userActive);
-  const { loadingActive, userListActive } = userActive;
-
-  const [actives, setActives] = useState();
   const fetch = useCallback(async () => {
     await dispatch(listUser(keyword, pagenumber, active));
-    // await dispatch(userDisabledaction(updateUser));
-    // await dispatch(userActiveaction(updateActiveUser));
-    await dispatch(listOrdersPaidS(actives));
-  }, [dispatch, keyword, pagenumber, actives, active]);
+  }, [dispatch, keyword, pagenumber, active]);
   useEffect(() => {
     fetch();
   }, [fetch]);

@@ -1,15 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
-  listUser,
   userActiveaction,
   userDisabledaction,
 } from "../../../redux/admin/Actions/UserActions.js";
 // import Loading from "../LoadingError/Loading.js";
-import LoadingDashboard from "../LoadingError/LoadingDashboard.js";
 import ReactTooltip from "react-tooltip";
-import { ContactUs } from "./contactEmail/ContactUs.js";
 import PersonIcon from "@mui/icons-material/Person";
 import { toast, ToastContainer } from "react-toastify";
 const UserChildComponent = (props) => {
@@ -113,7 +110,7 @@ const UserChildComponent = (props) => {
                     </div>
                   </div>
                   {user.isAdmin ? (
-                    <div></div>
+                    <div style={{ height: "36px" }}></div>
                   ) : (
                     <div
                       className={

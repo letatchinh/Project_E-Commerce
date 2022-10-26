@@ -28,16 +28,13 @@ import { logout } from "./UserActions";
 //ALL PRODUCT WITH PAGENITION
 export const listProducts =
   (keyword = "", pageNumber = "", sortPrice = "", keywordCategory = "") =>
-  async (dispatch, getState) => {
+  async (dispatch) => {
     try {
       const token = ADMIN_TOKEN;
       await dispatch({ type: PRODUCT_LIST_REQUEST });
 
-      // let { userLogin: userInfo } = getState();
-
       const config = {
         headers: {
-          // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
           Authorization: `Bearer ${token}`,
         },
       };
@@ -63,24 +60,15 @@ export const listProducts =
     }
   };
 
-//ALL PRODUCT WITH PAGENITION
+//ALL PRODUCT BEST SELLER QUANTITYSOLD >= 5 5WITH PAGENITION
 export const listProductSeller =
   (pageNumber = "") =>
-  async (dispatch, getState) => {
+  async (dispatch) => {
     try {
-      const token = ADMIN_TOKEN;
       await dispatch({ type: PRODUCT_LISTSELLER_REQUEST });
-
-      // let { userLogin: userInfo } = getState();
-
       const config = {
-        headers: {
-          // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
-          // Authorization: `Bearer ${token}`,
-          // "Content-Type": "application/json",
-        },
+        headers: {},
       };
-
       const { data } = await axios.get(
         `/api/products/filterHotProduct?page=${pageNumber}`,
         config
@@ -102,51 +90,14 @@ export const listProductSeller =
     }
   };
 
-//ALL PRODUCT WITH PAGENITION
-// export const listProductsSortHight = () => async (dispatch) => {
-//   const token =
-//     ADMIN_TOKEN;
-//   try {
-//     await dispatch({ type: PRODUCT_LIST_REQUEST });
-
-//     // let { userLogin: userInfo } = getState();
-
-//     const config = {
-//       headers: {
-//         // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
-//         Authorization: `Bearer ${token}`,
-//       },
-//     };
-
-//     const { data } = await axios.get(`/api/products/allSortHigh`, config);
-
-//     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
-//   } catch (error) {
-//     const message =
-//       error.response && error.response.data.message
-//         ? error.response.data.message
-//         : error.message;
-//     if (message === "Not authorized, token failed") {
-//       dispatch(logout());
-//     }
-//     dispatch({
-//       type: PRODUCT_LIST_FAIL,
-//       payload: message,
-//     });
-//   }
-// };
-
 //ALL PRODUCT NO PAGENATION
-export const listAllProducts = () => async (dispatch, getState) => {
+export const listAllProducts = () => async (dispatch) => {
   const token = ADMIN_TOKEN;
   try {
     await dispatch({ type: PRODUCT_LISTALL_REQUEST });
 
-    // let { userLogin: userInfo } = getState();
-
     const config = {
       headers: {
-        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
         Authorization: `Bearer ${token}`,
       },
     };
@@ -171,17 +122,11 @@ export const listAllProducts = () => async (dispatch, getState) => {
 
 //CURRENCY VND
 export const currencyVND = () => async (dispatch) => {
-  const token = ADMIN_TOKEN;
   try {
     await dispatch({ type: PRODUCT_LISTALL_REQUEST });
-
-    // let { userLogin: userInfo } = getState();
-
     const config = {
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
-        // Authorization: `Bearer ${token}`,
       },
     };
 
@@ -205,17 +150,12 @@ export const currencyVND = () => async (dispatch) => {
 
 //CURRENCY USD
 export const currencyUSD = () => async (dispatch) => {
-  const token = ADMIN_TOKEN;
   try {
     await dispatch({ type: PRODUCT_LISTALL_REQUEST });
-
-    // let { userLogin: userInfo } = getState();
 
     const config = {
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
-        // Authorization: `Bearer ${token}`,
       },
     };
 
@@ -238,16 +178,13 @@ export const currencyUSD = () => async (dispatch) => {
 };
 
 //DELETE PRODUCT
-export const deleteProduct = (id) => async (dispatch, getState) => {
+export const deleteProduct = (id) => async (dispatch) => {
   const token = ADMIN_TOKEN;
   try {
     await dispatch({ type: PRODUCT_DELETE_REQUEST });
 
-    // let { userLogin: userInfo } = getState();
-
     const config = {
       headers: {
-        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
         Authorization: `Bearer ${token}`,
       },
     };
@@ -278,12 +215,9 @@ export const createProduct =
     try {
       await dispatch({ type: PRODUCT_CREATE_REQUEST });
 
-      // let { userLogin: userInfo } = getState();
-
       const config = {
         headers: {
           "Content-Type": "application/json",
-          // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
           Authorization: `Bearer ${token}`,
         },
       };
@@ -340,17 +274,14 @@ export const editProduct = (id) => async (dispatch) => {
 };
 
 //UPDATE PRODUCT
-export const updateProduct = (product) => async (dispatch, getState) => {
+export const updateProduct = (product) => async (dispatch) => {
   const token = ADMIN_TOKEN;
   try {
     await dispatch({ type: PRODUCT_UPDATE_REQUEST });
 
-    // let { userLogin: userInfo } = getState();
-
     const config = {
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
         Authorization: `Bearer ${token}`,
       },
     };

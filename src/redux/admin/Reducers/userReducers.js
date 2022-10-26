@@ -39,11 +39,6 @@ export const userLoginReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         userInfo: action.payload,
-        // userlogin2: {
-        //   ...state.userlogin2,
-        //   status: true,
-        //   userInfo: action.payload,
-        // },
       };
     case USER_LOGIN_FAIL:
       return { ...state, loading: false, error: action.payload };
@@ -83,7 +78,6 @@ export const userDisabledReducer = (state = { updateUser: {} }, action) => {
     case USER_DISABLED_REQUEST:
       return { ...state, loadings: true };
     case USER_DISABLED_SUCCESS:
-      // console.log(action.payload);
       return {
         ...state,
         loadings: false,
@@ -106,7 +100,6 @@ export const userOpenActiveReducer = (
     case USER_ACTIVE_REQUEST:
       return { ...state, loadingsActive: true };
     case USER_ACTIVE_SUCCESS:
-      // console.log(action.payload);
       return {
         ...state,
         loadingsActive: false,

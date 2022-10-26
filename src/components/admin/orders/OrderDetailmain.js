@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deliverOrder,
   getOrderDetails,
-  listOrders,
 } from "../../../redux/admin/Actions/OrderActions";
 // import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
@@ -17,13 +16,11 @@ import { ToastContainer, toast } from "react-toastify";
 
 const OrderDetailmain = (props) => {
   const { orderId } = props;
-  const [sheetData, setSheetData] = useState("");
   const dispatch = useDispatch();
-  const navigator = useNavigate();
   const orderDetails = useSelector((state) => state.orderDetail);
   const { loading, error, order } = orderDetails;
   const orderDelivered = useSelector((state) => state.orderDelivered);
-  const { loading: loadingDelivered, success } = orderDelivered;
+  const { loading: loadingDelivered } = orderDelivered;
 
   const fetch = useCallback(async () => {
     dispatch(getOrderDetails(orderId));
@@ -36,7 +33,6 @@ const OrderDetailmain = (props) => {
   const deliverHanlder = () => {
     dispatch(deliverOrder(order));
     toast("Delivered success");
-    // navigator(-1);
   };
 
   let dataExcel = JSON.stringify(order);
@@ -73,15 +69,6 @@ const OrderDetailmain = (props) => {
                   </small>
                 </div>
                 <div className="col-lg-6 col-md-6 ms-auto d-flex justify-content-end align-items-center">
-                  {/* <select
-                  className="form-select d-inline-block"
-                  style={{ maxWidth: "200px" }}
-                >
-                  <option>Change status</option>
-                  <option>Awaiting payment</option>
-                  <option>Confirmed</option>
-                  <option>Delivered</option>
-                </select> */}
                   <CSVLink
                     // to="#"
                     data={str && str}

@@ -7,6 +7,8 @@ import Order from "./../Models/OrderModel.js";
 
 const orderRouter = express.Router();
 
+// USER
+
 //CREATE ORDER
 orderRouter.post(
   "/",
@@ -47,87 +49,6 @@ orderRouter.post(
   })
 );
 
-//ADMIN GET ALL ORDERS NO PAGINATION
-orderRouter.get(
-  "/allOrderNotice",
-  asyncHandler(async (req, res) => {
-    const ordersNotice = await Order.find({}).populate("user");
-
-    // const orders = orders1.filter((e) => e.user.name.includes(req.query.name));
-    res.json({ ordersNotice });
-  })
-);
-
-//ADMIN GET ALL ORDERS
-orderRouter.get(
-  "/all",
-  protect,
-  admin,
-  asyncHandler(async (req, res) => {
-    const pageSize = 5;
-    const page = Number(req.query.pageNumber) || 1;
-    const count = await Order.countDocuments({});
-    const orders = await Order.find({})
-      .limit(pageSize)
-      .skip(pageSize * (page - 1))
-      .sort({ _id: -1 })
-      .populate("user", "id name email");
-
-    // const orders = orders1.filter((e) => e.user.name.includes(req.query.name));
-    res.json({ orders, page, pages: Math.ceil(count / pageSize), count });
-  })
-);
-
-//ADMIN GET ALL ORDERS
-orderRouter.get(
-  "/allPaidS",
-  protect,
-  admin,
-
-  asyncHandler(async (req, res) => {
-    const isPaid = req.query.isPaid
-      ? {
-          isPaid: req.query.isPaid,
-        }
-      : {};
-    const isDelivered = req.query.isDelivered
-      ? {
-          isDelivered: req.query.isDelivered,
-        }
-      : {};
-    const ordersPaidS = await Order.find({
-      ...isPaid,
-      ...isDelivered,
-    }).populate("user");
-    res.json({ ordersPaidS });
-  })
-);
-
-//ADMIN GET ALL ORDERS
-orderRouter.get(
-  "/allOrder",
-  protect,
-  admin,
-  asyncHandler(async (req, res) => {
-    const pageSize = 10;
-    const pageFiter = Number(req.query.pageNumber) || 1;
-    const count = await Order.countDocuments({});
-    const orders = await Order.find({})
-      .limit(pageSize)
-      .skip(pageSize * (pageFiter - 1))
-      .sort({ _id: -1 })
-      .populate("user", "id name email");
-    const ordersFilter = orders.filter((e) =>
-      e.user.name.includes(req.query.name)
-    );
-    res.json({
-      ordersFilter,
-      pageFiter,
-      pagesFiter: Math.ceil(count / pageSize),
-    });
-  })
-);
-
 //USER LOGIN ORDERS
 orderRouter.get(
   "/",
@@ -135,25 +56,6 @@ orderRouter.get(
   asyncHandler(async (req, res) => {
     const order = await Order.find({ user: req.user._id }).sort({ _id: -1 });
     res.json(order);
-  })
-);
-
-//GET ORDER BY ID
-orderRouter.get(
-  "/:id",
-  protect,
-  admin,
-  asyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id).populate(
-      "user",
-      "name email"
-    );
-    if (order) {
-      res.json(order);
-    } else {
-      res.status(404);
-      throw new Error("Order Not Email");
-    }
   })
 );
 
@@ -183,26 +85,6 @@ orderRouter.put(
   })
 );
 
-//ORDER IS PAID
-orderRouter.put(
-  "/:id/delivered",
-  protect,
-  asyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id);
-
-    if (order) {
-      order.isDelivered = true;
-      order.isPaid = true;
-      order.deliveredAt = Date.now();
-
-      const updateOrder = await order.save();
-      res.json(updateOrder);
-    } else {
-      res.status(404);
-      throw new Error("Order Not Found");
-    }
-  })
-);
 // GET ORDER WITH ID USER
 orderRouter.get(
   "/getOrderUser/:id",
@@ -289,7 +171,125 @@ orderRouter.post(
   })
 );
 
-//NOTICE ORDERS
+//ADMIN
+
+//ADMIN GET ALL ORDERS NO PAGINATION
+orderRouter.get(
+  "/allOrderNotice",
+  asyncHandler(async (req, res) => {
+    const ordersNotice = await Order.find({}).populate("user");
+    res.json({ ordersNotice });
+  })
+);
+
+//ADMIN GET ALL ORDERS WITH PAGENATION
+orderRouter.get(
+  "/all",
+  protect,
+  admin,
+  asyncHandler(async (req, res) => {
+    const pageSize = 5;
+    const page = Number(req.query.pageNumber) || 1;
+    const count = await Order.countDocuments({});
+    const orders = await Order.find({})
+      .limit(pageSize)
+      .skip(pageSize * (page - 1))
+      .sort({ _id: -1 })
+      .populate("user", "id name email");
+    res.json({ orders, page, pages: Math.ceil(count / pageSize), count });
+  })
+);
+
+//ADMIN GET ALL ORDERS FILTER PAID AND DELIVERED
+orderRouter.get(
+  "/allPaidS",
+  protect,
+  admin,
+  asyncHandler(async (req, res) => {
+    const isPaid = req.query.isPaid
+      ? {
+          isPaid: req.query.isPaid,
+        }
+      : {};
+    const isDelivered = req.query.isDelivered
+      ? {
+          isDelivered: req.query.isDelivered,
+        }
+      : {};
+    const ordersPaidS = await Order.find({
+      ...isPaid,
+      ...isDelivered,
+    }).populate("user");
+    res.json({ ordersPaidS });
+  })
+);
+
+//ADMIN GET ALL ORDERS FILTER NAME HAS PAGENATION
+orderRouter.get(
+  "/allOrder",
+  protect,
+  admin,
+  asyncHandler(async (req, res) => {
+    const pageSize = 10;
+    const pageFiter = Number(req.query.pageNumber) || 1;
+    const count = await Order.countDocuments({});
+    const orders = await Order.find({})
+      .limit(pageSize)
+      .skip(pageSize * (pageFiter - 1))
+      .sort({ _id: -1 })
+      .populate("user", "id name email");
+    const ordersFilter = orders.filter((e) =>
+      e.user.name.includes(req.query.name)
+    );
+    res.json({
+      ordersFilter,
+      pageFiter,
+      pagesFiter: Math.ceil(count / pageSize),
+    });
+  })
+);
+
+//ADMIN GET ORDER BY ID
+orderRouter.get(
+  "/:id",
+  protect,
+  admin,
+  asyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id).populate(
+      "user",
+      "name email"
+    );
+    if (order) {
+      res.json(order);
+    } else {
+      res.status(404);
+      throw new Error("Order Not Email");
+    }
+  })
+);
+
+//ORDER IS PAID (ADMIN USE)
+orderRouter.put(
+  "/:id/delivered",
+  protect,
+  asyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+
+    if (order) {
+      order.isDelivered = true;
+      order.isPaid = true;
+      order.deliveredAt = Date.now();
+
+      const updateOrder = await order.save();
+      res.json(updateOrder);
+    } else {
+      res.status(404);
+      throw new Error("Order Not Found");
+    }
+  })
+);
+
+//NOTICE ORDERS (ADMIN USE)
 orderRouter.put(
   "/all/watched",
   asyncHandler(async (req, res) => {

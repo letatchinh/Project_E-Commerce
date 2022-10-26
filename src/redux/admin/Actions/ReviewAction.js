@@ -19,16 +19,13 @@ import { logout } from "./UserActions";
 
 export const listReviews =
   (keyword = "", pageNumber = "", sortRating = "", activeComment = "") =>
-  async (dispatch, getState) => {
+  async (dispatch) => {
     try {
       const token = ADMIN_TOKEN;
       await dispatch({ type: REVIEW_LIST_REQUEST });
 
-      // let { userLogin: userInfo } = getState();
-
       const config = {
         headers: {
-          // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
           Authorization: `Bearer ${token}`,
         },
       };
@@ -59,11 +56,8 @@ export const deleteReview = (id) => async (dispatch, getState) => {
   try {
     await dispatch({ type: REVIEW_DELETE_REQUEST });
 
-    // let { userLogin: userInfo } = getState();
-
     const config = {
       headers: {
-        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
         Authorization: `Bearer ${token}`,
       },
     };
@@ -92,11 +86,8 @@ export const disabledReivew = (id) => async (dispatch) => {
   try {
     await dispatch({ type: REVIEW_DISABLED_REQUEST });
 
-    // let { userLogin: userInfo } = getState();
-
     const config = {
       headers: {
-        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
         Authorization: `Bearer ${token}`,
       },
     };
@@ -125,11 +116,8 @@ export const activeReivew = (id) => async (dispatch) => {
   try {
     await dispatch({ type: REVIEW_ACTIVE_REQUEST });
 
-    // let { userLogin: userInfo } = getState();
-
     const config = {
       headers: {
-        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
         Authorization: `Bearer ${token}`,
       },
     };

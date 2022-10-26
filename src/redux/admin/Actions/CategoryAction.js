@@ -2,7 +2,6 @@ import axios from "axios";
 import {
   CATEGORY_CREATE_FAIL,
   CATEGORY_CREATE_REQUEST,
-  CATEGORY_CREATE_RESET,
   CATEGORY_CREATE_SUCCESS,
   CATEGORY_EDIT_FAIL,
   CATEGORY_EDIT_REQUEST,
@@ -18,16 +17,13 @@ import { ADMIN_TOKEN } from "../Constants/token";
 import { logout } from "./UserActions";
 
 //ALL PRODUCT NO PAGENATION
-export const listAllCategorys = () => async (dispatch, getState) => {
+export const listAllCategorys = () => async (dispatch) => {
   const token = ADMIN_TOKEN;
   try {
     await dispatch({ type: CATEGORY_LIST_REQUEST });
 
-    // let { userLogin: userInfo } = getState();
-
     const config = {
       headers: {
-        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
         Authorization: `Bearer ${token}`,
       },
     };
@@ -56,12 +52,9 @@ export const createCategory = (name) => async (dispatch, getState) => {
   try {
     await dispatch({ type: CATEGORY_CREATE_REQUEST });
 
-    // let { userLogin: userInfo } = getState();
-
     const config = {
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
         Authorization: `Bearer ${token}`,
       },
     };
@@ -117,12 +110,9 @@ export const updateCategory = (category) => async (dispatch, getState) => {
   try {
     await dispatch({ type: CATEGORY_UPDATE_REQUEST });
 
-    // let { userLogin: userInfo } = getState();
-
     const config = {
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${userInfo.userLogin.userInfo.data.token}`,
         Authorization: `Bearer ${token}`,
       },
     };

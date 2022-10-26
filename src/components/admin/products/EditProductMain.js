@@ -6,9 +6,7 @@ import {
   editProduct,
   updateProduct,
 } from "../../../redux/admin/Actions/ProductActions";
-import { PRODUCT_UPDATE_RESET } from "../../../redux/admin/Constants/ProductContants";
 import Message from "../LoadingError/Error";
-// import Loading from "../LoadingError/Loading";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
 const EditProductMain = (props) => {
   let id = 0;
@@ -206,18 +204,6 @@ const EditProductMain = (props) => {
                           <option value="shoe">shoe</option>
                         </select>
                       </div>
-                      {/* <div className="mb-4">
-                        <label className="form-label">Image</label>
-                        <input
-                          placeholder="Enter Image URL"
-                          className="form-control"
-                          type="text"
-                          value={image}
-                          required
-                          onChange={(e) => setImage(e.target.value)}
-                        /> */}
-                      {/* <input className="form-control mt-3" type="file" /> */}
-                      {/* </div> */}
                       <div className="mb-4">
                         <label className="form-label">Image</label>
                         <input
@@ -226,7 +212,6 @@ const EditProductMain = (props) => {
                           onChange={fileSelectedHandler}
                           className="form-control mt-3"
                         />
-                        {/* <input className="form-control mt-3" type="file" /> */}
                       </div>
                       <div className="mb-4">
                         <div

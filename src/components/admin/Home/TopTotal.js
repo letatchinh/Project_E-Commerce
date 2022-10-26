@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { listOrders } from "../../../redux/admin/Actions/OrderActions";
 import { listProducts } from "../../../redux/admin/Actions/ProductActions";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 const TopTotal = (props) => {
   const { orders, products, count } = props;
-  // console.log(orders);
   let totalSale = 0;
   let countPaid = 0;
   let totalPure = 0;
@@ -20,7 +19,6 @@ const TopTotal = (props) => {
     );
   }
 
-  // console.log(orsders);
   const dispatch = useDispatch();
   const fetch = useCallback(async () => {
     await dispatch(listProducts());
@@ -28,7 +26,6 @@ const TopTotal = (props) => {
   }, [dispatch]);
   useEffect(() => {
     fetch();
-    // setarrProduct(arrProduct);
   }, [fetch]);
   return (
     <div className="row">

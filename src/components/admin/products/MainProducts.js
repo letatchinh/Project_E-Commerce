@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Product from "./Product";
-// import products from "../../../data/Products";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../../../redux/admin/Actions/ProductActions.js";
 import Message from "../LoadingError/Error";
@@ -32,10 +31,7 @@ const MainProducts = () => {
   }, [dispatch, pagenumber, keyword, sortPrice, keywordCategory]);
   useEffect(() => {
     fetch();
-    // sortLoswtoHight();
-    // setarrProduct(arrProduct);
   }, [fetch, productDelete]);
-  // let arrProduct = [];
 
   const handlesortPrice = (e) => {
     setSortPrice(e.target.value);
@@ -49,7 +45,6 @@ const MainProducts = () => {
     }
   };
 
-  // console.log(keywordCategory);
   const submitHandler = (e) => {
     e.preventDefault();
     if (keyword.trim()) {
@@ -92,11 +87,7 @@ const MainProducts = () => {
                 <option value="">All category</option>
                 {categorys &&
                   categorys.map((cate) => (
-                    <option
-                      key={cate._id}
-                      value={cate.name}
-                      // {...(cate.name === keywordCategory ? "selected" : "")}
-                    >
+                    <option key={cate._id} value={cate.name}>
                       {cate.name}
                     </option>
                   ))}

@@ -19,9 +19,8 @@ const OrderMain = () => {
     orderListFiterName;
 
   const orderListPaidS = useSelector((state) => state.orderListPaidS);
-  const { loadingPaid, errorPaid, ordersPaidS } = orderListPaidS;
+  const { ordersPaidS } = orderListPaidS;
 
-  const [keyword, setKeyword] = useState();
   const [name, setName] = useState();
   const dispatch = useDispatch();
   const params = useParams();
@@ -31,17 +30,15 @@ const OrderMain = () => {
   const [delivered, setDelivered] = useState();
 
   const fetch = useCallback(async () => {
-    await dispatch(listOrders(keyword, pagenumber));
+    await dispatch(listOrders(pagenumber));
     await dispatch(listOrdersFiterName(name, pageFiterNumber));
     await dispatch(listOrdersPaidS(paid, delivered));
     // setPaid(false);
-  }, [dispatch, keyword, pagenumber, name, pageFiterNumber, paid, delivered]);
+  }, [dispatch, pagenumber, name, pageFiterNumber, paid, delivered]);
   useEffect(() => {
     fetch();
-    // setarrProduct(arrProduct);
   }, [fetch]);
   const submitHandler = (e) => {
-    e.preventDefault();
     if (name.trim()) {
       navigator(`/admin/orders/search/${name}`);
     } else {
@@ -110,7 +107,7 @@ const OrderMain = () => {
           </div>
         </header>
         <div className="card-body">
-          {!paid && !name && (
+          {!paid && !name && !delivered && (
             <div className="table-responsive">
               {loading ? (
                 <LoadingDashboard />
@@ -151,11 +148,7 @@ const OrderMain = () => {
                       >
                         <Link
                           className="page-link"
-                          to={
-                            keyword
-                              ? `/admin/orders/search/${keyword}/page/${x + 1}`
-                              : `/admin/orders/page/${x + 1}`
-                          }
+                          to={`/admin/orders/page/${x + 1}`}
                         >
                           {x + 1}
                         </Link>
@@ -196,9 +189,77 @@ const OrderMain = () => {
               ) : (
                 <div>No order</div>
               )}
+              {pagesFiter > 1 && (
+                <nav className="float-end mt-4" aria-label="Page navigation">
+                  <ul className="pagination">
+                    {page === 1 ? (
+                      <li disabled className="page-item disabled">
+                        <Link
+                          className="page-link"
+                          to={`/admin/orders/page/${
+                            pageFiter && pageFiter - 1
+                          }`}
+                        >
+                          Previous
+                        </Link>
+                      </li>
+                    ) : (
+                      <li disabled className="page-item">
+                        <Link
+                          className="page-link"
+                          to={`/admin/orders/page/${
+                            pageFiter && pageFiter - 1
+                          }`}
+                        >
+                          Previous
+                        </Link>
+                      </li>
+                    )}
+
+                    {[...Array(pages).keys()].map((x) => (
+                      <li
+                        className={`page-item ${
+                          x + 1 === pageFiter ? "active" : ""
+                        }`}
+                        key={x + 1}
+                      >
+                        <Link
+                          className="page-link"
+                          to={`/admin/orders/page/${x + 1}`}
+                        >
+                          {x + 1}
+                        </Link>
+                      </li>
+                    ))}
+                    {pageFiter === pagesFiter ? (
+                      <li disabled className="page-item disabled">
+                        <Link
+                          className="page-link"
+                          to={`/admin/orders/page/${
+                            pageFiter && pageFiter - 1
+                          }`}
+                        >
+                          Next
+                        </Link>
+                      </li>
+                    ) : (
+                      <li disabled className="page-item">
+                        <Link
+                          className="page-link"
+                          to={`/admin/orders/page/${
+                            pageFiter && pageFiter + 1
+                          }`}
+                        >
+                          Next
+                        </Link>
+                      </li>
+                    )}
+                  </ul>
+                </nav>
+              )}
             </div>
           )}
-          {paid && !name && (
+          {paid && !delivered && !name && (
             <div className="table-responsive">
               {loading ? (
                 <LoadingDashboard />
@@ -209,7 +270,18 @@ const OrderMain = () => {
               )}
             </div>
           )}
-          {paid && name && (
+          {delivered && !paid && !name && (
+            <div className="table-responsive">
+              {loading ? (
+                <LoadingDashboard />
+              ) : errors ? (
+                <Message variant="alert-danger">{errors}</Message>
+              ) : (
+                <Orders orders={ordersPaidS} />
+              )}
+            </div>
+          )}
+          {paid && delivered && !name && (
             <div className="table-responsive">
               {loading ? (
                 <LoadingDashboard />

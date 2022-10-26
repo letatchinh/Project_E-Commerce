@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -9,7 +9,6 @@ import { CATEGORY_CREATE_RESET } from "../../../redux/admin/Constants/CategoryCo
 import { createCategory } from "../../../redux/admin/Actions/CategoryAction";
 import Message from "../LoadingError/Error";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
-import { useNavigate } from "react-router-dom";
 
 //Use Hook form with material and yup
 const validationSchema = yup.object().shape({
@@ -17,8 +16,6 @@ const validationSchema = yup.object().shape({
 });
 
 const CreateCategory = () => {
-  const isInitialMount = useRef(true);
-
   const dispatch = useDispatch();
   //inittiali
   const {
@@ -30,15 +27,11 @@ const CreateCategory = () => {
     resolver: yupResolver(validationSchema),
   });
   const categoryCreate = useSelector((state) => state.categoryCreate);
-  const { loading, error, category, success } = categoryCreate;
+  const { loading, error, category } = categoryCreate;
   const fetch = useCallback(async () => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-    } else {
-      if (category) {
-        toast("Add Category Success");
-        dispatch({ type: CATEGORY_CREATE_RESET });
-      }
+    if (category) {
+      dispatch({ type: CATEGORY_CREATE_RESET });
+      toast("Add Category Success");
     }
   }, [category, dispatch]);
   useEffect(() => {
@@ -49,7 +42,6 @@ const CreateCategory = () => {
     await dispatch(createCategory(data.name));
     reset();
   };
-  // console.log(error);
   return (
     <>
       <ToastContainer />

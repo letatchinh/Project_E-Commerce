@@ -20,6 +20,7 @@ const CommentsTables = () => {
   let id = 1;
 
   const pagenumber = params.pagenumber;
+
   const reviewList = useSelector((state) => state.reviewList);
   const { loading, error, reviews, page, pages, count } = reviewList;
   const reviewDisabled = useSelector((state) => state.reviewDisabled);
@@ -161,7 +162,10 @@ const CommentsTables = () => {
                           <span className="btn btn-success">Active</span>
                         </Link>
                       ) : (
-                        <Link to="#" onClick={() => handelActive(e._id)}>
+                        <Link
+                          to={`/admin/productcomments/${e._id}/active`}
+                          onClick={() => handelActive(e._id)}
+                        >
                           <span className="btn btn-secondary">disabled</span>
                         </Link>
                       )}
