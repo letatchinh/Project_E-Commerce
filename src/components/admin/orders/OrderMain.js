@@ -27,13 +27,22 @@ const OrderMain = () => {
   const pageFiterNumber = params.pageFiterNumber;
   const [paid, setPaid] = useState();
   const [delivered, setDelivered] = useState();
+  const [totalPrice, setTotalPrice] = useState();
 
   const fetch = useCallback(async () => {
     await dispatch(listOrders(pagenumber));
     await dispatch(listOrdersFiterName(name, pageFiterNumber));
-    await dispatch(listOrdersPaidS(paid, delivered));
+    await dispatch(listOrdersPaidS(paid, delivered, totalPrice));
     // setPaid(false);
-  }, [dispatch, pagenumber, name, pageFiterNumber, paid, delivered]);
+  }, [
+    dispatch,
+    pagenumber,
+    name,
+    pageFiterNumber,
+    paid,
+    delivered,
+    totalPrice,
+  ]);
   useEffect(() => {
     fetch();
   }, [fetch]);
@@ -62,11 +71,19 @@ const OrderMain = () => {
       navigator("/admin/orders");
     }
   };
+  const HandlerSortTotal = (e) => {
+    if (totalPrice) {
+      setTotalPrice(e.target.value);
+      navigator(`/admin/orders/search/${e.target.value}`);
+    } else {
+      setTotalPrice(e.target.value);
+      navigator("/admin/orders");
+    }
+  };
   let count = 0;
   if (ordersFilter) {
     ordersFilter.filter((e) => (e.user.name.includes(name) ? count++ : 0));
   }
-
   return (
     <section className="content-main">
       <div className="content-header">
@@ -87,7 +104,14 @@ const OrderMain = () => {
                 onChange={(e) => setName(e.target.value)}
               />
             </form>
-
+            <div className="col-lg-2 col-6 col-md-3 w-pc-28">
+              <select className="form-select" onChange={HandlerSortTotal}>
+                <option value="">Show all Total</option>
+                <option value="50">Total {">="} 50$</option>
+                <option value="100">Total {">="} 100$</option>
+                <option value="200">Total {">="} 200$</option>
+              </select>
+            </div>
             <div className="col-lg-2 col-6 col-md-3 w-pc-28">
               <select className="form-select" onChange={HandlerPaiD}>
                 <option value="">Show all Paid</option>
@@ -105,7 +129,7 @@ const OrderMain = () => {
           </div>
         </header>
         <div className="card-body">
-          {!paid && !name && !delivered && (
+          {!paid && !name && !delivered && !totalPrice && (
             <div className="table-responsive">
               {loading ? (
                 <LoadingDashboard />
@@ -176,7 +200,7 @@ const OrderMain = () => {
               )}
             </div>
           )}
-          {!paid && !delivered && name && (
+          {!paid && !delivered && !totalPrice && name && (
             <div className="table-responsive">
               {loadings ? (
                 <LoadingDashboard />
@@ -257,14 +281,16 @@ const OrderMain = () => {
               )}
             </div>
           )}
-          {(paid || delivered) && !name && (
+          {(paid || delivered || totalPrice) && !name && (
             <div className="table-responsive">
               {loading ? (
                 <LoadingDashboard />
               ) : errors ? (
                 <Message variant="alert-danger">{errors}</Message>
-              ) : (
+              ) : ordersPaidS.length > 0 ? (
                 <Orders orders={ordersPaidS} />
+              ) : (
+                <div>No order</div>
               )}
             </div>
           )}

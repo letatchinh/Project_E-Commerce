@@ -96,7 +96,7 @@ export const listOrdersFiterName =
   };
 //ALL ORDER WITH PAID SUCCESS
 export const listOrdersPaidS =
-  (isPaid = "", isDelivered = "") =>
+  (isPaid = "", isDelivered = "", totalPrice = "") =>
   async (dispatch) => {
     const token = ADMIN_TOKEN;
     try {
@@ -109,7 +109,7 @@ export const listOrdersPaidS =
       };
 
       const { data } = await axios.get(
-        `/api/orders/allPaidS?isPaid=${isPaid}&&isDelivered=${isDelivered}`,
+        `/api/orders/allPaidS?isPaid=${isPaid}&&isDelivered=${isDelivered}&&totalPrice=${totalPrice}`,
         config
       );
 

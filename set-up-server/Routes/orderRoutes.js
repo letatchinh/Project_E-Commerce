@@ -216,9 +216,15 @@ orderRouter.get(
           isDelivered: req.query.isDelivered,
         }
       : {};
+    const totalPrice = req.query.totalPrice
+      ? {
+          totalPrice: { $gte: req.query.totalPrice },
+        }
+      : {};
     const ordersPaidS = await Order.find({
       ...isPaid,
       ...isDelivered,
+      ...totalPrice,
     }).populate("user");
     res.json({ ordersPaidS });
   })

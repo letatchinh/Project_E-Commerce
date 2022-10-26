@@ -125,9 +125,9 @@ const MainProducts = () => {
             <div className="col-lg-2 col-6 col-md-3">
               <select className="form-select" onChange={handlesortQuantitySold}>
                 <option value="">All Quantity Sold</option>
-                <option value={5}>+5 product</option>
-                <option value={20}>+20 product</option>
-                <option value={30}>+30 product</option>
+                <option value={5}>Quantity sold {">="} 5 product</option>
+                <option value={20}>Quantity sold {">="} 20 product</option>
+                <option value={30}>Quantity sold {">="} 30 product</option>
               </select>
             </div>
           </div>
