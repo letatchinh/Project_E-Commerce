@@ -32,7 +32,7 @@ const [enabled,setEnabled] = useState(false)
       sx={{ background: mainBackGround, padding: {md : "20px 50px" , sm : "20px 0px"} }}
     >
       <Stack  alignItems='center' direction="row" justifyContent="center">
-        <div style={{width : '100px'}}><img src="https://www.pngplay.com/wp-content/uploads/6/Flash-Sale-Logo-Transparent-File.png" alt="deal"/></div>
+        <div style={{width : '100px'}}><img src="/images/saleLogo.png" alt="deal"/></div>
        <CountdownTimer timer="00:00:00"/>
       </Stack>
       <Stack direction="row" spacing={3} overflow='scroll'>

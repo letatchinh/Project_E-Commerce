@@ -41,13 +41,16 @@ import ProductSellerScreen from "./page/admin/screens/ProductSellerScreen";
 import ContactUsUser from "./page/client/ContactUsUser";
 import EditCategory from "./components/admin/Categories/EditCategory";
 import ProductComments from "./page/admin/screens/ProductComments";
+
 const ComponentHomePage = React.lazy(() =>
   import("./page/client/screens/ComponentHomePage")
 );
 
 function App() {
   return (
+    
     <>
+    
       <Routes>
         <Route element={<HomePageUser />}>
           <Route

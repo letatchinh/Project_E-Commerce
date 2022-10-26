@@ -107,3 +107,11 @@ export const listCategory = [
       "https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/8c21a747-cd31-4ade-83c8-5e7610f057c6/10k-2-in-1-running-shorts-QBd76d.png",
   },
 ];
+export const listImages = [
+  "/images/BannerTop.jpeg",
+  "https://pyxis.nymag.com/v1/imgs/008/727/d59943cb43fa910c4c7efd8cfec08b6a0a-04-coats.2x.rsocial.w600.jpg",
+  "https://cf.shopee.ph/file/4f42c09aabb2e5f25e2cf39057b5064c",
+  "https://guardian.ng/wp-content/uploads/2022/02/Little-white-dress-photo-pinterest-1-e1645625359465-1424x802.jpg",
+  "https://i.ytimg.com/vi/Z8pyRLKbqYg/maxresdefault.jpg",
+  "https://my-test-11.slatic.net/p/d6d21a9350fcd3d7c4c689f82d84fd98.jpg",
+];
