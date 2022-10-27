@@ -27,7 +27,6 @@ export default function Register() {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),

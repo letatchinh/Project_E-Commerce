@@ -9,7 +9,8 @@ export default function StyledRating({
   precision,
   defaultValue,
   onChange,
-  
+  size,
+  active
 }) {
   const mainColorRating = useSelector(
     (state) => state.colorCommon.mainColorRating
@@ -20,7 +21,7 @@ export default function StyledRating({
       color: "#faaf00",
     },
     "& .MuiRating-iconEmpty .MuiSvgIcon-root": {
-      color: mainColorRating,
+      color: active ? 'white' : mainColorRating,
     },
   });
   return (
@@ -30,7 +31,7 @@ export default function StyledRating({
       precision={precision}
       value={value}
       readOnly={readOnly}
-      size="small"
+      size={size ? size : "small"}
     />
   );
 }

@@ -31,28 +31,46 @@ productRoute.get(
     const sortRating = Number(req.query.sortRating);
     const rangeFilterGte = Number(req.query.rangeFilterGte) || null;
     const rangeFilterLte = Number(req.query.rangeFilterLte) || null;
+    const rangeFilterGteRating = Number(req.query.rangeFilterGteRating) || null;
     const page = Number(req.query.page) || 1;
     const count = await Product.countDocuments({
       ...nameFilter,
       ...categoryFilter,
-      $or:
-        rangeFilterGte || rangeFilterLte
+      $and : [
+        { $or:
+          rangeFilterGte || rangeFilterLte
+            ? [
+                { newPrice: { $gte: rangeFilterGte } },
+                { newPrice: { $lte: rangeFilterLte } },
+              ]
+            : [{ newPrice: { $gte: 0 } }],},
+      { $or:
+        rangeFilterGteRating
           ? [
-              { newPrice: { $gte: rangeFilterGte } },
-              { newPrice: { $lte: rangeFilterLte } },
+              { rating: { $gte: rangeFilterGteRating } },
             ]
-          : [{ newPrice: { $gte: 0 } }],
+          : [{ rating: { $gte: 0 } }],}
+      ]
     });
     const products = await Product.find({
       ...nameFilter,
       ...categoryFilter,
-      $or:
-        rangeFilterGte || rangeFilterLte
+      $and : [
+        { $or:
+          rangeFilterGte || rangeFilterLte
+            ? [
+                { newPrice: { $gte: rangeFilterGte } },
+                { newPrice: { $lte: rangeFilterLte } },
+              ]
+            : [{ newPrice: { $gte: 0 } }],},
+      { $or:
+        rangeFilterGteRating
           ? [
-              { newPrice: { $gte: rangeFilterGte } },
-              { newPrice: { $lte: rangeFilterLte } },
+              { rating: { $gte: rangeFilterGteRating } },
             ]
-          : [{ newPrice: { $gte: 0 } }],
+          : [{ rating: { $gte: 0 } }],}
+      ]
+     
     })
       .limit(pageSize)
       .skip(pageSize * (page - 1))

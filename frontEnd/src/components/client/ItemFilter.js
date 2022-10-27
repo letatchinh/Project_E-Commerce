@@ -12,23 +12,21 @@ import "../StyleComponent/SideBarFilter.css";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  SET_GTE_RATING,
-  SET_LTE_RATING,
   SET_SORT_PRICE_LESS_5,
   SET_SORT_PRICE_MORE_10,
   SET_SORT_PRICE_MORE_50,
 } from "../../redux/filterProduct/Types";
 import { setFilter } from "../../redux/filterProduct/Actions";
-import StyledRating from "./StyledRating";
+import ButtonFilterRating from "./ButtonFilterRating";
+import MyTypography from "./MyTypography";
 export default function ItemFilter({ setPage }) {
   const dispatch = useDispatch();
   const mainColorText = useSelector((state) => state.colorCommon.mainColorText);
+  const mainBackGround2 = useSelector((state) => state.colorCommon.mainBackGround2);
   const low5 = useSelector((state) => state.filterProduct.low5);
   const more10 = useSelector((state) => state.filterProduct.more10);
   const more50 = useSelector((state) => state.filterProduct.more50);
   const gteRating = useSelector((state) => state.filterProduct.gteRating);
-  const lteRating = useSelector((state) => state.filterProduct.lteRating);
-console.log(gteRating,lteRating);
   return (
     <>
       <Stack
@@ -48,19 +46,19 @@ console.log(gteRating,lteRating);
           Search Filter
         </Typography>
       </Stack>
-      <Accordion defaultExpanded>
+      <Accordion sx={{background : mainBackGround2}} defaultExpanded>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography variant="body1" fontWeight="bold">
+          <MyTypography variant="body1" fontWeight="bold">
             Price
-          </Typography>
+          </MyTypography>
         </AccordionSummary>
         <AccordionDetails>
           <CheckboxSideBar
-            isCheck={low5 === null}
+            isCheck={low5 !== null}
             filter={() => {
               dispatch(setFilter({ type: SET_SORT_PRICE_LESS_5, filter: 5 }));
               setPage();
@@ -74,7 +72,7 @@ console.log(gteRating,lteRating);
             label="Product (<5$)"
           />
           <CheckboxSideBar
-            isCheck={more10 === null}
+            isCheck={more10 !== null}
             filter={() =>
               {dispatch(setFilter({ type: SET_SORT_PRICE_MORE_10, filter: 10 }));
               setPage()
@@ -89,7 +87,7 @@ console.log(gteRating,lteRating);
             label="Product (>10$)"
           />
           <CheckboxSideBar
-            isCheck={more50 === null}
+            isCheck={more50 !== null}
             filter={() =>
               {dispatch(setFilter({ type: SET_SORT_PRICE_MORE_50, filter: 50 })); setPage()}
             }
@@ -102,37 +100,35 @@ console.log(gteRating,lteRating);
           />
         </AccordionDetails>
       </Accordion>
-      <Accordion defaultExpanded>
+      <Accordion sx={{background : mainBackGround2}} defaultExpanded>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography variant="body1" fontWeight="bold">
+          <MyTypography variant="body1" fontWeight="bold">
             Rating
-          </Typography>
+          </MyTypography>
         </AccordionSummary>
         <AccordionDetails>
-          <CheckboxSideBar
-            isCheck={gteRating === null}
-            filter={() => {
-              dispatch(setFilter({ type: SET_GTE_RATING, filter: 0 }));
-              dispatch(setFilter({ type: SET_LTE_RATING, filter: 1 }));
-              setPage();
-            }}
-            unFilter={() => {
-              dispatch(
-                setFilter({ type: SET_GTE_RATING, filter: null })
-              );
-              dispatch(
-                setFilter({ type: SET_LTE_RATING, filter: null })
-              );
-              setPage();
-            }}
-            label={<div style={{marginBottom : '-3px'}}><StyledRating value={1} readOnly/></div>}
-          />
-         
+        <ButtonFilterRating active={gteRating === 0} value={0} setPage={setPage}/>
         </AccordionDetails>
+        <AccordionDetails>
+        <ButtonFilterRating active={gteRating === 1} value={1} setPage={setPage}/>
+        </AccordionDetails>
+        <AccordionDetails>
+        <ButtonFilterRating active={gteRating === 2} value={2} setPage={setPage}/>
+        </AccordionDetails>
+        <AccordionDetails>
+        <ButtonFilterRating active={gteRating === 3} value={3} setPage={setPage}/>
+        </AccordionDetails>
+        <AccordionDetails>
+        <ButtonFilterRating active={gteRating === 4} value={4} setPage={setPage}/>
+        </AccordionDetails>
+        <AccordionDetails>
+        <ButtonFilterRating active={gteRating === 5} value={5} setPage={setPage}/>
+        </AccordionDetails>
+       
       </Accordion>
     </>
   );

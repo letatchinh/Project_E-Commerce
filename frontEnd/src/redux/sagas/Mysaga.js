@@ -336,7 +336,6 @@ export function* fetchSearchOnkeyUp(action){
      if(action.payload.funcLoading){
       yield action.payload.funcLoading(false)
     }
-    yield console.log(action.payload);
   } catch (error) {
     
   }

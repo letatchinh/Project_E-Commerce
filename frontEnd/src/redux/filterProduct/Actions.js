@@ -66,3 +66,9 @@ export const setReFetchReview = (action) => {
         payload : action
     }
 }
+export const reSetFilter = () => {
+    return {
+        type : "RESET_FILTER",
+        payload : ""
+    }
+}

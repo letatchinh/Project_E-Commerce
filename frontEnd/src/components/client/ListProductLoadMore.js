@@ -16,7 +16,7 @@ const theme = createTheme({
       },
     },
   });
-export default function ListProduct({data,pages,page,handleChange}) {
+export default function ListProductLoadMore({data}) {
   return (
    <ThemeProvider theme={theme}>
        {data ? data.length !== 0 ?  <Stack width='100%'>
@@ -28,13 +28,6 @@ export default function ListProduct({data,pages,page,handleChange}) {
                 </Grid>
               ))}
           </Grid>
-          <Stack alignItems="center" spacing={2} sx={{ marginTop: "20px" }}>
-            <MyPagination
-              count={pages}
-              page={page}
-              onChange={handleChange}
-            />
-        </Stack>
           </Stack>  : <div style={{margin : '0 auto'}}><ErrorNoItem /></div> :  <div style={{margin : '0 auto'}}><ErrorNoItem /></div> }
           
    </ThemeProvider>

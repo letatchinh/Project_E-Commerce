@@ -86,39 +86,39 @@ function App() {
             <Route
               path="shirt"
               element={
-                <CategoryCommon valueOfContentTop="Shirt" type="shirt" />
+                <Search  typeCategory="shirt" />
               }
             />
             <Route
               path="coat"
-              element={<CategoryCommon valueOfContentTop="Coat" type="coat" />}
+              element={<Search  typeCategory="coat" />}
             />
             <Route
               path="trousers"
               element={
-                <CategoryCommon valueOfContentTop="Trousers" type="trousers" />
+                <Search  typeCategory="trousers" />
               }
             />
             <Route
               path="dress"
               element={
-                <CategoryCommon valueOfContentTop="Dress" type="dress" />
+                <Search  typeCategory="dress" />
               }
             />
             <Route
               path="bikini"
               element={
-                <CategoryCommon valueOfContentTop="Bikini" type="bikini" />
+                <Search  typeCategory="bikini" />
               }
             />
             <Route
               path="shorts"
               element={
-                <CategoryCommon valueOfContentTop="Shorts" type="shorts" />
+                <Search  typeCategory="shorts" />
               }
             />
           </Route>
-          <Route path="/products" element={<Products />} />
+          <Route path="/products" element={<Search />} />
           <Route path="/*" element={<NotFound />} />
         </Route>
         <Route path="/about" element={<AboutUs />} />

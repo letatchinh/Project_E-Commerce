@@ -1,65 +1,32 @@
 import {
-  Alert,
-  Box,
   Button,
   Link,
   Skeleton,
-  TextField,
   Typography,
 } from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useDispatch, useSelector } from "react-redux";
-import SendIcon from "@mui/icons-material/Send";
-import { useForm } from "react-hook-form";
 import PriceSell from "../../../components/client/PriceSell";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import StyledRating from "../../../components/client/StyledRating";
-import { styled } from "@mui/material/styles";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import MyCarousel from "./MyCarousel";
 import SelectDetailSize from "../../../components/client/SelectDetailSize";
 import "../../../components/StyleComponent/Product.css";
 import MyTypography from "../../../components/client/MyTypography";
 import Category from "../../../layout/client/Category";
 import { KEY_USER } from "../../../constant/LocalStored";
-import { fetchAddCommentRequest, fetchAddToCartRequestSaga } from "../../../redux/sagas/Mysaga";
+import {  fetchAddToCartRequestSaga } from "../../../redux/sagas/Mysaga";
 import ContentTop from "../../../components/client/ContentTop";
-import ListProductCommon from "../../../components/client/ListProductCommon";
-import AxiosUser from "../../../apis/client/AxiosUser";
+import ListProductRef from "../../../components/client/ListProductRef";
 import ListReview from "../../../components/client/ListReview.js";
 import ErrorNoItem from "../../../components/client/ErrorNoItem";
+import FormRating from "../../../components/client/FormRating";
+import ImagesOfDeTail from "../../../components/client/ImagesOfDeTail";
 export default function DetailProduct() {
   let params = useParams();
   const navigate = useNavigate();
-  const StyledTextField = styled(TextField)({
-    "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
-      borderColor: "#1976d2!important",
-    },
-    "& .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root": {
-      color: "#1976d2",
-    },
-    "& .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root": {
-      color: "#1976d2",
-    },
-    "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root": {
-      color: "#1976d2",
-    },
-  });
-  const schema = yup.object().shape({
-    comment: yup.string().required("Required").min(2).max(50),
-  });
-  const {
-    register,
-    reset,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
   const user = JSON.parse(localStorage.getItem(KEY_USER)) || "";
   const [itemm, setItem] = useState({});
   const {
@@ -74,9 +41,7 @@ export default function DetailProduct() {
     rating,
     numReviews
   } = itemm;
-  const [listItem, setListItem] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [isPayment, setIsPayment] = useState(false);
   const mainColorText = useSelector((state) => state.colorCommon.mainColorText);
   const mainBackGround2 = useSelector(
     (state) => state.colorCommon.mainBackGround2
@@ -86,7 +51,6 @@ export default function DetailProduct() {
   );
   const dispatch = useDispatch();
 
-  const [active, setActive] = useState(0);
   const [count, setCount] = useState(0);
   const [errorNoItem, setErrorNoItem] = useState(false);
   // const [nextItem, setNextItem] = useState(0);
@@ -101,32 +65,12 @@ export default function DetailProduct() {
       .finally(() => setLoading(false));
       window.scrollTo(0, 0);
   }, [params.productId]);
-
-  useEffect(() => {
-    AxiosUser.get(`/api/products/search?category=${itemm.category}`).then(
-      (res) => setListItem(res.data.products)
-    );
-    AxiosUser.get(`/api/orders/checkPayment/${user._id}?product=${_id}`)
-      .then((res) => setIsPayment(res.data.isPayment))
-      .catch((err) => {});
-  }, [itemm]);
   const handleSetItem = (item) => {
     setItem(item)
   }
-  const [value, setValue] = useState(null);
-  const onSubmit = (data) => {
-    const newComment = {
-      name: user.name,
-      comment: data.comment,
-      rating: value,
-      user: user._id,
-      product: _id,
-    };
-    dispatch(fetchAddCommentRequest({newComment,_id,handleSetItem,setCount : () => setCount(count + 1),reset}))
-  };
-  const onHoverChangeActive = (index) => {
-    setActive(index);
-  };
+  const handleSetCount = () => {
+    setCount(count + 1)
+  }
   return (
     <>
       {/* <Button onClick={() => navigate(`/products/${nextItem}`)} variant="outlined">Next</Button> */}
@@ -152,29 +96,9 @@ export default function DetailProduct() {
                   direction={{ md: "row", xs: "column" }}
                   spacing={1}
                 >
+                <ImagesOfDeTail images={images}/>
                   <Stack
-                    // className="leftTo"
-                    margin="0 auto"
-                    sx={{ width: { md: "35%", sm: "70%", xs: "90%" } }}
-                    spacing={1}
-                  >
-                    {images && (
-                      <img
-                        style={{ height: "30rem" }}
-                        src={`/images/${images[active]}`}
-                        alt="name"
-                      />
-                    )}
-                    {images && (
-                      <MyCarousel
-                        hover={onHoverChangeActive}
-                        limit={4}
-                        data={images}
-                      />
-                    )}
-                  </Stack>
-                  <Stack
-                    // className="rightTo"
+                    className="rightTo"
                     margin="0 auto"
                     alignItems={{ md: "flex-start", xs: "center" }}
                     width={{ md: "60%", xs: "100%" }}
@@ -323,54 +247,7 @@ export default function DetailProduct() {
                         <MyTypography>Add To Cart</MyTypography>
                       </Button>
                     </Stack>
-                    <Box width="80%">
-                      <form onSubmit={handleSubmit(onSubmit)}>
-                        <Stack id="comment" spacing={2}>
-                          <MyTypography variant="h6" color={mainColorText}>
-                            WRITE A CUSTOMER REVIEW
-                          </MyTypography>
-                          <MyTypography variant="h5" color={mainColorText}>
-                            Rating
-                          </MyTypography>
-                          <StyledRating
-                            precision={0.5}
-                            value={value}
-                            onChange={(event, newValue) => {
-                              setValue(newValue);
-                            }}
-                          />
-                          <MyTypography variant="h5" color={mainColorText}>
-                            Comment
-                          </MyTypography>
-                          <StyledTextField
-                            {...register("comment")}
-                            label="Write Commet Here ..."
-                            variant="outlined"
-                          />
-                          <Button
-                            disabled={value === null || !isPayment}
-                            type="submit"
-                            sx={{ width: "40%", marginLeft: "auto!important" }}
-                            variant="contained"
-                            endIcon={<SendIcon />}
-                          >
-                            Send
-                          </Button>
-                        </Stack>
-                      </form>
-                    </Box>
-                    {errors.comment && errors.comment.type === "required" && (
-                      <Alert severity="error">{errors.comment.message}</Alert>
-                    )}
-                    {errors.comment && errors.comment.type === "min" && (
-                      <Alert severity="error">{errors.comment.message}</Alert>
-                    )}
-                    {errors.comment && errors.comment.type === "max" && (
-                      <Alert severity="error">{errors.comment.message}</Alert>
-                    )}
-                    {!isPayment && (
-                      <Alert severity="error">You must by To Rating</Alert>
-                    )}
+                   {localStorage.getItem(KEY_USER) &&  <FormRating _id={_id} handleSetCount={handleSetCount} handleSetItem={handleSetItem}/>}
                   </Stack>
                 </Stack>
                 <Stack mt="1rem" spacing={2} alignItems="center">
@@ -397,13 +274,13 @@ export default function DetailProduct() {
                       Review
                     </MyTypography>
                     <Stack width={{ md: "50%", xs: "100%" }} id="review">
-                        <ListReview item={itemm} />
+                        {itemm && <ListReview item={itemm} />}
                     </Stack>
                   </Stack>
                   <Stack>
                     <ContentTop value="Product Reference" />
-                    {listItem && (
-                      <ListProductCommon data={listItem} limit={4} />
+                    {itemm.category && (
+                      <ListProductRef category={itemm.category}/>
                     )}
                   </Stack>
                 </Stack>

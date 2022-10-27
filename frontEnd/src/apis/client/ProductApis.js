@@ -21,10 +21,8 @@ export const fetchSortProductByDate = async(action) => {
 }
 export const fetchSearch = async(action) => {
     try {
-        // const {queryKey} = action
         const query = action.queryKey[0]
-        console.log(action);
-        const res =   await AxiosUser.get(`/api/products/search?name=${query.keywordSearch}&category=${query.type ? query.type : ""}&page=${query.page}&sortPrice=${query.sortPrice}&sortRating=${query.sortRating}&rangeFilterGte=${query.more}&rangeFilterLte=${query.low}&limit=${query.limit}&rangeFilterGteRating=${query.gteRating}&rangeFilterLteRating=${query.lteRating}`)
+        const res =   await AxiosUser.get(`/api/products/search?name=${query.keywordSearch}&category=${query.type ? query.type : ""}&page=${query.page}&sortPrice=${query.sortPrice}&sortRating=${query.sortRating}&rangeFilterGte=${query.more}&rangeFilterLte=${query.low}&limit=${query.limit}&rangeFilterGteRating=${query.gteRating}`)
         return res.data
     } catch (error) {
         return []
@@ -68,6 +66,30 @@ export const fetchListReview = async(action) => {
 export const fetchListVoucherScreen = async(action) => {
     try{
         const res = await AxiosUser.get(`/api/vouchers/all`)
+        return res.data
+    } catch (error) {
+        console.log(error);
+    }
+}
+export const fetchListRef = async(action) => {
+    try{
+        const res = await AxiosUser.get(`/api/products/search?category=${action.category}&page=${action.pageParam}&limit=4`)
+        return res.data
+    } catch (error) {
+        console.log(error);
+    }
+}
+export const fetchIsCheckPayment = async(action) => {
+    try{
+      const res = await  AxiosUser.get(`/api/orders/checkPayment/${action.queryKey[0]}?product=${action.queryKey[1]}`)
+        return res.data
+    } catch (error) {
+        console.log(error);
+    }
+}
+export const fetchDetailProduct = async(action) => {
+    try{
+      const res = await  AxiosUser.get(`/api/products/${action.queryKey[0]}`)
         return res.data
     } catch (error) {
         console.log(error);
