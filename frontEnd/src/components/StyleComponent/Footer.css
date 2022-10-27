@@ -1,0 +1,22 @@
+.buttonGoTop{
+animation: UpAndDown 1s ease infinite;
+}
+@keyframes UpAndDown {
+    0%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(-10px);
+    }
+    70%{
+        transform: translateY(-10px);
+    }
+    100%{
+        transform: translateY(0);
+    }
+}
+.iconFooterHover:hover{
+    transform: scale(1.5) rotate(20deg);
+    transition: 0.5s ease;
+    cursor: pointer;
+}

@@ -1,0 +1,98 @@
+.imgProduct:hover {
+    transform: scale(1.05) !important;
+    transition: all 0.3s ease;
+}
+
+.cardContentHover:hover {
+    cursor: pointer;
+    color: #D43725;
+    transition: all 0.3s ease;
+}
+.cardContentHover{
+    overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-line-clamp: 2; /* number of lines to show */
+           line-clamp: 2; 
+   -webkit-box-orient: vertical;
+}
+.cardHover {
+    overflow: hidden;
+}
+
+@keyframes letGo {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.boxMain:hover {
+    box-shadow: 0 0 6px 2px #e5e3e3;
+    transition: 0.5s ease;
+}
+
+.boxMain:hover .ButtonHoverAddAndBut {
+    transform: translateY(30px) translateX(-5px);
+    z-index: 2;
+    opacity: 1;
+    transition: 0.5s ease;
+}
+
+.hoverAddCart:hover {
+    border-color: #ee4d2d !important;
+    background-color: #FFEFEA !important;
+    transition: 0.5s ease;
+}
+
+.hoverAddCart:hover .hoverIconAddCart {
+    animation: rung 0.5s linear infinite;
+}
+
+@keyframes rung {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-30deg);
+    }
+
+    50% {
+        transform: rotate(0deg);
+    }
+
+    75% {
+        transform: rotate(30deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+
+}
+.leftTo{
+animation: leftTo 0.5s ease;
+}
+@keyframes leftTo {
+    0%{
+        transform: translateX(-30%);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+.rightTo{
+animation: rightTo 0.5s linear;
+}
+@keyframes rightTo {
+    0%{
+        transform: translateX(30%);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}

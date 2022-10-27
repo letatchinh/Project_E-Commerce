@@ -1,0 +1,83 @@
+import { Button, Paper, Stack, Typography } from '@mui/material'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { KEY_USER } from '../../constant/LocalStored'
+import { fetchAddVoucherRequest } from '../../redux/sagas/Mysaga'
+import MyTypography from './MyTypography'
+
+export default function ItemListVoucherScreen({item}) {
+    const {discount,_id} = item
+    const mainBackGround = useSelector(
+      (state) => state.colorCommon.mainBackGround
+    );
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+  const  handleGetVoucher = () => {
+    dispatch(fetchAddVoucherRequest({IdnewVoucher : _id}))
+  }
+  return (
+    <Stack direction="row">
+    <Paper
+      sx={{
+        border: "1px solid rgba(25, 118, 210, 0.5)",
+        borderRightStyle: "dashed",
+        borderLeftWidth: "5px",
+        flex: 1,
+        textTransform: "capitalize",
+        padding: "20px",
+        background :mainBackGround
+      }}
+      variant="outlined"
+    >
+      <Stack direction="row" spacing={1} alignItems="center">
+        <div style={{ width: "50px", height: "50px" }}>
+          <img
+            style={{ borderRadius: "50%" }}
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBaleheMwoudXJIQXdcvutQD_8kHmkrUD9vg&usqp=CAU"
+            alt="s"
+          />
+        </div>
+        <Stack>
+          <Stack direction='row' alignItems='center' sx={{ alignSelf: "center"}}>
+            <MyTypography>
+              -{" "}
+            </MyTypography>
+            <MyTypography fontSize="2rem">
+                {discount}
+              </MyTypography>
+              <MyTypography >
+              $ off
+              </MyTypography>
+          </Stack>
+          <Stack direction='row' alignItems='center'>
+          <MyTypography textAlign='center'>
+            Code:    
+          </MyTypography>
+          <Typography sx={{ borderRadius: "30px",
+                background: "#FFEBE8",
+                padding: "7px",
+                display: "inline",}}>
+                    {_id}
+                </Typography>
+          </Stack>
+        
+        </Stack>
+      </Stack>
+    </Paper>
+    <Button onClick={() => {
+      if(localStorage.getItem(KEY_USER)){
+        handleGetVoucher()
+      }
+      else{
+        navigate("/login")
+      }
+      }}
+      sx={{ borderLeftStyle: "dashed", textTransform: "capitalize" }}
+      variant="outlined"
+    >
+      Get
+    </Button>
+  </Stack>
+  )
+}

@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400&display=swap');
+.myLogo{
+    font-family: 'Oswald', sans-serif;
+    background-image: linear-gradient(to bottom , #ffffff, #564f4f);
+    background-clip: text;
+    color: transparent;
+    width: fit-content;
+}
+.headerAboutUs:hover{
+    color : #3d53ab ;
+    background: aliceblue;
+    transition: 0.5s ease;
+}
+
+.headerAboutUs{
+    border: 1px solid rgba(25, 118, 210, 0.5);
+    color: black;
+    padding :15px 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    flex : 1;
+    text-align: center;
+    font-size: calc(0.5vw + 10px);
+}
+.activeHeaderAboutUs{
+    color : #3d53ab  ;
+}
+.fillTopAboutUs{
+    position: fixed;
+    background-image: url("/public/images/backgroundAboutus.jpeg");
+    top: 0;
+    width: 100%;
+    height: 80vh;
+    z-index: -1;
+    background-repeat: no-repeat;
+    background-position: 47% 20%;
+    background-size: calc(100% + 50vw);
+
+}
+.InFillTopAboutUs{
+    height: calc(90vh + 2vw);
+    position: relative;
+    background: transparent;
+}
+.ItemInFillTopAboutUs{
+    position: absolute;
+    bottom: 0;
+    background-color: #6da9f1bf;
+    left: 10%;
+    right : 10%;
+    color: white;
+    padding: 15px;
+}
+.transfromItemHeader{
+    animation: leftToRight 1s linear ;
+}
+@keyframes leftToRight {
+    0%{
+        transform: translateX(-100%);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
