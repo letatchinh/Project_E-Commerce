@@ -12,6 +12,7 @@ import { useSearchParams } from "react-router-dom";
 import ErrorNoItem from "./ErrorNoItem";
 import ListProduct from "./ListProduct";
 import { setCategorySearch } from "../../redux/filterProduct/Actions";
+import Category from "../../layout/client/Category";
 export default function Search({typeCategory}) {
   const dispatch = useDispatch()
   const keywordSearch = useSelector((state) => state.filterProduct.keyword);
@@ -89,8 +90,28 @@ export default function Search({typeCategory}) {
   const mainBackGround = useSelector(
     (state) => state.colorCommon.mainBackGround
   );
-  console.log(data);
   return (
+    <>
+<Category />
+      <Stack sx={{background : mainBackGround}}  width="100%" direction="row" alignItems="center">
+        <div
+          style={{ flex: 1, height: "2px", background: "gray", width: "100%" }}
+        ></div>
+        <Typography
+          sx={{
+            border: "2px solid gray",
+            padding: "5px",
+            borderRadius: "10px",
+          }}
+          color="#fcaf17"
+          fontSize="1.5rem"
+        >
+          {type || "All Products"}
+        </Typography>
+        <div
+          style={{ flex: 1, height: "2px", background: "gray", width: "100%" }}
+        ></div>
+      </Stack>
     <Stack
       alignItems="center"
       spacing={1}
@@ -98,6 +119,7 @@ export default function Search({typeCategory}) {
       sx={{ background: mainBackGround }}
       position="relative"
     >
+  
       <Stack direction="row" width="100%">
         <Stack
           position={{ md: "relative", sm: "absolute", xs: "absolute" }}
@@ -122,5 +144,6 @@ export default function Search({typeCategory}) {
         </Stack>
       </Stack>
     </Stack>
+    </>
   );
 }

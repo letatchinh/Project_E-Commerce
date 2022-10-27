@@ -35,6 +35,7 @@ export default function LoginUser() {
     dispatch(fetchLoginRequest(data))
   };
   useEffect(() => {
+    window.scroll(0,0)
     if(statusLogin){
       navigate(-1)
     }

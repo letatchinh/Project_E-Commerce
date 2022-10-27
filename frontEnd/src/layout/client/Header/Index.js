@@ -21,10 +21,9 @@ import { useForm } from "react-hook-form";
 import IconCart from "../../../components/client/IconCart";
 import "../../../components/StyleComponent/Icons.css";
 import MyTypography from "../../../components/client/MyTypography";
-
 import '../../../components/StyleComponent/Header.css'
 import { fetchCartRequest, fetchSearchOnkeyUpRequest } from "../../../redux/sagas/Mysaga";
-import { setCategorySearch, setKeywordSearch } from "../../../redux/filterProduct/Actions";
+import { reSetFilter, setCategorySearch, setKeywordSearch } from "../../../redux/filterProduct/Actions";
 import ToastError from "../../../components/client/ToastError";
 import CategoryBannerMobile from "../../../components/client/CategoryBannerMobile";
 import ListItemSearchOnKey from "../../../components/client/ListItemSearchOnKey";
@@ -102,7 +101,6 @@ const handleClick = (event) => {
     setStatusOpenSearch(true)
   }
   const handleCloseSearch = () => {
-    console.log("ok");
     setStatusOpenSearch(false)
   }
   return (
@@ -131,7 +129,7 @@ const handleClick = (event) => {
        </Button>
        </Link>
        <Link to='/products'>
-       <Button sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'}, fontSize : contactActive ? '1rem' : '0.875rem' , textShadow : contactActive ? '0 0 20px white' : 'none'}}>
+       <Button onClick={() => dispatch(reSetFilter())} sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'}, fontSize : contactActive ? '1rem' : '0.875rem' , textShadow : contactActive ? '0 0 20px white' : 'none'}}>
        Products
        </Button>
        </Link>
@@ -152,7 +150,7 @@ const handleClick = (event) => {
                </Button>
               
            </Stack>
-              <Stack  direction='row' spacing={2} display={path_lo_out.includes(location.pathname) ? "none" : 'flex' && !statusLogin ? "block" : 'none'  } >
+              <Stack paddingTop='5px'  direction='row' spacing={2} display={path_lo_out.includes(location.pathname) ? "none" : 'flex' && !statusLogin ? "block" : 'none'  } >
               <Link to='/login'>
               <Button
             sx={{
@@ -233,7 +231,7 @@ const handleClick = (event) => {
                 }}
                 to="/"
               >
-                <Typography sx={{textShadow : !statusThemme ? "0 0 10px #f3f3f3" : "none"}} className="myLogo" fontSize='3rem' color='white'>UT</Typography>
+                <Typography onClick={() => dispatch(reSetFilter())} sx={{textShadow : !statusThemme ? "0 0 10px #f3f3f3" : "none"}} className="myLogo" fontSize='3rem' color='white'>UT</Typography>
                 
               </Link>
             </Grid>

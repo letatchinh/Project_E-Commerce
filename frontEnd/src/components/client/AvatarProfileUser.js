@@ -85,7 +85,7 @@ export default function AvatarProfileUser() {
         >
           <ImageSearchIcon /> See Avatar
         </MenuItem>
-        <MenuItem sx={{ gap: "5px" }} onClick={handleClose}>
+        {/* <MenuItem sx={{ gap: "5px" }} onClick={handleClose}>
           <label
             style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom : 0 , cursor : 'pointer' }}
             htmlFor="files"
@@ -94,7 +94,7 @@ export default function AvatarProfileUser() {
             <FilterIcon /> Edit Avatar
           </label>
           <input onChange={handleChangeAvatar} multiple type="file" id="files"  style={{ display: "none" }} />
-        </MenuItem>
+        </MenuItem> */}
       </Menu>
     </div>
   );

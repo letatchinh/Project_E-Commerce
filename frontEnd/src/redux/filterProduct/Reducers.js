@@ -51,7 +51,18 @@ const filterProductReducer = (state = initvalue, action) => {
             ...state,
             gteRating : action.payload
           }
-
+          case "RESET_FILTER":
+            return {
+              ...state,
+              keyword : "",
+  type : null,
+  sortPrice : null,
+  sortRating : null,
+  low5 : null,
+  more10 : null,
+  more50 : null,
+  gteRating : null,
+            }
       
     default:
       return state;
