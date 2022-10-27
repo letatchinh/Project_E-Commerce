@@ -20,6 +20,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { fetchLoginWithGoogleAndFbRequest } from "../../../redux/sagas/Mysaga";
 import '../../../components/StyleComponent/MyLink.css'
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
+import ToastError from "../../../components/client/ToastError";
 export default function LoginUser() {
   const schema = yup.object().shape({
     password: yup.string().required("Required").min(2).max(20),
@@ -52,12 +53,18 @@ export default function LoginUser() {
   }, []);
   
   const responseFacebook = async (response) => {
-    const newUser = {
-      password: response.id,
-      email: response.email,
-      name : response.name
-    };
-    dispatch(fetchLoginWithGoogleAndFbRequest(newUser))
+    if(response.status !== "unknown"){
+      const newUser = {
+        password: response.id,
+        email: response.email,
+        name : response.name
+      };
+      dispatch(fetchLoginWithGoogleAndFbRequest(newUser))
+    }
+    else{
+      ToastError("login with fb failed")
+    }
+    
   };
   const responseGoogle = async (response) => {
     const newUser = {
