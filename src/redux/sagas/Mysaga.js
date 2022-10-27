@@ -232,6 +232,7 @@ export function* fetchCartSaga() {
     }
   } catch (error) {
     console.log(error);
+    return []
   }
 }
 export function* fetchLoginWithGgAndFb(action) {
