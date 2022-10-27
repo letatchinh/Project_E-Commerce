@@ -21,8 +21,10 @@ export const fetchSortProductByDate = async(action) => {
 }
 export const fetchSearch = async(action) => {
     try {
-        const {queryKey} = action
-        const res =   await AxiosUser.get(`/api/products/search?name=${queryKey[0]}&category=${queryKey[1] ? queryKey[1] : ""}&page=${queryKey[2]}&sortPrice=${queryKey[3]}&sortRating=${queryKey[4]}&rangeFilterGte=${queryKey[6]}&rangeFilterLte=${queryKey[5]}&limit=${queryKey[7]}`)
+        // const {queryKey} = action
+        const query = action.queryKey[0]
+        console.log(action);
+        const res =   await AxiosUser.get(`/api/products/search?name=${query.keywordSearch}&category=${query.type ? query.type : ""}&page=${query.page}&sortPrice=${query.sortPrice}&sortRating=${query.sortRating}&rangeFilterGte=${query.more}&rangeFilterLte=${query.low}&limit=${query.limit}&rangeFilterGteRating=${query.gteRating}&rangeFilterLteRating=${query.lteRating}`)
         return res.data
     } catch (error) {
         return []
@@ -57,8 +59,6 @@ export const fetchListHot = async(action) => {
 }
 export const fetchListReview = async(action) => {
     try{
-        // const {queryKey} = action
-        // console.log(action);
         const res = await AxiosUser.get(`/api/reviews/getReviewByIdProduct/${action._id}?page=${action.pageParam}`)
         return res.data
     } catch (error) {

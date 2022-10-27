@@ -9,6 +9,7 @@ export default function StyledRating({
   precision,
   defaultValue,
   onChange,
+  
 }) {
   const mainColorRating = useSelector(
     (state) => state.colorCommon.mainColorRating
@@ -23,7 +24,7 @@ export default function StyledRating({
     },
   });
   return (
-    <StyledRating
+    <StyledRating 
       onChange={onChange}
       defaultValue={defaultValue}
       precision={precision}

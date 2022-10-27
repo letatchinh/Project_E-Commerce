@@ -130,6 +130,11 @@ const handleClick = (event) => {
        Contact
        </Button>
        </Link>
+       <Link to='/products'>
+       <Button sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'}, fontSize : contactActive ? '1rem' : '0.875rem' , textShadow : contactActive ? '0 0 20px white' : 'none'}}>
+       Products
+       </Button>
+       </Link>
           </Stack>
            <Stack direction='row'  alignItems='center'>
               <Button 

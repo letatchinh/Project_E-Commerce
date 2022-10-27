@@ -7,31 +7,34 @@ import { useSelector } from "react-redux";
 import CountdownTimer from "./CountdownTimer";
 import { Link } from "react-router-dom";
 import "../StyleComponent/ListProduct.css";
-import ListProduct from './ListProduct'
+import ListProduct from "./ListProduct";
 export default function ListProductSale() {
   const componentRef = useRef();
   const [isAppear, setIsAppear] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [isFetch,setIsFetch] = useState(false)
-  const [page,setPage] = useState(1)
-  const fetch = useCallback(async() => {
-    setLoading(true)
-   await axios.get(`api/products/filterSaleProduct?page=${page}`).then(res => setData(res.data)).catch(err => console.log(err))
-    setLoading(false)
-  },[isFetch,page])
+  const [isFetch, setIsFetch] = useState(false);
+  const [page, setPage] = useState(1);
+  const fetch = useCallback(async () => {
+    setLoading(true);
+    await axios
+      .get(`api/products/filterSaleProduct?page=${page}`)
+      .then((res) => setData(res.data))
+      .catch((err) => console.log(err));
+    setLoading(false);
+  }, [isFetch, page]);
   const handleChange = (event, value) => {
     setPage(value);
   };
   useEffect(() => {
-     isFetch && fetch()
-  },[fetch])
+    isFetch && fetch();
+  }, [fetch]);
   useEffect(() => {
     if (!componentRef?.current) return;
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         setIsAppear(true);
-        setIsFetch(true)
+        setIsFetch(true);
       }
     });
     observer.observe(componentRef.current);
@@ -40,10 +43,11 @@ export default function ListProductSale() {
     (state) => state.colorCommon.mainBackGround
   );
   return (
-    <Stack spacing={1}
+    <Stack
+      spacing={1}
       className={isAppear ? "appear" : ""}
       ref={componentRef}
-      sx={{ background: mainBackGround, padding: "10px" , borderRadius : '30px' }}
+      sx={{ background: mainBackGround, padding: "10px", borderRadius: "30px" }}
     >
       <Stack
         direction="row"
@@ -65,7 +69,12 @@ export default function ListProductSale() {
       {loading ? (
         <LoadingListProduct limit={4} />
       ) : (
-        <ListProduct data={data.products} page={data.page} handleChange={handleChange} pages={data.pages}/>
+        <ListProduct
+          data={data.products}
+          page={data.page}
+          handleChange={handleChange}
+          pages={data.pages}
+        />
       )}
     </Stack>
   );

@@ -25,7 +25,8 @@ export default function CategoryBannerMobile() {
 )
       }
       <ItemCategoryBanner delay={3.5} value="About us" linkTo={'/about'}/>
-      <ItemCategoryBanner delay={4} value="Contact" linkTo={'/'}/>
+      <ItemCategoryBanner delay={4} value="Contact" linkTo={'/contact'}/>
+      <ItemCategoryBanner delay={4.5} value="Products" linkTo={'/products'}/>
       
       </Stack>
     </Box>

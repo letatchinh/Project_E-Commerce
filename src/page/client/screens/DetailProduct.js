@@ -5,7 +5,6 @@ import {
   Link,
   Skeleton,
   TextField,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import { Container, Stack } from "@mui/system";
@@ -27,15 +26,13 @@ import "../../../components/StyleComponent/Product.css";
 import MyTypography from "../../../components/client/MyTypography";
 import Category from "../../../layout/client/Category";
 import { KEY_USER } from "../../../constant/LocalStored";
-import { fetchAddToCartRequestSaga } from "../../../redux/sagas/Mysaga";
+import { fetchAddCommentRequest, fetchAddToCartRequestSaga } from "../../../redux/sagas/Mysaga";
 import ContentTop from "../../../components/client/ContentTop";
 import ListProductCommon from "../../../components/client/ListProductCommon";
 import AxiosUser from "../../../apis/client/AxiosUser";
 import ListReview from "../../../components/client/ListReview.js";
-import ToastSuccess from "../../../components/client/ToastSuccess";
 import ErrorNoItem from "../../../components/client/ErrorNoItem";
 export default function DetailProduct() {
-
   let params = useParams();
   const navigate = useNavigate();
   const StyledTextField = styled(TextField)({
@@ -65,11 +62,30 @@ export default function DetailProduct() {
   });
   const user = JSON.parse(localStorage.getItem(KEY_USER)) || "";
   const [itemm, setItem] = useState({});
-  const { name, images, price,  _id, discount,countInStock,quantitySold  } = itemm;
+  const {
+    name,
+    images,
+    price,
+    _id,
+    discount,
+    countInStock,
+    quantitySold,
+    description,
+    rating,
+    numReviews
+  } = itemm;
   const [listItem, setListItem] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isPayment, setIsPayment] = useState(false);
-  const [review,setReview] = useState({rating : 0,numReviews : 0})
+  const mainColorText = useSelector((state) => state.colorCommon.mainColorText);
+  const mainBackGround2 = useSelector(
+    (state) => state.colorCommon.mainBackGround2
+  );
+  const mainBackGround = useSelector(
+    (state) => state.colorCommon.mainBackGround
+  );
+  const dispatch = useDispatch();
+
   const [active, setActive] = useState(0);
   const [count, setCount] = useState(0);
   const [errorNoItem, setErrorNoItem] = useState(false);
@@ -79,30 +95,25 @@ export default function DetailProduct() {
     axios
       .get(`/api/products/${params.productId}`)
       .then((res) => {
-        setReview({rating : res.data.rating,numReviews : res.data.numReviews})
-        setItem(res.data)
+        setItem(res.data);
       })
       .catch((err) => setErrorNoItem(true))
       .finally(() => setLoading(false));
+      window.scrollTo(0, 0);
   }, [params.productId]);
-  const mainColorText = useSelector((state) => state.colorCommon.mainColorText);
-  const mainBackGround2 = useSelector(
-    (state) => state.colorCommon.mainBackGround2
-  );
-  const mainBackGround = useSelector(
-    (state) => state.colorCommon.mainBackGround
-  );
+
   useEffect(() => {
     AxiosUser.get(`/api/products/search?category=${itemm.category}`).then(
       (res) => setListItem(res.data.products)
     );
     AxiosUser.get(`/api/orders/checkPayment/${user._id}?product=${_id}`)
       .then((res) => setIsPayment(res.data.isPayment))
-      .catch((err) => console.log(err));
-    window.scrollTo(0, 0)
+      .catch((err) => {});
   }, [itemm]);
+  const handleSetItem = (item) => {
+    setItem(item)
+  }
   const [value, setValue] = useState(null);
-  const dispatch = useDispatch();
   const onSubmit = (data) => {
     const newComment = {
       name: user.name,
@@ -111,19 +122,14 @@ export default function DetailProduct() {
       user: user._id,
       product: _id,
     };
-    AxiosUser.post("/api/reviews/add", newComment).then((res) => {
-      AxiosUser.get(`/api/reviews/SumReviewByIdProduct/${_id}`).then(res => setReview({rating : res.data.avgReview,numReviews : res.data.totalReview})).catch(err => console.log(err))
-      ToastSuccess("Tks For your Comment");
-      setCount(count + 1);
-      reset();
-    }).catch(err => console.log(err));
+    dispatch(fetchAddCommentRequest({newComment,_id,handleSetItem,setCount : () => setCount(count + 1),reset}))
   };
   const onHoverChangeActive = (index) => {
     setActive(index);
   };
   return (
     <>
-        {/* <Button onClick={() => navigate(`/products/${nextItem}`)} variant="outlined">Next</Button> */}
+      {/* <Button onClick={() => navigate(`/products/${nextItem}`)} variant="outlined">Next</Button> */}
       {errorNoItem ? (
         <div style={{ padding: "5rem" }}>
           <ErrorNoItem />
@@ -147,6 +153,7 @@ export default function DetailProduct() {
                   spacing={1}
                 >
                   <Stack
+                    // className="leftTo"
                     margin="0 auto"
                     sx={{ width: { md: "35%", sm: "70%", xs: "90%" } }}
                     spacing={1}
@@ -167,6 +174,7 @@ export default function DetailProduct() {
                     )}
                   </Stack>
                   <Stack
+                    // className="rightTo"
                     margin="0 auto"
                     alignItems={{ md: "flex-start", xs: "center" }}
                     width={{ md: "60%", xs: "100%" }}
@@ -198,22 +206,22 @@ export default function DetailProduct() {
                         <MyTypography variant="h6" color={mainColorText}>
                           Price
                         </MyTypography>
-                        <PriceSell
-                          discount={discount}
-                          price={price}
-                        />
+                        <PriceSell discount={discount} price={price} />
                       </Stack>
                       <Stack
                         direction="row"
                         justifyContent="space-between"
-                        sx={{ padding: "10px",borderBottom: "2px solid #f3f3f3", }}
+                        sx={{
+                          padding: "10px",
+                          borderBottom: "2px solid #f3f3f3",
+                        }}
                       >
                         <MyTypography variant="h6" color={mainColorText}>
                           Review
                         </MyTypography>
                         <Stack direction="row">
                           <StyledRating
-                            value={parseFloat(review.rating)}
+                            value={parseFloat(rating)}
                             readOnly={true}
                             precision={0.5}
                           />
@@ -221,7 +229,7 @@ export default function DetailProduct() {
                           <Link href="#review">
                             {" "}
                             <MyTypography variant="body2" component="span">
-                              ({review.numReviews})
+                              ({numReviews})
                             </MyTypography>
                           </Link>
                         </Stack>
@@ -229,9 +237,12 @@ export default function DetailProduct() {
                       <Stack
                         direction="row"
                         justifyContent="space-between"
-                        sx={{ padding: "10px",borderBottom: "2px solid #f3f3f3", }}
+                        sx={{
+                          padding: "10px",
+                          borderBottom: "2px solid #f3f3f3",
+                        }}
                       >
-                         <MyTypography variant="h6" color={mainColorText}>
+                        <MyTypography variant="h6" color={mainColorText}>
                           Sold
                         </MyTypography>
                         <MyTypography>{quantitySold}</MyTypography>
@@ -241,10 +252,18 @@ export default function DetailProduct() {
                         justifyContent="space-between"
                         sx={{ padding: "10px" }}
                       >
-                         <MyTypography variant="h6" color={mainColorText}>
+                        <MyTypography variant="h6" color={mainColorText}>
                           Count Of Stock
                         </MyTypography>
-                        {countInStock === 0 ? <MyTypography color='red'>(out of stock) </MyTypography> : <MyTypography>({countInStock}) available </MyTypography>} 
+                        {countInStock === 0 ? (
+                          <MyTypography color="red">
+                            (out of stock){" "}
+                          </MyTypography>
+                        ) : (
+                          <MyTypography>
+                            ({countInStock}) available{" "}
+                          </MyTypography>
+                        )}
                       </Stack>
                     </Stack>
                     <SelectDetailSize />
@@ -255,25 +274,26 @@ export default function DetailProduct() {
                       justifyContent="space-between"
                     >
                       {/* <Tooltip placement="top-end" title="Đang bảo trì"> */}
-                        <Button disabled={countInStock === 0} onClick={async(e) => {
-            if(localStorage.getItem(KEY_USER)){
-             await dispatch(
-            fetchAddToCartRequestSaga({
-        product: _id,
-        user: user._id,
-      })
-    )
-    navigate("/cart")
-            }
-            else{
-              navigate("/login")
-            }
-          }}
-                          sx={{ width: "45%", textTransform: "capitalize" }}
-                          variant="contained"
-                        >
-                          <Typography fontSize="1.2rem">Buy</Typography>
-                        </Button>
+                      <Button
+                        disabled={countInStock === 0}
+                        onClick={async (e) => {
+                          if (localStorage.getItem(KEY_USER)) {
+                            await dispatch(
+                              fetchAddToCartRequestSaga({
+                                product: _id,
+                                user: user._id,
+                              })
+                            );
+                            navigate("/cart");
+                          } else {
+                            navigate("/login");
+                          }
+                        }}
+                        sx={{ width: "45%", textTransform: "capitalize" }}
+                        variant="contained"
+                      >
+                        <Typography fontSize="1.2rem">Buy</Typography>
+                      </Button>
                       {/* </Tooltip> */}
                       <Button
                         onClick={() => {
@@ -302,11 +322,10 @@ export default function DetailProduct() {
                         <ShoppingCartIcon />
                         <MyTypography>Add To Cart</MyTypography>
                       </Button>
-                      
                     </Stack>
                     <Box width="80%">
                       <form onSubmit={handleSubmit(onSubmit)}>
-                        <Stack id='comment' spacing={2}>
+                        <Stack id="comment" spacing={2}>
                           <MyTypography variant="h6" color={mainColorText}>
                             WRITE A CUSTOMER REVIEW
                           </MyTypography>
@@ -354,6 +373,20 @@ export default function DetailProduct() {
                     )}
                   </Stack>
                 </Stack>
+                <Stack mt="1rem" spacing={2} alignItems="center">
+                  <Typography
+                    sx={{
+                      color: "transparent",
+                      backgroundImage:
+                        "linear-gradient(to bottom , orange, red)",
+                      backgroundClip: "text",
+                    }}
+                    variant="h5"
+                  >
+                    description of product
+                  </Typography>
+                  <MyTypography>{description}</MyTypography>
+                </Stack>
                 <Stack justifyContent="space-between">
                   <Stack sx={{ padding: "50px 10px" }}>
                     <MyTypography
@@ -363,12 +396,12 @@ export default function DetailProduct() {
                     >
                       Review
                     </MyTypography>
-                    <Stack width={{md : '50%',xs : '100%'}} id="review">
-                      { _id && <ListReview  _id={_id} />}
+                    <Stack width={{ md: "50%", xs: "100%" }} id="review">
+                        <ListReview item={itemm} />
                     </Stack>
                   </Stack>
                   <Stack>
-                    <ContentTop value="Product Lien Quan" />
+                    <ContentTop value="Product Reference" />
                     {listItem && (
                       <ListProductCommon data={listItem} limit={4} />
                     )}
