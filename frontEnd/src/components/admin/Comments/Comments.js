@@ -150,7 +150,7 @@ const CommentsTables = () => {
                       )}
                     </td>
                     <td>
-                      <StyledRating value={e.rating} />
+                      <StyledRating value={e.rating} readOnly />
                     </td>
                     <td>{e.comment}</td>
                     <td>
