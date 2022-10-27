@@ -1,0 +1,18 @@
+.IconsWhite{
+    color: white;
+  
+}
+.IconOrange{
+    color: #F45C31;
+}
+.IconLarge{
+    font-size: 4rem!important;
+}
+.badgeCustom span{
+    background:  white;
+    color: #ee4d2d;
+}
+.tabsss{
+    border-radius: 5px;
+    background:  white;
+}

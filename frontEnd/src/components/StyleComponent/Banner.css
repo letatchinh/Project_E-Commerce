@@ -1,0 +1,63 @@
+.boxBanner{
+    width: 100%;
+    min-height: 45rem;
+    position: relative;
+    transition: 0.5s ease;
+}
+.imgHeader{
+    position: absolute;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s all ease;
+
+}
+.fillBanner{
+    position: absolute;
+    inset:  0;
+    background-color: #00000090;
+    padding: 9rem 4rem;
+}
+.ItemCategoryBanner:hover{
+    transition: 0.5s ease ;
+    background: white;
+    color: black;
+}
+.ItemCategoryBanner:not(:hover){
+    transition: 0.5s ease ;
+    background: #00000061;
+    color: white;
+}
+
+@keyframes AppearCategory {
+    0%{
+        opacity: 0;
+transform: translateX(-100%);
+    }
+    100%{
+        opacity: 1;
+transform: translateX(0);
+    }
+}
+
+@keyframes AppearCategory2 {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes AppearCategory3 {
+    0%{
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    50%{
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
