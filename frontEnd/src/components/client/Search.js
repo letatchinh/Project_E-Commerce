@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Stack } from "@mui/system";
 import { Typography } from "@mui/material";
 import SideBarFilter from "./SideBarFilter";
@@ -11,7 +11,9 @@ import MyTypography from "./MyTypography";
 import { useSearchParams } from "react-router-dom";
 import ErrorNoItem from "./ErrorNoItem";
 import ListProduct from "./ListProduct";
-export default function Search() {
+import { setCategorySearch } from "../../redux/filterProduct/Actions";
+export default function Search({typeCategory}) {
+  const dispatch = useDispatch()
   const keywordSearch = useSelector((state) => state.filterProduct.keyword);
   const type = useSelector((state) => state.filterProduct.type);
   const sortPrice = useSelector((state) => state.filterProduct.sortPrice);
@@ -20,9 +22,11 @@ export default function Search() {
   const more10 = useSelector((state) => state.filterProduct.more10);
   const more50 = useSelector((state) => state.filterProduct.more50);
   const gteRating = useSelector((state) => state.filterProduct.gteRating);
-  const lteRating = useSelector((state) => state.filterProduct.lteRating);
   const [more, setMore] = useState(null);
   const [low, setLow] = useState(null);
+  useEffect(() => {
+    typeCategory && dispatch(setCategorySearch(typeCategory));
+  }, [typeCategory]);
   useEffect(() => {
     const arrMore = [more10, more50];
     arrMore.sort();
@@ -43,7 +47,6 @@ export default function Search() {
         low,
         more,
         gteRating,
-        lteRating,
       },
     ],
     fetchSearch
@@ -68,9 +71,7 @@ export default function Search() {
     if (gteRating) {
       objectSearch.gteRating = gteRating;
     }
-    if (lteRating) {
-      objectSearch.lteRating = lteRating;
-    }
+
     setSearchParams(objectSearch);
   }, [
     searchParams.get("name"),
@@ -81,7 +82,6 @@ export default function Search() {
     more,
     page,
     gteRating,
-    lteRating,
   ]);
   const handleChange = (event, value) => {
     setPage(value);
@@ -94,7 +94,7 @@ export default function Search() {
     <Stack
       alignItems="center"
       spacing={1}
-      padding="30px 50px"
+      padding={{md : "30px 50px", sm : "2px"}}
       sx={{ background: mainBackGround }}
       position="relative"
     >
@@ -109,8 +109,7 @@ export default function Search() {
           <Stack direction="row" justifyContent="center" alignItems="center">
             <SortBar />
           </Stack>
-          {isLoading && <LoadingHomePage height="5rem" />}
-          {data && data.products && data.products.length !== 0 ? (
+          {isLoading ? <LoadingHomePage height="5rem" /> : data && data.products && data.products.length !== 0 ? (
             <ListProduct
               data={data.products}
               page={page}

@@ -1,8 +1,11 @@
 import { Checkbox, FormControlLabel } from '@mui/material'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 
 export default function CheckboxSideBar({filter,label,unFilter,isCheck}) {
-    const [checked, setChecked] = useState(!isCheck);
+  const mainColorText = useSelector((state) => state.colorCommon.mainColorText);
+
+    const [checked, setChecked] = useState(isCheck);
     const handleChange = (event) => {
       setChecked(event.target.checked);
       if(event.target.checked){
@@ -14,6 +17,6 @@ export default function CheckboxSideBar({filter,label,unFilter,isCheck}) {
     };
   
   return (
-    <FormControlLabel control={<Checkbox checked={checked} onChange={handleChange} />} label={label}/>
+    <FormControlLabel sx={{color : mainColorText}}  control={<Checkbox sx={{color : mainColorText}}  checked={checked} onChange={handleChange} />} label={label}/>
     )
 }

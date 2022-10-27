@@ -21,10 +21,9 @@ export const fetchSortProductByDate = async(action) => {
 }
 export const fetchSearch = async(action) => {
     try {
-        // const {queryKey} = action
         const query = action.queryKey[0]
         console.log(action);
-        const res =   await AxiosUser.get(`/api/products/search?name=${query.keywordSearch}&category=${query.type ? query.type : ""}&page=${query.page}&sortPrice=${query.sortPrice}&sortRating=${query.sortRating}&rangeFilterGte=${query.more}&rangeFilterLte=${query.low}&limit=${query.limit}&rangeFilterGteRating=${query.gteRating}&rangeFilterLteRating=${query.lteRating}`)
+        const res =   await AxiosUser.get(`/api/products/search?name=${query.keywordSearch}&category=${query.type ? query.type : ""}&page=${query.page}&sortPrice=${query.sortPrice}&sortRating=${query.sortRating}&rangeFilterGte=${query.more}&rangeFilterLte=${query.low}&limit=${query.limit}&rangeFilterGteRating=${query.gteRating}`)
         return res.data
     } catch (error) {
         return []

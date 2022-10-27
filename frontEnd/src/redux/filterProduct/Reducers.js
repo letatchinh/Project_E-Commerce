@@ -8,7 +8,6 @@ const initvalue = {
   more10 : null,
   more50 : null,
   gteRating : null,
-  lteRating : null,
 };
 const filterProductReducer = (state = initvalue, action) => {
   switch (action.type) {
@@ -52,11 +51,7 @@ const filterProductReducer = (state = initvalue, action) => {
             ...state,
             gteRating : action.payload
           }
-        case TYPES.SET_LTE_RATING:
-          return {
-            ...state,
-            lteRating : action.payload
-          }
+
       
     default:
       return state;

@@ -23,7 +23,7 @@ export default function ListProduct({data,pages,page,handleChange}) {
           <Grid container spacing={1} width='100%'>
             {data &&
               data.map((e) => (
-                <Grid className="abc" key={v4()} xs={6} md={3}  sm={6} item>
+                <Grid className="abc" key={v4()} xs={6} lg={3} md={4}  sm={6} item>
                   <ProductClient item={e} />
                 </Grid>
               ))}
