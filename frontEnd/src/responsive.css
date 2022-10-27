@@ -16,6 +16,10 @@
   .navbar-aside {
     max-width: 220px;
   }
+
+  .form-select {
+    margin-top: 10px;
+  }
 }
 
 @media (max-width: 992px) {

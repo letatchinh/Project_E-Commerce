@@ -111,7 +111,7 @@ ReviewRoutes.get(
         }
       : {};
     const ratings = req.query.sortRating || null;
-    const pageSize = 6;
+    const pageSize = 10;
     const page = Number(req.query.pageNumber) || 1;
     const count = await Review.countDocuments({
       ...keyword,

@@ -917,6 +917,13 @@ ul.row-sm {
   max-width: 100px;
 }
 
+.form-select {
+
+  max-width: 157px;
+  font-size: 0.85rem;
+  width: 100%;
+}
+
 .form-control:hover,
 .form-select:hover {
   border-color: #4fa607;
