@@ -49,7 +49,6 @@ const Product = (props) => {
                 </sup>
               </div>
             )}
-            S
             <div className="product-rating">
               <StyledRating value={product.rating} readOnly />
               <span
