@@ -49,8 +49,9 @@ const Product = (props) => {
                 </sup>
               </div>
             )}
+            S
             <div className="product-rating">
-              <StyledRating value={product.rating} />
+              <StyledRating value={product.rating} readOnly />
               <span
                 style={{
                   fontSize: "12px",
@@ -71,7 +72,6 @@ const Product = (props) => {
             {product.discount > 0 && (
               <div className="dicount mb-2">-{product.discount}%</div>
             )}
-
             <div className="price mb-2">
               Quantity Sold: {product.quantitySold}
             </div>
