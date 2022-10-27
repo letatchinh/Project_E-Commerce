@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Stack } from "@mui/system";
 import { Typography } from "@mui/material";
@@ -7,41 +7,47 @@ import SortBar from "./SortBar";
 import LoadingHomePage from "./LoadingHomePage";
 import { useQuery } from "@tanstack/react-query";
 import { fetchSearch } from "../../apis/client/ProductApis";
-import MyTypography from "./MyTypography";
 import { useSearchParams } from "react-router-dom";
 import ErrorNoItem from "./ErrorNoItem";
 import ListProduct from "./ListProduct";
-import { setCategorySearch } from "../../redux/filterProduct/Actions";
+import { fetchFilter, setCategorySearch, setFilter } from "../../redux/filterProduct/Actions";
 import Category from "../../layout/client/Category";
 export default function Search({typeCategory}) {
   const dispatch = useDispatch()
-  const keywordSearch = useSelector((state) => state.filterProduct.keyword);
-  const type = useSelector((state) => state.filterProduct.type);
+  const keyword = useSelector((state) => state.filterProduct.keyword);
+  const category = useSelector((state) => state.filterProduct.category);
   const sortPrice = useSelector((state) => state.filterProduct.sortPrice);
   const sortRating = useSelector((state) => state.filterProduct.sortRating);
   const low5 = useSelector((state) => state.filterProduct.low5);
   const more10 = useSelector((state) => state.filterProduct.more10);
   const more50 = useSelector((state) => state.filterProduct.more50);
   const gteRating = useSelector((state) => state.filterProduct.gteRating);
-  const [more, setMore] = useState(null);
-  const [low, setLow] = useState(null);
+  const low = useSelector((state) => state.filterProduct.low);
+  const more = useSelector((state) => state.filterProduct.more);
+  const page = parseInt(useSelector((state) => state.filterProduct.page));
   useEffect(() => {
     typeCategory && dispatch(setCategorySearch(typeCategory));
   }, [typeCategory]);
   useEffect(() => {
     const arrMore = [more10, more50];
     arrMore.sort();
-    setMore(arrMore[0]);
-    setLow(Math.max(low5));
-  }, [more10, more50, low5]);
+    dispatch(setFilter({ type: "SET_MORE", filter: arrMore[0] }));
+    dispatch(setFilter({ type: "SET_LOW", filter: Math.max(low5) }));
+  }, [more10, more50, low5,dispatch]);
   let [searchParams, setSearchParams] = useSearchParams();
-  const [page, setPage] = useState(1);
+useEffect(() => {
+  let params = [];
+  for(let entry of searchParams.entries()) {
+    params.push(entry);
+  }
+  dispatch(fetchFilter(params))
 
+},[])
   const { data, isLoading } = useQuery(
     [
       {
-        keywordSearch,
-        type,
+        keyword,
+        category,
         page,
         sortPrice,
         sortRating,
@@ -53,9 +59,9 @@ export default function Search({typeCategory}) {
     fetchSearch
   );
   useEffect(() => {
-    let objectSearch = { name: keywordSearch, page: page };
-    if (type) {
-      objectSearch.category = type;
+    let objectSearch = { keyword: keyword, page: page };
+    if (category) {
+      objectSearch.category = category;
     }
     if (sortPrice) {
       objectSearch.sortPrice = sortPrice;
@@ -72,20 +78,22 @@ export default function Search({typeCategory}) {
     if (gteRating) {
       objectSearch.gteRating = gteRating;
     }
-
+console.log(objectSearch);
     setSearchParams(objectSearch);
   }, [
-    searchParams.get("name"),
-    type,
+    searchParams.get("keyword"),
+    keyword,
+    category,
     sortPrice,
     sortRating,
     low,
     more,
     page,
     gteRating,
+    setSearchParams
   ]);
   const handleChange = (event, value) => {
-    setPage(value);
+    dispatch(setFilter({type : "SET_PAGE",filter : value}))
   };
   const mainBackGround = useSelector(
     (state) => state.colorCommon.mainBackGround
@@ -106,7 +114,7 @@ export default function Search({typeCategory}) {
           color="#fcaf17"
           fontSize="1.5rem"
         >
-          {type || "All Products"}
+          {category || "All Products"}
         </Typography>
         <div
           style={{ flex: 1, height: "2px", background: "gray", width: "100%" }}
@@ -125,11 +133,11 @@ export default function Search({typeCategory}) {
           position={{ md: "relative", sm: "absolute", xs: "absolute" }}
           top={0}
         >
-          <SideBarFilter setPage={() => setPage(1)} />
+          <SideBarFilter setPage={() =>  dispatch(setFilter({type : "SET_PAGE",filter : 1}))} />
         </Stack>
         <Stack width="100%">
           <Stack direction="row" justifyContent="center" alignItems="center">
-            <SortBar />
+            <SortBar setPage={() =>  dispatch(setFilter({type : "SET_PAGE",filter : 1}))}/>
           </Stack>
           {isLoading ? <LoadingHomePage height="5rem" /> : data && data.products && data.products.length !== 0 ? (
             <ListProduct

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setSortPrice, setSortRating} from '../../redux/filterProduct/Actions'
 import '../StyleComponent/SideBarFilter.css'
 
-export default function SortBar() {
+export default function SortBar({setPage}) {
   const mainColorText = useSelector(state => state.colorCommon.mainColorText)
   const dispatch = useDispatch()
   const [price, setPrice] = useState('');
@@ -13,12 +13,15 @@ export default function SortBar() {
     setPrice(event.target.value);
     if(event.target.value){
       dispatch(setSortPrice(-1))
+      setPage()
     }
     else if(event.target.value === false){
       dispatch(setSortPrice(1))
+      setPage()
     }
     else{
       dispatch(setSortPrice(null))
+      setPage()
     }
   };
   const [rating, setRating] = useState('');
@@ -26,11 +29,14 @@ export default function SortBar() {
     setRating(event.target.value);
     if(event.target.value){
       dispatch(setSortRating(-1))
+      setPage()
     }
     else if(event.target.value === false){
       dispatch(setSortRating(1))
+      setPage()
     }else{
       dispatch(setSortRating(null))
+      setPage()
 
     }
   };

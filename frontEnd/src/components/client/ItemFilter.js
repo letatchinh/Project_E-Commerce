@@ -58,6 +58,7 @@ export default function ItemFilter({ setPage }) {
         </AccordionSummary>
         <AccordionDetails>
           <CheckboxSideBar
+        
             isCheck={low5 !== null}
             filter={() => {
               dispatch(setFilter({ type: SET_SORT_PRICE_LESS_5, filter: 5 }));
@@ -72,6 +73,7 @@ export default function ItemFilter({ setPage }) {
             label="Product (<5$)"
           />
           <CheckboxSideBar
+      
             isCheck={more10 !== null}
             filter={() =>
               {dispatch(setFilter({ type: SET_SORT_PRICE_MORE_10, filter: 10 }));
@@ -87,7 +89,8 @@ export default function ItemFilter({ setPage }) {
             label="Product (>10$)"
           />
           <CheckboxSideBar
-            isCheck={more50 !== null}
+       
+           isCheck={more50 !== null}
             filter={() =>
               {dispatch(setFilter({ type: SET_SORT_PRICE_MORE_50, filter: 50 })); setPage()}
             }

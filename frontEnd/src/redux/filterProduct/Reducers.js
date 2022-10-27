@@ -1,13 +1,16 @@
 import * as TYPES from "./Types";
 const initvalue = {
   keyword : "",
-  type : null,
+  category : null,
   sortPrice : null,
   sortRating : null,
   low5 : null,
   more10 : null,
   more50 : null,
   gteRating : null,
+  low : null,
+  more : null,
+  page : Number(1)
 };
 const filterProductReducer = (state = initvalue, action) => {
   switch (action.type) {
@@ -19,7 +22,7 @@ const filterProductReducer = (state = initvalue, action) => {
       case TYPES.SET_CATEGORY_SEARCH:
         return {
           ...state,
-          type : action.payload
+          category : action.payload
         }
       case TYPES.SET_SORT_PRICE:
         return {
@@ -51,11 +54,52 @@ const filterProductReducer = (state = initvalue, action) => {
             ...state,
             gteRating : action.payload
           }
+        case "SET_LOW":
+          return {
+            ...state,
+            low : action.payload
+          }
+        case "SET_PAGE":
+          return {
+            ...state,
+            page : action.payload
+          }
+        case "SET_MORE":
+          return {
+            ...state,
+            more : action.payload
+          }
+          case "FETCH_URL_GET_PARAM":
+            const keyString = ['keyword','category']
+              for (const property in state) {
+              action.payload.forEach(e => {
+                if(e[0] === property){
+                 
+                  state[property] = (keyString.includes(property)) ? e[1] : parseFloat(e[1])
+                }
+              })
+               }
+              if(state.low === 5){
+               state.low5 = state.low || null
+              }
+              if(state.more === 10){
+                state.more10 = state.more || null
+              }
+              if(state.more === 50){
+                state.more50 = state.more || null
+              }
+              
+             
+          return {
+           ...state,
+      
+
+          }
           case "RESET_FILTER":
             return {
               ...state,
               keyword : "",
-  type : null,
+  category : null,
   sortPrice : null,
   sortRating : null,
   low5 : null,

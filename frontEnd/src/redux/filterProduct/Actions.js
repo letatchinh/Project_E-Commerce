@@ -72,3 +72,9 @@ export const reSetFilter = () => {
         payload : ""
     }
 }
+export const fetchFilter = (action) => {
+    return {
+        type : "FETCH_URL_GET_PARAM",
+        payload : action
+    }
+}
