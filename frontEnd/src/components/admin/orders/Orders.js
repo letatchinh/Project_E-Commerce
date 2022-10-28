@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 const Orders = (props) => {
   const { orders } = props;
+  console.log(orders.length);
   return (
     <table className="table">
       <thead>
@@ -19,7 +20,7 @@ const Orders = (props) => {
         </tr>
       </thead>
       <tbody>
-        {orders &&
+        {orders && orders.length > 0 ? (
           orders.map((order) => (
             <tr
               key={order._id}
@@ -55,7 +56,10 @@ const Orders = (props) => {
                 </Link>
               </td>
             </tr>
-          ))}
+          ))
+        ) : (
+          <div className="p-2">No order</div>
+        )}
 
         {/* Not Paid Not Delivered */}
       </tbody>

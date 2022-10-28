@@ -16,7 +16,7 @@ const LatestOrder = (props) => {
         <div className="table-responsive">
           <table className="table">
             <tbody>
-              {orders &&
+              {orders && orders.length > 0 ? (
                 orders.slice(0, 5).map((order) => (
                   <tr key={order._id}>
                     <td>
@@ -45,7 +45,10 @@ const LatestOrder = (props) => {
                       </Link>
                     </td>
                   </tr>
-                ))}
+                ))
+              ) : (
+                <div className="p-2">No order</div>
+              )}
 
               {/* Not Paid */}
             </tbody>
