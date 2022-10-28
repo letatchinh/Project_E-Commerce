@@ -61,7 +61,7 @@ export default function SortBar() {
         >
           <MenuItem value={-1}>High to low</MenuItem>
           <MenuItem value={1}>Low to high</MenuItem>
-          <MenuItem value={"All"}>None</MenuItem>
+          <MenuItem value={"All"}>Default</MenuItem>
         </Select>
       </FormControl>
     <FormControl sx={{width : {md : '200px' , sm : '100px' , xs : '100px'}  , background : 'white'}}>
@@ -75,7 +75,7 @@ export default function SortBar() {
         >
           <MenuItem value={-1}>High to low</MenuItem>
           <MenuItem value={1}>Low to high</MenuItem>
-          <MenuItem value={'All'}>None</MenuItem>
+          <MenuItem value={'All'}>Default</MenuItem>
         </Select>
       </FormControl>
    </Stack>

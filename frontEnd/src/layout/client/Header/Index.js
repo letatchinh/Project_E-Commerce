@@ -52,14 +52,15 @@ const handleClick = (event) => {
     
   }, [localStorage.getItem(KEY_USER)]);
   const { register, handleSubmit, reset } = useForm();
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     if(data.searchKeyword.trim() === " ") {
       ToastError("Please write product you want")
     }
    else{
-    dispatch(setKeywordSearch(data.searchKeyword.trim()));
+   await dispatch(setKeywordSearch(data.searchKeyword.trim()));
 
-    navigate("/search");
+   await navigate("/search");
+    handleCloseSearch()
    }
   };
   useEffect(() => {
