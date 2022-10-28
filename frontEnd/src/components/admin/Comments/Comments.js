@@ -10,6 +10,7 @@ import Message from "../LoadingError/Error";
 import StyledRating from "../../client/StyledRating.js";
 import LoadingDashboard from "../LoadingError/LoadingDashboard";
 import { toast, ToastContainer } from "react-toastify";
+import moment from "moment";
 const CommentsTables = () => {
   const params = useParams();
   let navigator = useNavigate();
@@ -113,6 +114,7 @@ const CommentsTables = () => {
                 <th>Product</th>
                 <th>Rating</th>
                 <th>Comment</th>
+                <th>Create At</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -153,6 +155,7 @@ const CommentsTables = () => {
                       <StyledRating value={e.rating} readOnly />
                     </td>
                     <td>{e.comment}</td>
+                    <td> {moment(e.createdAt).format("llll")}</td>
                     <td>
                       {e.active ? (
                         <Link

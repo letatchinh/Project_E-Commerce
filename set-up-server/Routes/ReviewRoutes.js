@@ -161,8 +161,6 @@ ReviewRoutes.put(
 
     if (review) {
       review.active = false;
-      review.updatedAt = Date.now();
-
       const updateReview = await review.save();
       res.json(updateReview);
     } else {
@@ -181,7 +179,6 @@ ReviewRoutes.put(
     const review = await Review.findById(req.params.id);
     if (review) {
       review.active = true;
-      review.updatedAt = Date.now();
       const updateReview = await review.save();
       res.json(updateReview);
     } else {
