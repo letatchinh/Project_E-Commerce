@@ -10,11 +10,12 @@ import MyPagination from "../../../components/client/MyPagination";
 import ProductClient from "../../../components/client/ProductClient";
 export default function CategoryNew() {
   const [page, setPage] = useState(1);
-  const limit = 4
+  const limit = 8
   const { data,  isLoading } = useQuery(
     [page, limit],
     fetchListNew
   );
+  console.log(data);
   const handleChange = (event, value) => {
     setPage(value);
   };

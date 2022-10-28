@@ -21,7 +21,7 @@ import { fetchSubAddress } from '../../redux/client/cart/Actions';
 import { KEY_USER } from '../../constant/LocalStored';
 export default function FormChangeAddress() {
   const user = JSON.parse(localStorage.getItem(KEY_USER)) || ""
-
+  const [open, setOpen] = useState(false);
     const schema = yup.object().shape({
      
         quan: yup.string().required("Required"),
@@ -44,8 +44,9 @@ export default function FormChangeAddress() {
     const onSubmit = async(data) => {
         const newAddress = `${data.numberHouse},${data.phuong},${data.quan},Đà Nẵng`
     await dispatch(fetchSubAddress(newAddress))
+    handleClose()
 }
-    const [open, setOpen] = useState(false);
+  
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -57,8 +58,8 @@ export default function FormChangeAddress() {
 
   return (
     <div style={{margin : '0 auto'}}>
-    <Button  onClick={handleClickOpen}>
-      {user.address !== "" ? "Change" :<AddCircleOutlineIcon/>}
+    <Button variant='outlined'  onClick={handleClickOpen}>
+      {user.address !== "" ? "Change Address Here" :<AddCircleOutlineIcon/>}
     </Button>
     <Dialog fullWidth
       open={open}

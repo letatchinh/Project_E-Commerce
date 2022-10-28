@@ -27,8 +27,8 @@ export default function FormVoucher({disable}) {
           type: "notFoundVoucher",
           message: err.response.data.message,
         })
-      );
-    setLoading(false);
+      ).finally(() => setLoading(false));
+    
   };
 const disableStyle = {
   opacity : 0.5,

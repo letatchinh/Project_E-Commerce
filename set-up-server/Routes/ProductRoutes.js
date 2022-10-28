@@ -124,7 +124,7 @@ productRoute.get(
   asyncHandler(async (req, res) => {
     const limit = Number(req.query.limit) || 4;
     const page = Number(req.query.page) || 1;
-    const count = 4;
+    const count = 16;
     // const count = Product.countDocuments({}) || 10
     const products = await Product.find({})
       .limit(limit)

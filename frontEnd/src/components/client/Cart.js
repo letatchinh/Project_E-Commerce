@@ -6,6 +6,7 @@ import { Stack } from "@mui/system";
 import { Link } from "react-router-dom";
 import ItemCart from "./ItemCart";
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import Dialo from './Dialo'
 import { fetchDeleteAllCartRequest } from "../../redux/sagas/Mysaga";
 function Cart({handleClose}) {
   const listCarts = useSelector(state => state.cart.listCarts)
@@ -28,7 +29,10 @@ function Cart({handleClose}) {
     <Typography textAlign='center' borderBottom='1px solid #999' variant="h6">My Cart<ShoppingBasketIcon/></Typography>
    <Stack display={listCarts && listCarts.length === 0 ? "none" : 'flex'} direction='row' justifyContent='space-between' alignItems='center' padding ='5px 0'>
    <Typography  color='#777' variant="body2">New products added</Typography>
-    <Button onClick={handleDeleteAllCart} sx={{textTransform : 'capitalize'}} variant='outlined' size="small"  color='error'>Delete All</Button>
+   <Dialo click={handleDeleteAllCart} messenger="Are you want to delele All?">
+
+    <Button  sx={{textTransform : 'capitalize'}} variant='outlined' size="small"  color='error'>Delete All</Button>
+   </Dialo>
    </Stack>
       <Stack sx={{maxHeight : '60vh',overflowY : 'scroll'}}>
       {

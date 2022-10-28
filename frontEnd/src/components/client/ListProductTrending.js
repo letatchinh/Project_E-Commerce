@@ -1,12 +1,9 @@
-import { Button, Stack } from '@mui/material'
+import { Stack } from '@mui/material'
 import axios from 'axios'
 import React, {  useCallback, useEffect, useRef, useState } from 'react'
-import ListProductCommon from './ListProductCommon'
 import LoadingListProduct from './LoadingListProduct'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useSelector } from "react-redux";
 import MyTypography from './MyTypography'
-import { Link } from 'react-router-dom'
 import ListProduct from './ListProduct'
 export default function ListProductTrending() {
   const componentRef = useRef();
@@ -17,8 +14,7 @@ export default function ListProductTrending() {
     const [isFetch,setIsFetch] = useState(false)
     const fetch = useCallback(async() => {
       setLoading(true)
-      axios.get(`api/products/filterHotProduct?page=${page}`).then(res => setData(res.data)).catch(err => console.log(err))
-      setLoading(false)
+     await axios.get(`api/products/filterHotProduct?page=${page}`).then(res => {setData(res.data);setLoading(false)}).catch(err => console.log(err))
     },[isFetch,page])
     useEffect(() => {
        isFetch &&  fetch()

@@ -1,6 +1,6 @@
 import { Button, Paper, TextField, Typography } from "@mui/material";
 import { Container, Stack } from "@mui/system";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch} from "react-redux";
 import {
@@ -17,8 +17,11 @@ import ToastSuccess from "../../../components/client/ToastSuccess";
 import ToastError from "../../../components/client/ToastError";
 import HideShowPassword from "../../../components/client/HideShowPassword";
 import { REGEX_ONLY_NUMBER } from "../../../constant/YupGlobal";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 export default function Register() {
+  const [loading,setLoading] = useState(false)
+
   const navigate = useNavigate();
   const schema = yup.object().shape({
     name: yup.string().required("Please Enter Name").min(2).max(20),
@@ -43,18 +46,21 @@ export default function Register() {
       avatar : "",
       phone : data.phone
     };
+    setLoading(true)
     axios
       .post(`/api/users/`, newUser)
       .then((res) => {
         ToastSuccess("Resgister Success!");
+        setLoading(false)
         dispatch(
           fetchLoginRequest({ email: res.data.email, password: data.password })
         );
         navigate("/");
       })
       .catch((error) => {
+        setLoading(false)
         ToastError(error.response.data.message);
-      });
+      }).finally(() => setLoading);
   };
   return (
     <>
@@ -130,17 +136,15 @@ export default function Register() {
                   message={errors.password && errors.password.message}
                   {...register("password")}
                 />
-                <Button
-                  sx={{
-                    backgroundImage: "linear-gradient(45deg, #E26560, #E36183)",
-                    borderRadius: "50px",
-                  }}
-                  fullWidth
-                  type="submit"
-                  variant="contained"
-                >
-                  Register
-                </Button>
+                <LoadingButton loading={loading} sx={{
+                  backgroundImage: "linear-gradient(45deg, #E26560, #E36183)",
+                  borderRadius: "50px",
+                }}
+                fullWidth
+                type="submit"
+                variant="contained">
+        Register
+      </LoadingButton>
               </Stack>
             </form>
             <Stack

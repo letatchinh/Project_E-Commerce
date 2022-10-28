@@ -23,9 +23,9 @@ export default function ListProductNew() {
   const fetch = useCallback(async () => {
     setLoading(true);
     AxiosUser.get(`api/products/filterNewProduct?page=${page}&limit=${limit}`)
-      .then((res) => setData(res.data))
+      .then((res) => {setData(res.data); setLoading(false);})
       .catch((err) => console.log(err));
-    setLoading(false);
+   
   }, [isFetch, page]);
   // const {data,isLoading } = useQuery([page,limit], fetchListSale , {enabled : !isFetch})
   useEffect(() => {

@@ -15,6 +15,7 @@ import { fetchAddToCartRequestSaga } from "../../redux/sagas/Mysaga";
 import TypographyThreeDot from "./TypographyThreeDot";
 import PriceSell from './PriceSell'
 export default function ProductClient({ item }) {
+  const [loading,setLoading] = useState(false)
   const dispatch = useDispatch();
   const navigate = useNavigate()
   // const [isFetch,setIsFetch] = useState(false)

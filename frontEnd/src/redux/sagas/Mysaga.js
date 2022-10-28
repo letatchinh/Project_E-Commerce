@@ -274,15 +274,19 @@ export function* fetchDeleteAllCart(){
 }
 export function* fetchAddVoucher(action){
   try {
+    console.log(action);
     const user =  JSON.parse(localStorage.getItem(KEY_USER)) || "";
-    const res = yield call(() => AxiosUser.put(`/api/users/addVoucher/${user._id}`,action.payload))
+    const res = yield call(() => AxiosUser.put(`/api/users/addVoucher/${user._id}`,action.payload.voucher))
     if(res.status === STATUS_CODE.SUCCESS){
+      action.payload.setLoading()
       yield ToastSuccess("Get Voucher Successed")
     }
     else{
+      action.payload.setLoading()
       ToastError("Get Voucher Failed")
     }
   } catch (error) {
+    action.payload.setLoading()
     ToastError(error.response.data.message)
   }
 }

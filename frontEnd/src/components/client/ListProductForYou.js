@@ -9,14 +9,14 @@ export default function ListProductForYou() {
   const componentRef = useRef();
   const [isAppear, setIsAppear] = useState(false);
     const [data,setData] = useState([])
-    const limit = 9;
+    const limit = 16;
     const [dataRandom,setDataRandom] = useState([])
     const [loading,setLoading] = useState(false)
     const [isFetch,setIsFetch] = useState(false)
     const fetch = useCallback(async() => {
       setLoading(true)
-      axios.get(`api/products/search?category=&limit=${limit}`).then(res => setData(res.data.products)).catch(err => console.log(err))
-      setLoading(false)
+      axios.get(`api/products/search?category=&limit=${limit}`).then(res => {setData(res.data.products);setLoading(false)}).catch(err => console.log(err))
+      
     },[isFetch])
     useEffect(() => {
        isFetch &&  fetch()

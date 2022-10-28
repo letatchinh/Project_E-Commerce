@@ -1,5 +1,6 @@
+import LoadingButton from '@mui/lab/LoadingButton'
 import { Button, Paper, Stack, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { KEY_USER } from '../../constant/LocalStored'
@@ -8,13 +9,15 @@ import MyTypography from './MyTypography'
 
 export default function ItemListVoucherScreen({item}) {
     const {discount,_id} = item
+    const [loading,setLoading] = useState(false)
     const mainBackGround = useSelector(
       (state) => state.colorCommon.mainBackGround
     );
     const dispatch = useDispatch()
     const navigate = useNavigate()
-  const  handleGetVoucher = () => {
-    dispatch(fetchAddVoucherRequest({IdnewVoucher : _id}))
+  const  handleGetVoucher = async() => {
+    setLoading(true)
+   await dispatch(fetchAddVoucherRequest({voucher :{IdnewVoucher : _id},setLoading : () => setLoading(false)}))
   }
   return (
     <Stack direction="row">
@@ -65,19 +68,17 @@ export default function ItemListVoucherScreen({item}) {
         </Stack>
       </Stack>
     </Paper>
-    <Button onClick={() => {
+
+    <LoadingButton  sx={{ borderLeftStyle: "dashed", textTransform: "capitalize" }} onClick={() => {
       if(localStorage.getItem(KEY_USER)){
         handleGetVoucher()
       }
       else{
         navigate("/login")
       }
-      }}
-      sx={{ borderLeftStyle: "dashed", textTransform: "capitalize" }}
-      variant="outlined"
-    >
-      Get
-    </Button>
+      }} loading={loading} variant="outlined">
+  Get
+</LoadingButton>
   </Stack>
   )
 }

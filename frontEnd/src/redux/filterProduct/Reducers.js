@@ -94,10 +94,10 @@ const filterProductReducer = (state = initvalue, action) => {
   category : null,
   sortPrice : null,
   sortRating : null,
-  low5 : null,
-  more10 : null,
-  more50 : null,
+  min : null,
+  max : null,
   gteRating : null,
+  page : 1,
             }
       
     default:

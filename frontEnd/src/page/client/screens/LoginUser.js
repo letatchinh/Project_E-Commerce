@@ -56,8 +56,9 @@ export default function LoginUser() {
     setLoading(false)
    }).catch(err => {
     console.log(err.response.data.message);
+    setLoading(false)
     ToastError(err.response.data.message)
-   })
+   }).finally(() => setLoading(false))
                
    
   };
