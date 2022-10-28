@@ -118,6 +118,11 @@ const handleClick = (event) => {
        Home
        </Button>
         </Link>
+        <Link to='/products'>
+       <Button onClick={() => dispatch(reSetFilter())} sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'}, fontSize : contactActive ? '1rem' : '0.875rem' , textShadow : contactActive ? '0 0 20px white' : 'none'}}>
+       Products
+       </Button>
+       </Link>
           <Link to='/about'>
        <Button   sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'} , fontSize : aboutActive ? '1rem' : '0.875rem' , textShadow : aboutActive ? '0 0 20px white' : 'none'}}>
        About us
@@ -128,11 +133,7 @@ const handleClick = (event) => {
        Contact
        </Button>
        </Link>
-       <Link to='/products'>
-       <Button onClick={() => dispatch(reSetFilter())} sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'}, fontSize : contactActive ? '1rem' : '0.875rem' , textShadow : contactActive ? '0 0 20px white' : 'none'}}>
-       Products
-       </Button>
-       </Link>
+       
           </Stack>
            <Stack direction='row'  alignItems='center'>
               <Button 

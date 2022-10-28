@@ -17,6 +17,10 @@ import ToastError from "./ToastError";
 import Dialo from "./Dialo";
 export default function ItemListCart({ item }) {
   const status = useSelector(state => state.colorCommon.status)
+  const user = JSON.parse(localStorage.getItem(KEY_USER)) || "";
+  const totalBill = useSelector(state => state.cart.totalBill)
+  const taxShip = useSelector(state => state.cart.taxShip)
+  const voucher = useSelector(state => state.cart.voucher)
 
   const listCarts = useSelector((state) => state.cart.allListCart);
   const dispatch = useDispatch();
@@ -24,7 +28,7 @@ export default function ItemListCart({ item }) {
   const [checked, setChecked] = useState(isChecked);
   const handleChange = async (event) => {
     if(event.target.checked){
-      if(countInStock > quanlity){
+      if(countInStock >= quanlity){
         setChecked(event.target.checked);
         const newListCart = listCarts.map((e) => {
           if (e._id === item._id) {
@@ -39,6 +43,12 @@ export default function ItemListCart({ item }) {
       }
     }
     else{
+      console.log(totalBill,"totalBill");
+      console.log(taxShip,"totalBill");
+      console.log(voucher,"voucher");
+      if(totalBill + taxShip < voucher){
+        console.log("ok");
+      }
       setChecked(event.target.checked);
         const newListCart = listCarts.map((e) => {
           if (e._id === item._id) {
@@ -49,7 +59,7 @@ export default function ItemListCart({ item }) {
         await dispatch(fetchCartNew(newListCart));
     }
   };
-  const idUser = JSON.parse(localStorage.getItem(KEY_USER))._id;
+ 
   return (
     <Stack
       direction={{md : "row" ,sm : "row", xs : 'column'}}
@@ -111,7 +121,7 @@ export default function ItemListCart({ item }) {
         </Button>
        <Dialo messenger='Are you want to delete This item'   click={async() => {
            await dispatch(
-              fetchDeleteCartRequest({ user: idUser, product: item._id })
+              fetchDeleteCartRequest({ user: user._id, product: item._id })
             );
           }}> <Button
         

@@ -8,8 +8,8 @@ const initvalue = {
   more10 : null,
   more50 : null,
   gteRating : null,
-  low : null,
-  more : null,
+  min : null,
+  max : null,
   page : Number(1)
 };
 const filterProductReducer = (state = initvalue, action) => {
@@ -54,20 +54,20 @@ const filterProductReducer = (state = initvalue, action) => {
             ...state,
             gteRating : action.payload
           }
-        case "SET_LOW":
+        case "SET_MAX_PRICE":
           return {
             ...state,
-            low : action.payload
+            max : action.payload
           }
         case "SET_PAGE":
           return {
             ...state,
             page : action.payload
           }
-        case "SET_MORE":
+        case "SET_MIN_PRICE":
           return {
             ...state,
-            more : action.payload
+            min : action.payload
           }
           case "FETCH_URL_GET_PARAM":
             const keyString = ['keyword','category']
@@ -79,15 +79,7 @@ const filterProductReducer = (state = initvalue, action) => {
                 }
               })
                }
-              if(state.low === 5){
-               state.low5 = state.low || null
-              }
-              if(state.more === 10){
-                state.more10 = state.more || null
-              }
-              if(state.more === 50){
-                state.more50 = state.more || null
-              }
+             
               
              
           return {

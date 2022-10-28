@@ -16,13 +16,15 @@ import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import ToastSuccess from "../../../components/client/ToastSuccess";
 import ToastError from "../../../components/client/ToastError";
 import HideShowPassword from "../../../components/client/HideShowPassword";
+import { REGEX_ONLY_NUMBER } from "../../../constant/YupGlobal";
 
 export default function Register() {
   const navigate = useNavigate();
   const schema = yup.object().shape({
-    name: yup.string().required("Required").min(2).max(20),
-    password: yup.string().required("Required").min(2).max(20),
-    email: yup.string().required("Required").email(),
+    name: yup.string().required("Please Enter Name").min(2).max(20),
+    password: yup.string().required("Please Enter Password").min(2).max(20),
+    email: yup.string().required("Please Enter Email").email(),
+    phone : yup.string().required("Please Enter Phone").min(2).max(11).matches(REGEX_ONLY_NUMBER,"Phone is not wrong")
   });
   const {
     register,
@@ -38,11 +40,13 @@ export default function Register() {
       password: brcypt.hashSync(data.password, 10),
       email: data.email,
       address : "",
-      avatar : ""
+      avatar : "",
+      phone : data.phone
     };
     axios
       .post(`/api/users/`, newUser)
       .then((res) => {
+        console.log(res.data);
         ToastSuccess("Resgister Success!");
         dispatch(
           fetchLoginRequest({ email: res.data.email, password: data.password })
@@ -102,6 +106,15 @@ export default function Register() {
                   variant="outlined"
                   error={errors.name !== undefined}
                   helperText={errors.name && errors?.name.message}
+                />
+                <TextField
+                  size="small"
+                  {...register("phone")}
+                  fullWidth
+                  label="Number phone"
+                  variant="outlined"
+                  error={errors.phone !== undefined}
+                  helperText={errors.phone && errors?.phone.message}
                 />
                 <TextField
                   size="small"

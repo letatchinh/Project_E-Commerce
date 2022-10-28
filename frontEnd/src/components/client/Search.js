@@ -18,22 +18,22 @@ export default function Search({typeCategory}) {
   const category = useSelector((state) => state.filterProduct.category);
   const sortPrice = useSelector((state) => state.filterProduct.sortPrice);
   const sortRating = useSelector((state) => state.filterProduct.sortRating);
-  const low5 = useSelector((state) => state.filterProduct.low5);
-  const more10 = useSelector((state) => state.filterProduct.more10);
-  const more50 = useSelector((state) => state.filterProduct.more50);
+  // const low5 = useSelector((state) => state.filterProduct.low5);
+  // const more10 = useSelector((state) => state.filterProduct.more10);
+  // const more50 = useSelector((state) => state.filterProduct.more50);
   const gteRating = useSelector((state) => state.filterProduct.gteRating);
-  const low = useSelector((state) => state.filterProduct.low);
-  const more = useSelector((state) => state.filterProduct.more);
+  const max = useSelector((state) => state.filterProduct.max);
+  const min = useSelector((state) => state.filterProduct.min);
   const page = parseInt(useSelector((state) => state.filterProduct.page));
   useEffect(() => {
     typeCategory && dispatch(setCategorySearch(typeCategory));
   }, [typeCategory]);
-  useEffect(() => {
-    const arrMore = [more10, more50];
-    arrMore.sort();
-    dispatch(setFilter({ type: "SET_MORE", filter: arrMore[0] }));
-    dispatch(setFilter({ type: "SET_LOW", filter: Math.max(low5) }));
-  }, [more10, more50, low5,dispatch]);
+  // useEffect(() => {
+  //   const arrMore = [more10, more50];
+  //   arrMore.sort();
+  //   dispatch(setFilter({ type: "SET_MORE", filter: arrMore[0] }));
+  //   dispatch(setFilter({ type: "SET_LOW", filter: Math.max(low5) }));
+  // }, [more10, more50, low5,dispatch]);
   let [searchParams, setSearchParams] = useSearchParams();
 useEffect(() => {
   let params = [];
@@ -51,8 +51,8 @@ useEffect(() => {
         page,
         sortPrice,
         sortRating,
-        low,
-        more,
+        min,
+        max,
         gteRating,
       },
     ],
@@ -69,16 +69,16 @@ useEffect(() => {
     if (sortRating) {
       objectSearch.sortRating = sortRating;
     }
-    if (low) {
-      objectSearch.low = low;
+    if (min) {
+      objectSearch.min = min;
     }
-    if (more) {
-      objectSearch.more = more;
+    if (max) {
+      objectSearch.max = max;
     }
+   
     if (gteRating) {
       objectSearch.gteRating = gteRating;
     }
-console.log(objectSearch);
     setSearchParams(objectSearch);
   }, [
     searchParams.get("keyword"),
@@ -86,8 +86,8 @@ console.log(objectSearch);
     category,
     sortPrice,
     sortRating,
-    low,
-    more,
+    min,
+    max,
     page,
     gteRating,
     setSearchParams
@@ -133,11 +133,11 @@ console.log(objectSearch);
           position={{ md: "relative", sm: "absolute", xs: "absolute" }}
           top={0}
         >
-          <SideBarFilter setPage={() =>  dispatch(setFilter({type : "SET_PAGE",filter : 1}))} />
+          <SideBarFilter  />
         </Stack>
         <Stack width="100%">
           <Stack direction="row" justifyContent="center" alignItems="center">
-            <SortBar setPage={() =>  dispatch(setFilter({type : "SET_PAGE",filter : 1}))}/>
+            <SortBar />
           </Stack>
           {isLoading ? <LoadingHomePage height="5rem" /> : data && data.products && data.products.length !== 0 ? (
             <ListProduct
@@ -147,7 +147,7 @@ console.log(objectSearch);
               handleChange={handleChange}
             />
           ) : (
-            <ErrorNoItem src="https://i.pinimg.com/originals/20/d3/8b/20d38b1d0d3304dd80adc2e4029278ac.png" />
+            <ErrorNoItem inSearch={true} src="https://i.pinimg.com/originals/20/d3/8b/20d38b1d0d3304dd80adc2e4029278ac.png" />
           )}
         </Stack>
       </Stack>

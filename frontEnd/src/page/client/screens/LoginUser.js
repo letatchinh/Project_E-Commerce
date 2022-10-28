@@ -57,7 +57,8 @@ export default function LoginUser() {
       const newUser = {
         password: response.id,
         email: response.email,
-        name : response.name
+        name : response.name,
+        phone : 0
       };
       dispatch(fetchLoginWithGoogleAndFbRequest(newUser))
     }
@@ -71,6 +72,7 @@ export default function LoginUser() {
       email: response.profileObj.email,
       password: response.profileObj.googleId,
       name:response.profileObj.givenName + " " + response.profileObj.familyName,
+      phone : 0
     };
     dispatch(fetchLoginWithGoogleAndFbRequest(newUser))
   };
