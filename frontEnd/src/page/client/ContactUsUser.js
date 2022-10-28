@@ -15,7 +15,6 @@ export default function ContactUsUser() {
   const [status,setStatus] = useState(false)
   const [statusGif,setStatusGif] = useState(false)
   const onSubmit = data => {
-    console.log(data);
     setStatus(true)
     reset()
   };

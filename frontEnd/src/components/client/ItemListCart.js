@@ -1,4 +1,4 @@
-import { Button, Checkbox, Typography } from "@mui/material";
+import { Button, Checkbox } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useState } from "react";
 import MyTypography from "./MyTypography";
@@ -18,9 +18,6 @@ import Dialo from "./Dialo";
 export default function ItemListCart({ item }) {
   const status = useSelector(state => state.colorCommon.status)
   const user = JSON.parse(localStorage.getItem(KEY_USER)) || "";
-  const totalBill = useSelector(state => state.cart.totalBill)
-  const taxShip = useSelector(state => state.cart.taxShip)
-  const voucher = useSelector(state => state.cart.voucher)
 
   const listCarts = useSelector((state) => state.cart.allListCart);
   const dispatch = useDispatch();
@@ -43,12 +40,6 @@ export default function ItemListCart({ item }) {
       }
     }
     else{
-      console.log(totalBill,"totalBill");
-      console.log(taxShip,"totalBill");
-      console.log(voucher,"voucher");
-      if(totalBill + taxShip < voucher){
-        console.log("ok");
-      }
       setChecked(event.target.checked);
         const newListCart = listCarts.map((e) => {
           if (e._id === item._id) {
