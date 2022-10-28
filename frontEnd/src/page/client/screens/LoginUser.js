@@ -22,8 +22,8 @@ import HideShowPassword from "../../../components/client/HideShowPassword";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { fetchLoginWithGoogleAndFbRequest } from "../../../redux/sagas/Mysaga";
-import "../../../components/StyleComponent/MyLink.css";
-import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
+import '../../../components/StyleComponent/MyLink.css'
+import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import ToastError from "../../../components/client/ToastError";
 export default function LoginUser() {
   const schema = yup.object().shape({
@@ -61,24 +61,26 @@ export default function LoginUser() {
   }, []);
 
   const responseFacebook = async (response) => {
-    console.log(response);
-    if (response.status !== "unknown") {
+    if(response.status !== "unknown"){
       const newUser = {
         password: response.id,
         email: response.email,
-        name: response.name,
+        name : response.name,
+        phone : 0
       };
-      dispatch(fetchLoginWithGoogleAndFbRequest(newUser));
-    } else {
-      ToastError("Login with fb failed");
+      dispatch(fetchLoginWithGoogleAndFbRequest(newUser))
     }
+    else{
+      ToastError("login with fb failed")
+    }
+    
   };
   const responseGoogle = async (response) => {
     const newUser = {
       email: response.profileObj.email,
       password: response.profileObj.googleId,
-      name:
-        response.profileObj.givenName + " " + response.profileObj.familyName,
+      name:response.profileObj.givenName + " " + response.profileObj.familyName,
+      phone : 0
     };
     dispatch(fetchLoginWithGoogleAndFbRequest(newUser));
   };

@@ -29,7 +29,7 @@ productRoute.get(
       : {};
     const sortPrice = Number(req.query.sortPrice);
     const sortRating = Number(req.query.sortRating);
-    const rangeFilterGte = Number(req.query.rangeFilterGte) || null;
+    const rangeFilterGte = Number(req.query.rangeFilterGte) || 0;
     const rangeFilterLte = Number(req.query.rangeFilterLte) || null;
     const rangeFilterGteRating = Number(req.query.rangeFilterGteRating) || null;
     const page = Number(req.query.page) || 1;
@@ -37,13 +37,10 @@ productRoute.get(
       ...nameFilter,
       ...categoryFilter,
       $and : [
-        { $or:
-          rangeFilterGte || rangeFilterLte
-            ? [
-                { newPrice: { $gte: rangeFilterGte } },
-                { newPrice: { $lte: rangeFilterLte } },
-              ]
-            : [{ newPrice: { $gte: 0 } }],},
+        { newPrice :
+           rangeFilterLte
+            ? {$gte : rangeFilterGte , $lte : rangeFilterLte}
+            : { $gte: 0 } ,},
       { $or:
         rangeFilterGteRating
           ? [
@@ -56,13 +53,10 @@ productRoute.get(
       ...nameFilter,
       ...categoryFilter,
       $and : [
-        { $or:
-          rangeFilterGte || rangeFilterLte
-            ? [
-                { newPrice: { $gte: rangeFilterGte } },
-                { newPrice: { $lte: rangeFilterLte } },
-              ]
-            : [{ newPrice: { $gte: 0 } }],},
+        { newPrice :
+          rangeFilterLte
+            ? {$gte : rangeFilterGte , $lte : rangeFilterLte}
+            :  { $gte: 0 } ,},
       { $or:
         rangeFilterGteRating
           ? [

@@ -44,15 +44,13 @@ export default function ProfileUser({children}) {
       navigate('/login')
     }
   },[users])
-  const handleCLickList = (active) => {
-    setActive(active)
-  }
+
   return (
    <>
    <div style={{ background: mainBackGround2, padding: "50px 0" }}>
       <Container sx={{ background: mainBackGround, borderRadius: "20px",padding : '20px 0' }}>
-        <Stack direction={{sm : 'row' , xs : 'column'}}>
-          <Stack direction={{sm : 'column' , xs : 'row'}} width="30%" borderRight="1px solid #F0F2F5">
+        <Stack direction={{md : 'row',sm : 'column' , xs : 'column'}}>
+          <Stack direction={{sm : 'column' , xs : 'row'}} width={{md : '30%' , sm : '100%'}}borderRight="1px solid #F0F2F5">
             <AvatarProfileUser />
             <MenuList>
               <Link to='/profile_Info'> 

@@ -16,7 +16,7 @@ export default function PriceSell(props) {
           whiteSpace : 'nowrap'
         }}
       >
-        {price - (price * discount) / 100} $
+        {parseFloat((price - (price * discount) / 100).toFixed(2))} $
       </span>
       <span
         style={{

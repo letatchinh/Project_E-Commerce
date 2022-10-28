@@ -7,25 +7,15 @@ import {
 import React from "react";
 import { Stack } from "@mui/system";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import CheckboxSideBar from "./CheckboxSideBar";
 import "../StyleComponent/SideBarFilter.css";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  SET_SORT_PRICE_LESS_5,
-  SET_SORT_PRICE_MORE_10,
-  SET_SORT_PRICE_MORE_50,
-} from "../../redux/filterProduct/Types";
-import { setFilter } from "../../redux/filterProduct/Actions";
+import {  useSelector } from "react-redux";
 import ButtonFilterRating from "./ButtonFilterRating";
 import MyTypography from "./MyTypography";
-export default function ItemFilter({ setPage }) {
-  const dispatch = useDispatch();
+import RangeFilterPrice from "./RangeFilterPrice";
+export default function ItemFilter() {
   const mainColorText = useSelector((state) => state.colorCommon.mainColorText);
   const mainBackGround2 = useSelector((state) => state.colorCommon.mainBackGround2);
-  const low5 = useSelector((state) => state.filterProduct.low5);
-  const more10 = useSelector((state) => state.filterProduct.more10);
-  const more50 = useSelector((state) => state.filterProduct.more50);
   const gteRating = useSelector((state) => state.filterProduct.gteRating);
   return (
     <>
@@ -56,8 +46,9 @@ export default function ItemFilter({ setPage }) {
             Price
           </MyTypography>
         </AccordionSummary>
-        <AccordionDetails>
+        {/* <AccordionDetails>
           <CheckboxSideBar
+        
             isCheck={low5 !== null}
             filter={() => {
               dispatch(setFilter({ type: SET_SORT_PRICE_LESS_5, filter: 5 }));
@@ -72,6 +63,7 @@ export default function ItemFilter({ setPage }) {
             label="Product (<5$)"
           />
           <CheckboxSideBar
+      
             isCheck={more10 !== null}
             filter={() =>
               {dispatch(setFilter({ type: SET_SORT_PRICE_MORE_10, filter: 10 }));
@@ -87,7 +79,8 @@ export default function ItemFilter({ setPage }) {
             label="Product (>10$)"
           />
           <CheckboxSideBar
-            isCheck={more50 !== null}
+       
+           isCheck={more50 !== null}
             filter={() =>
               {dispatch(setFilter({ type: SET_SORT_PRICE_MORE_50, filter: 50 })); setPage()}
             }
@@ -98,6 +91,9 @@ export default function ItemFilter({ setPage }) {
             }
             label="Product (>50$)"
           />
+        </AccordionDetails> */}
+        <AccordionDetails>
+          <RangeFilterPrice/>
         </AccordionDetails>
       </Accordion>
       <Accordion sx={{background : mainBackGround2}} defaultExpanded>
@@ -111,22 +107,22 @@ export default function ItemFilter({ setPage }) {
           </MyTypography>
         </AccordionSummary>
         <AccordionDetails>
-        <ButtonFilterRating active={gteRating === 0} value={0} setPage={setPage}/>
+        <ButtonFilterRating active={gteRating === 0} value={0}/>
         </AccordionDetails>
         <AccordionDetails>
-        <ButtonFilterRating active={gteRating === 1} value={1} setPage={setPage}/>
+        <ButtonFilterRating active={gteRating === 1} value={1}/>
         </AccordionDetails>
         <AccordionDetails>
-        <ButtonFilterRating active={gteRating === 2} value={2} setPage={setPage}/>
+        <ButtonFilterRating active={gteRating === 2} value={2}/>
         </AccordionDetails>
         <AccordionDetails>
-        <ButtonFilterRating active={gteRating === 3} value={3} setPage={setPage}/>
+        <ButtonFilterRating active={gteRating === 3} value={3}/>
         </AccordionDetails>
         <AccordionDetails>
-        <ButtonFilterRating active={gteRating === 4} value={4} setPage={setPage}/>
+        <ButtonFilterRating active={gteRating === 4} value={4}/>
         </AccordionDetails>
         <AccordionDetails>
-        <ButtonFilterRating active={gteRating === 5} value={5} setPage={setPage}/>
+        <ButtonFilterRating active={gteRating === 5} value={5}/>
         </AccordionDetails>
        
       </Accordion>

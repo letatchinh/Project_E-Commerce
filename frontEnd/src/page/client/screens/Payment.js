@@ -176,6 +176,17 @@ if(value === ""){
                 spacing={1}
                 sx={{ width: "400px", padding: "40px", marginLeft: "auto" }}
               >
+               <Stack
+                  width="100%"
+                  justifyContent="space-between"
+                  direction="row"
+                >
+                  <MyTypography variant="h6">Total price :</MyTypography>
+                  <MyTypography variant="h6" fontWeight="bold">
+                  {totalBill} $
+                  </MyTypography>
+                  
+                </Stack>
                 <Stack
                   width="100%"
                   justifyContent="space-between"
@@ -194,7 +205,7 @@ if(value === ""){
                 >
                  <MyTypography variant="h6">Voucher :</MyTypography>
                   <MyTypography variant="h6" fontWeight="bold">
-                  {voucher} $
+                  -{voucher} $
                   </MyTypography>
                   
                 </Stack>
@@ -204,7 +215,7 @@ if(value === ""){
                   direction="row"
                 >
                   <MyTypography variant="h6" fontWeight="bold">
-                    Total
+                    Total Order
                   </MyTypography>
                   <MyTypography variant="h6" fontWeight="bold">
                     {(parseFloat(totalBill) + taxShip - voucher).toFixed(2)} $

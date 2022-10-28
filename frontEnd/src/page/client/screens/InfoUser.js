@@ -28,10 +28,10 @@ import MyTextField from "../../../components/client/MyTextField";
 import MyTypography from "../../../components/client/MyTypography";
 import MySelection from "../../../components/client/MySelection";
 import {  styled } from '@mui/material/styles';
+import { REGEX_ONLY_NUMBER } from "../../../constant/YupGlobal";
 
 export default function InfoUser() {
   const statusColor = useSelector(state => state.colorCommon.status)
-  const [address,setAddress] = useState([])
   const CssSelect = styled(Select)({
     '& .MuiOutlinedInput-notchedOutline': {
         borderColor: !statusColor && '#999',
@@ -60,11 +60,10 @@ export default function InfoUser() {
     quan: yup.string().required("Required"),
     phuong: yup.string().required("Required"),
     numberHouse: yup.string().required("Required"),
-    // phone: yup
-    //   .string()
-    //   .required("Required")
-    //   .matches(regex.REGEX_ONLY_NUMBER, "Không đúng định dạng"),
-    // address: yup.string().required("Required"),
+    phone: yup
+      .string()
+      .required("Required")
+      .matches(REGEX_ONLY_NUMBER, "Number phone is wrong"),
   });
   const {
     register,
@@ -82,7 +81,7 @@ export default function InfoUser() {
   const onSubmit = async (data) => {
     const newAddress =
     data.numberHouse + "," + data.phuong + "," + data.quan + ",Đà nẵng";
-    const user = {...userLogin,email : data.email,name : data.name,address : newAddress}
+    const user = {...userLogin,email : data.email,name : data.name,address : newAddress,phone : data.phone}
         setLoading(true);
   await AxiosUser.put(`/api/users/profileUser/${userLogin._id}`,user).then(res => {
     localStorage.setItem(KEY_USER,JSON.stringify(res.data))
@@ -121,6 +120,15 @@ export default function InfoUser() {
             variant="outlined"/>
           {errors.name && (
             <Alert severity="error">{errors.name?.message}</Alert>
+          )}
+          <MyTextField  
+            defaultValue={userLogin.phone}
+            fullWidth
+            {...register("phone")}
+            label="Number Phone"
+            variant="outlined"/>
+          {errors.phone && (
+            <Alert severity="error">{errors.phone?.message}</Alert>
           )}
           <MyTextField
             defaultValue={userLogin.email}
@@ -277,8 +285,8 @@ export default function InfoUser() {
       <List style={{ display: !status ? "block" : "none" }}>
         <ItemInfoUser icon={<PeopleIcon color="primary" />} value={userLogin.name} />
         <ItemInfoUser icon={<EmailIcon color="primary" />} value={userLogin.email} />
-        <ItemInfoUser icon={<PhoneIcon color="primary" />} value={userLogin.phone} />
-        <ItemInfoUser icon={<LocationOnIcon  color="primary"/>} value={userLogin.address} />
+        <ItemInfoUser icon={<PhoneIcon color="primary" />} value={`+84 ${userLogin.phone}`} />
+        <ItemInfoUser icon={<LocationOnIcon  color="primary"/>} value={userLogin.address || "(No data Address , please edit)"} />
       </List>
       <Button
         onClick={() => setStatus(!status)}
