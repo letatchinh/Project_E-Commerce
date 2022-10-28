@@ -24,6 +24,7 @@ export default function ProductClient({ item }) {
     price,
     _id,
     rating,
+    newPrice,
     numReviews,
     countInStock
   } = item;
