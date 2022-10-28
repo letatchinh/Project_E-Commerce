@@ -7,7 +7,7 @@ import { v4 } from "uuid";
 import ContentTop from "../../components/client/ContentTop";
 import ItemCategory from "../../components/client/ItemCategory";
 import { listCategory } from "../../constant/Key";
-import { reSetFilter, setCategorySearch } from "../../redux/filterProduct/Actions";
+import { reSetFilter, setCategorySearch, setFilter } from "../../redux/filterProduct/Actions";
 export default function Category() {
   const mainBackGround = useSelector((state) => state.colorCommon.mainBackGround);
   const dispatch = useDispatch()
@@ -22,7 +22,8 @@ export default function Category() {
         alignItems='center'
         justifyContent='center'
       >
-      <Grid onClick={() => dispatch(setCategorySearch(null))} item>
+      <Grid onClick={() => {dispatch(setCategorySearch(null))
+      dispatch(setFilter({type : "SET_PAGE",filter : 1}))}} item>
        <Link to={`/products`}>
           <ItemCategory  value="All" image="https://vibcare.co.in/wp-content/uploads/2018/12/ALL-PRODUCT-01.png" />
           </Link>
