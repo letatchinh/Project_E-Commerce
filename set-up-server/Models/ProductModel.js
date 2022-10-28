@@ -21,7 +21,9 @@ const productSchema = mongoose.Schema(
       type: Number,
       require: true,
       default: function () {
-        return this.price - (this.price * this.discount) / 100;
+        return parseFloat(
+          (this.price - (this.price * this.discount) / 100).toFixed(2)
+        );
       },
     },
     pricePure: {

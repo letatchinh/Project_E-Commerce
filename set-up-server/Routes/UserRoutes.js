@@ -24,6 +24,7 @@ userRouter.post(
         isAdmin: user.isAdmin,
         listVoucher: user.listVoucher || [],
         address: user.address,
+        phone : user.phone,
         avatar: user.avatar,
         token: generateToken(user._id),
         createdAt: user.createdAt,
@@ -39,7 +40,7 @@ userRouter.post(
 userRouter.post(
   "/",
   asyncHandler(async (req, res) => {
-    const { name, email, password, address, avatar, listVoucher } = req.body;
+    const { name, email, password, address, avatar, listVoucher,phone } = req.body;
 
     const userExists = await User.findOne({ email });
 
@@ -54,6 +55,7 @@ userRouter.post(
       password,
       address,
       avatar,
+      phone,
       listVoucher,
     });
 
@@ -62,6 +64,7 @@ userRouter.post(
         _id: user.id,
         name: user.name,
         email: user.email,
+        phone : user.phone,
         address: user.address,
         avatar: user.avatar,
         listVoucher: user.listVoucher || [],
@@ -79,7 +82,7 @@ userRouter.post(
 userRouter.post(
   "/check",
   asyncHandler(async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password ,phone} = req.body;
     const user = await User.findOne({ email });
     if (user) {
       if (!user.active) {
@@ -93,6 +96,7 @@ userRouter.post(
           address: user.address || "",
           avatar: user.avatar || "",
           isAdmin: user.isAdmin,
+          phone : user.phone,
           listVoucher: user.listVoucher || [],
           token: generateToken(user._id),
           createdAt: user.createdAt,
@@ -105,6 +109,7 @@ userRouter.post(
         password,
         address: "",
         avatar: "",
+        phone ,
         listVoucher: [],
       });
       res.status(201).json({
@@ -113,6 +118,7 @@ userRouter.post(
         email: newUser.email,
         address: newUser.address || "",
         avatar: newUser.avatar,
+        phone : newUser.phone,
         listVoucher: newUser.listVoucher || [],
         isAdmin: false,
         token: generateToken(newUser._id),
@@ -131,6 +137,7 @@ userRouter.put(
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
       user.address = req.body.address || user.address;
+      user.phone = req.body.phone || user.phone;
       user.listVoucher =
         [...user.listVoucher, req.body.newVoucher] || user.listVoucher;
       if (req.body.password) {
@@ -144,6 +151,7 @@ userRouter.put(
         address: updateUser.address,
         avatar: updateUser.avatar,
         isAdmin: updateUser.isAdmin,
+        phone: updateUser.phone,
         listVoucher: updateUser.listVoucher,
         createdAt: updateUser.createdAt,
         token: generateToken(updateUser._id),
@@ -202,6 +210,7 @@ userRouter.put(
         email: updateUser.email,
         isAdmin: updateUser.isAdmin,
         address: updateUser.address,
+        phone: updateUser.phone,
         listVoucher: updateUser.listVoucher,
         avatar: updateUser.avatar,
         createdAt: updateUser.createdAt,
@@ -232,6 +241,7 @@ userRouter.put(
       user.email = req.body.email || user.email;
       user.address = req.body.address || user.address;
       user.avatar = req.body.avatar || user.avatar;
+      user.phone = req.body.phone || user.phone;
       if (req.body.password) {
         user.password = req.body.password;
       }
@@ -242,6 +252,7 @@ userRouter.put(
         email: updateUser.email,
         address: updateUser.address,
         avatar: updateUser.avatar,
+        phone: updateUser.phone,
         listVoucher: updateUser.listVoucher,
         isAdmin: updateUser.isAdmin,
         createdAt: updateUser.createdAt,
@@ -407,4 +418,5 @@ userRouter.get(
     }
   })
 );
+
 export default userRouter;

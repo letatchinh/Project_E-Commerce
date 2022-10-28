@@ -11,7 +11,7 @@ import AxiosUser from "../../apis/client/AxiosUser";
 import ToastSuccess from "./ToastSuccess";
 import ToastError from "./ToastError";
 export default function DetailListOrderUser({ click, data, reFetch }) {
-  const { _id, isDelivered, orderItem, shippingPrice, totalPrice, voucher } =
+  const { _id, isDelivered, orderItem, shippingPrice, totalPrice, voucher,shippingAddress } =
     data;
   const handleCancelBill = async () => {
     AxiosUser.delete(`/api/orders/deleteById/${_id}`)
@@ -26,7 +26,7 @@ export default function DetailListOrderUser({ click, data, reFetch }) {
     <Stack>
       <Stack
         justifyContent="space-between"
-        direction={{ sm: "row", xs: "column" }}
+        direction={{md : "row", sm: "column", xs: "column" }}
         padding="10px"
         borderBottom="1px solid #CACACA"
         alignItems={{ sm: "center", xs: "flex-start" }}
@@ -36,6 +36,7 @@ export default function DetailListOrderUser({ click, data, reFetch }) {
           Back
         </Button>
         <TextItemListOrder title="Bill Id" value={_id} />
+       
         <TextItemListOrder
           title="Status"
           value={isDelivered ? "Shipping" : "Wait Admin Check"}
@@ -49,7 +50,7 @@ export default function DetailListOrderUser({ click, data, reFetch }) {
             ))}
         </Stack>
       </ContainerScoll>
-      <Stack direction="row" alignItems="center">
+      <Stack direction="row" alignItems="center" justifyContent='space-between'>
         {!isDelivered && (
           <Dialo
             messenger="Are you want Cancel Bill ?"
@@ -58,8 +59,8 @@ export default function DetailListOrderUser({ click, data, reFetch }) {
             <Button variant="outlined">Cancel Bill</Button>
           </Dialo>
         )}
-
-        <Stack marginLeft="auto" width="200px">
+ <TextItemListOrder title="Address Ship" value={shippingAddress.address} />
+        <Stack  width="200px">
           <Stack>
             <TotalBill title="Tax Ship" value={shippingPrice} />
             <TotalBill title="Voucher" value={voucher} />

@@ -27,6 +27,9 @@ export default function ListCart() {
     const user = JSON.parse(localStorage.getItem(KEY_USER)) || ""
     const [isCheck,setIsCheck] = useState(false)
     const [checkedAll, setCheckedAll] = useState(false);
+    const totalBill = useSelector(state => state.cart.totalBill)
+    const taxShip = useSelector(state => state.cart.taxShip)
+    const voucher = useSelector(state => state.cart.voucher)
     const dispatch = useDispatch()
     useEffect(() => {
       dispatch(fetchTotalBill())
@@ -36,11 +39,11 @@ export default function ListCart() {
       dispatch(fetchTaxShip(parseFloat((distance * 0.8).toFixed(1))))
     },[distance,dispatch])
     useEffect(() => {
-      dispatch(fetchVoucher({discount : 0,_id : null}))
-    },[])
-    const totalBill = useSelector(state => state.cart.totalBill)
-    const taxShip = useSelector(state => state.cart.taxShip)
-    const voucher = useSelector(state => state.cart.voucher)
+      if(totalBill + taxShip < voucher){
+        dispatch(fetchVoucher({discount : 0,_id : null}))
+      }
+    },[totalBill,taxShip])
+
     const SubAddress = useSelector(state => state.cart.SubAddress)
     const steps = [
       "Add to Cart",
@@ -48,6 +51,7 @@ export default function ListCart() {
       "Wait admin Check Order",
     ];
     useEffect(() => {
+      
      if(SubAddress || user.address){
       setLoadingDistance(true)
       axios
@@ -72,12 +76,11 @@ export default function ListCart() {
         )
         .catch((err) => {});
      }
-    }, [user,SubAddress]);
+    }, [user.address,SubAddress]);
      const handleChange = (event) => {
       setCheckedAll(event.target.checked);
       dispatch(checkedAllProductRequest(event.target.checked))
     };
-    console.log(loadingDistance);
   return (
     <div style={{background : background2 , padding : '2rem 0' }}>
     <Container  >
@@ -97,11 +100,12 @@ export default function ListCart() {
         <Stack textAlign={{md : 'left', sm : 'center'}} spacing={3} sx={{background : backgroundWhite, padding:'10px',borderRadius:'20px'}}>
         <Stack  spacing={1} borderBottom='1px solid #999' padding='10px 0'>
           <Typography  textAlign={{md : 'left', sm : 'center'}} color='#9e9e9e' fontSize='14px'>Address</Typography>
-          {user.address === "" && !SubAddress ?  <FormChangeAddress /> :  <Stack direction='row' sx={{color : '#9e9e9e'}} alignItems='center' spacing={1} >
+            <Stack direction='row' sx={{color : '#9e9e9e'}} alignItems='center' spacing={1} >
           <PlaceIcon/>
-          <MyTypography  fontSize='13px' fontWeight='medium'>{user.address || SubAddress || ""}</MyTypography>
+          <MyTypography  fontSize='13px' fontWeight='medium'>{SubAddress|| user.address  || ""}</MyTypography>
           
-           </Stack>}
+           </Stack>
+         { (user.address === "" || !SubAddress) &&  <FormChangeAddress /> }
         </Stack>
         <Stack spacing={1} >
           <MyTypography fontSize='1.2rem'>Infomation Order</MyTypography>

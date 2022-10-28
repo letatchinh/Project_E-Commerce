@@ -70,7 +70,7 @@ const Sidebar = (props) => {
                   to="/admin/productcomments"
                 >
                   <i className="icon fa-solid fa-comment"></i>
-                  <span className="text">List Comments</span>
+                  <span className="text">Comments</span>
                 </NavLink>
               </li>
               <li className="menu-item">

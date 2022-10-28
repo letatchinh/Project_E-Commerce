@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Header from "../../layout/client/Header/Index";
@@ -12,10 +12,10 @@ import { reSetFilter } from "../../redux/filterProduct/Actions";
 export default function HomePageUser() {
   const dispatch = useDispatch()
   const location = useLocation().pathname
-  const pathActiveSearch = ['/search','/product/shirt','/product/coat','/product/trousers','/product/dress','/product/bikini','/product/shorts']
+  const pathActiveSearch = useMemo(() => ['/search','/product/shirt','/product/coat','/product/trousers','/product/dress','/product/bikini','/product/shorts','/products'],[])
  useEffect(() => {
   !pathActiveSearch.includes(location) && dispatch(reSetFilter())
- },[location])
+ },[location,pathActiveSearch,dispatch])
   return (
     
     <div style={{ minWidth: "320px", position: "relative" }}>

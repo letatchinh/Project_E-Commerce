@@ -16,15 +16,12 @@ import {
     QUAN,
   } from "../../constant/Key"
   import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { KEY_USER } from '../../constant/LocalStored';
-import AxiosUser from '../../apis/client/AxiosUser';
 import { useDispatch } from 'react-redux';
-import { fecthLogginSuccess } from '../../redux/login/Actions';
-import ToastSuccess from './ToastSuccess';
 import { fetchSubAddress } from '../../redux/client/cart/Actions';
+import { KEY_USER } from '../../constant/LocalStored';
 export default function FormChangeAddress() {
-    const [loading,setLoading] = useState(false)
-    const user = JSON.parse(localStorage.getItem(KEY_USER))
+  const user = JSON.parse(localStorage.getItem(KEY_USER)) || ""
+
     const schema = yup.object().shape({
      
         quan: yup.string().required("Required"),
@@ -46,11 +43,6 @@ export default function FormChangeAddress() {
     const dispatch = useDispatch()
     const onSubmit = async(data) => {
         const newAddress = `${data.numberHouse},${data.phuong},${data.quan},Đà Nẵng`
-    //     await AxiosUser.put(`/api/users/profileUser/${user._id}`,{...user,address : newAddress}).then(res => {
-    //         localStorage.setItem(KEY_USER,JSON.stringify(res.data))
-    //         dispatch(fecthLogginSuccess(res.data))
-    //         ToastSuccess("Update Success")
-    // })
     await dispatch(fetchSubAddress(newAddress))
 }
     const [open, setOpen] = useState(false);
@@ -66,7 +58,7 @@ export default function FormChangeAddress() {
   return (
     <div style={{margin : '0 auto'}}>
     <Button  onClick={handleClickOpen}>
-      <AddCircleOutlineIcon/>
+      {user.address !== "" ? "Change" :<AddCircleOutlineIcon/>}
     </Button>
     <Dialog fullWidth
       open={open}

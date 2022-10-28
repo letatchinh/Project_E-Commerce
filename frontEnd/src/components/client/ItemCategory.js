@@ -1,10 +1,13 @@
 import { Button, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { setFilter } from '../../redux/filterProduct/Actions'
 
 export default function ItemCategory({value,image}) {
+  const dispatch = useDispatch()
   return (
-        <Button  sx={{textTransform : 'capitalize' , width : '100px', height :' 100px' , margin : '5px 0'}} variant="outlined" >
+        <Button onClick={() => dispatch(setFilter({type : "SET_PAGE",filter : 1}))}  sx={{textTransform : 'capitalize' , width : '100px', height :' 100px' , margin : '5px 0'}} variant="outlined" >
        <Stack width='70%' alignItems='center'>
        <img src={image} alt='2'/>
           <Typography textTransform='capitalize'>{value}</Typography>

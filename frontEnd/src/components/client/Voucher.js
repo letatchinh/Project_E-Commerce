@@ -30,7 +30,7 @@ export default function Voucher({item,active,handleSetActive,handleUnSetActive})
     }
   return (
     <Stack direction='row'>
-    <Button  onClick={handleSetVoucher} sx={{borderRightStyle : 'dashed',borderLeftWidth : '5px' , flex : 1,textTransform : 'capitalize',backgroundColor : active ? "#1976d238" : 'white'}} variant='outlined'>{name}</Button>
+    <Button  onClick={handleSetVoucher} sx={{borderRightStyle : 'dashed',borderLeftWidth : '5px' , flex : 1,textTransform : 'capitalize',backgroundColor : active ? "#1976d238" : 'white'}} variant='outlined'>{`discount -${discount}$`}</Button>
     <Button onClick={handleCancelVoucher} sx={{borderLeftStyle : 'dashed',textTransform : 'capitalize',backgroundColor : active ? "#1976d238" : 'white'}} variant='outlined'>cancel</Button>
     </Stack>
   )
