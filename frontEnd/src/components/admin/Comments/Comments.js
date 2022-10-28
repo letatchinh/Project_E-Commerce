@@ -116,6 +116,7 @@ const CommentsTables = () => {
                   <th>Rating</th>
                   <th>Comment</th>
                   <th>Create At</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -157,20 +158,21 @@ const CommentsTables = () => {
                       </td>
                       <td>{e.comment}</td>
                       <td> {moment(e.createdAt).format("llll")}</td>
+                      <td> {e.active ? "active" : "disabled"}</td>
                       <td>
                         {e.active ? (
                           <Link
                             to={`/admin/productcomments/${e._id}/disabled`}
                             onClick={() => handelDisabled(e._id)}
                           >
-                            <span className="btn btn-success">Active</span>
+                            <span className="btn  btn-secondary">disabled</span>
                           </Link>
                         ) : (
                           <Link
                             to={`/admin/productcomments/${e._id}/active`}
                             onClick={() => handelActive(e._id)}
                           >
-                            <span className="btn btn-secondary">disabled</span>
+                            <span className="btn btn-success">Active</span>
                           </Link>
                         )}
                       </td>

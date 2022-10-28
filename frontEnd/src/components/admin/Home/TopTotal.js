@@ -32,7 +32,7 @@ const TopTotal = (props) => {
   return (
     <div className="row">
       <div className="col-lg-3">
-        <div className="card card-body mb-4 shadow-sm">
+        <div className="card card-body mb-4 shadow-sm box-sp">
           <article className="icontext">
             <span className="icon icon-sm rounded-circle alert-primary">
               <i className="text-primary fas fa-usd"></i>
@@ -45,7 +45,7 @@ const TopTotal = (props) => {
         </div>
       </div>
       <div className="col-lg-3">
-        <div className="card card-body mb-4 shadow-sm">
+        <div className="card card-body mb-4 shadow-sm box-sp">
           <article className="icontext">
             <span className="icon icon-sm rounded-circle alert-danger text-danger">
               <CurrencyExchangeIcon />
@@ -61,7 +61,7 @@ const TopTotal = (props) => {
       </div>
 
       <div className="col-lg-3">
-        <div className="card card-body mb-4 shadow-sm">
+        <div className="card card-body mb-4 shadow-sm box-sp">
           <article className="icontext">
             <span className="icon icon-sm rounded-circle alert-success">
               <i className="text-success fa fa-shopping-bag"></i>
@@ -75,7 +75,7 @@ const TopTotal = (props) => {
       </div>
 
       <div className="col-lg-3">
-        <div className="card card-body mb-4 shadow-sm">
+        <div className="card card-body mb-4 shadow-sm box-sp">
           <article className="icontext">
             <span className="icon icon-sm rounded-circle alert-warning">
               <i className="text-warning fas fa-shopping-basket"></i>
