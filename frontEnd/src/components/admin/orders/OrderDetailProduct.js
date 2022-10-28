@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 const OrderDetailProduct = (props) => {
   const { order, loading } = props;
-  console.log(order);
+
   if (!loading) {
     //Caculate Price
     const addDecimals = (num) => {
@@ -12,6 +12,7 @@ const OrderDetailProduct = (props) => {
       order.orderItem.reduce((acc, item) => acc + item.price * item.qty, 0)
     );
   }
+  console.log(order);
   return (
     <table className="table border table-lg">
       <thead>
@@ -42,9 +43,9 @@ const OrderDetailProduct = (props) => {
               </Link>
             </td>
             <td>${item.pricePure}</td>
-            <td>${item.price}</td>
+            <td>${item.price.toFixed(2)}</td>
             <td>{item.qty}</td>
-            <td className="text-end">${item.qty * item.price}</td>
+            <td className="text-end">${item.qty * item.price.toFixed(2)}</td>
           </tr>
         ))}
         <tr>
