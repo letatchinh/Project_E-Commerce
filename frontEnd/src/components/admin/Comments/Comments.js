@@ -179,7 +179,7 @@ const CommentsTables = () => {
                     </tr>
                   ))
                 ) : (
-                  <div>No comment</div>
+                  <div className="p-2">No comment</div>
                 )}
               </tbody>
             </table>
