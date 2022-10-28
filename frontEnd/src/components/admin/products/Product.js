@@ -38,7 +38,7 @@ const Product = (props) => {
             {product.discount !== 0 && (
               <div className="price mb-2 price-box">
                 {product.price < 1000
-                  ? "$" + product.price * ((100 - product.discount) / 100)
+                  ? "$" + product.newPrice
                   : (
                       product.price *
                       ((100 - product.discount) / 100)
