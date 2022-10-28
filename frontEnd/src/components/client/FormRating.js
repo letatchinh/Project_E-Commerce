@@ -30,7 +30,7 @@ export default function FormRating({_id,handleSetItem,handleSetCount}) {
         resolver: yupResolver(schema),
       });
       const [value, setValue] = useState(null);
-      const onSubmit = (data) => {
+      const onSubmit = async(data) => {
         const newComment = {
           name: user.name,
           comment: data.comment,
@@ -38,7 +38,8 @@ export default function FormRating({_id,handleSetItem,handleSetCount}) {
           user: user._id,
           product: _id,
         };
-        dispatch(fetchAddCommentRequest({newComment,_id,handleSetItem,setCount : handleSetCount,reset}))
+       await dispatch(fetchAddCommentRequest({newComment,_id,handleSetItem,setCount : handleSetCount,reset}))
+       setValue(null)
       };
       const { data, isLoading } = useQuery([user._id, _id], fetchIsCheckPayment, {
         enabled: _id !== undefined,

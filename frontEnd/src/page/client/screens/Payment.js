@@ -86,7 +86,7 @@ export default function Payment() {
       name : e.name,
       qty : e.quanlity,
       images : e.images,
-      price : (e.discount > 0) ? (e.price - (e.price * e.discount) / 100) : e.price,
+      price : (e.discount > 0) ? e.newPrice : e.price,
       product : e._id
     }))
     const newOrder = {
