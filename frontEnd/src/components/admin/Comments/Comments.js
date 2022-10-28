@@ -106,80 +106,82 @@ const CommentsTables = () => {
         ) : error ? (
           <Message variant="alert-danger">{error}</Message>
         ) : (
-          <table className="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Product</th>
-                <th>Rating</th>
-                <th>Comment</th>
-                <th>Create At</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            {/* Table Data */}
-            <tbody>
-              {/* Products */}
-              {reviews.reviews && count > 0 ? (
-                reviews.reviews.map((e) => (
-                  <tr
-                    key={id}
-                    style={{
-                      background: e.active ? "" : "rgba(108, 117, 125, 0.25)",
-                    }}
-                  >
-                    <td>{id++}</td>
-                    <td>
-                      <b>{e.name}</b>
-                    </td>
-                    <td>
-                      {e.product && (
-                        <div class="itemside">
-                          <div class="left">
-                            <img
-                              src={
-                                `/images/${e.product.images[0]}` ||
-                                `/images/img01.png}`
-                              }
-                              alt={e.product.name}
-                              className="img-xs"
-                              style={{ width: "40px", height: "40px" }}
-                            />
+          <div className="table-responsive">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Product</th>
+                  <th>Rating</th>
+                  <th>Comment</th>
+                  <th>Create At</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              {/* Table Data */}
+              <tbody>
+                {/* Products */}
+                {reviews.reviews && count > 0 ? (
+                  reviews.reviews.map((e) => (
+                    <tr
+                      key={id}
+                      style={{
+                        background: e.active ? "" : "rgba(108, 117, 125, 0.25)",
+                      }}
+                    >
+                      <td>{id++}</td>
+                      <td>
+                        <b>{e.name}</b>
+                      </td>
+                      <td>
+                        {e.product && (
+                          <div class="itemside">
+                            <div class="left">
+                              <img
+                                src={
+                                  `/images/${e.product.images[0]}` ||
+                                  `/images/img01.png}`
+                                }
+                                alt={e.product.name}
+                                className="img-xs"
+                                style={{ width: "40px", height: "40px" }}
+                              />
+                            </div>
+                            <div class="info">{e.product.name}</div>
                           </div>
-                          <div class="info">{e.product.name}</div>
-                        </div>
-                      )}
-                    </td>
-                    <td>
-                      <StyledRating value={e.rating} readOnly />
-                    </td>
-                    <td>{e.comment}</td>
-                    <td> {moment(e.createdAt).format("llll")}</td>
-                    <td>
-                      {e.active ? (
-                        <Link
-                          to={`/admin/productcomments/${e._id}/disabled`}
-                          onClick={() => handelDisabled(e._id)}
-                        >
-                          <span className="btn btn-success">Active</span>
-                        </Link>
-                      ) : (
-                        <Link
-                          to={`/admin/productcomments/${e._id}/active`}
-                          onClick={() => handelActive(e._id)}
-                        >
-                          <span className="btn btn-secondary">disabled</span>
-                        </Link>
-                      )}
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <div>No comment</div>
-              )}
-            </tbody>
-          </table>
+                        )}
+                      </td>
+                      <td>
+                        <StyledRating value={e.rating} readOnly />
+                      </td>
+                      <td>{e.comment}</td>
+                      <td> {moment(e.createdAt).format("llll")}</td>
+                      <td>
+                        {e.active ? (
+                          <Link
+                            to={`/admin/productcomments/${e._id}/disabled`}
+                            onClick={() => handelDisabled(e._id)}
+                          >
+                            <span className="btn btn-success">Active</span>
+                          </Link>
+                        ) : (
+                          <Link
+                            to={`/admin/productcomments/${e._id}/active`}
+                            onClick={() => handelActive(e._id)}
+                          >
+                            <span className="btn btn-secondary">disabled</span>
+                          </Link>
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <div>No comment</div>
+                )}
+              </tbody>
+            </table>
+          </div>
         )}
         {pages > 1 && (
           <nav className="float-end mt-4" aria-label="Page navigation">
