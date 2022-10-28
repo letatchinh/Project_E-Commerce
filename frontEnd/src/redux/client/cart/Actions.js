@@ -14,9 +14,7 @@ import {
   FETCH_CART_NEW,
   CAL_VOUCHER
 } from "./Types";
-const idUser =
-  localStorage.getItem(KEY_USER) &&
-  JSON.parse(localStorage.getItem(KEY_USER))._id;
+
 
 export const fetchCart = (data) => {
   return {

@@ -49,7 +49,6 @@ const handleClick = (event) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchCartRequest())
-    
   }, [localStorage.getItem(KEY_USER)]);
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = async(data) => {

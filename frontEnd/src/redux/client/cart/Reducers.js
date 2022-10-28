@@ -21,7 +21,6 @@ const cartReducers = (state = initvalue, action) => {
     case TYPES.FETCH_CART_NEW:
       return {
         ...state,
-
         allListCart: action.payload,
       };
     case TYPES.ADD_CART:

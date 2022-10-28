@@ -28,7 +28,7 @@ import MyTextField from "../../../components/client/MyTextField";
 import MyTypography from "../../../components/client/MyTypography";
 import MySelection from "../../../components/client/MySelection";
 import {  styled } from '@mui/material/styles';
-import { REGEX_ONLY_NUMBER } from "../../../constant/YupGlobal";
+import { REGEX_ONLY_NUMBER, REGEX_ONLY_NUMBER_v2 } from "../../../constant/YupGlobal";
 
 export default function InfoUser() {
   const statusColor = useSelector(state => state.colorCommon.status)
@@ -63,7 +63,7 @@ export default function InfoUser() {
     phone: yup
       .string()
       .required("Required")
-      .matches(REGEX_ONLY_NUMBER, "Number phone is wrong"),
+      .matches(REGEX_ONLY_NUMBER_v2, "Number phone is wrong"),
   });
   const {
     register,

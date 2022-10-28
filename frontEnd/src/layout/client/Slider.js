@@ -20,7 +20,7 @@ export default function Slider() {
   return (
     
         <Stack  direction='row' spacing={1} padding='5px'>
-        <Carousel sx={{width : {md : '70%' , xs : '100%'}}}>
+        <Carousel interval={1000} sx={{width : {md : '70%' , xs : '100%'}}}>
     {
         items.map( (item, i) => <ItemSlider key={i} image={item.image} /> )
     }
