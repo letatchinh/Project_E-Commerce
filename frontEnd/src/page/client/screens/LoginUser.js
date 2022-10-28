@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -10,7 +10,7 @@ import { Container, Stack } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import "@fontsource/roboto/300.css";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchLoginRequest } from "../../../redux/login/Actions";
+import { fecthLogginSuccess } from "../../../redux/login/Actions";
 import { Link, useNavigate } from "react-router-dom";
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
@@ -25,7 +25,13 @@ import { fetchLoginWithGoogleAndFbRequest } from "../../../redux/sagas/Mysaga";
 import '../../../components/StyleComponent/MyLink.css'
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import ToastError from "../../../components/client/ToastError";
+import AxiosUser from "../../../apis/client/AxiosUser";
+import { KEY_USER } from "../../../constant/LocalStored";
+import ToastSuccess from "../../../components/client/ToastSuccess";
+import LoadingButton from '@mui/lab/LoadingButton';
+
 export default function LoginUser() {
+  const [loading,setLoading] = useState(false)
   const schema = yup.object().shape({
     password: yup.string().required("Required").min(2).max(20),
     email: yup.string().required("Required").email(),
@@ -40,8 +46,20 @@ export default function LoginUser() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const statusLogin = useSelector((state) => state.user.statusLogin);
-  const onSubmit = (data) => {
-    dispatch(fetchLoginRequest(data));
+  const onSubmit = async(data) => {
+    setLoading(true)
+  //  await dispatch(fetchLoginRequest(data));
+    await AxiosUser.post('/api/users/loginUser',data).then(res => {
+    localStorage.setItem(KEY_USER,JSON.stringify(res.data));
+    dispatch(fecthLogginSuccess(res.data))
+    ToastSuccess("Login Success")
+    setLoading(false)
+   }).catch(err => {
+    console.log(err.response.data.message);
+    ToastError(err.response.data.message)
+   })
+               
+   
   };
   useEffect(() => {
     window.scroll(0, 0);
@@ -76,13 +94,19 @@ export default function LoginUser() {
     
   };
   const responseGoogle = async (response) => {
-    const newUser = {
-      email: response.profileObj.email,
-      password: response.profileObj.googleId,
-      name:response.profileObj.givenName + " " + response.profileObj.familyName,
-      phone : 0
-    };
-    dispatch(fetchLoginWithGoogleAndFbRequest(newUser));
+    if(response.error === "popup_closed_by_user"){
+      ToastError("login with GG failed")
+    }
+    else{
+      const newUser = {
+        email: response.profileObj.email,
+        password: response.profileObj.googleId,
+        name:response.profileObj.givenName + " " + response.profileObj.familyName,
+        phone : 0
+      };
+      dispatch(fetchLoginWithGoogleAndFbRequest(newUser));
+    }
+   
   };
   return (
     <div style={{ background: "#F8F9FD", padding: "100px 0" }}>
@@ -147,17 +171,16 @@ export default function LoginUser() {
                 message={errors.password && errors.password.message}
                 {...register("password")}
               />
-              <Button
-                sx={{
+           
+              <LoadingButton loading={loading} sx={{
                   backgroundImage: "linear-gradient(45deg, #E26560, #E36183)",
                   borderRadius: "50px",
                 }}
                 fullWidth
                 type="submit"
-                variant="contained"
-              >
-                Login
-              </Button>
+                variant="contained">
+        Login
+      </LoadingButton>
               <Stack
                 direction="row"
                 justifyContent="space-between"
