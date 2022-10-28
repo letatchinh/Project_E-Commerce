@@ -158,7 +158,15 @@ const CommentsTables = () => {
                       </td>
                       <td>{e.comment}</td>
                       <td> {moment(e.createdAt).format("llll")}</td>
-                      <td> {e.active ? "active" : "disabled"}</td>
+                      <td>
+                        <span
+                          className={
+                            e.active ? "badge btn-primary" : "badge btn-dark"
+                          }
+                        >
+                          {e.active ? "active" : "disabled"}
+                        </span>{" "}
+                      </td>
                       <td>
                         {e.active ? (
                           <Link

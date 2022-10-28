@@ -9,13 +9,15 @@ import { Stack } from "@mui/system";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "../StyleComponent/SideBarFilter.css";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import ButtonFilterRating from "./ButtonFilterRating";
 import MyTypography from "./MyTypography";
 import RangeFilterPrice from "./RangeFilterPrice";
 export default function ItemFilter() {
   const mainColorText = useSelector((state) => state.colorCommon.mainColorText);
-  const mainBackGround2 = useSelector((state) => state.colorCommon.mainBackGround2);
+  const mainBackGround2 = useSelector(
+    (state) => state.colorCommon.mainBackGround2
+  );
   const gteRating = useSelector((state) => state.filterProduct.gteRating);
   return (
     <>
@@ -36,7 +38,7 @@ export default function ItemFilter() {
           Search Filter
         </Typography>
       </Stack>
-      <Accordion sx={{background : mainBackGround2}} defaultExpanded>
+      <Accordion sx={{ background: mainBackGround2 }} defaultExpanded>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -93,10 +95,10 @@ export default function ItemFilter() {
           />
         </AccordionDetails> */}
         <AccordionDetails>
-          <RangeFilterPrice/>
+          <RangeFilterPrice />
         </AccordionDetails>
       </Accordion>
-      <Accordion sx={{background : mainBackGround2}} defaultExpanded>
+      <Accordion sx={{ background: mainBackGround2 }} defaultExpanded>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -107,24 +109,23 @@ export default function ItemFilter() {
           </MyTypography>
         </AccordionSummary>
         <AccordionDetails>
-        <ButtonFilterRating active={gteRating === 0} value={0}/>
+          <ButtonFilterRating active={gteRating === 0} value={0} />
         </AccordionDetails>
         <AccordionDetails>
-        <ButtonFilterRating active={gteRating === 1} value={1}/>
+          <ButtonFilterRating active={gteRating === 1} value={1} />
         </AccordionDetails>
         <AccordionDetails>
-        <ButtonFilterRating active={gteRating === 2} value={2}/>
+          <ButtonFilterRating active={gteRating === 2} value={2} />
         </AccordionDetails>
         <AccordionDetails>
-        <ButtonFilterRating active={gteRating === 3} value={3}/>
+          <ButtonFilterRating active={gteRating === 3} value={3} />
         </AccordionDetails>
         <AccordionDetails>
-        <ButtonFilterRating active={gteRating === 4} value={4}/>
+          <ButtonFilterRating active={gteRating === 4} value={4} />
         </AccordionDetails>
         <AccordionDetails>
-        <ButtonFilterRating active={gteRating === 5} value={5}/>
+          <ButtonFilterRating active={gteRating === 5} value={5} />
         </AccordionDetails>
-       
       </Accordion>
     </>
   );
