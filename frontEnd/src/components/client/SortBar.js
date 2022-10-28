@@ -49,7 +49,6 @@ export default function SortBar() {
   };
   return (
    <Stack className='SortBar' spacing={5} direction='row' padding='10px' alignItems='center' >
-    <Typography sx={{display : {md : 'block' , sm : 'none' , xs : 'none'} }} color={mainColorText}>Sort Follow</Typography>
     <FormControl sx={{width : {md : '200px' , sm : '100px' , xs : '100px'}  , background : 'white'}}>
         <InputLabel id="demo-simple-select-label">Price</InputLabel>
         <Select

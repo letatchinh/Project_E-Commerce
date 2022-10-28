@@ -6,7 +6,6 @@ import {
 } from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useDispatch, useSelector } from "react-redux";
 import PriceSell from "../../../components/client/PriceSell";
 import axios from "axios";
@@ -24,6 +23,7 @@ import ListReview from "../../../components/client/ListReview.js";
 import ErrorNoItem from "../../../components/client/ErrorNoItem";
 import FormRating from "../../../components/client/FormRating";
 import ImagesOfDeTail from "../../../components/client/ImagesOfDeTail";
+import ButtonAddToCartDetail from "../../../components/client/ButtonAddToCartDetail";
 export default function DetailProduct() {
   let params = useParams();
   const navigate = useNavigate();
@@ -71,6 +71,7 @@ export default function DetailProduct() {
   const handleSetCount = () => {
     setCount(count + 1)
   }
+  
   return (
     <>
       {/* <Button onClick={() => navigate(`/products/${nextItem}`)} variant="outlined">Next</Button> */}
@@ -203,10 +204,10 @@ export default function DetailProduct() {
                         onClick={async (e) => {
                           if (localStorage.getItem(KEY_USER)) {
                             await dispatch(
-                              fetchAddToCartRequestSaga({
+                              fetchAddToCartRequestSaga({itemCart : {
                                 product: _id,
                                 user: user._id,
-                              })
+                              }})
                             );
                             navigate("/cart");
                           } else {
@@ -216,36 +217,9 @@ export default function DetailProduct() {
                         sx={{ width: "45%", textTransform: "capitalize" }}
                         variant="contained"
                       >
-                        <Typography fontSize="1.2rem">Buy</Typography>
-                      </Button>
-                      {/* </Tooltip> */}
-                      <Button
-                        onClick={() => {
-                          if (localStorage.getItem(KEY_USER)) {
-                            dispatch(
-                              fetchAddToCartRequestSaga({
-                                product: _id,
-                                user: user._id,
-                              })
-                            );
-                          } else {
-                            navigate("/login");
-                          }
-                        }}
-                        sx={{
-                          display: "block",
-                          width: "45%",
-                          textTransform: "capitalize",
-                          background: "rgba(255,87,34,0.1)",
-                          borderColor: "#ee4d2d",
-                          color: "#ee4d2d",
-                        }}
-                        color="warning"
-                        variant="outlined"
-                      >
-                        <ShoppingCartIcon />
-                        <MyTypography>Add To Cart</MyTypography>
-                      </Button>
+                        <Typography fontSize="1.2rem">Buy now</Typography>
+                      </Button>            
+                      <ButtonAddToCartDetail _id={_id}/>
                     </Stack>
                    {localStorage.getItem(KEY_USER) &&  <FormRating _id={_id} handleSetCount={handleSetCount} handleSetItem={handleSetItem}/>}
                   </Stack>

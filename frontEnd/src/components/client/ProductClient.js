@@ -14,6 +14,7 @@ import { KEY_USER } from "../../constant/LocalStored";
 import { fetchAddToCartRequestSaga } from "../../redux/sagas/Mysaga";
 import TypographyThreeDot from "./TypographyThreeDot";
 import PriceSell from './PriceSell'
+import LoadingButton from "@mui/lab/LoadingButton";
 export default function ProductClient({ item }) {
   const [loading,setLoading] = useState(false)
   const dispatch = useDispatch();
@@ -32,6 +33,21 @@ export default function ProductClient({ item }) {
   const mainColorText = useSelector((state) => state.colorCommon.mainColorText);
   const idUser = localStorage.getItem(KEY_USER) && JSON.parse(localStorage.getItem(KEY_USER))._id;
   const [active, setActive] = useState(0);
+  const handleAddToCart = (e) => {
+    e.preventDefault()
+    if(localStorage.getItem(KEY_USER)){
+      setLoading(true)
+      dispatch(
+    fetchAddToCartRequestSaga({itemCart : {
+      product: _id,
+      user: idUser,
+      },setLoading : () => setLoading(false)})
+)
+    }
+    else{
+      navigate("/login")
+    }
+  }
   // const myRef = useRef()
   // useEffect(() => {
   //   if (!myRef?.current) return;
@@ -109,25 +125,12 @@ export default function ProductClient({ item }) {
         <div style={{padding : '5px 0' , height : '50px'}}><TypographyThreeDot className='cardContentHover'>{name}</TypographyThreeDot></div>
         <Stack direction='row' justifyContent='space-between'>
         <PriceSell fontSize="18px" price={price} discount={item.discount}/>
-        <Button
-          onClick={(e) => {
-            e.preventDefault()
-            if(localStorage.getItem(KEY_USER)){
-              dispatch(
-            fetchAddToCartRequestSaga({
-        product: _id,
-        user: idUser,
-      })
-    )
-            }
-            else{
-              navigate("/login")
-            }
-          }}
-          variant="outlined"
-        >
-          <AddShoppingCartIcon className="hoverIconAddCart" />
-        </Button>
+  
+
+        <LoadingButton onClick={handleAddToCart} loading={loading} variant="outlined">
+        <AddShoppingCartIcon className="hoverIconAddCart" />
+</LoadingButton>
+
         </Stack>
 
       </Link>

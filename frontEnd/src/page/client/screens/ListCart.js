@@ -101,11 +101,11 @@ export default function ListCart() {
         <Stack  spacing={1} borderBottom='1px solid #999' padding='10px 0'>
           <Typography  textAlign={{md : 'left', sm : 'center'}} color='#9e9e9e' fontSize='14px'>Address</Typography>
             <Stack direction='row' sx={{color : '#9e9e9e'}} alignItems='center' spacing={1} >
-          <PlaceIcon/>
-          <MyTypography  fontSize='13px' fontWeight='medium'>{SubAddress|| user.address  || ""}</MyTypography>
-          
+         {(SubAddress || user.address) &&  <PlaceIcon/>}
+          <MyTypography  fontSize='13px' fontWeight='medium'>{SubAddress|| user.address  || ""} </MyTypography>
+         
            </Stack>
-           <FormChangeAddress /> 
+           <FormChangeAddress />
         </Stack>
         <Stack spacing={1} >
           <MyTypography fontSize='1.2rem'>Infomation Order</MyTypography>

@@ -125,15 +125,26 @@ export function* fetchCancelOrder(action) {
 export function* fetchAddToCart(action) {
   try {
     const response = yield call(() =>
-      AxiosUser.post("/api/carts/add", action.payload)
+      AxiosUser.post("/api/carts/add", action.payload.itemCart)
     );
     const { status, data } = response;
     if (status === STATUS_CODE.CREATED) {
       yield put({ type: "FETCH_CART_SUCCESS", payload: data });
       yield ToastSuccess("Added to Your Cart!");
+      if(action.payload.setLoading){
+        action.payload.setLoading()
+      }
+    }
+    else{
+      if(action.payload.setLoading){
+        action.payload.setLoading()
+      }
     }
   } catch (error) {
     ToastError(error.response.data.message);
+    if(action.payload.setLoading){
+      action.payload.setLoading()
+    }
   }
 }
 export function* fetchCartSuccess() {

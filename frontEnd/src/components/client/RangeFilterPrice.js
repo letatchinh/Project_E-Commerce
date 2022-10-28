@@ -10,7 +10,11 @@ export default function RangeFilterPrice() {
     const [value, setValue] = useState([0, 100]);
     useEffect(() => {
         if(min && max){
+
             setValue([Math.trunc(min/4),Math.trunc(max/4)])
+        }
+        else if(!min && !max){
+          setValue([0,100])
         }
     },[min,max])
     const dispatch = useDispatch()

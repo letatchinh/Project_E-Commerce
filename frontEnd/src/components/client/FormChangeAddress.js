@@ -59,7 +59,7 @@ export default function FormChangeAddress() {
   return (
     <div style={{margin : '0 auto'}}>
     <Button variant='outlined'  onClick={handleClickOpen}>
-      {user.address !== "" ? "Change Address Here" :<AddCircleOutlineIcon/>}
+       Change Address Here
     </Button>
     <Dialog fullWidth
       open={open}

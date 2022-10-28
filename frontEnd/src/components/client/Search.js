@@ -12,6 +12,7 @@ import ErrorNoItem from "./ErrorNoItem";
 import ListProduct from "./ListProduct";
 import { fetchFilter, setCategorySearch, setFilter } from "../../redux/filterProduct/Actions";
 import Category from "../../layout/client/Category";
+import ButtonRemoveAllFilter from "./ButtonRemoveAllFilter";
 export default function Search({typeCategory}) {
   const dispatch = useDispatch()
   const keyword = useSelector((state) => state.filterProduct.keyword);
@@ -128,13 +129,15 @@ useEffect(() => {
       position="relative"
     >
   
-      <Stack direction="row" width="100%">
+      <Stack direction="row" width="100%" position='relative'>
         <Stack
           position={{ md: "relative", sm: "absolute", xs: "absolute" }}
           top={0}
         >
           <SideBarFilter  />
+         
         </Stack>
+        <ButtonRemoveAllFilter/>
         <Stack width="100%">
           <Stack direction="row" justifyContent="center" alignItems="center">
             <SortBar />
