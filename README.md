@@ -9,7 +9,7 @@ Has two folder includes Project_E-commerce
 
 ## Deployment
 
-To deploy this project must into cd Project_E-Commerce
+To deploy this project must into cd frontEnd
 
 ```bash
   npm start

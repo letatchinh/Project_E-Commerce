@@ -26,9 +26,9 @@ const Orders = (props) => {
               style={{ background: order.watched ? "" : "#d4d5d7" }}
             >
               <td>
-                <b>{order.user.name}</b>
+                <b>{order.user && order.user.name}</b>
               </td>
-              <td>{order.user.email}</td>
+              <td>{order.user && order.user.email}</td>
               <td>${order.totalPrice}</td>
               <td>
                 {order.isPaid ? (
