@@ -46,7 +46,6 @@ export default function Register() {
     axios
       .post(`/api/users/`, newUser)
       .then((res) => {
-        console.log(res.data);
         ToastSuccess("Resgister Success!");
         dispatch(
           fetchLoginRequest({ email: res.data.email, password: data.password })
