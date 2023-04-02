@@ -1,35 +1,39 @@
 import mongoose from "mongoose";
+import AutoIncrement from 'mongoose-sequence';
 
 const orderSchema = mongoose.Schema(
   {
+    billNumber: {
+      type: Number,
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      require: true,
+      required: true,
       ref: "User",
     },
     orderItem: [
       {
-        name: { type: String, require: true },
-        qty: { type: Number, require: true },
+        name: { type: String, required: true },
+        qty: { type: Number, required: true },
         images: [String],
-        price: { type: Number, require: true },
-        pricePure: { type: Number, require: true },
+        price: { type: Number, required: true },
+        pricePure: { type: Number, required: true },
         product: {
           type: mongoose.Schema.Types.ObjectId,
-          require: true,
+          required: true,
           ref: "Product",
         },
       },
     ],
     shippingAddress: {
-      address: { type: String, require: true },
-      city: { type: String, require: true },
-      postalCode: { type: String, require: true },
-      country: { type: String, require: true },
+      address: { type: String, required: true },
+      city: { type: String, required: true },
+      postalCode: { type: String, required: true },
+      country: { type: String, required: true },
     },
     paymentMethod: {
       type: String,
-      require: true,
+      required: true,
       default: "Paypal",
     },
     paymentResult: {
@@ -40,7 +44,7 @@ const orderSchema = mongoose.Schema(
     },
     taxPrice: {
       type: Number,
-      require: true,
+      required: true,
       default: 0.0,
     },
     voucher: {
@@ -48,24 +52,25 @@ const orderSchema = mongoose.Schema(
     },
     shippingPrice: {
       type: Number,
-      require: true,
+      required: true,
       default: 0.0,
     },
     totalPrice: {
       type: Number,
-      require: true,
+      required: true,
       default: 0.0,
     },
     isPaid: {
       type: Boolean,
-      require: true,
+      required: true,
+      default: false,
     },
     paidAt: {
       type: Date,
     },
     isDelivered: {
       type: Boolean,
-      require: true,
+      required: true,
       default: false,
     },
     deliveredAt: {
@@ -73,7 +78,7 @@ const orderSchema = mongoose.Schema(
     },
     watched: {
       type: Boolean,
-      require: true,
+      required: true,
       default: false,
     },
   },
@@ -82,6 +87,13 @@ const orderSchema = mongoose.Schema(
   }
 );
 
-const Order = mongoose.model("Order", orderSchema);
+orderSchema.plugin(AutoIncrement(mongoose), {
+  inc_field: 'billNumber',
+  start_seq: 10001,
+});
+
+const Order = mongoose.model("Order", orderSchema, "Order");
+
+Order.syncIndexes();
 
 export default Order;

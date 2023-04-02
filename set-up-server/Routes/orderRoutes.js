@@ -10,7 +10,7 @@ const orderRouter = express.Router();
 
 //CREATE ORDER
 orderRouter.post(
-  "/",
+  "/create",
   protect,
   asyncHandler(async (req, res) => {
     const {
@@ -24,11 +24,13 @@ orderRouter.post(
       shippingPrice,
       totalPrice,
     } = req.body;
-
+    console.log(req.body,'req.body');
     if (orderItem && orderItem.length === 0) {
       res.status(400);
+      console.log('OK1');
       throw new Error("No order items");
     } else {
+      console.log('OK2');
       const order = new Order({
         user: req.user._id,
         orderItem,
@@ -43,6 +45,7 @@ orderRouter.post(
       });
 
       const createOrder = await order.save();
+      console.log('OK3');
       res.status(201).json(createOrder);
     }
   })
@@ -247,6 +250,7 @@ orderRouter.get(
       e.user.name.includes(req.query.name)
     );
     res.json({
+      orders,
       ordersFilter,
       pageFiter,
       pagesFiter: Math.ceil(count / pageSize),
@@ -305,6 +309,41 @@ orderRouter.put(
       res.status(404);
       throw new Error("Order Not Found");
     }
+  })
+);
+
+//Admin statistical
+orderRouter.get(
+  "/all/statics",
+  asyncHandler(async (req, res) => {
+    const startDate = req.query.startDate;
+    const endDate = req.query.endDate;
+    const orders = await Order.aggregate([
+      {
+        $match:{
+          deliveredAt:{$exists:true},
+          deliveredAt:{$gte:new Date(startDate),$lte:new Date(endDate)}
+        }
+      },
+      {
+        $group:{
+          _id:'$user',
+          user:{$first:'$user'},
+          // shippingAddress:{$first:'$shippingAddress'},
+          paymentMethod:{$first:'$paymentMethod'},
+          taxPrice:{$first:'$taxPrice'},
+          totalAmount:{$sum:'$totalPrice'},
+          voucher:{$first:'$voucher'},
+          isPaid:{$first:'$isPaid'},
+          isDelivered:{$first:'$isDelivered'},
+          watched:{$first:'$watched'},
+          createdAt:{$first:'$createdAt'},
+          deliveredAt:{$first:'$deliveredAt'},
+        }
+      }
+  ])
+    res.status(200).send(orders);
+   
   })
 );
 
