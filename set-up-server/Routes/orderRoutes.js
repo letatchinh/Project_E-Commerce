@@ -23,8 +23,8 @@ orderRouter.post(
       isPaid,
       shippingPrice,
       totalPrice,
+      priceBill
     } = req.body;
-    console.log(req.body,'req.body');
     if (orderItem && orderItem.length === 0) {
       res.status(400);
       console.log('OK1');
@@ -42,10 +42,10 @@ orderRouter.post(
         voucher,
         shippingPrice,
         totalPrice,
+        priceBill
       });
 
       const createOrder = await order.save();
-      console.log('OK3');
       res.status(201).json(createOrder);
     }
   })
@@ -235,8 +235,8 @@ orderRouter.get(
 //ADMIN GET ALL ORDERS FILTER NAME HAS PAGENATION
 orderRouter.get(
   "/allOrder",
-  protect,
-  admin,
+  // protect,
+  // admin,
   asyncHandler(async (req, res) => {
     const pageSize = 10;
     const pageFiter = Number(req.query.pageNumber) || 1;
@@ -319,30 +319,60 @@ orderRouter.get(
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
     const orders = await Order.aggregate([
+      // {
+      //   $lookup: {
+      //     from: 'User',
+      //     localField: 'user',
+      //     foreignField: '_id',
+      //     as: 'Users'
+      //   }
+      // },
+      // Unwind the user array
+      // { $unwind: '$Users' },
       {
         $match:{
           deliveredAt:{$exists:true},
           deliveredAt:{$gte:new Date(startDate),$lte:new Date(endDate)}
         }
       },
-      {
-        $group:{
-          _id:'$user',
-          user:{$first:'$user'},
-          // shippingAddress:{$first:'$shippingAddress'},
-          paymentMethod:{$first:'$paymentMethod'},
-          taxPrice:{$first:'$taxPrice'},
-          totalAmount:{$sum:'$totalPrice'},
-          voucher:{$first:'$voucher'},
-          isPaid:{$first:'$isPaid'},
-          isDelivered:{$first:'$isDelivered'},
-          watched:{$first:'$watched'},
-          createdAt:{$first:'$createdAt'},
-          deliveredAt:{$first:'$deliveredAt'},
-        }
-      }
+      // {
+      //   $group:{
+      //     _id:'$Users',
+      //     user:{$first:'$Users'},
+      //     // shippingAddress:{$first:'$shippingAddress'},
+      //     paymentMethod:{$first:'$paymentMethod'},
+      //     taxPrice:{$first:'$taxPrice'},
+      //     totalAmount:{$sum:'$totalPrice'},
+      //     voucher:{$first:'$voucher'},
+      //     isPaid:{$first:'$isPaid'},
+      //     isDelivered:{$first:'$isDelivered'},
+      //     watched:{$first:'$watched'},
+      //     createdAt:{$first:'$createdAt'},
+      //     deliveredAt:{$first:'$deliveredAt'},
+      //   }
+        
+      // },
+
   ])
-    res.status(200).send(orders);
+  const sumOrders = await Order.aggregate([
+    {
+      $match:{
+        deliveredAt:{$exists:true},
+        deliveredAt:{$gte:new Date(startDate),$lte:new Date(endDate)}
+      }
+    },
+    {
+      $group:{
+        _id:'',
+        totalAmount:{$sum:'$totalPrice'},
+        totalShip:{$sum:'$shippingPrice'},
+        totalSale:{$sum:'$taxPrice'},
+        count: { $sum: 1 },
+      }
+    },
+
+])
+    res.status(200).send({orders,sumOrders:sumOrders[0]});
    
   })
 );

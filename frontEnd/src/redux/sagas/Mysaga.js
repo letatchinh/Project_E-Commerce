@@ -178,7 +178,7 @@ export function* fetchAddOrder(action) {
   try {
     const { status, data } = yield call(() =>
       AxiosUser.post(
-        "/api/orders",
+        "/api/orders/create",
         action.payload.newOrder,
         action.payload.config
       )

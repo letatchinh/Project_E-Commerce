@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export function getToday(){
     const dateObj = new Date();
     const month = dateObj.getUTCMonth() + 1;
@@ -10,3 +12,7 @@ export function getToday(){
      export  function reverses(array){
         return array.map((item,idx) => array[array.length-1-idx])
       }
+export const getNow = () => ({
+  startDate : moment().startOf('month').format("YYYY-MM-DD") ,
+  endDate : moment().endOf('month').format("YYYY-MM-DD") 
+})

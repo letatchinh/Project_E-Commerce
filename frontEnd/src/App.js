@@ -8,6 +8,7 @@ import ListPaymentUser from "./page/client/screens/ListPaymentUser";
 import Payment from "./page/client/screens/Payment";
 import React from "react";
 import "./responsive.css";
+import 'antd/dist/reset.css';
 import "react-toastify/dist/ReactToastify.css";
 import HomeScreen from "./page/admin/screens/HomeScreen";
 import ProductScreen from "./page/admin/screens/productScreen";

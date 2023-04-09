@@ -110,6 +110,7 @@ export default function Payment() {
       voucher : voucher,
       shippingPrice : taxShip,
       totalPrice : parseFloat((parseFloat(totalBill) + taxShip - voucher).toFixed(2)),
+      priceBill : (parseFloat(totalBill)).toFixed(2),
       isPaid : value === "Paypal" ? true : false,
       paidAt : value === "Paypal" ? now : ""
     };
