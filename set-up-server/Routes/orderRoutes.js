@@ -319,16 +319,16 @@ orderRouter.get(
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
     const orders = await Order.aggregate([
-      // {
-      //   $lookup: {
-      //     from: 'User',
-      //     localField: 'user',
-      //     foreignField: '_id',
-      //     as: 'Users'
-      //   }
-      // },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user',
+          foreignField: '_id',
+          as: 'Users'
+        }
+      },
       // Unwind the user array
-      // { $unwind: '$Users' },
+      { $unwind: '$Users' },
       {
         $match:{
           deliveredAt:{$exists:true},

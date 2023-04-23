@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Col, DatePicker, Row, Statistic, Table, Typography } from "antd";
+import { Card, Col, DatePicker, Row, Statistic, Table, Tabs, Typography } from "antd";
 import moment from "moment";
 import statics from "../../../apis/statics";
 import { getNow } from "../../../constant/FunctionCommom";
@@ -64,10 +64,19 @@ const columns = [
 export default function StatisticAll() {
 
   const [data,setData] = useState(null)
-  console.log(data,"data");
   const [date,setDate] = useState(getNow())
   const [loading,setLoading] = useState(false)
     const onhandleChangeDate = async(date,[startDate,endDate]) => {
+      setDate({startDate,endDate})
+    }
+    const onhandleChangeDateMonth = async(dates,dateString) => {
+      const startDate = moment(dateString).startOf('M').format("YYYY-MM-DD")
+      const endDate = moment(dateString).endOf('M').format("YYYY-MM-DD")
+      setDate({startDate,endDate})
+    }
+    const onhandleChangeDateYear = async(dates,dateString) => {
+      const startDate = moment(dateString).startOf('y').format("YYYY-MM-DD")
+      const endDate = moment(dateString).endOf('y').format("YYYY-MM-DD")
       setDate({startDate,endDate})
     }
     useEffect(() => {
@@ -80,23 +89,41 @@ export default function StatisticAll() {
           setData(res)
         }
         else{
-          const res = await statics.getAll({...getNow()})
+          const res = await statics.getAll({...date})
           setData(res)
         }
         setLoading(false)
       }
       fetch()
     },[date])
+    const onChange = (key) => {
+      console.log(key);
+    };
+    const items = [
+      {
+        key: '1',
+        label: `Theo ngày`,
+        children:<RangePicker
+        onChange={onhandleChangeDate}
+        format={dateFormat}
+      />,
+      },
+      {
+        key: '2',
+        label: `Theo tháng`,
+        children: <DatePicker onChange={onhandleChangeDateMonth} picker="month" />,
+      },
+      {
+        key: '3',
+        label: `Theo Năm`,
+        children: <DatePicker onChange={onhandleChangeDateYear} picker="year" />,
+      },
+    ]
   return (
     <div style={{ padding: "20px" , background : 'white' }}>
       <Row>
       <Col span={8}>
-      <RangePicker
-      // disabledDate={(current) => current.month() !== moment().month()}
-      onChange={onhandleChangeDate}
-      format={dateFormat}
-      // key={dateRanges.key} value={dateRanges.value}
-    />
+      <Tabs destroyInactiveTabPane defaultActiveKey="1" items={items} onChange={onChange}/>
       </Col>
       <Col span={16}>
       <Row style={{padding : '20px',borderRadius : '10px',boxShadow : '0 0 5px 1px #999'}}>
