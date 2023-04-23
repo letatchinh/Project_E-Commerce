@@ -35,7 +35,7 @@ export default function ItemFilter() {
           component="span"
           color={mainColorText}
         >
-          Search Filter
+          Lọc
         </Typography>
       </Stack>
       <Accordion sx={{ background: mainBackGround2 }} defaultExpanded>
@@ -45,7 +45,7 @@ export default function ItemFilter() {
           id="panel1a-header"
         >
           <MyTypography variant="body1" fontWeight="bold">
-            Price
+            Giá
           </MyTypography>
         </AccordionSummary>
         {/* <AccordionDetails>
@@ -105,7 +105,7 @@ export default function ItemFilter() {
           id="panel1a-header"
         >
           <MyTypography variant="body1" fontWeight="bold">
-            Rating
+            Đánh giá
           </MyTypography>
         </AccordionSummary>
         <AccordionDetails>

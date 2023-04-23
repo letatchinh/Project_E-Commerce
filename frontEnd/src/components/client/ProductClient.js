@@ -106,7 +106,7 @@ export default function ProductClient({ item }) {
         }}
       >
         <Typography color="white" fontSize="calc(0.3vw + 8px)" textAlign="center">
-          Sold {item.quantitySold}
+          Đã bán {item.quantitySold}
         </Typography>
       </div>
       <Link to={`/products/${_id}`}>
@@ -118,7 +118,7 @@ export default function ProductClient({ item }) {
             alt="green iguana"
             src={`/images/${images[active]}`}
           />
-       {countInStock === 0 &&  <Stack sx={{position : 'absolute' , inset : 0,justifyContent : 'center' , alignItems : 'center'}}><Typography sx={{ padding : '3rem 1.5rem' ,borderRadius : '50%' , backgroundColor : '#00000079'}} color='white' variant="body1">Out Of Stock</Typography></Stack>}
+       {countInStock === 0 &&  <Stack sx={{position : 'absolute' , inset : 0,justifyContent : 'center' , alignItems : 'center'}}><Typography sx={{ padding : '3rem 1.5rem' ,borderRadius : '50%' , backgroundColor : '#00000079'}} color='white' variant="body1">Hết hàng</Typography></Stack>}
         </Stack>
       </Link>
       <Link to={`/products/${_id}`}>

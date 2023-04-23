@@ -50,7 +50,7 @@ export default function SortBar() {
   return (
    <Stack className='SortBar' spacing={5} direction='row' padding='10px' alignItems='center' >
     <FormControl sx={{width : {md : '200px' , sm : '100px' , xs : '100px'}  , background : 'white'}}>
-        <InputLabel id="demo-simple-select-label">Price</InputLabel>
+        <InputLabel id="demo-simple-select-label">Giá</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
@@ -58,13 +58,13 @@ export default function SortBar() {
           value={price}
           onChange={handleChangePrice}
         >
-          <MenuItem value={-1}>High to low</MenuItem>
-          <MenuItem value={1}>Low to high</MenuItem>
-          <MenuItem value={"All"}>Default</MenuItem>
+          <MenuItem value={-1}>Giảm dần</MenuItem>
+          <MenuItem value={1}>Tăng dần</MenuItem>
+          <MenuItem value={"All"}>Mặc định</MenuItem>
         </Select>
       </FormControl>
     <FormControl sx={{width : {md : '200px' , sm : '100px' , xs : '100px'}  , background : 'white'}}>
-        <InputLabel id="demo-simple-select-label">Rating</InputLabel>
+        <InputLabel id="demo-simple-select-label">Đánh giá</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
@@ -72,9 +72,9 @@ export default function SortBar() {
           value={rating}
           onChange={handleChangeRating}
         >
-          <MenuItem value={-1}>High to low</MenuItem>
-          <MenuItem value={1}>Low to high</MenuItem>
-          <MenuItem value={'All'}>Default</MenuItem>
+          <MenuItem value={-1}>Giảm dần</MenuItem>
+          <MenuItem value={1}>Tăng dần</MenuItem>
+          <MenuItem value={"All"}>Mặc định</MenuItem>
         </Select>
       </FormControl>
    </Stack>

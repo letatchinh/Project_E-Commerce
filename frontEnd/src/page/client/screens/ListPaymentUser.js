@@ -41,7 +41,7 @@ export default function ListPaymentUser() {
 
   return (
     <>
-      <ContentTop value={"List Payment"} />
+      <ContentTop value={"Danh sách sản phầm đã mua"} />
       {
         loading ? (<LoadingCycleFullwitdh />) : (list.length !== 0) ?
         ( <Stack width="100%">

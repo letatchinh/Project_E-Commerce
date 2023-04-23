@@ -58,14 +58,17 @@ const Footer = () => {
           <Grid item md={5} sm={6} xs={12}>
             <Stack spacing={3}>
               <CustomTypoGraphy fontWeight="400" fontSize="14px">
-                “Put customer satisfaction as the number 1 priority in every
-                thought think your actions" is the mission, philosophy,
-                strategy.. Always move forward with Ut Fashion
+              Đặt sự hài lòng của khách hàng là ưu tiên số 1 trong mọi hoạt động
+                nghĩ nghĩ hành động" là sứ mệnh, triết lý,
+                chiến lược.. Luôn tiến về phía trước cùng Út Fashion
               </CustomTypoGraphy>
               <Stack spacing={1}>
-                <CustomTypoGraphy>Subscribe to our newsletter to receive news,
-Special offers and exclusive promotions</CustomTypoGraphy>
-{statusEmailFooter ? <Typography color='#00fff2'> Thank you for subscribing to receive information</Typography> 
+                <CustomTypoGraphy>
+Theo dõi bản tin của chúng tôi để nhận tin tức,
+Ưu đãi đặc biệt và khuyến mãi độc quyền
+</CustomTypoGraphy>
+{statusEmailFooter ? <Typography color='#00fff2'>cảm ơn bạn đã đăng ký để nhận thông tin
+</Typography> 
 : 
                  <Paper
                   variant="outlined"
@@ -107,16 +110,16 @@ Special offers and exclusive promotions</CustomTypoGraphy>
               <CustomTypoGraphy>About us</CustomTypoGraphy>
               <Stack>
                 <CustomTypoGraphy className="cardContentHover" fontSize="14px">
-                  Intro
+                  Về chúng tôi
                 </CustomTypoGraphy>
                 <CustomTypoGraphy className="cardContentHover" fontSize="14px">
-                  Contact
+                  Liên hệ
                 </CustomTypoGraphy>
                 <CustomTypoGraphy className="cardContentHover" fontSize="14px">
-                  recruit
+                  Việc làm
                 </CustomTypoGraphy>
                 <CustomTypoGraphy className="cardContentHover" fontSize="14px">
-                  News
+                  Tin tức
                 </CustomTypoGraphy>
               </Stack>
             </Stack>
@@ -132,7 +135,7 @@ Special offers and exclusive promotions</CustomTypoGraphy>
                     Ut Fashion Joint Stock Company
                   </CustomTypoGraphy>
                   <CustomTypoGraphy fontWeight="400" fontSize="14px">
-                    Address: 67 Nguyen Dinh Chieu , Khue My , Ngu Hanh Son , Da
+                    Địa chỉ: 67 Nguyen Dinh Chieu , Khue My , Ngu Hanh Son , Da
                     Nang city
                   </CustomTypoGraphy>
                 </Stack>
@@ -143,13 +146,10 @@ Special offers and exclusive promotions</CustomTypoGraphy>
                 </BlockIconFooter>
                 <Stack>
                   <CustomTypoGraphy fontWeight="400" fontSize="14px">
-                    Contact to order: 0905970965
+                    Liên hệ đặt hàng: 0905970965
                   </CustomTypoGraphy>
                   <CustomTypoGraphy fontWeight="400" fontSize="14px">
-                    Order inquiries: 0905970965
-                  </CustomTypoGraphy>
-                  <CustomTypoGraphy fontWeight="400" fontSize="14px">
-                    Comments and complaints: 1800 2086
+                    Bình luận và phàn nàn: 1800 2086
                   </CustomTypoGraphy>
                 </Stack>
               </Stack>

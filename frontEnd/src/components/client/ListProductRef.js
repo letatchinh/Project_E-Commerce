@@ -38,7 +38,7 @@ useEffect(() => {
       {data && data.pages.map(e => <ListProductLoadMore key={v4()} data={e.products}/>)}
         {isFetchingNextPage && <LoadingHomePage width='50%'/>}
       <Button sx={{width : '30%' , margin : '0 auto' , textTransform : 'capitalize'}}   disabled={!hasNextPage}  onClick={() => {fetchNextPage()}} variant='outlined'>
-          See More
+          Xem thêm
         </Button>
         {isFetching &&  !isFetchingNextPage && <LoadingHomePage />}
     </Stack>

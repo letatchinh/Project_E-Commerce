@@ -9,7 +9,7 @@ export default function ButtonRemoveAllFilter() {
   return (
       <Box   sx={{position : 'absolute ' , right : '5px',top : {md : '0' , sm : '0' , xs : '-25px'}}}>
          <Dialo messenger="Confirm Reset Filter ?" click={() => dispatch(reSetFilter())}>
-         <Button color='error' sx={{display : {md : 'block' , sm : 'none' , xs : 'none'}}} variant='outlined'>Remove All Filter</Button>
+         <Button color='error' sx={{display : {md : 'block' , sm : 'none' , xs : 'none'}}} variant='outlined'>Gỡ bộ lọc</Button>
          </Dialo>
          <Dialo messenger="Confirm Reset Filter ?" click={() => dispatch(reSetFilter())}>
          <Button color='error' sx={{display : {md : 'none' , sm : 'block', xs : 'block'}}} variant='outlined'><FilterAltOffIcon/></Button>

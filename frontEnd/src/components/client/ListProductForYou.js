@@ -53,7 +53,7 @@ export default function ListProductForYou() {
      ref={componentRef} sx={{background : mainBackGround, padding : '10px', borderRadius : '30px'}}>
        <Stack direction='row' alignItems='center' justifyContent={{md : 'center' , xs : 'flex-start'}} spacing={2} position='relative'>
        <img style={{width  : '30px' ,height : '30px'}} src="https://bizweb.dktcdn.net/100/438/408/themes/878697/assets/fire-icon-new.png?1664943619853" alt="flashsale"/>
-       <MyTypography fontSize='1.5rem'>For You</MyTypography>
+       <MyTypography fontSize='1.5rem'>Dành cho bạn</MyTypography>
        </Stack>
        {
         loading ?  <LoadingListProduct limit={limit}/> :  <ListProductCommon data={dataRandom} limit={limit} />

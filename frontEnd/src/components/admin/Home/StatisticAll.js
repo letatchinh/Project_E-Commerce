@@ -3,8 +3,8 @@ import { Card, Col, DatePicker, Row, Statistic, Table, Tabs, Typography } from "
 import moment from "moment";
 import statics from "../../../apis/statics";
 import { getNow } from "../../../constant/FunctionCommom";
-import {  ArrowUpOutlined, DollarOutlined, ProfileOutlined } from '@ant-design/icons';
-import {get, set} from 'lodash'
+import {   DollarOutlined, ProfileOutlined } from '@ant-design/icons';
+import {get} from 'lodash'
 import './index.css'
 import SkeletonTable from "../../comon/SkeletonTable";
 const { RangePicker } = DatePicker;

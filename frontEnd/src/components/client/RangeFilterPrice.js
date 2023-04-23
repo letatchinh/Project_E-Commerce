@@ -28,14 +28,14 @@ export default function RangeFilterPrice() {
     }
   return (
     <Box sx={{ width: '100%' }}>
-    <MyTypography>{`Price from ${value[0] * 4}$ to : ${value[1] * 4}$ `}</MyTypography>
+    <MyTypography>{`Giá từ ${value[0] * 4}$ đến : ${value[1] * 4}$ `}</MyTypography>
     <Slider
       getAriaLabel={() => 'Temperature range'}
       value={value}
       onChange={handleChange}
       valueLabelDisplay="auto"
     />
-    <Button onClick={handleSetPrice} fullWidth variant='outlined'>Apply</Button>
+    <Button onClick={handleSetPrice} fullWidth variant='outlined'>Áp dụng</Button>
   </Box>
   )
 }

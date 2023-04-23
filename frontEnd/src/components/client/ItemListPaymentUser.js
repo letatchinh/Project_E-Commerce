@@ -29,7 +29,7 @@ const handleBuyAgain = async(e) => {
     <img style={{width : '100px',height : '100px',objectFit : 'cover'}} src={`/images/${images[0]}`} alt='22'/>
     <Stack alignItems='flex-start'>
         <Typography variant='body1' fontWeight='bold' color={mainColorText}>{name}</Typography>
-        <LoadingButton loadingIndicator="Loading…" loading={loading}  onClick={handleBuyAgain} type="button" variant='outlined'>Buy Again</LoadingButton>
+        <LoadingButton loadingIndicator="Loading…" loading={loading}  onClick={handleBuyAgain} type="button" variant='outlined'>Mua lại</LoadingButton>
     </Stack>
     <Typography sx={{marginLeft : 'auto!important'}} alignSelf='center' variant='h6'>
     <PriceSell discount={discount} price={price}/>

@@ -129,7 +129,7 @@ export default function DetailProduct() {
                         }}
                       >
                         <MyTypography variant="h6" color={mainColorText}>
-                          Price
+                          Giá
                         </MyTypography>
                         <PriceSell discount={discount} price={price} />
                       </Stack>
@@ -142,7 +142,7 @@ export default function DetailProduct() {
                         }}
                       >
                         <MyTypography variant="h6" color={mainColorText}>
-                          Review
+                          Đánh giá
                         </MyTypography>
                         <Stack direction="row">
                           <StyledRating
@@ -168,7 +168,7 @@ export default function DetailProduct() {
                         }}
                       >
                         <MyTypography variant="h6" color={mainColorText}>
-                          Sold
+                          Đã bán
                         </MyTypography>
                         <MyTypography>{quantitySold}</MyTypography>
                       </Stack>
@@ -178,15 +178,15 @@ export default function DetailProduct() {
                         sx={{ padding: "10px" }}
                       >
                         <MyTypography variant="h6" color={mainColorText}>
-                          Count Of Stock
+                          Tồn kho
                         </MyTypography>
                         {countInStock === 0 ? (
                           <MyTypography color="red">
-                            (out of stock){" "}
+                            (Hết hàng){" "}
                           </MyTypography>
                         ) : (
                           <MyTypography>
-                            ({countInStock}) available{" "}
+                            ({countInStock}) Còn{" "}
                           </MyTypography>
                         )}
                       </Stack>
@@ -217,7 +217,7 @@ export default function DetailProduct() {
                         sx={{ width: "45%", textTransform: "capitalize" }}
                         variant="contained"
                       >
-                        <Typography fontSize="1.2rem">Buy now</Typography>
+                        <Typography fontSize="1.2rem">Mua ngay</Typography>
                       </Button>            
                       <ButtonAddToCartDetail _id={_id}/>
                     </Stack>
@@ -234,7 +234,7 @@ export default function DetailProduct() {
                     }}
                     variant="h5"
                   >
-                    description of product
+                    Mô tả sản phẩm
                   </Typography>
                   <MyTypography>{description}</MyTypography>
                 </Stack>
@@ -245,14 +245,14 @@ export default function DetailProduct() {
                       variant="h5"
                       color={mainColorText}
                     >
-                      Review
+                      Đánh giá
                     </MyTypography>
                     <Stack width={{ md: "50%", xs: "100%" }} id="review">
                         {itemm && <ListReview item={itemm} />}
                     </Stack>
                   </Stack>
                   <Stack>
-                    <ContentTop value="Product Reference" />
+                    <ContentTop value="Sản phẩm liên quan" />
                     {itemm.category && (
                       <ListProductRef category={itemm.category}/>
                     )}

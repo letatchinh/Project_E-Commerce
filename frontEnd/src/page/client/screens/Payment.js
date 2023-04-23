@@ -48,9 +48,9 @@ export default function Payment() {
   },[users])
   const dispatch = useDispatch();
   const steps = [
-    "Add to Cart",
-    "Choose Payment Method",
-    "Wait admin Check Order",
+    "Thêm vào giỏ hàng",
+    "Chọn phương thức thanh toán",
+    "Đợi admin kiểm tra giỏ hàng",
   ];
   const [activeStep, setActiveStep] = useState(1);
   const taxShip = useSelector(state => state.cart.taxShip)
@@ -152,19 +152,19 @@ if(value === ""){
     <>
         <div style={{ background: mainBackGround, padding: "20px", position : 'relative' }}>
         {listChecked.length === 0 && activeStep !== 2  &&  <Stack>
-          <Link style={{position : 'absolute' , top : '2rem' , left : '5rem'}} to='/cart'><Button startIcon={<ArrowBackIosIcon/>} >Back</Button></Link>
+          <Link style={{position : 'absolute' , top : '2rem' , left : '5rem'}} to='/cart'><Button startIcon={<ArrowBackIosIcon/>} >Quay lại</Button></Link>
         <ErrorNoItem src='https://bizweb.dktcdn.net/100/351/215/themes/713955/assets/empty-cart.png?1617619216743'/>
         </Stack>}
           {activeStep === 1 && listChecked.length !== 0  && (
             <Container sx={{ background: mainBackGround2, borderRadius: "10px", position : 'relative' }}>
-            <Link style={{position : 'absolute' , top : '2rem' , left : '2rem'}} to='/cart'><Button startIcon={<ArrowBackIosIcon/>} >Back</Button></Link>
+            <Link style={{position : 'absolute' , top : '2rem' , left : '2rem'}} to='/cart'><Button startIcon={<ArrowBackIosIcon/>} >Quay lại</Button></Link>
               <Stack
                 spacing={3}
                 borderBottom="2px solid #C4C4C4"
                 padding="20px"
                 textAlign="center"
               >
-                <MyTypography variant="h4">Payment </MyTypography>
+                <MyTypography variant="h4">Thanh toán </MyTypography>
                 <MyStepper activeStep={1} steps={steps}/>
 
               </Stack>
@@ -182,7 +182,7 @@ if(value === ""){
                   justifyContent="space-between"
                   direction="row"
                 >
-                  <MyTypography variant="h6">Total price :</MyTypography>
+                  <MyTypography variant="h6">Tổng giá trị :</MyTypography>
                   <MyTypography variant="h6" fontWeight="bold">
                   {totalBill} $
                   </MyTypography>
@@ -193,7 +193,7 @@ if(value === ""){
                   justifyContent="space-between"
                   direction="row"
                 >
-                  <MyTypography variant="h6">Tax Ship :</MyTypography>
+                  <MyTypography variant="h6">Phí ship :</MyTypography>
                   <MyTypography variant="h6" fontWeight="bold">
                   {taxShip} $
                   </MyTypography>
@@ -204,7 +204,7 @@ if(value === ""){
                   justifyContent="space-between"
                   direction="row"
                 >
-                 <MyTypography variant="h6">Voucher :</MyTypography>
+                 <MyTypography variant="h6">Giảm giá :</MyTypography>
                   <MyTypography variant="h6" fontWeight="bold">
                   -{voucher} $
                   </MyTypography>
@@ -216,7 +216,7 @@ if(value === ""){
                   direction="row"
                 >
                   <MyTypography variant="h6" fontWeight="bold">
-                    Total Order
+                    Tổng tiền đơn hàng
                   </MyTypography>
                   <MyTypography variant="h6" fontWeight="bold">
                     {(parseFloat(totalBill) + taxShip - voucher).toFixed(2)} $
@@ -238,7 +238,7 @@ if(value === ""){
                   <FormControl>
                     <FormLabel id="demo-row-radio-buttons-group-label">
                       <MyTypography variant="h5" fontWeight="bold">
-                        Payment Method
+                        Phương thức thanh toán
                       </MyTypography>
                     </FormLabel>
                     <RadioGroup
@@ -290,7 +290,7 @@ if(value === ""){
                   onClick={handlePayment}
                 >
                   <Typography variant="h6" sx={{ textTransform: "capitalize" }}>
-                    Payment
+                    Thanh toán
                   </Typography>
                 </Button>
               </Stack>

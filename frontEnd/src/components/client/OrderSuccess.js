@@ -10,7 +10,7 @@ export default function OrderSuccess() {
     <Container sx={{ width: "100%" ,textAlign : 'center' }}>
       <Stack spacing={2} alignItems="center">
         <MyTypography variant="h4" fontWeight="bold">
-          Your Order has been received
+          Chúc mừng bạn đã đặt hàng thành công !
         </MyTypography>
         <img
           style={{ width: "100px", height: "100px", marginTop: "50px" }}
@@ -18,20 +18,20 @@ export default function OrderSuccess() {
           alt="ok"
         />
         <MyTypography variant="h6" fontWeight="bold">
-          Thank you for your purchase
+          Cảm ơn bạn đã mua hàng
         </MyTypography>
         <MyTypography variant="body1">
-          Please wait admin Check your Order
+          Vui lòng đợi admin kiểm tra đơn hàng
         </MyTypography>
         <Stack spacing={3} direction="row">
           <Link to="/profile_ListOrder">
             <Button variant="contained" startIcon={<ListAltIcon />}>
-              My order
+              Đơn hàng của tôi
             </Button>
           </Link>
           <Link to="/">
             <Button variant="outlined" endIcon={<ShoppingCartIcon />}>
-              Go Shopping
+              Đi mua hàng tiếp
             </Button>
           </Link>
         </Stack>

@@ -151,7 +151,7 @@ const AddProductMain = () => {
                   <div className="mb-4">
                     <TextField
                       variant="outlined"
-                      label="Price"
+                      label="Giá"
                       {...register("price")}
                       error={errors?.price !== undefined}
                       helperText={errors.price && errors.price.message}
@@ -161,7 +161,7 @@ const AddProductMain = () => {
                   <div className="mb-4">
                     <TextField
                       variant="outlined"
-                      label="CountInStock"
+                      label="Tồn kho"
                       {...register("countInStock")}
                       error={errors?.countInStock !== undefined}
                       helperText={

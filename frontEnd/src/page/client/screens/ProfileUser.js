@@ -50,7 +50,7 @@ export default function ProfileUser({children}) {
    <div style={{ background: mainBackGround2, padding: "50px 0" }}>
       <Container sx={{ background: mainBackGround, borderRadius: "20px",padding : '20px 0' }}>
         <Stack direction={{md : 'row',sm : 'column' , xs : 'column'}}>
-          <Stack direction={{sm : 'column' , xs : 'row'}} width={{md : '30%' , sm : '100%'}}borderRight="1px solid #F0F2F5">
+          <Stack direction={{sm : 'column' , xs : 'row'}} width={{md : '30%' , sm : '100%'}} borderRight="1px solid #F0F2F5">
             <AvatarProfileUser />
             <MenuList>
               <Link to='/profile_Info'> 
@@ -58,7 +58,7 @@ export default function ProfileUser({children}) {
                 <ListItemIcon>
                   <InfoIcon color='primary' fontSize="small" />
                 </ListItemIcon>
-                <Typography variant="body1" color={mainColorText}>Infomation</Typography>
+                <Typography variant="body1" color={mainColorText}>Thông tin cá nhân</Typography>
               </MenuItem>
               </Link>
              <Link to='/profile_ListPayment'>
@@ -66,7 +66,7 @@ export default function ProfileUser({children}) {
                 <ListItemIcon>
                   <ShoppingBasketIcon color='primary' fontSize="small" />
                 </ListItemIcon>
-                <Typography variant="body1" color={mainColorText}>purchased product</Typography>
+                <Typography variant="body1" color={mainColorText}>Sản phâm đã mua</Typography>
               </MenuItem>
               </Link>
           <Link to='/profile_ListOrder'>
@@ -74,7 +74,7 @@ export default function ProfileUser({children}) {
                 <ListItemIcon>
                   <ListAltIcon color='primary' fontSize="small" />
                 </ListItemIcon>
-                <Typography variant="body1" color={mainColorText}>List Order</Typography>
+                <Typography variant="body1" color={mainColorText}>Danh sách đơn hàng</Typography>
               </MenuItem>
           </Link>
             </MenuList>

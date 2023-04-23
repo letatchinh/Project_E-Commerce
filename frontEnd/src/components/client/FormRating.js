@@ -50,10 +50,10 @@ export default function FormRating({_id,handleSetItem,handleSetCount}) {
                       <form onSubmit={handleSubmit(onSubmit)}>
                         <Stack id="comment" spacing={2}>
                           <MyTypography variant="h6" color={mainColorText}>
-                            WRITE A CUSTOMER REVIEW
+                            Viết bình luận
                           </MyTypography>
                           <MyTypography variant="h5" color={mainColorText}>
-                            Rating
+                            Số sao
                           </MyTypography>
                           <StyledRating
                             precision={0.5}
@@ -63,11 +63,11 @@ export default function FormRating({_id,handleSetItem,handleSetCount}) {
                             }}
                           />
                           <MyTypography variant="h5" color={mainColorText}>
-                            Comment
+                            Đánh giá
                           </MyTypography>
                           <MyTextField 
                             {...register("comment")}
-                            label="Write Commet Here ..."
+                            label="Viết đánh giá ở đây ..."
                             variant="outlined"
                           />
                           <Button
@@ -80,7 +80,7 @@ export default function FormRating({_id,handleSetItem,handleSetCount}) {
                             {isLoading ? "Checking..." : "Send"}
                           </Button>
       {data && !data.isPayment && (
-        <Alert severity="error">You must buy To Rating</Alert>
+        <Alert severity="error">Bạn phải mua để đánh giá</Alert>
       )}
                         </Stack>
                       </form>

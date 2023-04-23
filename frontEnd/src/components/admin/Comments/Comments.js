@@ -87,16 +87,16 @@ const CommentsTables = () => {
 
             <div className="col-lg-2 col-6 col-md-3">
               <select className="form-select" onChange={handlesortRating}>
-                <option value="">All rating</option>
-                <option value="-1">High to Low</option>
-                <option value="1">Low to High</option>
+                <option value="">Tất cả đánh giá</option>
+                <option value="-1">Giảm dần</option>
+                <option value="1">Tăng dần</option>
               </select>
             </div>
             <div className="col-lg-2 col-6 col-md-3">
               <select className="form-select" onChange={handleActive}>
-                <option value="">All Status</option>
-                <option value={true}>Active</option>
-                <option value={false}>Disabled</option>
+                <option value="">Tất cả trạng thái</option>
+                <option value={true}>Hoạt động</option>
+                <option value={false}>ngừng hoạt động</option>
               </select>
             </div>
           </div>

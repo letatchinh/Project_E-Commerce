@@ -64,7 +64,7 @@ export default function ListProductNew() {
           alt="flashsale"
         />
         <Link style={{ position: "absolute", right: 0 }} to="new-product">
-          <Button endIcon={<ChevronRightIcon />}>See More</Button>
+          <Button endIcon={<ChevronRightIcon />}>Xem thêm</Button>
         </Link>
       </Stack>
       {loading ? (

@@ -46,9 +46,9 @@ export default function ListCart() {
 
     const SubAddress = useSelector(state => state.cart.SubAddress)
     const steps = [
-      "Add to Cart",
-      "Choose Payment Method",
-      "Wait admin Check Order",
+      "Thêm vào giỏ hàng",
+      "Chọn phương thức thanh toán",
+      "Đợi admin kiểm tra giỏ hàng",
     ];
     useEffect(() => {
       
@@ -89,17 +89,17 @@ export default function ListCart() {
         <Stack width={{md : '70%' , sm : '100%'}} spacing={1} sx={{background : backgroundWhite, padding:'10px',borderRadius:'20px'}}>
         <Stack width = '100%' direction='row' alignItems='center' >
      <div style={{flex : 1 , height : '2px' , background : 'gray', width : '100%'}}></div>
-     <Typography sx={{border : "2px solid gray" , padding : '7px' , borderRadius : '10px'}} color={status ? 'black' : 'white'} fontSize='1.5rem'>My Cart</Typography>
+     <Typography sx={{border : "2px solid gray" , padding : '7px' , borderRadius : '10px'}} color={status ? 'black' : 'white'} fontSize='1.5rem'>Giỏ hàng</Typography>
      <div style={{flex : 1 , height : '2px' , background : 'gray', width : '100%'}}></div>
    </Stack> 
    {listCarts && listCarts.length !== 0 && 
-   <FormControlLabel sx={{color : !status && 'white'}} control={<Checkbox sx={{color : !status && 'white'}}  checked={checkedAll} onChange={handleChange}  />} label={!checkedAll ? "Check All" : "UnCheck All"} />
+   <FormControlLabel sx={{color : !status && 'white'}} control={<Checkbox sx={{color : !status && 'white'}}  checked={checkedAll} onChange={handleChange}  />} label={!checkedAll ? "Chọn tất cả" : "Bỏ Chọn tất cả"} />
    }
                     {listCarts && listCarts.length === 0 ? <div style={{margin : '0 auto'}}><ErrorNoItem /></div>: listCarts.map(e =>  <ItemListCart key={v4()} item={e}/>)}
         </Stack>
         <Stack textAlign={{md : 'left', sm : 'center'}} spacing={3} sx={{background : backgroundWhite, padding:'10px',borderRadius:'20px'}}>
         <Stack  spacing={1} borderBottom='1px solid #999' padding='10px 0'>
-          <Typography  textAlign={{md : 'left', sm : 'center'}} color='#9e9e9e' fontSize='14px'>Address</Typography>
+          <Typography  textAlign={{md : 'left', sm : 'center'}} color='#9e9e9e' fontSize='14px'>Địa chỉ</Typography>
             <Stack direction='row' sx={{color : '#9e9e9e'}} alignItems='center' spacing={1} >
          {(SubAddress || user.address) &&  <PlaceIcon/>}
           <MyTypography  fontSize='13px' fontWeight='medium'>{SubAddress|| user.address  || ""} </MyTypography>
@@ -108,18 +108,18 @@ export default function ListCart() {
            <FormChangeAddress />
         </Stack>
         <Stack spacing={1} >
-          <MyTypography fontSize='1.2rem'>Infomation Order</MyTypography>
+          <MyTypography fontSize='1.2rem'>Thông tin đơn hàng</MyTypography>
           <Stack direction='row' justifyContent='space-between'>
-            <MyTypography fontSize='14px' color='#757575'>Total Price</MyTypography>
+            <MyTypography fontSize='14px' color='#757575'>Tồng tiền sản phẩm</MyTypography>
             <MyTypography>{totalBill} $</MyTypography>
           </Stack>
           <Stack direction='row' justifyContent='space-between'>
-          <MyTypography fontSize='14px' color='#757575'>Ship Price ({distance} km)</MyTypography>
+          <MyTypography fontSize='14px' color='#757575'>Phí ship ({distance} km)</MyTypography>
           {loadingDistance ? <div>...loading</div> : <MyTypography>{(distance * 0.8).toFixed(1)} $</MyTypography>}
             
           </Stack>
           <Stack direction='row' justifyContent='space-between'>
-          <MyTypography fontSize='14px' color='#757575'>Voucher</MyTypography>
+          <MyTypography fontSize='14px' color='#757575'>Giảm giá</MyTypography>
             <MyTypography>-{voucher} $</MyTypography>
           </Stack>
            <Typography sx={{opacity : voucher !== 0 ? 1 : 0 , transition : '0.5s ease',backgroundImage: 'linear-gradient(to right , orange, red)',
@@ -129,10 +129,10 @@ export default function ListCart() {
         </Stack>
     <FormVoucher />
         <Stack direction='row' justifyContent='space-between' alignItems='center'>
-        <Typography fontSize='14px' color='#757575'>Total</Typography>
+        <Typography fontSize='14px' color='#757575'>Tổng tiền đơn hàng</Typography>
             <Typography color='#f57224' fontSize='1.3rem'>{(parseFloat(totalBill) + taxShip - voucher).toFixed(2)} $</Typography>
         </Stack>
-        <Link className={(((!isCheck || user.address === "" ) && (!isCheck || !SubAddress))) ? 'disableLink': " "} to='/payment'><Button endIcon={<ArrowForwardIcon className='surFaceArrow'/>}  disabled={(((!isCheck || user.address === "" ) && (!isCheck || !SubAddress)))} sx={{width : '100%'}} color='warning' variant='contained'>Confirm Order</Button></Link>
+        <Link className={(((!isCheck || user.address === "" ) && (!isCheck || !SubAddress))) ? 'disableLink': " "} to='/payment'><Button endIcon={<ArrowForwardIcon className='surFaceArrow'/>}  disabled={(((!isCheck || user.address === "" ) && (!isCheck || !SubAddress)))} sx={{width : '100%'}} color='warning' variant='contained'>Xác nhận đơn hàng</Button></Link>
         </Stack>
         </Stack>
     </Container>

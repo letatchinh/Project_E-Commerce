@@ -26,12 +26,12 @@ function Cart({handleClose}) {
       }}
     >
    
-    <Typography textAlign='center' borderBottom='1px solid #999' variant="h6">My Cart<ShoppingBasketIcon/></Typography>
+    <Typography textAlign='center' borderBottom='1px solid #999' variant="h6">Giỏ hàng <ShoppingBasketIcon/></Typography>
    <Stack display={listCarts && listCarts.length === 0 ? "none" : 'flex'} direction='row' justifyContent='space-between' alignItems='center' padding ='5px 0'>
-   <Typography  color='#777' variant="body2">New products added</Typography>
+   <Typography  color='#777' variant="body2">Sản phâm vừa thêm</Typography>
    <Dialo click={handleDeleteAllCart} messenger="Are you want to delele All?">
 
-    <Button  sx={{textTransform : 'capitalize'}} variant='outlined' size="small"  color='error'>Delete All</Button>
+    <Button  sx={{textTransform : 'capitalize'}} variant='outlined' size="small"  color='error'>Xoá tất cả</Button>
    </Dialo>
    </Stack>
       <Stack sx={{maxHeight : '60vh',overflowY : 'scroll'}}>
@@ -46,7 +46,7 @@ function Cart({handleClose}) {
           alt="empty"
         />
       )}
-      <Typography  color='#777' variant="body2" padding ='5px 0'>{listCarts.length} in {count} product in your cart</Typography>
+      <Typography  color='#777' variant="body2" padding ='5px 0'>{listCarts.length} trong {count} sản phẩm trong giỏ hàng của bạn</Typography>
 
       <Link
         style={{ pointerEvents: listCarts && listCarts.length === 0 ? "none" : "auto" }}
@@ -58,7 +58,7 @@ function Cart({handleClose}) {
           color="warning"
           variant="contained"
         >
-          Go to cart
+          Đến giỏ hàng
         </Button>
       </Link>
     </List>

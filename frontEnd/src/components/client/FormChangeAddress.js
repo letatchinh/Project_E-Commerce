@@ -59,7 +59,7 @@ export default function FormChangeAddress() {
   return (
     <div style={{margin : '0 auto'}}>
     <Button variant='outlined'  onClick={handleClickOpen}>
-       Change Address Here
+       Thay đổi địa chỉ
     </Button>
     <Dialog fullWidth
       open={open}
@@ -74,10 +74,10 @@ export default function FormChangeAddress() {
   >
         <Stack spacing={2}>
         <InputLabel id="demo-simple-select-label">
-        City : Da Nang
+        Thành phố : Da Nang
           </InputLabel>
          
-          <InputLabel id="demo-simple-select-label">District</InputLabel>
+          <InputLabel id="demo-simple-select-label">Đường</InputLabel>
           <Select fullWidth
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -97,7 +97,7 @@ export default function FormChangeAddress() {
           {errors.quan && (
             <Alert severity="error">{errors.quan?.message}</Alert>
           )}
-          <InputLabel id="demo-simple-select-label">ward</InputLabel>
+          <InputLabel id="demo-simple-select-label">Quận</InputLabel>
           <Select fullWidth
             labelId="demo-simple-select-label"
             id="demo-simple-select"

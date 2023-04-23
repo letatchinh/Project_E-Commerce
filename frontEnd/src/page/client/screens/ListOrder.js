@@ -53,7 +53,7 @@ export default function ListOrder() {
        <LoadingCycleFullwitdh/>
       ) : (
         <div>
-          <ContentTop value="List Order" />
+          <ContentTop value="Danh sách đơn hàng" />
           {status ? (
             <Stack alignItems="center">
               <ContainerScoll>

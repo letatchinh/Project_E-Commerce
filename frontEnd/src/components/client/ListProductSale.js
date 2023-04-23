@@ -63,7 +63,7 @@ export default function ListProductSale() {
         />
         <CountdownTimer />
         <Link style={{ position: "absolute", right: 0 }} to="/flash-sale">
-          <Button endIcon={<ChevronRightIcon />}>See More</Button>
+          <Button endIcon={<ChevronRightIcon />}>Xem thêm</Button>
         </Link>
       </Stack>
       {loading ? (

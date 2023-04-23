@@ -29,11 +29,12 @@ item._id && refetch()
    return (
      <Stack>
 {     data && data.pages.map(e => e.reviews.map(f => <Review key={v4()}  item={f}/>)) }
-{data && data.pages[0].reviews.length === 0 ?  <Paper sx={{padding : '50px',textAlign : 'center',backgroundColor : 'rgb(231, 235, 240)'}} elevation={3}><Typography lineHeight={3.5}>There are currently no reviews for this product. Be the first to review this product</Typography>
-         <Button href='#comment' variant='contained'>Send Your Comment</Button>
+{data && data.pages[0].reviews.length === 0 ?  <Paper sx={{padding : '50px',textAlign : 'center',backgroundColor : 'rgb(231, 235, 240)'}} elevation={3}><Typography lineHeight={3.5}>Hiện tại không có đánh giá cho sản phẩm này. Hay la ngươi đâu tiên xem xet sản phẩm nay
+</Typography>
+         <Button href='#comment' variant='contained'>Gửi đánh giá của bạn</Button>
          </Paper> : 
           <Button sx={{width : '30%' , margin : '0 auto' , textTransform : 'capitalize'}}   disabled={!hasNextPage}  onClick={() => {fetchNextPage()}} variant='outlined'>
-          See More
+          Xem thêm
         </Button>}
         {isFetching &&  !isFetchingNextPage && <LoadingHomePage />}
         {isFetchingNextPage && <LoadingHomePage width='50%'/>}

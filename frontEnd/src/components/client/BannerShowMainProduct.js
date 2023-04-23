@@ -40,7 +40,7 @@ export default function BannerShowMainProduct() {
             textAlign="center"
             fontWeight="bold"
           >
-            Shirt
+            Áo sơ mi
           </Typography>
           <Typography
             variant="h6"
@@ -49,7 +49,7 @@ export default function BannerShowMainProduct() {
             color="white"
             sx={{ animation: `AppearCategory2 3s ease` }}
           >
-            High-quality materials – Luxurious design – Classy design
+            Chất liệu cao cấp – Kiểu dáng sang trọng – Kiểu dáng đẳng cấp
           </Typography>
           <Typography
             variant="h6"
@@ -58,7 +58,7 @@ export default function BannerShowMainProduct() {
             color="white"
             sx={{ animation: `AppearCategory2 4s ease ` }}
           >
-            Sale Off 30%
+            Giảm giá đến 30%
           </Typography>
           <Link to="/product/shirt">
             <Button
@@ -73,7 +73,7 @@ export default function BannerShowMainProduct() {
               }}
               variant="outlined"
             >
-              Buy Now
+              Mua ngay
             </Button>
           </Link>
         </Stack>

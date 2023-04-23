@@ -55,7 +55,7 @@ export default function ItemListVoucherScreen({item}) {
           </Stack>
           <Stack direction='row' alignItems='center'>
           <MyTypography textAlign='center'>
-            Code:    
+            Mã:    
           </MyTypography>
           <Typography sx={{ borderRadius: "30px",
                 background: "#FFEBE8",
@@ -77,7 +77,7 @@ export default function ItemListVoucherScreen({item}) {
         navigate("/login")
       }
       }} loading={loading} variant="outlined">
-  Get
+  Lấy
 </LoadingButton>
   </Stack>
   )

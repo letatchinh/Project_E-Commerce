@@ -106,7 +106,7 @@ export default function InfoUser() {
   },[userLogin.address])
   return (
     <>
-      <ContentTop value={"Infomation"} />
+      <ContentTop value={"Thông tin cá nhân"} />
       <form
         style={{ padding: "10px", display: status ? "block" : "none" }}
         onSubmit={handleSubmit(onSubmit)}
@@ -145,7 +145,7 @@ export default function InfoUser() {
           
     
 
-          <MyTypography >District</MyTypography>
+          <MyTypography >Đường</MyTypography>
           <MySelection   labelId="demo-simple-select-label"
             id="demo-simple-select"
             data={QUAN}
@@ -159,7 +159,7 @@ export default function InfoUser() {
           {errors.quan && (
             <Alert severity="error">{errors.quan?.message}</Alert>
           )}
-          <MyTypography>SubDistrict</MyTypography>
+          <MyTypography>Phường</MyTypography>
           <CssSelect sx={{color :!statusColor && "white"}}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -261,7 +261,7 @@ export default function InfoUser() {
               variant="contained"
             >
               <Typography variant="body1" fontWeight="600">
-                Cancel
+                Huỷ
               </Typography>
             </Button>
             <Button
@@ -276,7 +276,7 @@ export default function InfoUser() {
               endIcon={<DoneIcon />}
             >
               <Typography variant="body1" fontWeight="600">
-                Save
+                Lưu
               </Typography>
             </Button>
           </Stack>
@@ -286,7 +286,7 @@ export default function InfoUser() {
         <ItemInfoUser icon={<PeopleIcon color="primary" />} value={userLogin.name} />
         <ItemInfoUser icon={<EmailIcon color="primary" />} value={userLogin.email} />
         <ItemInfoUser icon={<PhoneIcon color="primary" />} value={`+84 ${userLogin.phone}`} />
-        <ItemInfoUser icon={<LocationOnIcon  color="primary"/>} value={userLogin.address || "(No data Address , please edit)"} />
+        <ItemInfoUser icon={<LocationOnIcon  color="primary"/>} value={userLogin.address || "(Chưa có địa chỉ vui lòng thêm mới)"} />
       </List>
       <Button
         onClick={() => setStatus(!status)}
@@ -298,7 +298,7 @@ export default function InfoUser() {
         variant="contained"
       >
         <Typography variant="body1" fontWeight="600">
-          Edit
+          Thay đổi
         </Typography>
       </Button>
     </>

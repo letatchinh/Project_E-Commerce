@@ -127,7 +127,7 @@ export default function Search({ typeCategory }) {
           color="#fcaf17"
           fontSize="1.5rem"
         >
-          {category || "All Products"}
+          {category || "Tất cả sản phẩm"}
         </Typography>
         <div
           style={{ flex: 1, height: "2px", background: "gray", width: "100%" }}

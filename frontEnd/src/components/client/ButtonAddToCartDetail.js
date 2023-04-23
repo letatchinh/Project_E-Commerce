@@ -38,7 +38,7 @@ export default function ButtonAddToCartDetail({_id}) {
       color="warning"
       variant="outlined" onClick={handleAddToCart} loading={loading} >
     <ShoppingCartCheckoutIcon className="hoverIconAddCart" />
-    <MyTypography>Add To Cart</MyTypography>
+    <MyTypography>Thêm vào giỏ hàng</MyTypography>
 </LoadingButton>
   )
 }

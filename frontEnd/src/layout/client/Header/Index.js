@@ -115,22 +115,22 @@ const handleClick = (event) => {
           <Stack direction='row' spacing={1} alignItems='center'>
           <Link to='/'>
        <Button  sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'}}}>
-       Home
+       Trang chủ
        </Button>
         </Link>
         <Link to='/products'>
        <Button onClick={() => dispatch(reSetFilter())} sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'}, fontSize : contactActive ? '1rem' : '0.875rem' , textShadow : contactActive ? '0 0 20px white' : 'none'}}>
-       Products
+       Danh sách sản phẩm
        </Button>
        </Link>
           <Link to='/about'>
        <Button   sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'} , fontSize : aboutActive ? '1rem' : '0.875rem' , textShadow : aboutActive ? '0 0 20px white' : 'none'}}>
-       About us
+       Về chúng tôi
        </Button>
         </Link>
        <Link to='/contact'>
        <Button sx={{textTransform : 'capitalize',color : 'white', display : {md : 'block' , xs : 'none'}, fontSize : contactActive ? '1rem' : '0.875rem' , textShadow : contactActive ? '0 0 20px white' : 'none'}}>
-       Contact
+       Liên hệ
        </Button>
        </Link>
        
@@ -161,7 +161,7 @@ const handleClick = (event) => {
             }}
             variant="outlined"
           >
-            Login
+            Đăng nhập
           </Button>
               </Link>
               <Link to='/register'>
@@ -173,7 +173,7 @@ const handleClick = (event) => {
             }}
             variant="outlined"
           >
-            Sign Up
+            Đăng ký
           </Button>
               </Link>
               </Stack>
