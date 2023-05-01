@@ -42,7 +42,7 @@ const CategoriesTable = () => {
   return (
     <>
       <div className="col-md-12 col-lg-12 mt-3 mb-3">
-        <h2>Sum Product In Each Category</h2>
+        <h2>Tổng số lượng sản phẩm của từng loại</h2>
         {loading ? (
           <LoadingDashboard />
         ) : error ? (
@@ -51,9 +51,9 @@ const CategoriesTable = () => {
           <table className="table">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
+                <th>Stt</th>
+                <th>Tên</th>
+                <th>Mô tả</th>
               </tr>
             </thead>
             {/* Table Data */}
@@ -66,7 +66,7 @@ const CategoriesTable = () => {
                     <td>
                       <b>{cate.name}</b>
                     </td>
-                    <td>{cate.num ? cate.num + " product" : "0 product"}</td>
+                    <td>{cate.num ? cate.num + " sản phẩm" : "0 sản phẩm"}</td>
                   </tr>
                 ))}
             </tbody>

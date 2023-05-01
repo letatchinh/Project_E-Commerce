@@ -17,12 +17,12 @@ const OrderDetailProduct = (props) => {
     <table className="table border table-lg">
       <thead>
         <tr>
-          <th style={{ width: "40%" }}>Product</th>
-          <th style={{ width: "20%" }}>Pure Price</th>
-          <th style={{ width: "20%" }}>Unit Price</th>
-          <th style={{ width: "20%" }}>Quantity</th>
+          <th style={{ width: "40%" }}>Tên sản phẩm</th>
+          <th style={{ width: "20%" }}>Giá gốc</th>
+          <th style={{ width: "20%" }}>Giá hiện tại</th>
+          <th style={{ width: "20%" }}>Số lượng</th>
           <th style={{ width: "20%" }} className="text-end">
-            Total
+            Tổng
           </th>
         </tr>
       </thead>
@@ -52,26 +52,26 @@ const OrderDetailProduct = (props) => {
           <td colSpan="5">
             <article className="float-end">
               <dl className="dlist">
-                <dt>Subtotal:</dt>
+                <dt>Tổng phụ:</dt>
                 <dd>${order.itemsPrice}</dd>
               </dl>
               <dl className="dlist">
-                <dt>Shipping cost:</dt>
+                <dt>Giá vận chuyển:</dt>
                 <dd>${order.shippingPrice}</dd>
               </dl>
               <dl className="dlist">
-                <dt>Grand total:</dt>
+                <dt>Tổng cộng:</dt>
                 <dd>
                   <b className="h5">${order.totalPrice}</b>
                 </dd>
               </dl>
               <dl className="dlist">
-                <dt className="text-muted">Status</dt>
+                <dt className="text-muted">Trạng thái</dt>
                 <dd>
                   {order.isPaid ? (
-                    <span className="text-success">Payment done</span>
+                    <span className="text-success">Đã trả xong</span>
                   ) : (
-                    <span className="text-danger">Not Paid</span>
+                    <span className="text-danger">Chưa chi trả</span>
                   )}
                 </dd>
               </dl>

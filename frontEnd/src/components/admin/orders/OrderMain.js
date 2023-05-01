@@ -87,7 +87,7 @@ const OrderMain = () => {
   return (
     <section className="content-main">
       <div className="content-header">
-        <h2 className="content-title">Orders</h2>
+        <h2 className="content-title">Danh sách đơn hàng</h2>
       </div>
 
       <div className="card mb-4 shadow-sm">
@@ -99,31 +99,31 @@ const OrderMain = () => {
             >
               <input
                 type="text"
-                placeholder="Search..."
+                placeholder="Tìm kiếm..."
                 className="form-control p-2"
                 onChange={(e) => setName(e.target.value)}
               />
             </form>
             <div className="col-lg-2 col-6 col-md-3 w-pc-28">
               <select className="form-select" onChange={HandlerSortTotal}>
-                <option value="">Show all Total</option>
-                <option value="50">Total {">="} 50$</option>
-                <option value="100">Total {">="} 100$</option>
-                <option value="200">Total {">="} 200$</option>
+                <option value="">Hiển thị tất cả tổng tiền</option>
+                <option value="50">Tổng {">="} 50$</option>
+                <option value="100">Tổng {">="} 100$</option>
+                <option value="200">Tổng {">="} 200$</option>
               </select>
             </div>
             <div className="col-lg-2 col-6 col-md-3 w-pc-28">
               <select className="form-select" onChange={HandlerPaiD}>
-                <option value="">Show all Paid</option>
-                <option value="true">Paided</option>
-                <option value="false">Unpaid</option>
+                <option value="">Hiển thị tất cả</option>
+                <option value="true">Đã chi trả</option>
+                <option value="false">Chưa chi trả</option>
               </select>
             </div>
             <div className="col-lg-2 col-6 col-md-3 w-pc-28">
               <select className="form-select" onChange={HandlerDislivered}>
-                <option value="">Show all Deilivered</option>
-                <option value="true">Shippered</option>
-                <option value="false">Not shipper</option>
+                <option value="">Tất cả đơn hàng chuyển giao</option>
+                <option value="true">Đã chuyển</option>
+                <option value="false">Chưa chuyển</option>
               </select>
             </div>
           </div>
@@ -147,7 +147,7 @@ const OrderMain = () => {
                           className="page-link"
                           to={`/admin/orders/page/${page && page - 1}`}
                         >
-                          Previous
+                          Trước
                         </Link>
                       </li>
                     ) : (
@@ -156,7 +156,7 @@ const OrderMain = () => {
                           className="page-link"
                           to={`/admin/orders/page/${page && page - 1}`}
                         >
-                          Previous
+                          Trước
                         </Link>
                       </li>
                     )}
@@ -182,7 +182,7 @@ const OrderMain = () => {
                           className="page-link"
                           to={`/admin/orders/page/${page && page - 1}`}
                         >
-                          Next
+                          Sau
                         </Link>
                       </li>
                     ) : (
@@ -191,7 +191,7 @@ const OrderMain = () => {
                           className="page-link"
                           to={`/admin/orders/page/${page && page + 1}`}
                         >
-                          Next
+                          Sau
                         </Link>
                       </li>
                     )}
@@ -209,7 +209,7 @@ const OrderMain = () => {
               ) : count > 0 ? (
                 <Orders orders={ordersFilter} />
               ) : (
-                <div>No order</div>
+                <div>Không đơn hàng</div>
               )}
               {pagesFiter > 1 && (
                 <nav className="float-end mt-4" aria-label="Page navigation">
@@ -222,7 +222,7 @@ const OrderMain = () => {
                             pageFiter && pageFiter - 1
                           }`}
                         >
-                          Previous
+                          Trước
                         </Link>
                       </li>
                     ) : (
@@ -233,7 +233,7 @@ const OrderMain = () => {
                             pageFiter && pageFiter - 1
                           }`}
                         >
-                          Previous
+                          Trước
                         </Link>
                       </li>
                     )}
@@ -261,7 +261,7 @@ const OrderMain = () => {
                             pageFiter && pageFiter - 1
                           }`}
                         >
-                          Next
+                          Sau
                         </Link>
                       </li>
                     ) : (
@@ -272,7 +272,7 @@ const OrderMain = () => {
                             pageFiter && pageFiter + 1
                           }`}
                         >
-                          Next
+                          Sau
                         </Link>
                       </li>
                     )}
@@ -290,7 +290,7 @@ const OrderMain = () => {
               ) : ordersPaidS.length > 0 ? (
                 <Orders orders={ordersPaidS} />
               ) : (
-                <div>No order</div>
+                <div>Không đơn hàng</div>
               )}
             </div>
           )}

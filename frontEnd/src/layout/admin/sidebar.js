@@ -40,7 +40,7 @@ const Sidebar = (props) => {
                   // exact={true}
                 >
                   <i className="icon fas fa-home"></i>
-                  <span className="text">Dashboard</span>
+                  <span className="text">Trang chủ</span>
                 </NavLink>
               </li>
               <li className="menu-item">
@@ -50,7 +50,7 @@ const Sidebar = (props) => {
                   to="/admin/products"
                 >
                   <i className="icon fas fa-shopping-bag"></i>
-                  <span className="text">Products</span>
+                  <span className="text">Danh sách sản phẩm</span>
                 </NavLink>
               </li>
               <li className="menu-item">
@@ -60,7 +60,7 @@ const Sidebar = (props) => {
                   to="/admin/addproduct"
                 >
                   <i className="icon fas fa-cart-plus"></i>
-                  <span className="text">Add product</span>
+                  <span className="text">Thêm sản phẩm</span>
                 </NavLink>
               </li>
               <li className="menu-item">
@@ -70,7 +70,7 @@ const Sidebar = (props) => {
                   to="/admin/productcomments"
                 >
                   <i className="icon fa-solid fa-comment"></i>
-                  <span className="text">Comments</span>
+                  <span className="text">Danh sách bình luận</span>
                 </NavLink>
               </li>
               <li className="menu-item">
@@ -80,7 +80,7 @@ const Sidebar = (props) => {
                   to="/admin/categorys"
                 >
                   <i className="icon fas fa-list"></i>
-                  <span className="text">Category</span>
+                  <span className="text">Loại</span>
                 </NavLink>
               </li>
               <li className="menu-item">
@@ -90,7 +90,7 @@ const Sidebar = (props) => {
                   to="/admin/orders"
                 >
                   <i className="icon fa fa-shopping-bag"></i>
-                  <span className="text">Orders</span>
+                  <span className="text">Danh sách đơn hàng</span>
                 </NavLink>
               </li>
               <li className="menu-item">
@@ -100,7 +100,7 @@ const Sidebar = (props) => {
                   to="/admin/users"
                 >
                   <i className="icon fas fa-user"></i>
-                  <span className="text">Users</span>
+                  <span className="text">Danh sách người dùng</span>
                 </NavLink>
               </li>
               <li className="menu-item">
@@ -110,7 +110,7 @@ const Sidebar = (props) => {
                   to="/admin/seller"
                 >
                   <i className="icon fa-solid fa-store"></i>
-                  <span className="text">Seller</span>
+                  <span className="text">Sản phẩm bán chạy</span>
                 </NavLink>
               </li>
               <li className="menu-item">
@@ -120,7 +120,7 @@ const Sidebar = (props) => {
                   to="/admin/currency"
                 >
                   <i className="icon fas fa-usd"></i>
-                  <span className="text">Exchange</span>
+                  <span className="text">Trao đổi</span>
                 </NavLink>
               </li>
             </ul>

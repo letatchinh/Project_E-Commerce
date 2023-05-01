@@ -57,12 +57,12 @@ const EditCategory = (props) => {
           <div className="pcShow">
             <div className="content-header">
               <Link to={-1} className="btn btn-danger text-white">
-                Go to category
+                Trở về danh sách loại
               </Link>
-              <h2 className="content-title">Update Category</h2>
+              <h2 className="content-title">Cập nhật loại</h2>
               <div>
                 <button type="submit" className="btn btn-primary">
-                  Publish now
+                  Cập nhật
                 </button>
               </div>
             </div>
@@ -74,11 +74,11 @@ const EditCategory = (props) => {
                   to="/admin/categorys"
                   className="btn btn-danger text-white"
                 >
-                  Go to Category
+                  Trở về danh sách loại
                 </Link>
                 <div>
                   <button type="submit" className="btn btn-primary">
-                    Publish now
+                    Cập nhật
                   </button>
                 </div>
               </div>
@@ -102,7 +102,7 @@ const EditCategory = (props) => {
                     <>
                       <div className="mb-4">
                         <label htmlFor="Category_Name" className="form-label">
-                          Name
+                          Tên
                         </label>
                         <input
                           type="text"

@@ -44,7 +44,7 @@ const OrderDetailmain = (props) => {
       <section className="content-main">
         <div className="content-header">
           <Link to="/admin/orders" className="btn btn-dark text-white">
-            Back To Orders
+            Trở về danh sách đơn hàng
           </Link>
         </div>
 
@@ -65,7 +65,7 @@ const OrderDetailmain = (props) => {
                   </span>
                   <br />
                   <small className="text-white mx-3">
-                    Order ID : {order._id}
+                    Đơn hàng ID : {order._id}
                   </small>
                 </div>
                 <div className="col-lg-6 col-md-6 ms-auto d-flex justify-content-end align-items-center">
@@ -96,7 +96,7 @@ const OrderDetailmain = (props) => {
                   <div className="box shadow-sm bg-light">
                     {order.isDelivered ? (
                       <button className="btn btn-success col-12">
-                        DELIVERED AT ({" "}
+                        GIAO TẠI ({" "}
                         {moment(order.deliveredAt).format("MMM Do YY")})
                       </button>
                     ) : (

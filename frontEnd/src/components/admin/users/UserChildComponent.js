@@ -123,7 +123,7 @@ const UserChildComponent = (props) => {
                         to={`/admin/users/${user._id}/disabled`}
                         onClick={() => handleDisalbed(user)}
                       >
-                        {user.active ? "Disabled" : ""}
+                        {user.active ? "Không hoạt động" : ""}
                       </Link>
                     </div>
                   )}
@@ -136,14 +136,14 @@ const UserChildComponent = (props) => {
                         onClick={() => handleActive(user)}
                         className="open-active"
                       >
-                        <span>Active</span>
+                        <span>Hoạt động</span>
                       </Link>
                       <Link
                         to={`/admin/users/${user._id}/sendMail`}
                         className="icon-mail"
                       >
                         <i className="fa fa-envelope"></i>
-                        <span>Send Mail</span>
+                        <span>Gửi email</span>
                       </Link>
                     </>
                   )}
@@ -229,7 +229,7 @@ const UserChildComponent = (props) => {
                         to={`/admin/users/${user._id}/disabled`}
                         onClick={() => handleDisalbed(user)}
                       >
-                        {user.active ? "Disabled" : ""}
+                        {user.active ? "Không hoạt động" : ""}
                       </Link>
                     </div>
                   )}

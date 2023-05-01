@@ -11,7 +11,7 @@ const OrderDetailInfo = (props) => {
             <i className="text-success fas fa-user"></i>
           </span>
           <div className="text">
-            <h6 className="mb-1">Cutsomer</h6>
+            <h6 className="mb-1">Khách hàng</h6>
             <p className="mb-1">
               {order.user.name} <br />
               <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
@@ -25,9 +25,9 @@ const OrderDetailInfo = (props) => {
             <i className="text-success fas fa-truck-moving"></i>
           </span>
           <div className="text">
-            <h6 className="mb-1">Order info</h6>
+            <h6 className="mb-1">Thông tin đơn hàng</h6>
             <p className="mb-1">
-              Shipping: {order.shippingAddress.country} <br /> Pay method:{" "}
+              Đang chuyển hàng: {order.shippingAddress.country} <br /> Phương thức chi trả:{" "}
               {order.paymentMethod}
             </p>
           </div>
@@ -39,9 +39,9 @@ const OrderDetailInfo = (props) => {
             <i className="text-success fas fa-map-marker-alt"></i>
           </span>
           <div className="text">
-            <h6 className="mb-1">Deliver to</h6>
+            <h6 className="mb-1">Giao hàng đến</h6>
             <p className="mb-1">
-              Address: {order.shippingAddress.city}
+              Địa chỉ: {order.shippingAddress.city}
               <br />
               {order.shippingAddress.address}
               <br />

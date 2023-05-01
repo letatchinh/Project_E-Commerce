@@ -34,9 +34,9 @@ const CategoriesTableEx = () => {
           <table className="table">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Edit</th>
+                <th>Stt</th>
+                <th>Tên</th>
+                <th>Chỉnh sửa</th>
               </tr>
             </thead>
             {/* Table Data */}

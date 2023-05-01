@@ -7,7 +7,7 @@ const LatestOrder = (props) => {
   const { error, loading, orders } = props;
   return (
     <div className="card-body">
-      <h3 className="card-title">New orders</h3>
+      <h3 className="card-title">Danh sách đơn hàng mới</h3>
       {loading ? (
         <LoadingDashboard />
       ) : error ? (
@@ -27,7 +27,7 @@ const LatestOrder = (props) => {
                     <td>
                       {order.isPaid ? (
                         <span className="badge rounded-pill alert-success">
-                          Paid At {moment(order.paidAt).format("MMM Do YY")}
+                          Thanh toán vào lúc {moment(order.paidAt).format("MMM Do YY")}
                         </span>
                       ) : (
                         <span className="badge rounded-pill alert-danger">

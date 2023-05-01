@@ -23,7 +23,7 @@ const ProductSeller = () => {
   return (
     <section className="content-main">
       <div className="content-header">
-        <h2 className="content-title">Best Seller Products</h2>
+        <h2 className="content-title">Danh sách sản phẩm bán chạy</h2>
       </div>
 
       <div className="card mb-4 shadow-sm">

@@ -93,12 +93,12 @@ const EditProductMain = (props) => {
           <div className="pcShow">
             <div className="content-header">
               <Link to={-1} className="btn btn-danger text-white">
-                Go to products
+                Trở về danh sách sản phẩm
               </Link>
-              <h2 className="content-title">Update Product</h2>
+              <h2 className="content-title">Cập nhật sản phẩm</h2>
               <div>
                 <button type="submit" className="btn btn-primary">
-                  Publish now
+                  Cập nhật
                 </button>
               </div>
             </div>
@@ -110,15 +110,15 @@ const EditProductMain = (props) => {
                   to="/admin/products"
                   className="btn btn-danger text-white"
                 >
-                  Go to products
+                  Trở về danh sách sản phẩm
                 </Link>
                 <div>
                   <button type="submit" className="btn btn-primary">
-                    Publish now
+                    Cập nhật
                   </button>
                 </div>
               </div>
-              <h2 className="content-title">Update Product</h2>
+              <h2 className="content-title">Cập nhật sản phẩm</h2>
             </div>
           </div>
 
@@ -138,7 +138,7 @@ const EditProductMain = (props) => {
                     <>
                       <div className="mb-4">
                         <label htmlFor="product_title" className="form-label">
-                          Product title
+                          Tên sản phẩm
                         </label>
                         <input
                           type="text"
@@ -166,7 +166,7 @@ const EditProductMain = (props) => {
                       </div>
                       <div className="mb-4">
                         <label htmlFor="product_price" className="form-label">
-                          Count In Stock
+                          Số lượng trong kho
                         </label>
                         <input
                           type="number"
@@ -179,7 +179,7 @@ const EditProductMain = (props) => {
                         />
                       </div>
                       <div className="mb-4">
-                        <label className="form-label">Description</label>
+                        <label className="form-label">Mô tả</label>
                         <textarea
                           placeholder="Type here"
                           className="form-control"
@@ -191,13 +191,13 @@ const EditProductMain = (props) => {
                       </div>
                       <div className="mb-4">
                         <label className="form-label form-label-cate">
-                          Category
+                          Loại
                         </label>
                         <select
                           value={category}
                           onChange={(e) => setCategory(e.target.value)}
                         >
-                          <option value="">Select</option>
+                          <option value="">Chọn</option>
                           {categorys &&
                             categorys.map((cate) => (
                               <option key={cate._id} value={cate.name}>
@@ -207,7 +207,7 @@ const EditProductMain = (props) => {
                         </select>
                       </div>
                       <div className="mb-4">
-                        <label className="form-label">Image</label>
+                        <label className="form-label">Hình ảnh</label>
                         <input
                           type="file"
                           multiple
@@ -245,7 +245,7 @@ const EditProductMain = (props) => {
                           htmlFor="product_discount"
                           className="form-label"
                         >
-                          Discount
+                          Giảm giá
                         </label>
                         <input
                           type="number"

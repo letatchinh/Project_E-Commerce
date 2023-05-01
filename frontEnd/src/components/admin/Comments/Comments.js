@@ -68,7 +68,7 @@ const CommentsTables = () => {
   return (
     <>
       <ToastContainer />
-      <h2 className="p-2">Comment products</h2>
+      <h2 className="p-2">Bình luận danh sách sản phẩm</h2>
 
       <div className="col-md-12 col-lg-12 mt-3 mb-3 card">
         <header className="card-header bg-white">
@@ -79,7 +79,7 @@ const CommentsTables = () => {
             >
               <input
                 type="search"
-                placeholder="Search..."
+                placeholder="Tìm kiếm..."
                 className="form-control p-2"
                 onChange={(e) => setKeyword(e.target.value)}
               />
@@ -110,14 +110,14 @@ const CommentsTables = () => {
             <table className="table">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Product</th>
-                  <th>Rating</th>
-                  <th>Comment</th>
-                  <th>Create At</th>
-                  <th>Status</th>
-                  <th>Action</th>
+                  <th>Stt</th>
+                  <th>Tên</th>
+                  <th>Sản phẩm</th>
+                  <th>Đánh giá</th>
+                  <th>Bình luận</th>
+                  <th>Ngày tạo</th>
+                  <th>Trạng thái</th>
+                  <th>Hành động</th>
                 </tr>
               </thead>
               {/* Table Data */}
@@ -164,7 +164,7 @@ const CommentsTables = () => {
                             e.active ? "badge btn-primary" : "badge btn-dark"
                           }
                         >
-                          {e.active ? "active" : "disabled"}
+                          {e.active ? "hoạt động" : "Không hoạt động"}
                         </span>{" "}
                       </td>
                       <td>
@@ -173,21 +173,21 @@ const CommentsTables = () => {
                             to={`/admin/productcomments/${e._id}/disabled`}
                             onClick={() => handelDisabled(e._id)}
                           >
-                            <span className="btn  btn-secondary">disabled</span>
+                            <span className="btn  btn-secondary">Không hoạt động</span>
                           </Link>
                         ) : (
                           <Link
                             to={`/admin/productcomments/${e._id}/active`}
                             onClick={() => handelActive(e._id)}
                           >
-                            <span className="btn btn-success">Active</span>
+                            <span className="btn btn-success">Hoạt động</span>
                           </Link>
                         )}
                       </td>
                     </tr>
                   ))
                 ) : (
-                  <div className="p-2">No comment</div>
+                  <div className="p-2">Không bình luận</div>
                 )}
               </tbody>
             </table>
@@ -202,7 +202,7 @@ const CommentsTables = () => {
                     className="page-link"
                     to={`/admin/productcomments/page/${page && page - 1}`}
                   >
-                    Previous
+                    Trước
                   </Link>
                 </li>
               ) : (
@@ -211,7 +211,7 @@ const CommentsTables = () => {
                     className="page-link"
                     to={`/admin/productcomments/page/${page && page - 1}`}
                   >
-                    Previous
+                    Trước
                   </Link>
                 </li>
               )}
@@ -241,7 +241,7 @@ const CommentsTables = () => {
                     className="page-link"
                     to={`/admin/productcomments/page/${page && page - 1}`}
                   >
-                    Next
+                    Sau
                   </Link>
                 </li>
               ) : (
@@ -250,7 +250,7 @@ const CommentsTables = () => {
                     className="page-link"
                     to={`/admin/productcomments/page/${page && page + 1}`}
                   >
-                    Next
+                    Sau
                   </Link>
                 </li>
               )}

@@ -80,10 +80,10 @@ const MainProducts = () => {
       <ToastContainer />
       <section className="content-main">
         <div className="content-header">
-          <h2 className="content-title">Products</h2>
+          <h2 className="content-title">Danh sách sản phẩm</h2>
           <div>
             <Link to="/admin/addproduct" className="btn btn-primary">
-              Create New
+              Tạo mới
             </Link>
           </div>
         </div>
@@ -97,7 +97,7 @@ const MainProducts = () => {
               >
                 <input
                   type="search"
-                  placeholder="Search..."
+                  placeholder="Tìm kiếm..."
                   className="form-control p-2"
                   onChange={(e) => setKeyword(e.target.value)}
                 />
@@ -108,7 +108,7 @@ const MainProducts = () => {
                   value={keywordCategory}
                   onChange={handlesortCategory}
                 >
-                  <option value="">All category</option>
+                  <option value="">Tất cả các loại</option>
                   {categorys &&
                     categorys.map((cate) => (
                       <option key={cate._id} value={cate.name}>
@@ -120,9 +120,9 @@ const MainProducts = () => {
 
               <div className="col-lg-2 col-6 col-md-3">
                 <select className="form-select" onChange={handlesortPrice}>
-                  <option value="">All price</option>
-                  <option value="-1">High to Low</option>
-                  <option value="1">Low to High</option>
+                  <option value="">Sắp xếp theo giá</option>
+                  <option value="-1">Cao đến thấp</option>
+                  <option value="1">Thấp đến cao</option>
                 </select>
               </div>
               <div className="col-lg-2 col-6 col-md-3">
@@ -130,10 +130,10 @@ const MainProducts = () => {
                   className="form-select"
                   onChange={handlesortQuantitySold}
                 >
-                  <option value="">All Quantity Sold</option>
-                  <option value={5}>Quantity sold {">="} 5 product</option>
-                  <option value={20}>Quantity sold {">="} 20 product</option>
-                  <option value={30}>Quantity sold {">="} 30 product</option>
+                  <option value="">Sắp xếp theo số lượng</option>
+                  <option value={5}>Số lượng bán {">="} 5 sản phẩm</option>
+                  <option value={20}>Số lượng bán {">="} 20 sản phẩm</option>
+                  <option value={30}>Số lượng bán {">="} 30 sản phẩm</option>
                 </select>
               </div>
             </div>
@@ -154,7 +154,7 @@ const MainProducts = () => {
                   products.map((product) => (
                     <Product product={product} key={product._id} />
                   ))}
-                {products.length === 0 && <div>No Empty product</div>}
+                {products.length === 0 && <div>Không có sản phẩm</div>}
               </div>
             )}
             {pages > 1 && (
@@ -166,7 +166,7 @@ const MainProducts = () => {
                         className="page-link"
                         to={`/admin/products/page/${page && page - 1}`}
                       >
-                        Previous
+                        Trước
                       </Link>
                     </li>
                   ) : (
@@ -175,7 +175,7 @@ const MainProducts = () => {
                         className="page-link"
                         to={`/admin/products/page/${page && page - 1}`}
                       >
-                        Previous
+                        Trước
                       </Link>
                     </li>
                   )}
@@ -203,7 +203,7 @@ const MainProducts = () => {
                         className="page-link"
                         to={`/admin/products/page/${page && page - 1}`}
                       >
-                        Next
+                        Sau
                       </Link>
                     </li>
                   ) : (
@@ -212,7 +212,7 @@ const MainProducts = () => {
                         className="page-link"
                         to={`/admin/products/page/${page && page + 1}`}
                       >
-                        Next
+                        Sau
                       </Link>
                     </li>
                   )}

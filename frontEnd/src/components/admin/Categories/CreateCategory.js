@@ -53,7 +53,7 @@ const CreateCategory = () => {
             <div className="mb-4">
               <TextField
                 variant="outlined"
-                label="Name"
+                label="Tên"
                 {...register("name")}
                 error={errors?.name !== undefined}
                 helperText={errors.name && errors.name.message}
@@ -64,7 +64,7 @@ const CreateCategory = () => {
 
           <div className="d-grid">
             <button type="submit" className="btn btn-primary py-3">
-              Create category
+              Tạo mới
             </button>
           </div>
         </form>

@@ -65,18 +65,18 @@ const Product = (props) => {
                 ({product.numReviews})
               </span>
             </div>
-            <div className="price mb-2">Category: {product.category}</div>
+            <div className="price mb-2">Loại: {product.category}</div>
             <div className="price mb-2">
-              Count In Stocks: {product.countInStock}
+              Số lượng trong kho: {product.countInStock}
             </div>
             {product.discount > 0 && (
               <div className="dicount mb-2">-{product.discount}%</div>
             )}
             <div className="price mb-2">
-              Quantity Sold: {product.quantitySold}
+              Số lượng đã bán: {product.quantitySold}
             </div>
             <div className="price mb-2" style={{ whiteSpace: "nowrap" }}>
-              Price Pure:{" "}
+              Giá gốc:{" "}
               <span className=" price-box">
                 {product.price < 1000
                   ? "$" + product.pricePure

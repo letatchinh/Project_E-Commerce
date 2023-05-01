@@ -145,7 +145,7 @@ const Header = (props) => {
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="#">
-              English
+              VN
             </Link>
           </li>
           <li

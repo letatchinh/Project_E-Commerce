@@ -101,13 +101,13 @@ const AddProductMain = () => {
               style={{ justifyContent: "inherit" }}
             >
               <Link to="/admin/products" className="btn btn-danger text-white">
-                Go to products
+                Trở về danh sách sản phẩm
               </Link>
               <h2
                 className="content-title"
                 style={{ display: "block", width: "50%", textAlign: "center" }}
               >
-                Add product
+                Thêm sản phẩm
               </h2>
             </div>
           </div>
@@ -119,16 +119,16 @@ const AddProductMain = () => {
                     to="/admin/products"
                     className="btn btn-danger text-white"
                   >
-                    Go to products
+                    Trở về danh sách sản phẩm
                   </Link>
                 </div>
                 <div>
                   <button type="submit" className="btn btn-primary">
-                    Publish now
+                    Tạo mới
                   </button>
                 </div>
               </div>
-              <h2 className="content-title">Add product</h2>
+              <h2 className="content-title">Thêm sản phẩm</h2>
             </div>
           </div>
 
@@ -141,7 +141,7 @@ const AddProductMain = () => {
                   <div className="mb-4">
                     <TextField
                       variant="outlined"
-                      label="Name"
+                      label="Tên"
                       {...register("name")}
                       error={errors?.name !== undefined}
                       helperText={errors.name && errors.name.message}
@@ -174,7 +174,7 @@ const AddProductMain = () => {
                     <TextareaAutosize
                       aria-label="minimum height"
                       minRows={3}
-                      placeholder="Minimum 3 rows"
+                      placeholder="Mô tả"
                       style={{ width: 400 }}
                       {...register("description")}
                     />
@@ -184,13 +184,13 @@ const AddProductMain = () => {
                   </div>
                   <div className="mb-4">
                     <label className="form-label form-label-cate">
-                      Category
+                      loại
                     </label>
                     <select
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
                     >
-                      <option value="">Select</option>
+                      <option value="">Chọn</option>
                       {categorys &&
                         categorys.map((cate) => (
                           <option key={cate._id} value={cate.name}>
@@ -201,7 +201,7 @@ const AddProductMain = () => {
                   </div>
 
                   <div className="mb-4">
-                    <label className="form-label">Image</label>
+                    <label className="form-label">Hình ảnh</label>
                     <input
                       type="file"
                       multiple
@@ -238,7 +238,7 @@ const AddProductMain = () => {
                   <div className="mb-4">
                     <TextField
                       variant="outlined"
-                      label="Discount"
+                      label="Giảm giá"
                       {...register("discount")}
                       error={errors?.discount !== undefined}
                       helperText={errors.discount && errors.discount.message}
@@ -253,7 +253,7 @@ const AddProductMain = () => {
             <div className="content-header">
               <div>
                 <button type="submit" className="btn btn-primary">
-                  Publish now
+                  Tạo mới
                 </button>
               </div>
             </div>

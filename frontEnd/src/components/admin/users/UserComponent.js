@@ -45,7 +45,7 @@ const UserComponent = () => {
   return (
     <section className="content-main">
       <div className="content-header">
-        <h2 className="content-title">Customer</h2>
+        <h2 className="content-title">Người dùng</h2>
       </div>
       <div className="card mb-4">
         <header className="card-header">
@@ -56,16 +56,16 @@ const UserComponent = () => {
             >
               <input
                 type="text"
-                placeholder="Search..."
+                placeholder="Tìm kiếm..."
                 className="form-control"
                 onChange={(e) => setKeyword(e.target.value)}
               />
             </form>
             <div className="col-lg-2 col-6 col-md-3">
               <select className="form-select" onChange={handlerActive}>
-                <option value="">Status: all</option>
-                <option value="true">Active only</option>
-                <option value="false">Disabled</option>
+                <option value="">Tất cả trạng thái</option>
+                <option value="true">Đang hoạt động</option>
+                <option value="false">Không hoạt động</option>
               </select>
             </div>
           </div>
@@ -82,7 +82,7 @@ const UserComponent = () => {
             ) : count > 0 ? (
               <UserChildComponent users={users} />
             ) : (
-              <div>No user</div>
+              <div>Không người dùng</div>
             )}
 
             {/* nav */}
@@ -95,7 +95,7 @@ const UserComponent = () => {
                         className="page-link"
                         to={`/admin/users/page/${page && page - 1}`}
                       >
-                        Previous
+                        Trước
                       </Link>
                     </li>
                   ) : (
@@ -104,7 +104,7 @@ const UserComponent = () => {
                         className="page-link"
                         to={`/admin/users/page/${page && page - 1}`}
                       >
-                        Previous
+                        Trước
                       </Link>
                     </li>
                   )}
@@ -132,7 +132,7 @@ const UserComponent = () => {
                         className="page-link"
                         to={`/admin/users/page/${page && page - 1}`}
                       >
-                        Next
+                        Sau
                       </Link>
                     </li>
                   ) : (
@@ -141,7 +141,7 @@ const UserComponent = () => {
                         className="page-link"
                         to={`/admin/users/page/${page && page + 1}`}
                       >
-                        Next
+                        Sau
                       </Link>
                     </li>
                   )}
