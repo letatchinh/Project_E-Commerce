@@ -39,7 +39,7 @@ const TopTotal = (props) => {
             </span>
             <div className="text">
               <h6 className="mb-1">Tổng doanh thu bán hàng</h6>{" "}
-              <span>${totalSale.toFixed(2).toLocaleString()}</span>
+              <span>VND{totalSale.toFixed(2).toLocaleString()}</span>
             </div>
           </article>
         </div>
@@ -53,7 +53,7 @@ const TopTotal = (props) => {
             <div className="text">
               <h6 className="mb-1">Tổng doanh thu lợi nhuận</h6>{" "}
               <span>
-                ${(totalSale - totalPure).toFixed(2).toLocaleString()}
+                VND{(totalSale - totalPure).toFixed(2).toLocaleString()}
               </span>
             </div>
           </article>

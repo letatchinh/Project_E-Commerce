@@ -1,17 +1,17 @@
 const vouches = [
   {
-    name: "Giam 1$",
-    discount: 1,
+    name: "Giam 10.000VND",
+    discount: 10000,
     image: "img01.png",
   },
   {
-    name: "Giam 5$",
-    discount: 5,
+    name: "Giam 50.000VND",
+    discount: 50000,
     image: "img02.png",
   },
   {
-    name: "Giam 10$",
-    discount: 10,
+    name: "Giam 100.000",
+    discount: 100000,
     image: "img03.png",
   },
 ];

@@ -113,7 +113,7 @@ const Sidebar = (props) => {
                   <span className="text">Sản phẩm bán chạy</span>
                 </NavLink>
               </li>
-              <li className="menu-item">
+              {/* <li className="menu-item">
                 <NavLink
                   activeclassname="active"
                   className="menu-link"
@@ -122,7 +122,7 @@ const Sidebar = (props) => {
                   <i className="icon fas fa-usd"></i>
                   <span className="text">Trao đổi</span>
                 </NavLink>
-              </li>
+              </li> */}
             </ul>
             <br />
             <br />

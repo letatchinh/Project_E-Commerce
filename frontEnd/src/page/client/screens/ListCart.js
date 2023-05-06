@@ -111,16 +111,16 @@ export default function ListCart() {
           <MyTypography fontSize='1.2rem'>Thông tin đơn hàng</MyTypography>
           <Stack direction='row' justifyContent='space-between'>
             <MyTypography fontSize='14px' color='#757575'>Tồng tiền sản phẩm</MyTypography>
-            <MyTypography>{totalBill} $</MyTypography>
+            <MyTypography>{totalBill} VND</MyTypography>
           </Stack>
           <Stack direction='row' justifyContent='space-between'>
           <MyTypography fontSize='14px' color='#757575'>Phí ship ({distance} km)</MyTypography>
-          {loadingDistance ? <div>...loading</div> : <MyTypography>{(distance * 0.8).toFixed(1)} $</MyTypography>}
+          {loadingDistance ? <div>...loading</div> : <MyTypography>{(distance * 0.8).toFixed(1)} VND</MyTypography>}
             
           </Stack>
           <Stack direction='row' justifyContent='space-between'>
           <MyTypography fontSize='14px' color='#757575'>Giảm giá</MyTypography>
-            <MyTypography>-{voucher} $</MyTypography>
+            <MyTypography>-{voucher} VND</MyTypography>
           </Stack>
            <Typography sx={{opacity : voucher !== 0 ? 1 : 0 , transition : '0.5s ease',backgroundImage: 'linear-gradient(to right , orange, red)',
     backgroundClip: 'text',
@@ -130,7 +130,7 @@ export default function ListCart() {
     <FormVoucher />
         <Stack direction='row' justifyContent='space-between' alignItems='center'>
         <Typography fontSize='14px' color='#757575'>Tổng tiền đơn hàng</Typography>
-            <Typography color='#f57224' fontSize='1.3rem'>{(parseFloat(totalBill) + taxShip - voucher).toFixed(2)} $</Typography>
+            <Typography color='#f57224' fontSize='1.3rem'>{(parseFloat(totalBill) + taxShip - voucher).toFixed(2)} VND</Typography>
         </Stack>
         <Link className={(((!isCheck || user.address === "" ) && (!isCheck || !SubAddress))) ? 'disableLink': " "} to='/payment'><Button endIcon={<ArrowForwardIcon className='surFaceArrow'/>}  disabled={(((!isCheck || user.address === "" ) && (!isCheck || !SubAddress)))} sx={{width : '100%'}} color='warning' variant='contained'>Xác nhận đơn hàng</Button></Link>
         </Stack>

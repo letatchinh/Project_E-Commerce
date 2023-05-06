@@ -16,7 +16,7 @@ export default function PriceSell(props) {
           whiteSpace : 'nowrap'
         }}
       >
-        {parseFloat((price - (price * discount) / 100).toFixed(2))} $
+        {parseFloat((price - (price * discount) / 100).toFixed(2))} VND
       </span>
       <span
         style={{
@@ -28,7 +28,7 @@ export default function PriceSell(props) {
             !isSell  ? (fontSize ? fontSize : "20px") :  (fontSizeDiscount ? fontSizeDiscount : "14px"),
         }}
       >
-        {price} $
+        {price} VND
       </span>
     </Stack>
   );
