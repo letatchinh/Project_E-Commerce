@@ -59,7 +59,7 @@ const AddProductMain = () => {
   const fetch = useCallback(async () => {
     await dispatch(listAllCategorys());
     if (product) {
-      toast.success("Product Added");
+      toast.success("Đã thêm sản phẩm");
       dispatch({ type: PRODUCT_CREATE_RESET });
       setCategory("");
       setImages([]);

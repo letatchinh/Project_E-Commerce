@@ -86,7 +86,7 @@ export default function InfoUser() {
   await AxiosUser.put(`/api/users/profileUser/${userLogin._id}`,user).then(res => {
     localStorage.setItem(KEY_USER,JSON.stringify(res.data))
     dispatch(fecthLogginSuccess(res.data))
-    ToastSuccess("Update Success")
+    ToastSuccess("Cập nhật thành công")
     setStatus(!status);
   }).catch(err => console.log(err)).finally(() =>  setLoading(false))  
   };

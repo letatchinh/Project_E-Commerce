@@ -81,7 +81,7 @@ const EditProductMain = (props) => {
       })
     );
     if (product.name !== name && !products.includes(product.name)) {
-      toast.success("Edit success");
+      toast.success("Chỉnh sửa thành công");
     }
   };
 

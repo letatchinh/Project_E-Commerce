@@ -130,7 +130,7 @@ export function* fetchAddToCart(action) {
     const { status, data } = response;
     if (status === STATUS_CODE.CREATED) {
       yield put({ type: "FETCH_CART_SUCCESS", payload: data });
-      yield ToastSuccess("Added to Your Cart!");
+      yield ToastSuccess("Đã thêm vào giỏ hàng!");
       if(action.payload.setLoading){
         action.payload.setLoading()
       }
@@ -192,7 +192,7 @@ export function* fetchAddOrder(action) {
       yield action.payload.setStep()
     }
   } catch (error) {
-    ToastError("Failed Order")
+    ToastError("Mua hàng thất bại")
   }
 }
 export function* fetchAddOrderSuccessAndDeleteCart(action) {
@@ -206,7 +206,7 @@ export function* fetchAddOrderSuccessAndDeleteCart(action) {
       AxiosUser.post(`/api/carts/deleteMany/${idUser}`, listProduct)
     );
     if (status === STATUS_CODE.SUCCESS) {
-      ToastSuccess("Payment succeeded");
+      ToastSuccess("Thanh toán thành công");
       yield put({ type: "FETCH_CART_REQUEST" });
     }
   } catch (error) {
@@ -254,15 +254,15 @@ export function* fetchLoginWithGgAndFb(action) {
     if (res.status === STATUS_CODE.SUCCESS) {
       yield localStorage.setItem(KEY_USER, JSON.stringify(res.data));
       yield put(fecthLogginSuccess(res.data));
-      ToastSuccess("Login Success");
+      ToastSuccess("Đăng nhập thành công");
     }
     else if(res.status === STATUS_CODE.CREATED){
       yield localStorage.setItem(KEY_USER, JSON.stringify(res.data));
       yield put(fecthLogginSuccess(res.data));
-      ToastSuccess("Login Success");
+      ToastSuccess("Đăng nhập thành công");
     }
     else{
-      ToastError("Login Failed");
+      ToastError("Đăng nhập thất bại");
     }
   } catch (error) {
     ToastError(error.response.data.message)
@@ -273,11 +273,11 @@ export function* fetchDeleteAllCart(){
     const user =  JSON.parse(localStorage.getItem(KEY_USER)) || "";
     const res = yield call(() => AxiosUser.post(`/api/carts/deleteAll/${user._id}`))
     if(res.status === STATUS_CODE.SUCCESS){
-      yield ToastSuccess("Delete All Cart Successed")
+      yield ToastSuccess("Xoá giỏ hàng thành công")
       yield put({type : "FETCH_CART_REQUEST",payload : ""})
     }
     else{
-      ToastError("Delelte All Cart Failed")
+      ToastError("Xoá giỏ hàng thất bại")
     }
   } catch (error) {
     console.log(error);
@@ -290,11 +290,11 @@ export function* fetchAddVoucher(action){
     const res = yield call(() => AxiosUser.put(`/api/users/addVoucher/${user._id}`,action.payload.voucher))
     if(res.status === STATUS_CODE.SUCCESS){
       action.payload.setLoading()
-      yield ToastSuccess("Get Voucher Successed")
+      yield ToastSuccess("Lấy voucher thành công")
     }
     else{
       action.payload.setLoading()
-      ToastError("Get Voucher Failed")
+      ToastError("Lấy voucher thất bại")
     }
   } catch (error) {
     action.payload.setLoading()
@@ -306,11 +306,11 @@ export function* fetchRemoveVoucher(action){
     const user =  JSON.parse(localStorage.getItem(KEY_USER)) || "";
     const res = yield call(() => AxiosUser.put(`/api/users/removeVoucher/${user._id}`,{IdnewVoucher :action.payload}))
     if(res.status === STATUS_CODE.SUCCESS){
-      yield ToastSuccess("Remove Voucher Successed")
+      yield ToastSuccess("Xoá voucher thành công")
       yield put(fetchVoucher({discount : 0,_id : null}))
     }
     else{
-      ToastError("Get Voucher Failed")
+      ToastError("Xoá voucher thất bại")
     }
   } catch (error) {
     console.log(error);
@@ -335,7 +335,7 @@ export function* fetchCheckVoucher(action){
         yield action.payload.handleSetActive()
     }
     else{
-      ToastError("Cant Apply This Voucher , i Need Money")
+      ToastError("Không thể sử dụng voucher này")
     }
   } catch (error) {
     
@@ -364,11 +364,11 @@ export function* fetchAddComment(action){
      yield  action.payload.handleSetItem(data.updatedProduct)
      yield action.payload.setCount()
      yield action.payload.reset()
-     yield ToastSuccess("Tks for Your Comment <3")
+     yield ToastSuccess("Cảm ơn bạn đã đánh giá <3")
      }
    }
   } catch (error) {
-    ToastError("Error connect")
+    ToastError("Kết nối thất bại")
     console.log(error,"error");
   }
 }

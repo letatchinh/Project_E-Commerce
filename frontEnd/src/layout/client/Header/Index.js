@@ -53,7 +53,7 @@ const handleClick = (event) => {
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = async(data) => {
     if(data.searchKeyword.trim() === " ") {
-      ToastError("Please write product you want")
+      ToastError("Vui lòng viết sản phẩm bạn muốn")
     }
    else{
    await dispatch(setKeywordSearch(data.searchKeyword.trim()));

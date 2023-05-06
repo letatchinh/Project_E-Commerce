@@ -16,11 +16,11 @@ export default function DetailListOrderUser({ click, data, reFetch }) {
   const handleCancelBill = async () => {
     AxiosUser.delete(`/api/orders/deleteById/${_id}`)
       .then((res) => {
-        ToastSuccess("Delete Success");
+        ToastSuccess("Xoá thành công");
         click();
         reFetch();
       })
-      .catch((err) => ToastError("Delete Failed"));
+      .catch((err) => ToastError("Xoá thất bại"));
   };
   return (
     <Stack>

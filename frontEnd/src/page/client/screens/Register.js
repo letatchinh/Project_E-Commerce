@@ -50,7 +50,7 @@ export default function Register() {
     axios
       .post(`/api/users/`, newUser)
       .then((res) => {
-        ToastSuccess("Resgister Success!");
+        ToastSuccess("Đăng ký thành công!");
         setLoading(false)
         dispatch(
           fetchLoginRequest({ email: res.data.email, password: data.password })

@@ -89,7 +89,7 @@ export const fetchDeleteCartRequest = (data) => {
       try {
         await AxiosUser.post("/api/carts/delete", data)
           .then(async(res) => {
-            ToastSuccess("Delete Success!");
+            ToastSuccess("Xoá thành công!");
             dispatch(fetchCartRequest())
           })
           .catch((err) => ToastError(err.response.data.message));

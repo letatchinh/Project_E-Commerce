@@ -31,12 +31,12 @@ const UserChildComponent = (props) => {
     fetch();
   }, [fetch]);
   const handleDisalbed = (updateUser) => {
-    toast("Disable success");
+    toast("Ngừng hoạt động thành công");
     dispatch(userDisabledaction(updateUser));
     navigator(-1);
   };
   const handleActive = (updateActiveUser) => {
-    toast("Active success");
+    toast("Kích hoạt thành công");
     dispatch(userActiveaction(updateActiveUser));
     navigator(-1);
   };

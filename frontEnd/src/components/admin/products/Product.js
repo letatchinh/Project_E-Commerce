@@ -12,7 +12,7 @@ const Product = (props) => {
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure ?")) {
       dispatch(deleteProduct(id));
-      toast("Delete success");
+      toast("Xoá thành công");
     }
   };
 

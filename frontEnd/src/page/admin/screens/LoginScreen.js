@@ -21,7 +21,7 @@ const Login = () => {
 
   useEffect(() => {
     if (userInfo && email !== "admin@gmail.com") {
-      toast.error("Not is a Admin");
+      toast.error("không phải admin");
       localStorage.removeItem("userInfo");
     } else if (userInfo && email === "admin@gmail.com") {
       navigate("/admin");

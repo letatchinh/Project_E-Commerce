@@ -32,7 +32,7 @@ const OrderDetailmain = (props) => {
 
   const deliverHanlder = () => {
     dispatch(deliverOrder(order));
-    toast("Delivered success");
+    toast("Giao hàng thành công");
   };
 
   let dataExcel = JSON.stringify(order);

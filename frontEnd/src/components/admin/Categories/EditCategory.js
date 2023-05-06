@@ -46,7 +46,7 @@ const EditCategory = (props) => {
       })
     );
     if (category.name !== name && !categorys.includes(category.name)) {
-      toast.success("Edit success");
+      toast.success("Chỉnh sửa thành công");
     }
   };
   return (

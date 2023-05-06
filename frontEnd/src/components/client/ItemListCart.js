@@ -36,7 +36,7 @@ export default function ItemListCart({ item }) {
         await dispatch(fetchCartNew(newListCart));
       }
       else{
-        ToastError(`${name} is out of stock`)
+        ToastError(`${name} đã hết hàng`)
       }
     }
     else{
@@ -102,7 +102,7 @@ export default function ItemListCart({ item }) {
               dispatch(increaseQuanlity(item));
             }
             else{
-              ToastError(`${name} Is Out of stock`)
+              ToastError(`${name} đã hết hàng`)
             }
           }}
           variant="outlined"

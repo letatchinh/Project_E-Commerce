@@ -117,7 +117,7 @@ export default function Payment() {
   dispatch(fetchAddOrderRequest({newOrder,config,setStep}))
   }
   else{
-    res.data.listOutOfStock.map(e => ToastError(`${e.name} Is Out Of Stock , Stock is ${e.countInStock}`))
+    res.data.listOutOfStock.map(e => ToastError(`${e.name} hết hàng , kho còn ${e.countInStock}`))
   }
   })
    

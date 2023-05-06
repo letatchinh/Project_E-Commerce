@@ -27,7 +27,7 @@ export const fetchLoginRequest=(data) =>{
                 const res = await AxiosUser.post('/api/users/loginUser',data)
                 localStorage.setItem(KEY_USER,JSON.stringify(res.data));
                 dispatch(fecthLogginSuccess(res.data))
-                ToastSuccess("Login Success")
+                ToastSuccess("Đăng nhập thành công")
                 return res.data
             } catch (error) {
                 console.log(error.response.data.message);

@@ -31,7 +31,7 @@ const CreateCategory = () => {
   const fetch = useCallback(async () => {
     if (category) {
       dispatch({ type: CATEGORY_CREATE_RESET });
-      toast("Add Category Success");
+      toast("Thêm vào giỏ hàng thành công");
     }
   }, [category, dispatch]);
   useEffect(() => {

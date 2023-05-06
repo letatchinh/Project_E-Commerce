@@ -53,7 +53,7 @@ export const ContactUs = () => {
           console.log(error.text);
         }
       );
-    toast("Send Mail Success");
+    toast("Gửi mail thành công");
   };
 
   useEffect(() => {

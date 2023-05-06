@@ -58,11 +58,11 @@ const CommentsTables = () => {
   };
   const handelDisabled = (id) => {
     dispatch(disabledReivew(id));
-    toast("Disabled success");
+    toast("Ngừng hoạt động thành công");
   };
   const handelActive = (id) => {
     dispatch(activeReivew(id));
-    toast("Active success");
+    toast("Ngừng hoạt động thất bại");
   };
 
   return (

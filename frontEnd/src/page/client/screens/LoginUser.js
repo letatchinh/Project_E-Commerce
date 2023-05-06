@@ -52,7 +52,7 @@ export default function LoginUser() {
     await AxiosUser.post('/api/users/loginUser',data).then(res => {
     localStorage.setItem(KEY_USER,JSON.stringify(res.data));
     dispatch(fecthLogginSuccess(res.data))
-    ToastSuccess("Login Success")
+    ToastSuccess("Đăng nhập thành công")
     setLoading(false)
    }).catch(err => {
     console.log(err.response.data.message);
@@ -90,13 +90,13 @@ export default function LoginUser() {
       dispatch(fetchLoginWithGoogleAndFbRequest(newUser))
     }
     else{
-      ToastError("login with fb failed")
+      ToastError("Đăng nhập FB thất bại")
     }
     
   };
   const responseGoogle = async (response) => {
     if(response.error === "popup_closed_by_user"){
-      ToastError("login with GG failed")
+      ToastError("Đăng nhập google thất bại")
     }
     else{
       const newUser = {
