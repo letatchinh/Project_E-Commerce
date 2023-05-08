@@ -454,7 +454,7 @@ productRoute.put(
       quantitySold,
     } = req.body;
     const product = await Product.findById(req.params.id);
-    const productExists = await Product.findOne({ name });
+    const productExists = await Product.findOne({ name , _id : {$ne : req.params.id} });
     if (productExists) {
       res.status(400);
       throw new Error("Product name must be edit");

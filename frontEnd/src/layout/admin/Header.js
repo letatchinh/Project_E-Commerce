@@ -131,7 +131,7 @@ const Header = (props) => {
                           className={`${active === e && "active"}`}
                         >
                           <dd>
-                            User: {e.user.name} just ordered{" "}
+                            User: {e?.user?.name} just ordered{" "}
                             <i className="fas fa-eye"></i>
                           </dd>
                         </dl>

@@ -22,13 +22,13 @@ export default function RangeFilterPrice() {
       setValue(newValue);
     };
     const handleSetPrice = () => {
-        dispatch(setFilter({ type: "SET_MIN_PRICE", filter: (value[0]*4) }));
-        dispatch(setFilter({ type: "SET_MAX_PRICE", filter: (value[1]*4) }));
+        dispatch(setFilter({ type: "SET_MIN_PRICE", filter: (value[0]*10000) }));
+        dispatch(setFilter({ type: "SET_MAX_PRICE", filter: (value[1]*10000) }));
         dispatch(setFilter({type : "SET_PAGE",filter : 1}))
     }
   return (
     <Box sx={{ width: '100%' }}>
-    <MyTypography>{`Giá từ ${value[0] * 4}$ đến : ${value[1] * 4}$ `}</MyTypography>
+    <MyTypography>{`Giá từ ${value[0] * 10000}VND đến : ${value[1] * 10000}VND `}</MyTypography>
     <Slider
       getAriaLabel={() => 'Temperature range'}
       value={value}
