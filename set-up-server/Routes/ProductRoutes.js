@@ -4,7 +4,13 @@ import Product from "./../Models/ProductModel.js";
 import { admin, protect } from "./../MiddelWare/AuthMiddleware.js";
 
 const productRoute = express.Router();
-
+productRoute.delete(
+  "/deleteAll",
+  asyncHandler(async (req, res) => {
+    await Product.deleteMany({});
+      res.json({ message: "deleted" });
+  })
+);
 // USER
 //GET ALL PRODUCT
 productRoute.get(

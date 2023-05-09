@@ -4,7 +4,13 @@ import { admin, protect } from "../MiddelWare/AuthMiddleware.js";
 import Product from "../Models/ProductModel.js";
 import Review from "../Models/ReviewModel.js";
 const ReviewRoutes = express.Router();
-
+ReviewRoutes.delete(
+  "/deleteAll",
+  asyncHandler(async (req, res) => {
+    await Review.deleteMany({});
+      res.json({ message: "deleted" });
+  })
+);
 //USER
 
 //GET ALL Review
@@ -187,4 +193,5 @@ ReviewRoutes.put(
     }
   })
 );
+
 export default ReviewRoutes;

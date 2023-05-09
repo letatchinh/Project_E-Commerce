@@ -109,4 +109,11 @@ CartRoutes.delete(
     }
   })
 );
+CartRoutes.delete(
+  "/deleteAll",
+  asyncHandler(async (req, res) => {
+    await Carts.deleteMany({});
+      res.json({ message: "Cart deleted" });
+  })
+);
 export default CartRoutes;

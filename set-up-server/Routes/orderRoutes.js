@@ -5,7 +5,13 @@ import { admin, protect } from "./../MiddelWare/AuthMiddleware.js";
 import Order from "./../Models/OrderModel.js";
 
 const orderRouter = express.Router();
-
+orderRouter.delete(
+  "/deleteAll",
+  asyncHandler(async (req, res) => {
+    await Order.deleteMany({});
+      res.json({ message: "deleted" });
+  })
+);
 // USER
 
 //CREATE ORDER
