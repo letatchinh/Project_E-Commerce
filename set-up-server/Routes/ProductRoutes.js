@@ -297,11 +297,12 @@ productRoute.get(
           },
         }
       : {};
-    const keywordQuantitySold = req.query.quantitySold
-      ? {
-          quantitySold: { $gte: req.query.quantitySold },
-        }
-      : {};
+    // const keywordQuantitySold = req.query.quantitySold
+    //   ? {
+    //       quantitySold: { $gte: req.query.quantitySold },
+    //     }
+    //   : {};
+    const keywordQuantitySold = req.query.quantitySold || null ; 
 
     const prices = req.query.sortPrice || null;
 
@@ -319,7 +320,8 @@ productRoute.get(
     })
       .limit(pageSize)
       .skip(pageSize * (page - 1))
-      .sort(!prices ? { _id: -1 } : { price: prices });
+      // .sort(!prices ? { _id: -1 } : { price: prices });
+      .sort(prices ? { price: prices } : keywordQuantitySold ? { quantitySold: keywordQuantitySold } : { price: prices, quantitySold: keywordQuantitySold } || { _id: -1 })
     res.json({ products, page, pages: Math.ceil(count / pageSize) });
   })
 );

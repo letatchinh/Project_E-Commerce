@@ -131,9 +131,9 @@ const MainProducts = () => {
                   onChange={handlesortQuantitySold}
                 >
                   <option value="">Sắp xếp theo số lượng</option>
-                  <option value={5}>Số lượng bán {">="} 5 sản phẩm</option>
-                  <option value={20}>Số lượng bán {">="} 20 sản phẩm</option>
-                  <option value={30}>Số lượng bán {">="} 30 sản phẩm</option>
+                  <option value="-1">Cao đến thấp</option>
+                  <option value="1">Thấp đến cao</option>
+                  {/* <option value={30}>Số lượng bán {">="} 30 sản phẩm</option> */}
                 </select>
               </div>
             </div>

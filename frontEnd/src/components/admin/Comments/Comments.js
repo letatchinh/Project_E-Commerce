@@ -116,8 +116,8 @@ const CommentsTables = () => {
                   <th>Đánh giá</th>
                   <th>Bình luận</th>
                   <th>Ngày tạo</th>
-                  <th>Trạng thái</th>
-                  <th>Hành động</th>
+                  {/* <th>Trạng thái</th>
+                  <th>Hành động</th> */}
                 </tr>
               </thead>
               {/* Table Data */}
@@ -158,7 +158,7 @@ const CommentsTables = () => {
                       </td>
                       <td>{e.comment}</td>
                       <td> {moment(e.createdAt).format("llll")}</td>
-                      <td>
+                      {/* <td>
                         <span
                           className={
                             e.active ? "badge btn-primary" : "badge btn-dark"
@@ -166,8 +166,8 @@ const CommentsTables = () => {
                         >
                           {e.active ? "hoạt động" : "Không hoạt động"}
                         </span>{" "}
-                      </td>
-                      <td>
+                      </td> */}
+                      {/* <td>
                         {e.active ? (
                           <Link
                             to={`/admin/productcomments/${e._id}/disabled`}
@@ -183,7 +183,7 @@ const CommentsTables = () => {
                             <span className="btn btn-success">Hoạt động</span>
                           </Link>
                         )}
-                      </td>
+                      </td> */}
                     </tr>
                   ))
                 ) : (
@@ -193,7 +193,7 @@ const CommentsTables = () => {
             </table>
           </div>
         )}
-        {pages > 1 && (
+        {/* {pages > 1 && (
           <nav className="float-end mt-4" aria-label="Page navigation">
             <ul className="pagination">
               {page === 1 ? (
@@ -256,7 +256,7 @@ const CommentsTables = () => {
               )}
             </ul>
           </nav>
-        )}
+        )} */}
       </div>
     </>
   );
