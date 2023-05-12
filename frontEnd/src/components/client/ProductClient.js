@@ -127,22 +127,23 @@ export default function ProductClient({ item }) {
         <PriceSell fontSize="18px" price={price} discount={item.discount}/>
   
 
-        <LoadingButton onClick={handleAddToCart} loading={loading} variant="outlined">
-        <AddShoppingCartIcon className="hoverIconAddCart" />
-</LoadingButton>
+       
 
         </Stack>
 
       </Link>
-      <CardContent sx={{ padding: "5px 0" , display : 'flex' , alignItems : 'center' }}>
-        <StyledRating value={parseFloat(rating)} precision={.5} readOnly={true} size="small" />
+      <CardContent sx={{ padding: "5px 0" , display : 'flex' , alignItems : 'center',justifyContent : 'space-between' }}>
+        <div><StyledRating value={parseFloat(rating)} precision={.5} readOnly={true} size="small" />
         <Typography
           variant="body2"
           component="span"
           color={mainColorText}
         >
           ({numReviews})
-        </Typography>
+        </Typography></div>
+        <LoadingButton onClick={handleAddToCart} loading={loading} variant="outlined">
+        <AddShoppingCartIcon className="hoverIconAddCart" />
+</LoadingButton>
       </CardContent>
       <Stack
         className="scrollBarProduct"

@@ -104,14 +104,14 @@ const OrderMain = () => {
                 onChange={(e) => setName(e.target.value)}
               />
             </form>
-            <div className="col-lg-2 col-6 col-md-3 w-pc-28">
+            {/* <div className="col-lg-2 col-6 col-md-3 w-pc-28">
               <select className="form-select" onChange={HandlerSortTotal}>
                 <option value="">Hiển thị tất cả tổng tiền</option>
                 <option value="50">Tổng {">="} 50$</option>
                 <option value="100">Tổng {">="} 100$</option>
                 <option value="200">Tổng {">="} 200$</option>
               </select>
-            </div>
+            </div> */}
             <div className="col-lg-2 col-6 col-md-3 w-pc-28">
               <select className="form-select" onChange={HandlerPaiD}>
                 <option value="">Hiển thị tất cả</option>

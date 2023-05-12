@@ -10,3 +10,4 @@ export function getToday(){
      export  function reverses(array){
         return array.map((item,idx) => array[array.length-1-idx])
       }
+export const formatterNumber = (value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')

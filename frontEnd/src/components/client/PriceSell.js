@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
+import { formatterNumber } from "../../constant/FunctionCommom 2";
 
 export default function PriceSell(props) {
   const { price, discount, fontSize , fontSizeDiscount } = props;
@@ -16,7 +17,7 @@ export default function PriceSell(props) {
           whiteSpace : 'nowrap'
         }}
       >
-        {parseFloat((price - (price * discount) / 100).toFixed(2))} VND
+        {formatterNumber(parseFloat((price - (price * discount) / 100).toFixed(2)))} VND
       </span>
       <span
         style={{
@@ -28,7 +29,7 @@ export default function PriceSell(props) {
             !isSell  ? (fontSize ? fontSize : "20px") :  (fontSizeDiscount ? fontSizeDiscount : "14px"),
         }}
       >
-        {price} VND
+        {formatterNumber(price)} VND
       </span>
     </Stack>
   );
