@@ -118,16 +118,16 @@ export default function ListCart() {
           {loadingDistance ? <div>...loading</div> : <MyTypography>{(distance * 0.8).toFixed(1)} VND</MyTypography>}
             
           </Stack>
-          <Stack direction='row' justifyContent='space-between'>
+          {/* <Stack direction='row' justifyContent='space-between'>
           <MyTypography fontSize='14px' color='#757575'>Giảm giá</MyTypography>
             <MyTypography>-{voucher} VND</MyTypography>
-          </Stack>
+          </Stack> */}
            <Typography sx={{opacity : voucher !== 0 ? 1 : 0 , transition : '0.5s ease',backgroundImage: 'linear-gradient(to right , orange, red)',
     backgroundClip: 'text',
     color: 'transparent',
     width: 'fit-content',}}><img style={{width : '30px'}} src="https://cdn-icons-png.flaticon.com/128/2548/2548362.png" alt='ll'/>{`congrats you got ${voucher}$ ​​off from voucher`}</Typography>
         </Stack>
-    <FormVoucher />
+    {/* <FormVoucher /> */}
         <Stack direction='row' justifyContent='space-between' alignItems='center'>
         <Typography fontSize='14px' color='#757575'>Tổng tiền đơn hàng</Typography>
             <Typography color='#f57224' fontSize='1.3rem'>{(parseFloat(totalBill) + taxShip - voucher).toFixed(2)} VND</Typography>

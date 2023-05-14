@@ -38,8 +38,8 @@ export default function DetailListOrderUser({ click, data, reFetch }) {
         <TextItemListOrder title="Bill Id" value={_id} />
        
         <TextItemListOrder
-          title="Status"
-          value={isDelivered ? "Shipping" : "Wait Admin Check"}
+          title="Trạng thái"
+          value={isDelivered ? "Đang Ship" : "Đợi admin duyệt"}
         />
       </Stack>
       <ContainerScoll>
@@ -53,18 +53,18 @@ export default function DetailListOrderUser({ click, data, reFetch }) {
       <Stack direction="row" alignItems="center" justifyContent='space-between'>
         {!isDelivered && (
           <Dialo
-            messenger="Are you want Cancel Bill ?"
+            messenger="Bạn muốn huỷ đơn ?"
             click={handleCancelBill}
           >
-            <Button variant="outlined">Cancel Bill</Button>
+            <Button variant="outlined">Huỷ đơn</Button>
           </Dialo>
         )}
- <TextItemListOrder title="Address Ship" value={shippingAddress.address} />
+ <TextItemListOrder title="Địa chỉ ship" value={shippingAddress.address} />
         <Stack  width="200px">
           <Stack>
-            <TotalBill title="Tax Ship" value={shippingPrice} />
-            <TotalBill title="Voucher" value={voucher} />
-            <TotalBill title="Total Bill" value={totalPrice} />
+            <TotalBill title="Phí ship" value={shippingPrice} />
+            {/* <TotalBill title="Voucher" value={voucher} /> */}
+            <TotalBill title="Tổng đơn hàng" value={totalPrice} />
           </Stack>
         </Stack>
       </Stack>
