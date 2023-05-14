@@ -1,4 +1,4 @@
-import {  RECEIVE_LIST, SET_CATEGORY_SEARCH, SET_SEARCH_KEYWORD, SET_SORT_PRICE, SET_SORT_RATING, SORT_PRICE_HIGH_TO_LOW, SORT_PRICE_LOW_TO_HIGH, SORT_RATING_HIGH_TO_LOW, SORT_RATING_LOW_TO_HIGH } from "./Types"
+import {  RECEIVE_LIST, SET_CATEGORY_SEARCH, SET_SEARCH_KEYWORD, SET_SORT_NEW, SET_SORT_PRICE, SET_SORT_RATING, SET_SORT_SOLD, SORT_PRICE_HIGH_TO_LOW, SORT_PRICE_LOW_TO_HIGH, SORT_RATING_HIGH_TO_LOW, SORT_RATING_LOW_TO_HIGH } from "./Types"
 
 export const fetchReceiveListShow = (data) => {
     return {
@@ -51,6 +51,18 @@ export const setSortPrice = (action) => {
 export const setSortRating = (action) => {
     return {
         type : SET_SORT_RATING,
+        payload : action
+    }
+}
+export const setSortNew = (action) => {
+    return {
+        type : SET_SORT_NEW,
+        payload : action
+    }
+}
+export const setSortSold = (action) => {
+    return {
+        type : SET_SORT_SOLD,
         payload : action
     }
 }

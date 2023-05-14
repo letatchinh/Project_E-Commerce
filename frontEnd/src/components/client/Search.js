@@ -24,6 +24,8 @@ export default function Search({ typeCategory }) {
   const category = useSelector((state) => state.filterProduct.category);
   const sortPrice = useSelector((state) => state.filterProduct.sortPrice);
   const sortRating = useSelector((state) => state.filterProduct.sortRating);
+  const sortNew = useSelector((state) => state.filterProduct.sortNew);
+  const sortSold = useSelector((state) => state.filterProduct.sortSold);
   // const low5 = useSelector((state) => state.filterProduct.low5);
   // const more10 = useSelector((state) => state.filterProduct.more10);
   // const more50 = useSelector((state) => state.filterProduct.more50);
@@ -56,6 +58,8 @@ export default function Search({ typeCategory }) {
         page,
         sortPrice,
         sortRating,
+        sortNew,
+        sortSold,
         min,
         max,
         gteRating,
@@ -74,6 +78,12 @@ export default function Search({ typeCategory }) {
     if (sortRating) {
       objectSearch.sortRating = sortRating;
     }
+    if (sortNew) {
+      objectSearch.sortNew = sortNew;
+    }
+    if (sortSold) {
+      objectSearch.sortSold = sortSold;
+    }
     if (min) {
       objectSearch.min = min;
     }
@@ -91,6 +101,8 @@ export default function Search({ typeCategory }) {
     category,
     sortPrice,
     sortRating,
+    sortNew,
+    sortSold,
     min,
     max,
     page,

@@ -1,20 +1,26 @@
-import { FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material'
+import { Button, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material'
 import { Stack } from '@mui/system'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setFilter, setSortPrice, setSortRating} from '../../redux/filterProduct/Actions'
+import { setFilter, setSortNew, setSortPrice, setSortRating, setSortSold} from '../../redux/filterProduct/Actions'
 import '../StyleComponent/SideBarFilter.css'
 
 export default function SortBar() {
   const mainColorText = useSelector(state => state.colorCommon.mainColorText)
   const sortPrice = useSelector((state) => state.filterProduct.sortPrice);
   const sortRating = useSelector((state) => state.filterProduct.sortRating);
+  const sortSold = useSelector((state) => state.filterProduct.sortSold);
+  const sortNew = useSelector((state) => state.filterProduct.sortNew);
   const dispatch = useDispatch()
   const [price, setPrice] = useState('All');
   const [rating, setRating] = useState('All');
+  const [news,setnews] = useState(null);
+  const [sold, setSold] = useState(null);
   useEffect(() => {
     setPrice(sortPrice || '')
     setRating(sortRating || '')
+    setnews(sortSold || null)
+    setSold(sortNew || null)
   },[sortPrice,sortRating])
   const handleChangePrice = (event) => {
     setPrice(event.target.value);
@@ -47,6 +53,21 @@ export default function SortBar() {
 
     }
   };
+  const handleSortSold = () => {
+      dispatch(setSortSold(1))
+      setSold(true)
+      setnews(false)
+      dispatch(setFilter({type : "SET_PAGE",filter : 1}))
+  
+  };
+  const handleSortNew = () => {
+      dispatch(setSortNew(1))
+      setnews(true)
+      setSold(false)
+      dispatch(setFilter({type : "SET_PAGE",filter : 1}))
+  
+  };
+
   return (
    <Stack className='SortBar' spacing={5} direction='row' padding='10px' alignItems='center' >
     <FormControl sx={{width : {md : '200px' , sm : '100px' , xs : '100px'}  , background : 'white'}}>
@@ -76,6 +97,16 @@ export default function SortBar() {
           <MenuItem value={1}>Tăng dần</MenuItem>
           <MenuItem value={"All"}>Mặc định</MenuItem>
         </Select>
+      </FormControl>
+    <FormControl sx={{width : {md : '200px' , sm : '100px' , xs : '100px'}  , background : 'white'}}>
+    <Button onClick={handleSortNew} variant={news ? 'contained' : 'outlined'}>
+         Mới nhất
+        </Button>
+      </FormControl>
+    <FormControl sx={{width : {md : '200px' , sm : '100px' , xs : '100px'}  , background : 'white'}}>
+        <Button onClick={handleSortSold} variant={sold ? 'contained' : 'outlined'}>
+         Bán chạy nhất
+        </Button>
       </FormControl>
    </Stack>
   )

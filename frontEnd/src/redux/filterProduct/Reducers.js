@@ -4,6 +4,8 @@ const initvalue = {
   category : null,
   sortPrice : null,
   sortRating : null,
+  sortSold : null,
+  sortNew : null,
   low5 : null,
   more10 : null,
   more50 : null,
@@ -27,12 +29,34 @@ const filterProductReducer = (state = initvalue, action) => {
       case TYPES.SET_SORT_PRICE:
         return {
           ...state,
+          sortRating : null,
+          sortSold : null,
+          sortNew : null,
           sortPrice : action.payload
         }
       case TYPES.SET_SORT_RATING:
         return {
           ...state,
+          sortPrice : null,
+          sortSold : null,
+          sortNew : null,
           sortRating : action.payload
+        }
+      case TYPES.SET_SORT_NEW:
+        return {
+          ...state,
+          sortPrice : null,
+          sortRating : null,
+          sortSold : null,
+          sortNew : action.payload
+        }
+      case TYPES.SET_SORT_SOLD:
+        return {
+          ...state,
+          sortPrice : null,
+          sortRating : null,
+          sortNew : null,
+          sortSold : action.payload
         }
       case TYPES.SET_SORT_PRICE_LESS_5:
         return {

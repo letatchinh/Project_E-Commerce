@@ -26,6 +26,8 @@ productRoute.get(
   "/search",
   asyncHandler(async (req, res) => {
     const pageSize = Number(req.query.limit) || 8;
+    const sortNew = (req.query.sortNew)
+    const sortSold = req.query.sortSold
     const name = req.query.name || "";
     const nameFilter = name ? { name: { $regex: name, $options: "i" } } : {};
 
@@ -81,7 +83,9 @@ productRoute.get(
           ? { price: sortPrice }
           : sortRating
           ? { rating: sortRating }
-          : { _id: -1 }
+          : sortNew !== 'false' ? {createdAt : -1} 
+          : sortSold  !== 'false'? {quantitySold : -1}
+          : {}
       );
     res.send({ products, page, pages: Math.ceil(count / pageSize), count });
     // const arr = products.find()
