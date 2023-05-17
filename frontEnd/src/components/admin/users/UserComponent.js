@@ -86,11 +86,11 @@ const UserComponent = () => {
               />
             </form>
             <div className="col-lg-2 col-6 col-md-3">
-              <select className="form-select" onChange={handlerActive}>
+              {/* <select className="form-select" onChange={handlerActive}>
                 <option value="">Tất cả trạng thái</option>
                 <option value="true">Đang hoạt động</option>
                 <option value="false">Không hoạt động</option>
-              </select>
+              </select> */}
             </div>
           </div>
         </header>

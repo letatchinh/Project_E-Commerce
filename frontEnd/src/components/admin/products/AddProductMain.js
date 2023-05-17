@@ -16,23 +16,23 @@ const validationSchema = yup.object().shape({
   name: yup.string().required("You Must Enter Name Product"),
   price: yup
     .number()
-    .typeError("You must specify a number for price")
-    .min(0, "Min value 0.")
-    .required("Required"),
+    .typeError("Bạn phải chỉ định một số cho giá")
+    .min(0, "thấp nhất 0.")
+    .required("Vui lòng nhập"),
   discount: yup
     .number()
-    .typeError("You must specify a number for discount")
-    .min(0, "Min value 0.")
-    .required("Required"),
+    .typeError("Bạn phải chỉ định một số cho giảm giá")
+    .min(0, "thấp nhất 0.")
+    .required("Vui lòng nhập"),
   countInStock: yup
     .number()
-    .typeError("You must specify a number for count instock")
-    .min(0, "Min value 0.")
-    .required("Required"),
+    .typeError("Bạn phải chỉ định một số cho kho")
+    .min(0, "thấp nhất 0.")
+    .required("Vui lòng nhập"),
   description: yup
     .string()
-    .required("Filed description not empty")
-    .min(10, "Must be more 10 character"),
+    .required("Vui lòng nhập")
+    .min(10, "Phải hơn 10 kí tự"),
 });
 
 const AddProductMain = () => {

@@ -306,11 +306,11 @@ export function* fetchRemoveVoucher(action){
     const user =  JSON.parse(localStorage.getItem(KEY_USER)) || "";
     const res = yield call(() => AxiosUser.put(`/api/users/removeVoucher/${user._id}`,{IdnewVoucher :action.payload}))
     if(res.status === STATUS_CODE.SUCCESS){
-      yield ToastSuccess("Xoá voucher thành công")
+      // yield ToastSuccess("Xoá voucher thành công")
       yield put(fetchVoucher({discount : 0,_id : null}))
     }
     else{
-      ToastError("Xoá voucher thất bại")
+      // ToastError("Xoá voucher thất bại")
     }
   } catch (error) {
     console.log(error);

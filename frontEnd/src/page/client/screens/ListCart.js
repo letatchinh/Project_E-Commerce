@@ -37,7 +37,7 @@ export default function ListCart() {
      setIsCheck(listCarts.some(e => e.isChecked))
     },[listCarts,dispatch])
     useEffect(() => {
-      dispatch(fetchTaxShip(parseFloat((distance * 0.8).toFixed(1))))
+      dispatch(fetchTaxShip(parseFloat((distance * 8000).toFixed(0))))
     },[distance,dispatch])
     useEffect(() => {
       if(totalBill + taxShip < voucher){
@@ -116,7 +116,7 @@ export default function ListCart() {
           </Stack>
           <Stack direction='row' justifyContent='space-between'>
           <MyTypography fontSize='14px' color='#757575'>Phí ship ({distance} km)</MyTypography>
-          {loadingDistance ? <div>...loading</div> : <MyTypography>{(distance * 0.8).toFixed(1)} VND</MyTypography>}
+          {loadingDistance ? <div>...loading</div> : <MyTypography>{formatterNumber((distance * 8000).toFixed(0))} VND</MyTypography>}
             
           </Stack>
           {/* <Stack direction='row' justifyContent='space-between'>

@@ -185,7 +185,7 @@ if(value === ""){
                 >
                   <MyTypography variant="h6">Tổng giá trị :</MyTypography>
                   <MyTypography variant="h6" fontWeight="bold">
-                  {totalBill} $
+                  {formatterNumber(totalBill)} VND
                   </MyTypography>
                   
                 </Stack>
@@ -196,7 +196,7 @@ if(value === ""){
                 >
                   <MyTypography variant="h6">Phí ship :</MyTypography>
                   <MyTypography variant="h6" fontWeight="bold">
-                  {taxShip} $
+                  {formatterNumber(taxShip)} VND
                   </MyTypography>
                   
                 </Stack>
@@ -220,7 +220,7 @@ if(value === ""){
                     Tổng tiền đơn hàng
                   </MyTypography>
                   <MyTypography variant="h6" fontWeight="bold">
-                    {formatterNumber(totalBill + taxShip - voucher)} $
+                    {formatterNumber(totalBill + taxShip - voucher)} VND
                   </MyTypography>
                 </Stack>
               </Stack>
@@ -249,7 +249,7 @@ if(value === ""){
                       name="row-radio-buttons-group"
                       value={value}
                     >
-                      <FormControlLabel
+                      {/* <FormControlLabel
                         onChange={handleChange}
                         value="Paypal"
                         control={<Radio />}
@@ -260,14 +260,20 @@ if(value === ""){
                             alt="Paypal"
                           />
                         }
-                      />
+                      /> */}
                       <FormControlLabel 
                         onChange={handleChange}
                         value="shipCod"
                         control={<Radio />}
                         label="ShipCod"
                       />
-                      <FormControlLabel
+                      {/* <FormControlLabel 
+                        onChange={handleChange}
+                        value="Paypal"
+                        control={<Radio />}
+                        label="Chuyển khoản"
+                      /> */}
+                      {/* <FormControlLabel
                         value="disabled"
                         disabled
                         control={<Radio />}
@@ -278,7 +284,7 @@ if(value === ""){
                             alt="Paypal"
                           />
                         }
-                      />
+                      /> */}
                     </RadioGroup>
                   </FormControl>
                   {
