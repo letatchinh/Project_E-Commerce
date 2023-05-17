@@ -145,7 +145,7 @@ export default function ProductClient({ item }) {
         <AddShoppingCartIcon className="hoverIconAddCart" />
 </LoadingButton>
       </CardContent>
-      <Stack
+      {/* <Stack
         className="scrollBarProduct"
         direction="row"
         spacing={1}
@@ -169,7 +169,7 @@ export default function ProductClient({ item }) {
             }}
           />
         ))}
-      </Stack>
+      </Stack> */}
     
     </Box>
   );

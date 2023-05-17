@@ -83,7 +83,7 @@ const Product = (props) => {
                   : ((product.price * 80) / 100).toLocaleString() + "VND"}
               </span>
             </div>
-            <div className="row productImageSub">
+            {/* <div className="row productImageSub">
               {product.images.map((e, i) => (
                 <img
                   key={i}
@@ -103,7 +103,7 @@ const Product = (props) => {
                   onClick={() => setActive(i)}
                 />
               ))}
-            </div>
+            </div> */}
             <div className="row">
               <Link
                 to={`/admin/product/${product._id}/edit`}

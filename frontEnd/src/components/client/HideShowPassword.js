@@ -6,7 +6,7 @@ import React, { forwardRef, useState } from 'react'
     const [showPassword,setShowPassword] = useState(false)
   return (
     <FormControl fullWidth  variant="outlined">
-    <InputLabel sx={{top : '-6px' }} htmlFor="outlined-adornment-password">{props.placeholder || "Password"}</InputLabel>
+    <InputLabel sx={{top : '-6px' }} htmlFor="outlined-adornment-password">{props.placeholder || "Mật khẩu"}</InputLabel>
     <OutlinedInput size="small"
       id="outlined-adornment-password"
       type={showPassword ? 'text' : 'password'}
@@ -25,7 +25,7 @@ import React, { forwardRef, useState } from 'react'
           </IconButton>
         </InputAdornment>
       }
-      label="Password"
+      label="Mật khẩu"
     />
     <FormHelperText error id="accountId-error">
      {props.error && props.message}

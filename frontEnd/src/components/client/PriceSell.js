@@ -5,6 +5,7 @@ import { formatterNumber } from "../../constant/FunctionCommom 2";
 
 export default function PriceSell(props) {
   const { price, discount, fontSize , fontSizeDiscount } = props;
+  console.log(price,"price");
   const isSell  = (discount > 0)
   return (
     <Stack spacing={1} direction="row" sx={{cursor : 'auto'}}>
@@ -17,7 +18,7 @@ export default function PriceSell(props) {
           whiteSpace : 'nowrap'
         }}
       >
-        {formatterNumber(parseFloat((price - (price * discount) / 100).toFixed(2)))} VND
+        {formatterNumber(price - (price * discount) / 100)} VND
       </span>
       <span
         style={{

@@ -33,8 +33,8 @@ import LoadingButton from '@mui/lab/LoadingButton';
 export default function LoginUser() {
   const [loading,setLoading] = useState(false)
   const schema = yup.object().shape({
-    password: yup.string().required("Required").min(2).max(20),
-    email: yup.string().required("Required").email(),
+    password: yup.string().required("Vui lòng nhập").min(2).max(20),
+    email: yup.string().required("Vui lòng nhập").email(),
   });
   const {
     register,
@@ -130,7 +130,7 @@ export default function LoginUser() {
                 }}
               >
                 <CardGiftcardIcon sx={{ color: "orange" }} />
-                Sign in to get more offers
+                Đăng nhập để nhận nhiều ưu đãi hơn
               </Typography>
               <Stack
                 direction="row"
@@ -139,7 +139,7 @@ export default function LoginUser() {
                 width="100%"
               >
                 <Typography variant="h6" color="#888">
-                  LOGIN
+                  ĐĂNG NHẬP
                 </Typography>
                 <Stack direction="row" spacing={1}>
                   <FacebookOutlinedIcon
@@ -180,7 +180,7 @@ export default function LoginUser() {
                 fullWidth
                 type="submit"
                 variant="contained">
-        Login
+        Đăng nhập
       </LoadingButton>
               <Stack
                 direction="row"
@@ -191,24 +191,25 @@ export default function LoginUser() {
                 <FormControlLabel
                   sx={{ margin: 0 }}
                   control={<Checkbox defaultChecked />}
-                  label="Remember Me"
+                  label="Nhớ mật khẩu"
                 />
                 <Link to="/forgotPassword">
                   <Typography className="Mylink" variant="body2" color="#888">
-                    Forgot password
+                    Quên mật khẩu
                   </Typography>
                 </Link>
               </Stack>
               <FacebookLogin
+              textButton="Đăng nhập với FB"
                 appId="3267114616941933"
                 fields="name,email,picture"
                 callback={responseFacebook}
                 icon={<FacebookIcon />}
               />
-              <Typography>Or</Typography>
+              <Typography>Hoặc</Typography>
               <GoogleLogin
                 clientId="102456725904-0gb4rrpp4337idg21co7gar7a72mk5ll.apps.googleusercontent.com"
-                buttonText="Login With Google"
+                buttonText="Đăng nhập với Google"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
                 cookiePolicy={"single_host_origin"}
@@ -227,9 +228,9 @@ export default function LoginUser() {
             }}
           >
             <Typography variant="h5" fontWeight="bold">
-              Welcome to login
+              Chào mừng bạn đến với đăng nhập
             </Typography>
-            <Typography fontWeight="300">Don't have an account</Typography>
+            <Typography fontWeight="300">Bạn không có tài khoản ?</Typography>
             <Link to="/register">
               {" "}
               <Button
@@ -240,7 +241,7 @@ export default function LoginUser() {
                 }}
                 variant="outlined"
               >
-                Sign Up
+                Đăng ký
               </Button>
             </Link>
           </Stack>

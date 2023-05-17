@@ -24,10 +24,10 @@ export default function Register() {
 
   const navigate = useNavigate();
   const schema = yup.object().shape({
-    name: yup.string().required("Please Enter Name").min(2).max(20),
-    password: yup.string().required("Please Enter Password").min(2).max(20),
-    email: yup.string().required("Please Enter Email").email(),
-    phone : yup.string().required("Please Enter Phone").min(2).max(11).matches(REGEX_ONLY_NUMBER,"Phone is not wrong")
+    name: yup.string().required("Vui lòng nhập tên").min(2).max(20),
+    password: yup.string().required("Vui lòng nhập mật khẩu").min(2).max(20),
+    email: yup.string().required("Vui lòng nhập email").email(),
+    phone : yup.string().required("Vui lòng nhập số điện thoại").min(2).max(11).matches(REGEX_ONLY_NUMBER,"Phone is not wrong")
   });
   const {
     register,
@@ -84,7 +84,7 @@ export default function Register() {
                   width="100%"
                 >
                   <Typography variant="h6" color="#888">
-                    Sign Up
+                    Đăng ký
                   </Typography>
                   <Stack direction="row" spacing={1}>
                     <FacebookOutlinedIcon
@@ -107,7 +107,7 @@ export default function Register() {
                   size="small"
                   {...register("name")}
                   fullWidth
-                  label="Name"
+                  label="Tên"
                   variant="outlined"
                   error={errors.name !== undefined}
                   helperText={errors.name && errors?.name.message}
@@ -116,7 +116,7 @@ export default function Register() {
                   size="small"
                   {...register("phone")}
                   fullWidth
-                  label="Number phone"
+                  label="Số điện thoại"
                   variant="outlined"
                   error={errors.phone !== undefined}
                   helperText={errors.phone && errors?.phone.message}
@@ -143,7 +143,7 @@ export default function Register() {
                 fullWidth
                 type="submit"
                 variant="contained">
-        Register
+        Đăng ký
       </LoadingButton>
               </Stack>
             </form>
@@ -159,9 +159,9 @@ export default function Register() {
               }}
             >
               <Typography variant="h5" fontWeight="bold">
-                Welcome to Sign Up
+                Chào mừng đến với đăng ký
               </Typography>
-              <Typography fontWeight="300">You have an account</Typography>
+              <Typography fontWeight="300">Bạn đã có tài khoản</Typography>
               <Link to="/login">
                 {" "}
                 <Button
@@ -172,7 +172,7 @@ export default function Register() {
                   }}
                   variant="outlined"
                 >
-                  Login
+                  Đăng nhập ngay
                 </Button>
               </Link>
             </Stack>

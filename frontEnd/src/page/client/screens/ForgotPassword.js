@@ -108,8 +108,7 @@ export default function ForgotPassword() {
                 </Stack>
               </Stack>
               <MyTypography fontSize="1rem">
-                Please Enter Your Email to We can Send confirm Code To reset
-                Your Password
+               Nhập gmail để chúng tôi gửi mã về để lấy lại nick
               </MyTypography>
               <TextField
                 size="small"
@@ -130,13 +129,13 @@ export default function ForgotPassword() {
                 type="submit"
                 variant="contained"
               >
-                {loading ? <LoadingCycleFullwitdh size="30px" /> : "Send"}
+                {loading ? <LoadingCycleFullwitdh size="30px" /> : "Gửi"}
               </Button>
               <Alert
                 sx={{ width: "100%", display: userNotFound ? "flex" : "none" }}
                 severity="error"
               >
-                We Cant Find Your email , please Check your email
+                Không tìm thấy email
               </Alert>
             </Stack>
           </form>
@@ -159,9 +158,9 @@ export default function ForgotPassword() {
             }}
           >
             <Typography variant="h5" fontWeight="bold">
-              Welcome to forgot Password
+             Chào mừng đến với quên mật khẩu
             </Typography>
-            <Typography fontWeight="300">You have an account</Typography>
+            <Typography fontWeight="300">Bạn đã có Tài khoản</Typography>
             <Link to="/login">
               {" "}
               <Button
@@ -172,7 +171,7 @@ export default function ForgotPassword() {
                 }}
                 variant="outlined"
               >
-                Login
+                Đăng nhập
               </Button>
             </Link>
           </Stack>

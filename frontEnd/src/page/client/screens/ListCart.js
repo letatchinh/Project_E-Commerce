@@ -17,6 +17,7 @@ import  '../../../components/StyleComponent/Linkcss.css'
 import FormVoucher from '../../../layout/client/FormVoucher'
 import MyStepper from './MyStepper'
 import MyTypography from '../../../components/client/MyTypography'
+import { formatterNumber } from '../../../constant/FunctionCommom 2'
 export default function ListCart() {
     const background2 = useSelector(state => state.colorCommon.mainBackGround2)
     const backgroundWhite = useSelector(state => state.colorCommon.mainBackGround)
@@ -111,7 +112,7 @@ export default function ListCart() {
           <MyTypography fontSize='1.2rem'>Thông tin đơn hàng</MyTypography>
           <Stack direction='row' justifyContent='space-between'>
             <MyTypography fontSize='14px' color='#757575'>Tồng tiền sản phẩm</MyTypography>
-            <MyTypography>{totalBill} VND</MyTypography>
+            <MyTypography>{formatterNumber(totalBill)} VND</MyTypography>
           </Stack>
           <Stack direction='row' justifyContent='space-between'>
           <MyTypography fontSize='14px' color='#757575'>Phí ship ({distance} km)</MyTypography>
@@ -130,7 +131,7 @@ export default function ListCart() {
     {/* <FormVoucher /> */}
         <Stack direction='row' justifyContent='space-between' alignItems='center'>
         <Typography fontSize='14px' color='#757575'>Tổng tiền đơn hàng</Typography>
-            <Typography color='#f57224' fontSize='1.3rem'>{(parseFloat(totalBill) + taxShip - voucher).toFixed(2)} VND</Typography>
+            <Typography color='#f57224' fontSize='1.3rem'>{formatterNumber(totalBill + taxShip - voucher)} VND</Typography>
         </Stack>
         <Link className={(((!isCheck || user.address === "" ) && (!isCheck || !SubAddress))) ? 'disableLink': " "} to='/payment'><Button endIcon={<ArrowForwardIcon className='surFaceArrow'/>}  disabled={(((!isCheck || user.address === "" ) && (!isCheck || !SubAddress)))} sx={{width : '100%'}} color='warning' variant='contained'>Xác nhận đơn hàng</Button></Link>
         </Stack>

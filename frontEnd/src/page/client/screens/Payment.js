@@ -26,6 +26,7 @@ import AxiosUser from "../../../apis/client/AxiosUser";
 import ToastError from "../../../components/client/ToastError";
 import MyStepper from "./MyStepper";
 import MyTypography from "../../../components/client/MyTypography";
+import { formatterNumber } from "../../../constant/FunctionCommom 2";
 export default function Payment() {
   const config = {
     headers: { Authorization: `Bearer ${getToken()}` }
@@ -219,7 +220,7 @@ if(value === ""){
                     Tổng tiền đơn hàng
                   </MyTypography>
                   <MyTypography variant="h6" fontWeight="bold">
-                    {(parseFloat(totalBill) + taxShip - voucher).toFixed(2)} $
+                    {formatterNumber(totalBill + taxShip - voucher)} $
                   </MyTypography>
                 </Stack>
               </Stack>
