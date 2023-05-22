@@ -27,7 +27,7 @@ const validationSchema = yup.object().shape({
   countInStock: yup
     .number()
     .typeError("Bạn phải chỉ định một số cho kho")
-    .min(0, "thấp nhất 0.")
+    .min(1, "thấp nhất 1.")
     .required("Vui lòng nhập"),
   description: yup
     .string()
@@ -163,12 +163,15 @@ const AddProductMain = () => {
                       variant="outlined"
                       label="Tồn kho"
                       {...register("countInStock")}
-                      error={errors?.countInStock !== undefined}
-                      helperText={
-                        errors.countInStock && errors.countInStock.message
-                      }
+                      // error={errors?.countInStock !== undefined}
+                      // helperText={
+                      //   errors.countInStock && errors.countInStock.message
+                      // }
                       fullWidth
                     />
+                     <p className="alert-danger">
+                      {errors.countInStock && errors.countInStock.message}
+                    </p>
                   </div>
                   <div className="mb-4">
                     <TextareaAutosize
